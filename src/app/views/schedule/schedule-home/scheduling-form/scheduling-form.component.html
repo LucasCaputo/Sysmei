@@ -1,8 +1,44 @@
-<h1 mat-dialog-title>Hi Lucas</h1>
-
-{{data }}
-
-
+<h1 mat-dialog-title>Novo Agendamento</h1>
+<div mat-dialog-content>
+  <form #form="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>Título</mat-label>
+        <input
+          matInput
+          placeholder="Nome do Serviço"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="title"
+          name="title"
+          #titleInput
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input
+          matInput
+          placeholder="Descrição"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="description"
+          name="description"
+          #descriptionInput
+        />
+      </mat-form-field>
+    </div>
+  </form>
+</div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">No Thanks</button>
+  <button mat-button mat-dialog-close>No Thanks</button>
+  <button
+    mat-button
+    (click)="onSubmit(form)"
+    [mat-dialog-close]="data"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
 </div>

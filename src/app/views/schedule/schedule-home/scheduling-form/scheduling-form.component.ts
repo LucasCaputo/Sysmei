@@ -1,31 +1,49 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { SchedulingService } from 'src/app/shared/services/scheduling.service';
 
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling-form.component.html',
-  styleUrls: ['./scheduling-form.component.scss']
+  styleUrls: ['./scheduling-form.component.scss'],
 })
 export class SchedulingFormComponent implements OnInit {
-  
+  @ViewChild('titleInput') titleInput: ElementRef | undefined;
+  @ViewChild('descriptionInput') descriptionInput: ElementRef | undefined;
+
+  title = '';
+  description = '';
+
   constructor(
-    public dialogRef: MatDialogRef<SchedulingFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {},
-    public schedulingForm: FormGroup,
-    private fb: FormBuilder
-  ) { }
+    private schedulingService: SchedulingService,
+    @Inject(MAT_DIALOG_DATA) public data: {}
+  ) {}
 
-  ngOnInit(): void {
-    this.schedulingForm = this.fb.group({
-      data: this.data
-    })
+  ngOnInit(): void {}
+
+  onSubmit(form: NgForm) {
+    console.log(form);
+    console.log(this.data);
   }
 
-  
-  onCancel(): void {
-    this.dialogRef.close();
-  }
+  // createScheduling(){
+  //   console.log(this.data);
 
+  //   this.schedulingService.postScheduling(this.schedulingForm.value).subscribe(result => {});
+  //   this.dialogRef.close();
+  //   this.schedulingForm.reset();
+  //   window.location.reload();
+  // }
+
+  // onCancel(): void {
+  //   this.dialogRef.close();
+  // }
 }
