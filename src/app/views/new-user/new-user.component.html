@@ -1,0 +1,64 @@
+<h1>Novo Agendamento</h1>
+<div>
+  <form #form="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>CPF</mat-label>
+        <input
+          matInput
+          placeholder="CPF"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="cpf"
+          name="cpf"
+          #cpfInput
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input
+          matInput
+          placeholder="Login"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="login"
+          name="login"
+          #loginInput
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          placeholder="Nome"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="nome"
+          name="nome"
+          #nomeInput
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          placeholder="Senha"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="senha"
+          name="senha"
+          #senhaInput
+        />
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div>
+  <button mat-button (click)="onSubmit(form)">Cadastrar</button>
+</div>
