@@ -5,17 +5,9 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 @NgModule({
   declarations: [CustomerHomeComponent],
-  imports: [
-    CommonModule,
-    CustomerRoutingModule,
-    HttpClientModule
-   
-  ],
-  providers: [
-    
-  ]
+  imports: [CommonModule, CustomerRoutingModule, HttpClientModule],
+  providers: [],
 })
-export class CustomerModule { }
+export class CustomerModule {}

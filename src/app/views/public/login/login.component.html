@@ -1,0 +1,34 @@
+<h1>Login</h1>
+<div>
+  <form #form="ngForm">
+    <div>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          placeholder="usuario"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="usuario"
+          name="usuario"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          placeholder="Senha"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="senha"
+          name="senha"
+        />
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div>
+  <button mat-button (click)="onSubmit(form)">Entrar</button>
+</div>
