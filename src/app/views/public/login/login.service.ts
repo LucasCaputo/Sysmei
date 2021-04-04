@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Login } from './login.interface';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { NewUser } from '../new-user/new-user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +22,9 @@ export class LoginService {
     private authService: AuthService
   ) {}
 
-  public postLogin(login: Login): Observable<any> {
+  public postLogin(login: Login): Observable<Login> {
     return this.httpClient
-      .post<any>(environment.baseURL + '/user/login', login, this.httpOptions)
+      .post<Login>(environment.baseURL + '/user/login', login, this.httpOptions)
       .pipe(
         tap((response) => {
           this.authService.setUser(response);

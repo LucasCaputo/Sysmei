@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SchedulingService {
+export class ScheduleService {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { NewUser } from '../interfaces/new-user.interface';
+import { NewUser } from './new-user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class NewUserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public postUser(newUser: any): Observable<NewUser> {
+  public postUser(newUser: any): Observable<any> {
     return this.httpClient.post<any>(
       environment.baseURL + '/user',
       newUser,

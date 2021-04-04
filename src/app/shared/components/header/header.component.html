@@ -8,9 +8,30 @@
     />
     <span style="flex: 1 1 auto"></span>
     <div *ngIf="isprivate; else public">
-      <button routerLink="clientes" aria-label="Clientes">Clientes</button>
-      <button routerLink="agenda" aria-label="Agenda">Agenda</button>
-      <button (click)="logout()" aria-label="logout">LogOut</button>
+      <button
+        mat-flat-button
+        color="primary"
+        routerLink="clientes"
+        aria-label="Clientes"
+      >
+        Clientes
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        routerLink="agenda"
+        aria-label="Agenda"
+      >
+        Agenda
+      </button>
+      <button
+        mat-icon-button
+        color="secondary"
+        (click)="logout()"
+        aria-label="Logout"
+      >
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
     </div>
     <ng-template #public>
       <button
@@ -18,7 +39,6 @@
         color="primary"
         routerLink="cadastro"
         aria-label="Cadastro"
-        style="margin-right: 16px"
       >
         Cadastro
       </button>

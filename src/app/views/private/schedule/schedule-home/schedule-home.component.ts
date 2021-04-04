@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ScheduleService } from '../schedule.service';
 
 @Component({
   selector: 'app-schedule-home',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule-home.component.scss'],
 })
 export class ScheduleHomeComponent implements OnInit {
-  constructor() {}
+  constructor( private scheduleService: ScheduleService) {}
 
   ngOnInit(): void {}
 }

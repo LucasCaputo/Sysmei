@@ -15,17 +15,14 @@
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field>
-        <mat-label>Descrição</mat-label>
-        <input
-          matInput
-          placeholder="Descrição"
-          autocomplete="off"
-          type="text"
-          [(ngModel)]="description"
-          name="description"
-        />
+      <mat-form-field appearance="fill">
+        <mat-label>Cliente</mat-label>
+        <mat-select [(ngModel)]="customer" name="state">
+          <mat-option>Seleciona um cliente</mat-option>
+          <mat-option *ngFor="let state of states" [value]="state"  >{{state}}</mat-option>
+        </mat-select>
       </mat-form-field>
+      <p>{{customer}}</p>
     </div>
   </form>
 </div>
@@ -36,7 +33,7 @@
     [mat-dialog-close]="{
       data: data,
       title: title,
-      description: description
+      customer: customer
     }"
   >
     Cadastrar

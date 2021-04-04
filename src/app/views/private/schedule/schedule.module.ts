@@ -16,6 +16,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -38,6 +39,7 @@ FullCalendarModule.registerPlugins([
     MatDialogModule,
     MatInputModule,
     FormsModule,
+    MatSelectModule
   ],
   providers: [],
 })
