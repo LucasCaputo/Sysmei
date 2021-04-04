@@ -8,7 +8,7 @@ import {
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { SchedulingService } from 'src/app/shared/services/scheduling.service';
+import { SchedulingService } from 'src/app/views/private/schedule/scheduling.service';
 
 @Component({
   selector: 'app-scheduling',
@@ -28,22 +28,4 @@ export class SchedulingFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
-
-  onSubmit(form: NgForm) {
-    console.log(form);
-    console.log(this.data);
-  }
-
-  // createScheduling(){
-  //   console.log(this.data);
-
-  //   this.schedulingService.postScheduling(this.schedulingForm.value).subscribe(result => {});
-  //   this.dialogRef.close();
-  //   this.schedulingForm.reset();
-  //   window.location.reload();
-  // }
-
-  // onCancel(): void {
-  //   this.dialogRef.close();
-  // }
 }

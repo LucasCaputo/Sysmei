@@ -6,14 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule-home.component.scss'],
 })
 export class ScheduleHomeComponent implements OnInit {
-  valorDoContador = 10;
-
   constructor() {}
 
   ngOnInit(): void {}
-
-  novoValorNoContador(valor: number) {
-    this.valorDoContador = valor;
-    console.log(valor);
-  }
 }

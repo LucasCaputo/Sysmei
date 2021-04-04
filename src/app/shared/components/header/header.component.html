@@ -1,6 +1,11 @@
 <header>
   <mat-toolbar color="primary">
-    <span routerLink="{{ isprivate ? 'agenda' : 'login' }}">SysMei</span>
+    <img
+      src="../../../../assets/logo.svg"
+      height="40px"
+      routerLink="{{ isprivate ? 'agenda' : 'login' }}"
+      style="outline: none; cursor: pointer"
+    />
     <span style="flex: 1 1 auto"></span>
     <div *ngIf="isprivate; else public">
       <button routerLink="clientes" aria-label="Clientes">Clientes</button>
@@ -8,8 +13,23 @@
       <button (click)="logout()" aria-label="logout">LogOut</button>
     </div>
     <ng-template #public>
-      <button routerLink="cadastro" aria-label="Cadastro">Cadastro</button>
-      <button routerLink="login" aria-label="Login">Login</button>
+      <button
+        mat-flat-button
+        color="primary"
+        routerLink="cadastro"
+        aria-label="Cadastro"
+        style="margin-right: 16px"
+      >
+        Cadastro
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        routerLink="login"
+        aria-label="Login"
+      >
+        Login
+      </button>
     </ng-template>
   </mat-toolbar>
 </header>

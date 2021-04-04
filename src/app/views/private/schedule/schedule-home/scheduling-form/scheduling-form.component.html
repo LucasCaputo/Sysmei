@@ -11,7 +11,6 @@
           type="text"
           [(ngModel)]="title"
           name="title"
-          #titleInput
         />
       </mat-form-field>
     </div>
@@ -25,20 +24,21 @@
           type="text"
           [(ngModel)]="description"
           name="description"
-          #descriptionInput
         />
       </mat-form-field>
     </div>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>No Thanks</button>
+  <button mat-button mat-dialog-close>Cancelar</button>
   <button
     mat-button
-    (click)="onSubmit(form)"
-    [mat-dialog-close]="data"
-    cdkFocusInitial
+    [mat-dialog-close]="{
+      data: data,
+      title: title,
+      description: description
+    }"
   >
-    Ok
+    Cadastrar
   </button>
 </div>

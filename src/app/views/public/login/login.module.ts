@@ -8,6 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -16,6 +20,9 @@ import { MatInputModule } from '@angular/material/input';
     HttpClientModule,
     MatInputModule,
     FormsModule,
+    FlexLayoutModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [],
 })

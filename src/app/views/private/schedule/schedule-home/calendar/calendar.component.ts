@@ -9,6 +9,8 @@ import {
 } from '@fullcalendar/angular';
 import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
+import { SchedulingService } from '../../scheduling.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +18,13 @@ import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.comp
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private schedulingService: SchedulingService,
+    private auth: AuthService
+  ) {
+    this.Name();
+  }
 
   ngOnInit(): void {}
 
@@ -60,26 +68,44 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-
       if (result) {
+        const schedule = {
+          title: result.title,
+          start: result.data.startStr,
+          end: result.data.endStr,
+          allDay: '2021-01-31',
+        };
+
+        debugger;
+
+        this.schedulingService
+          .postScheduling(schedule)
+          .subscribe((response) => {
+            console.log(response);
+          });
+
         const calendarApi = selectInfo.view.calendar;
 
         calendarApi.unselect();
 
         calendarApi.addEvent({
           id: createEventId(),
-          title: 'Dialog test',
+          title: result.title,
           start: selectInfo.startStr,
           end: selectInfo.endStr,
           allDay: selectInfo.allDay,
           extendedProps: {
-            titulo: 'BioChemistry',
-            description: 'teste',
+            description: result.description,
           },
         });
       }
     });
+  }
+
+  Name() {
+    const user = this.auth.getUser();
+    console.log(user);
+    return user;
   }
 
   handleEventClick(clickInfo: EventClickArg) {

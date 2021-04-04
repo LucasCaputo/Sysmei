@@ -1,64 +1,66 @@
-<h1>Novo Agendamento</h1>
-<div>
-  <form #form="ngForm">
-    <div>
-      <mat-form-field>
-        <mat-label>CPF</mat-label>
-        <input
-          matInput
-          placeholder="CPF"
-          autocomplete="off"
-          type="text"
-          [(ngModel)]="cpf"
-          name="cpf"
-          #cpfInput
-        />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Login</mat-label>
-        <input
-          matInput
-          placeholder="Login"
-          autocomplete="off"
-          type="text"
-          [(ngModel)]="login"
-          name="login"
-          #loginInput
-        />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Nome</mat-label>
-        <input
-          matInput
-          placeholder="Nome"
-          autocomplete="off"
-          type="text"
-          [(ngModel)]="nome"
-          name="nome"
-          #nomeInput
-        />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Senha</mat-label>
-        <input
-          matInput
-          placeholder="Senha"
-          autocomplete="off"
-          type="text"
-          [(ngModel)]="senha"
-          name="senha"
-          #senhaInput
-        />
-      </mat-form-field>
-    </div>
-  </form>
-</div>
-<div>
-  <button mat-button (click)="onSubmit(form)">Cadastrar</button>
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" class="login">
+  <div fxFlex fxLayoutAlign="center center">
+    <mat-card class="card">
+      <mat-card-title style="margin-bottom: 16px">Criar Conta</mat-card-title>
+      <mat-card-content>
+        <form #form="ngForm">
+          <mat-form-field>
+            <mat-label>CPF</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              type="text"
+              [(ngModel)]="cpf"
+              name="cpf"
+              #cpfInput
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Login</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              type="text"
+              [(ngModel)]="login"
+              name="login"
+              #loginInput
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              type="text"
+              [(ngModel)]="nome"
+              name="nome"
+              #nomeInput
+            />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              autocomplete="off"
+              type="text"
+              [(ngModel)]="senha"
+              name="senha"
+              #senhaInput
+            />
+          </mat-form-field>
+        </form>
+
+        <p style="margin: 16px 0">
+          Já tem uma conta?
+          <span routerLink="/login" class="create-account"> Faça Login! </span>
+        </p>
+      </mat-card-content>
+      <mat-card-actions fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" (click)="onSubmit(form)">
+          Cadastrar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

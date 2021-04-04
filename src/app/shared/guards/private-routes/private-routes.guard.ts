@@ -11,8 +11,6 @@ export class PrivateRoutesGuard implements CanActivate {
   canActivate(): boolean {
     const isLoged = this.authService.isLoged();
 
-    console.log(isLoged, 'Está logado?');
-
     if (isLoged) {
       return true;
     }
