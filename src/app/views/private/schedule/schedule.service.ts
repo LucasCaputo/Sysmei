@@ -17,11 +17,14 @@ export class ScheduleService {
   public postScheduling(scheduling: any): Observable<any> {
     console.log(scheduling);
 
-    return this.httpClient.post<any>(environment.baseURL + '/agenda', {
-      headers: {
-        Authorization: this.authService.getToken()!,
-      },
-      params: scheduling,
-    });
+    return this.httpClient.post<any>(
+      environment.baseURL + '/agenda',
+      scheduling,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
   }
 }

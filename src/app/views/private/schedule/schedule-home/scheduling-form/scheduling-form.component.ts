@@ -5,11 +5,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
-import { ScheduleService } from 'src/app/views/private/schedule/schedule.service';
 import { CustomerService } from '../../../customer/customer.service';
 
 @Component({
@@ -20,31 +21,37 @@ import { CustomerService } from '../../../customer/customer.service';
 export class SchedulingFormComponent implements OnInit {
   @ViewChild('titleInput') titleInput: ElementRef | undefined;
   @ViewChild('customerInput') customerInput: ElementRef | undefined;
+  user = this.authService.getUser();
 
   title = '';
   customer: string = '';
 
-  states: string[] = []
-
-  user = this.authService.getUser()
+  customerControl = new FormControl();
+  options: string[] = ['1', '2', '3', '4'];
+  filteredOptions: Observable<string[]>;
 
   constructor(
-    private scheduleService: ScheduleService,
     private customerService: CustomerService,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: {}
-  ) {}
+  ) {
+    this.filteredOptions = this.customerControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value))
+    );
+  }
 
   ngOnInit(): void {
     let customers = this.customerService.getCustomer(this.user).subscribe(
       (response) => {
         console.log(response);
 
-        response.forEach((element:any)=> {
-          // this.states.push(`${element.id} - ${element.nome} - ${element.email}`)
-          this.states.push(element.id)
-        })
-
+        response.forEach((element: any) => {
+          /*   this.options.push(
+            `${element.id} -${element.nome} - ${element.email}`
+          ); */
+          /*  this.options.push(element.id); */
+        });
       },
       (error) => {
         console.log(error);
@@ -52,8 +59,14 @@ export class SchedulingFormComponent implements OnInit {
     );
 
     console.log(customers);
-    
-      
-      
+    console.log(this.data);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter((option) =>
+      option.toLowerCase().includes(filterValue)
+    );
   }
 }

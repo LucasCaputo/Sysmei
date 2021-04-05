@@ -67,45 +67,30 @@ export class CalendarComponent implements OnInit {
       data: selectInfo,
     });
 
-    // debugger
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        let start = result.data.startStr
+          .replace(/.{9}$/gm, '')
+          .replace(/T/gm, ' ');
+        let end = result.data.endStr.replace(/.{9}$/gm, '').replace(/T/gm, ' ');
         const schedule = {
           title: result.title,
-          start: result.data.startStr,// 2021-04-04T08:00:00-03:00 string
-          end: result.data.endStr, //2021-04-04T08:30:00-03:00 string
-          allDay: '2021-01-31', 
+          start,
+          end,
           status: true,
           usuario: {
-                    "login": this.auth.getUser()?.login
-                 },
+            login: this.auth.getUser()?.login,
+          },
           paciente: {
-            id: result.customer
-          }
+            id: result.customer,
+          },
         };
 
         debugger;
 
-      //   {
-      //     "title": "Teste",
-      //     "start": "2021-04-30 05:10",
-      //     "end": "2021-04-30 06:10",
-      //     "allDay": "2021-02-31",
-      //     "status": true,
-      //     "usuario": {
-      //         "login": "zezin"
-      //     },
-      //     "paciente": {
-      //         "id": "5"
-      //     }
-      // }
-
-        // this.scheduleService
-        //   .postScheduling(schedule)
-        //   .subscribe((response) => {
-        //     console.log(response);
-        //   });
+        this.scheduleService.postScheduling(schedule).subscribe((response) => {
+          console.log(response);
+        });
 
         const calendarApi = selectInfo.view.calendar;
 
