@@ -11,7 +11,7 @@ export class SnackbarService {
     this._snackBar.open(message, confirmation, {
       duration: 10000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom',
+      verticalPosition: 'top',
       panelClass: [`${isError ? 'bg-error' : 'bg-success'}`],
     });
   }

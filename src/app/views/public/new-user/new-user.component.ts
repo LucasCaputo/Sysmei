@@ -6,9 +6,12 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { NewUserService } from './new-user.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+
+import { FormControl, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-user',
@@ -26,13 +29,34 @@ export class NewUserComponent implements OnInit {
   nome = '';
   senha = '';
 
-  constructor(public newUserService: NewUserService) {}
+  formControl = new FormControl('', [Validators.required, Validators.email]);
+
+  constructor(
+    private newUserService: NewUserService,
+    private router: Router,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {}
 
   onSubmit(form: NgForm) {
-    this.newUserService.postUser(form.form.value).subscribe((result: any) => {
-      console.log(result);
-    });
+    this.newUserService.postUser(form.form.value).subscribe(
+      (response) => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! usuário ${this.nome} cadastrado com sucesso, faça login`,
+          'X',
+          false
+        );
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(
+          `Tente novamente ( ${error.error}) `,
+          'X',
+          true
+        );
+        console.log(error);
+      }
+    );
   }
 }
