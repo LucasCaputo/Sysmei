@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { LoaderService } from '../loader/loader.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,11 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
   @Input() isprivate: boolean | undefined;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    public loaderService: LoaderService
+  ) {}
 
   ngOnInit(): void {}
 

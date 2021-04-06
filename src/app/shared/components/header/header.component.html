@@ -1,5 +1,7 @@
 <header>
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="loaderService.isLoading | async" class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
   <mat-toolbar color="primary">
     <img
       src="../../../../assets/logo.svg"
