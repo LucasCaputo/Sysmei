@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { InterceptorService } from './shared/components/loader/interceptor.service';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +33,7 @@ import { InterceptorService } from './shared/components/loader/interceptor.servi
     MatIconModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatSnackBarModule,
   ],
   providers: [
     {
