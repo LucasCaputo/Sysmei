@@ -1,17 +1,11 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
 import { NewUserService } from './new-user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
-import { FormControl, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-user',
@@ -19,31 +13,46 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
   styleUrls: ['./new-user.component.scss'],
 })
 export class NewUserComponent implements OnInit {
-  @ViewChild('telefoneInput') telefoneInput: ElementRef | undefined;
-  @ViewChild('loginInput') loginInput: ElementRef | undefined;
-  @ViewChild('nomeInput') nomeInput: ElementRef | undefined;
-  @ViewChild('senhaInput') senhaInput: ElementRef | undefined;
+  profileForm = this.fb.group({
+    telefone: [''],
+    login: ['', [Validators.email]],
+    nome: ['', this.checkName],
+    senha: [''],
+  });
 
-  telefone = '';
-  login = '';
-  nome = '';
-  senha = '';
-
-  formControl = new FormControl('', [Validators.required, Validators.email]);
+  type = 'password';
 
   constructor(
     private newUserService: NewUserService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
-    this.newUserService.postUser(form.form.value).subscribe(
+  checkName(input: FormControl) {
+    const hasNumber = /[0-9]/.test(input.value);
+
+    if (hasNumber) return { hasNumber: true };
+    else {
+      const name = input.value.split(' ');
+
+      const filtrado = name.filter((x: string) => {
+        if (x != '' && x.length > 1) return { isNameComplete: true };
+
+        return null;
+      });
+
+      return filtrado.length < 2 ? { isNameComplete: true } : null;
+    }
+  }
+
+  onSubmit() {
+    this.newUserService.postUser(this.profileForm.value).subscribe(
       (response) => {
         this.snackbarService.openSnackBar(
-          `Parabéns! usuário ${this.nome} cadastrado com sucesso, faça login`,
+          `Parabéns! usuário ${this.profileForm.value.nome} cadastrado com sucesso, faça login`,
           'X',
           false
         );
