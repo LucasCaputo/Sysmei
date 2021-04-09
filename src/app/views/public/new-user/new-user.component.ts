@@ -49,23 +49,25 @@ export class NewUserComponent implements OnInit {
   }
 
   onSubmit() {
-    this.newUserService.postUser(this.profileForm.value).subscribe(
-      (response) => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! usuário ${this.profileForm.value.nome} cadastrado com sucesso, faça login`,
-          'X',
-          false
-        );
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(
-          `Tente novamente ( ${error.error}) `,
-          'X',
-          true
-        );
-        console.log(error);
-      }
-    );
+    if (this.profileForm.valid) {
+      this.newUserService.postUser(this.profileForm.value).subscribe(
+        (response) => {
+          this.snackbarService.openSnackBar(
+            `Parabéns! usuário ${this.profileForm.value.nome} cadastrado com sucesso, faça login`,
+            'X',
+            false
+          );
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          this.snackbarService.openSnackBar(
+            `Tente novamente ( ${error.error}) `,
+            'X',
+            true
+          );
+          console.log(error);
+        }
+      );
+    }
   }
 }

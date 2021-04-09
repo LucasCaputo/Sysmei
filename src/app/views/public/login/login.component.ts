@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
@@ -12,35 +12,42 @@ import { LoginService } from 'src/app/views/public/login/login.service';
   styleUrls: ['./login.component.scss', '../../../app.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  usuario = '';
-  senha = '';
+  loginForm = this.fb.group({
+    usuario: ['', [Validators.email]],
+    senha: [''],
+  });
+
+  type = 'password';
 
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {}
 
-  onSubmit(form: NgForm) {
-    this.loginService.postLogin(form.form.value).subscribe(
-      (response) => {
-        this.snackbarService.openSnackBar(
-          `Bem-vindo ${response.usuario.nome}`,
-          'X',
-          false
-        );
-        this.router.navigate(['/agenda']);
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(
-          `Tente novamente ( ${error.error}) `,
-          'X',
-          true
-        );
-        console.log(error);
-      }
-    );
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.loginService.postLogin(this.loginForm.value).subscribe(
+        (response) => {
+          this.snackbarService.openSnackBar(
+            `Bem-vindo ${response.usuario.nome}`,
+            'X',
+            false
+          );
+          this.router.navigate(['/agenda']);
+        },
+        (error) => {
+          this.snackbarService.openSnackBar(
+            `Tente novamente ( ${error.error}) `,
+            'X',
+            true
+          );
+          console.log(error);
+        }
+      );
+    }
   }
 }

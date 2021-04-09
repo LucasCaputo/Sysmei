@@ -3,40 +3,67 @@
     <mat-card class="card">
       <mat-card-title style="margin-bottom: 16px">Entrar</mat-card-title>
       <mat-card-content>
-        <form #form="ngForm">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <mat-form-field>
             <mat-label>E-mail</mat-label>
-            <input
-              matInput
-              autocomplete="off"
-              type="text"
-              [(ngModel)]="usuario"
-              name="usuario"
-            />
+            <input matInput type="text" formControlName="usuario" required />
+            <mat-error
+              *ngIf="
+                loginForm.controls.usuario.hasError('email') &&
+                !loginForm.controls.usuario.hasError('required')
+              "
+            >
+              Por favor insira um endereço de e-mail válido
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls.usuario.hasError('required')">
+              E-mail é <strong>obrigatório</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>Senha</mat-label>
             <input
               matInput
-              autocomplete="off"
-              type="password"
-              [(ngModel)]="senha"
-              name="senha"
+              [type]="type"
+              formControlName="senha"
+              minlength="6"
+              required
             />
+            <mat-error *ngIf="loginForm.controls.senha.hasError('required')">
+              A senha é <strong>obrigatório</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls.senha.hasError('minlength')">
+              A senha deve ter <strong>no mínimo 6 caracteres</strong>
+            </mat-error>
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'text'"
+              (click)="type = 'password'"
+              >remove_red_eye</mat-icon
+            >
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'password'"
+              (click)="type = 'text'"
+              >visibility_off</mat-icon
+            >
           </mat-form-field>
-        </form>
 
-        <p style="margin: 16px 0">
-          Não tem uma conta?
-          <span routerLink="/cadastro" class="create-account"> Crie uma! </span>
-        </p>
+          <p style="margin: 16px 0">
+            Não tem uma conta?
+            <span routerLink="/cadastro" class="create-account">
+              Crie uma!
+            </span>
+          </p>
+          <mat-card-actions fxLayoutAlign="end center">
+            <button type="submit" mat-raised-button color="primary">
+              Entrar
+            </button>
+          </mat-card-actions>
+        </form>
       </mat-card-content>
-      <mat-card-actions fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" (click)="onSubmit(form)">
-          Entrar
-        </button>
-      </mat-card-actions>
     </mat-card>
   </div>
 </div>
