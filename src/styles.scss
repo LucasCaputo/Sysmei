@@ -28,3 +28,15 @@ body {
     color: white;
   }
 }
+
+@media (max-width: 650px) {
+  .fc-header-toolbar {
+    flex-direction: column;
+    .fc-toolbar-chunk:first-child {
+      align-self: end;
+    }
+    .fc-toolbar-chunk:last-child {
+      align-self: flex-end;
+    }
+  }
+}
