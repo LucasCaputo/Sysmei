@@ -6,11 +6,20 @@ import { NewUserService } from './new-user.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.scss'],
+  animations: [
+    trigger('enter', [
+      transition(':enter', [
+        style({ opacity: 0.5 }),
+        animate('400ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class NewUserComponent implements OnInit {
   profileForm = this.fb.group({
@@ -21,6 +30,8 @@ export class NewUserComponent implements OnInit {
   });
 
   type = 'password';
+
+  isOpen = true;
 
   constructor(
     private newUserService: NewUserService,

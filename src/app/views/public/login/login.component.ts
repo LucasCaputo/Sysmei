@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +11,14 @@ import { LoginService } from 'src/app/views/public/login/login.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', '../../../app.component.scss'],
+  animations: [
+    trigger('enter', [
+      transition(':enter', [
+        style({ opacity: 0.5 }),
+        animate('400ms', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
