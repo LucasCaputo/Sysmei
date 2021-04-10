@@ -1,8 +1,14 @@
-<div *ngFor="let customer of customerList">
-    <p>{{customer.id}}</p>
-    <p>{{customer.nome}}</p>
-    <p>{{customer.email}}</p>
-    _____________________________________________________
+<div fxHide.gt-xs="true">
+  <app-customer-mobile></app-customer-mobile>
 </div>
+<div fxHide.lt-sm="true">
+  versão > 600px
+  <!-- <div *ngFor="let customer of customerList">
+    <p>{{ customer.id }}</p>
+    <p>{{ customer.nome }}</p>
+    <p>{{ customer.email }}</p>
+    _____________________________________________________
+  </div>
 
-<button (click)="openDialog()">Cadastrar paciente</button>
+  <button (click)="openDialog()">Cadastrar paciente</button> -->
+</div>

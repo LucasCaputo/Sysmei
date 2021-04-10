@@ -16,6 +16,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { InterceptorService } from './shared/components/loader/interceptor.service';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoaderComponent } from './shared/components/loader/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HeaderComponent,
     PrivateComponent,
     PublicComponent,
+    LoaderComponent,
   ],
   imports: [
     HttpClientModule,

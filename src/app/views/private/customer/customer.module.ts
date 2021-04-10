@@ -13,9 +13,19 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { CustomerFormComponent } from './customer-home/customer-form/customer-form.component';
+import { CustomerMobileComponent } from './customer-home/customer-mobile/customer-mobile.component';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-  declarations: [CustomerHomeComponent, CustomerFormComponent],
+  declarations: [
+    CustomerHomeComponent,
+    CustomerFormComponent,
+    CustomerMobileComponent,
+  ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
@@ -25,6 +35,10 @@ import { CustomerFormComponent } from './customer-home/customer-form/customer-fo
     FlexLayoutModule,
     MatButtonModule,
     MatDialogModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatProgressBarModule,
   ],
   providers: [],
 })

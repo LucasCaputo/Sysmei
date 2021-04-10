@@ -1,42 +1,72 @@
 <header>
-  <div *ngIf="loaderService.isLoading | async" class="loader-container">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="{{ !isMobile ? 'primary' : '' }}">
     <img
       src="../../../../assets/logo.svg"
       height="40px"
-      routerLink="{{ isprivate ? 'agenda' : 'login' }}"
+      *ngIf="!isMobile"
+      routerLink="{{ isPrivate ? 'agenda' : 'login' }}"
       style="outline: none; cursor: pointer"
     />
     <span style="flex: 1 1 auto"></span>
-    <div *ngIf="isprivate; else public">
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="clientes"
-        aria-label="Clientes"
-        routerLinkActive="active"
-      >
-        Clientes
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="agenda"
-        aria-label="Agenda"
-        routerLinkActive="active"
-      >
-        Agenda
-      </button>
-      <button
-        mat-icon-button
-        color="secondary"
-        (click)="logout()"
-        aria-label="Logout"
-      >
-        <mat-icon>power_settings_new</mat-icon>
-      </button>
+    <div
+      *ngIf="isPrivate; else public"
+      [style]="
+        isMobile
+          ? 'width: 100%; justify-content: space-around; display: flex'
+          : ''
+      "
+    >
+      <div *ngIf="!isMobile">
+        <button
+          mat-flat-button
+          color="primary"
+          routerLink="clientes"
+          aria-label="Clientes"
+          routerLinkActive="active"
+        >
+          Clientes
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          routerLink="agenda"
+          aria-label="Agenda"
+          routerLinkActive="active"
+        >
+          Agenda
+        </button>
+        <button
+          mat-icon-button
+          color="secondary"
+          (click)="logout()"
+          aria-label="Logout"
+        >
+          <mat-icon>power_settings_new</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="isMobile">
+        <button
+          mat-icon-button
+          color="primary"
+          routerLink="agenda"
+          aria-label="Agenda"
+          routerLinkActive="active"
+          style="margin-right: 16px"
+        >
+          <mat-icon>today</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="primary"
+          routerLink="clientes"
+          aria-label="Clientes"
+          routerLinkActive="active"
+          style="margin-left: 16px"
+        >
+          <mat-icon>groups</mat-icon>
+        </button>
+      </div>
     </div>
     <ng-template #public>
       <button

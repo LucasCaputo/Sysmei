@@ -1,0 +1,37 @@
+<div fxFlex fxLayout="column">
+  <mat-toolbar
+    color="primary"
+    fxFlex
+    fxLayoutAlign="space-between center"
+    style="position: fixed; padding-left: 0"
+  >
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Sair</button>
+    </mat-menu>
+
+    <form>
+      <mat-form-field>
+        <input matInput />
+      </mat-form-field>
+      <button mat-icon-button aria-label="Pesquisar clientes">
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Adicionar clientes">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </form>
+  </mat-toolbar>
+  <div style="margin-top: 70px; margin-bottom: 70px">
+    <div *ngFor="let customer of customerList">
+      <p>{{ customer.id }}</p>
+      <p>{{ customer.nome }}</p>
+      <p>{{ customer.email }}</p>
+      _____________________________________________________
+    </div>
+
+    <button (click)="openDialog()">Cadastrar paciente</button>
+  </div>
+</div>
