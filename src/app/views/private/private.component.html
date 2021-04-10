@@ -1,6 +1,8 @@
 <app-header
   [isPrivate]="true"
   [isMobile]="size() < 600 ? true : false"
-  [style]="size() < 600 ? 'position: fixed; bottom: 0; width: 100%' : ''"
+  [style]="
+    size() < 600 ? 'position: fixed; bottom: 0; width: 100%; z-index: 9' : ''
+  "
 ></app-header>
 <router-outlet></router-outlet>
