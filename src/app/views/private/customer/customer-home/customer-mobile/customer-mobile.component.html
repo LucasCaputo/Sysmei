@@ -37,50 +37,32 @@
       _____________________________________________________
     </div> -->
 
-    <mat-list>
-      <div mat-subheader>A</div>
-      <mat-list-item *ngFor="let folder of folders">
-        <div
-          mat-list-icon
-          style="width: 40px; height: 40px; background-color: red"
-        ></div>
-        <div mat-line>{{ folder.name }}</div>
-        <div mat-line>{{ folder.updated }}</div>
-        <div mat-line>{{ folder.email }}</div>
-        <button mat-icon-button aria-label="Telefone">
-          <mat-icon>phone</mat-icon>
-        </button>
-
-        <button mat-icon-button aria-label="Whatsapp">
-          <mat-icon
-            svgIcon="thumbs-up"
-            aria-hidden="false"
-            aria-label="Whatsapp"
-          ></mat-icon>
-        </button>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <div mat-subheader>B</div>
-      <mat-list-item *ngFor="let note of notes">
-        <div
-          mat-list-icon
-          style="width: 40px; height: 40px; background-color: red"
-        ></div>
-        <div mat-line>{{ note.name }}</div>
-        <div mat-line>{{ note.updated }}</div>
-        <div mat-line>{{ note.email }}</div>
-        <button mat-icon-button aria-label="Telefone">
-          <mat-icon>phone</mat-icon>
-        </button>
-
-        <button mat-icon-button aria-label="Whatsapp">
-          <mat-icon
-            svgIcon="thumbs-up"
-            aria-hidden="false"
-            aria-label="Whatsapp"
-          ></mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
+    <div *ngFor="let letter of letters">
+      <mat-list>
+        <div mat-subheader>{{ letter }}</div>
+        <div *ngFor="let customer of customerList">
+          <mat-list-item *ngIf="letter == customer.inicial">
+            <div
+              mat-list-icon
+              style="width: 40px; height: 40px; background-color: red"
+            ></div>
+            <div mat-line>
+              {{ customer.nome }}
+            </div>
+            <div mat-line>
+              {{ customer.telefones[0].numero }}
+            </div>
+            <div mat-line>
+              {{ customer.email }}
+            </div>
+            <button mat-icon-button aria-label="Telefone">
+              <mat-icon>phone</mat-icon>
+            </button>
+            <app-whatsapp-icon></app-whatsapp-icon>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </div>
+      </mat-list>
+    </div>
   </div>
 </div>
