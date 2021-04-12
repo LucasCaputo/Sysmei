@@ -5,7 +5,7 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -20,7 +20,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
+
 import { WhatsappIconComponent } from '../../../shared/components/whatsapp-icon/whatsapp-icon.component';
+
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import { WhatsappIconComponent } from '../../../shared/components/whatsapp-icon/
     HttpClientModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     MatButtonModule,
     MatDialogModule,
@@ -43,6 +47,7 @@ import { WhatsappIconComponent } from '../../../shared/components/whatsapp-icon/
     MatMenuModule,
     MatProgressBarModule,
     MatListModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
 })

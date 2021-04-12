@@ -1,16 +1,34 @@
-<h1 mat-dialog-title>Novo Paciente</h1>
+<h1 mat-dialog-title>Cadastrar novo cliente</h1>
 <div mat-dialog-content>
-  <form #form="ngForm">
+  <form [formGroup]="customerForm">
     <div>
       <mat-form-field>
         <mat-label>Nome</mat-label>
-        <input matInput type="text" [(ngModel)]="nome" name="nome" />
+        <input matInput type="text" formControlName="nome" />
       </mat-form-field>
     </div>
     <div>
       <mat-form-field>
         <mat-label>Telefone</mat-label>
-        <input matInput type="text" [(ngModel)]="telefone1" name="telefone1" />
+        <input
+          matInput
+          type="tel"
+          mask="(00) 0 0000-0000"
+          formControlName="telefone1"
+          minlength="11"
+          required
+        />
+        <mat-error
+          *ngIf="
+            customerForm.controls.telefone1.hasError('minlength') &&
+            !customerForm.controls.telefone1.hasError('required')
+          "
+        >
+          Por favor insira um telefone <strong>celular</strong> válido
+        </mat-error>
+        <mat-error *ngIf="customerForm.controls.telefone1.hasError('required')">
+          Telefone é <strong>obrigatório</strong>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Email</mat-label>
@@ -18,8 +36,7 @@
           matInput
           placeholder="E-mail"
           type="text"
-          [(ngModel)]="email"
-          name="email"
+          formControlName="email"
         />
       </mat-form-field>
     </div>
@@ -30,10 +47,10 @@
   <button
     mat-button
     [mat-dialog-close]="{
-      nome: nome,
-      telefone1: telefone1,
-      email: email,
-      login_usuario: login_usuario
+      nome: customerForm.value.nome,
+      telefone1: customerForm.value.telefone1,
+      email: customerForm.value.email,
+      login_usuario: customerForm.value.login_usuario
     }"
   >
     Cadastrar

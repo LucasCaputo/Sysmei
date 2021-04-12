@@ -1,12 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -15,25 +8,14 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit {
-  @ViewChild('nomeInput') nomeInput: ElementRef | undefined;
-  @ViewChild('telefone1Input') telefone1Input: ElementRef | undefined;
-  @ViewChild('emailInput') emailInput: ElementRef | undefined;
+  customerForm = this.fb.group({
+    nome: [''],
+    telefone1: [''],
+    email: ['', [Validators.email]],
+    login_usuario: [this.authService.getUser()?.login],
+  });
 
-  nome = '';
-  telefone1 = '';
-  email = '';
-  login_usuario = '';
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {},
-    private authService: AuthService
-  ) {}
-
-  ngOnInit(): void {
-    this.login_usuario = this.authService.getUser()?.login!;
-  }
-
-  onSubmit(form: NgForm) {
-    console.log(form);
-  }
+  ngOnInit(): void {}
 }

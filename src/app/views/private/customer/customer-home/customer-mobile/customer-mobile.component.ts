@@ -56,7 +56,7 @@ export class CustomerMobileComponent implements OnInit {
     this.getCustomers();
   }
 
-  formatContacts(list: CustomerResponse) {
+  async formatContacts(list: CustomerResponse) {
     this.getList = [];
     this.customerList = [];
 
@@ -72,10 +72,10 @@ export class CustomerMobileComponent implements OnInit {
     for (let i = 0; i < this.letters.length; i++) {
       let letter = this.letters[i]; // A
 
-      this.getList[0].forEach((element: any) => {
+      await this.getList[0].forEach((element: any) => {
         if (
           letter == element.nome[0] ||
-          letter.toLowerCase == element.nome[0]
+          letter.toLowerCase() == element.nome[0]
         ) {
           this.customerList.push({ inicial: letter, ...element });
         }
@@ -104,9 +104,7 @@ export class CustomerMobileComponent implements OnInit {
       if (result) {
         this.customerService.postCustomer(result).subscribe(
           (response) => {
-            if (response) {
-              this.getCustomers();
-            }
+            this.getCustomers();
           },
           (error) => {
             console.log(error);
