@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CustomerResponse } from '../../customer.interface';
@@ -46,7 +48,8 @@ export class CustomerMobileComponent implements OnInit {
   ];
   user = this.authService.getUser();
 
-  @ViewChild('searchInput') searchInput: ElementRef | undefined;
+  @ViewChild('searchBox')
+  searchBox!: ElementRef<HTMLInputElement>;
 
   search = '';
 
@@ -60,6 +63,15 @@ export class CustomerMobileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCustomers();
+  }
+
+  ngAfterViewInit() {
+    fromEvent(this.searchBox?.nativeElement, 'keyup')
+      .pipe(debounceTime(300))
+      .subscribe((e: Event) => {
+        const target = e.target as HTMLInputElement;
+        this.search = target.value;
+      });
   }
 
   getCustomers() {
@@ -91,12 +103,24 @@ export class CustomerMobileComponent implements OnInit {
     for (let i = 0; i < this.letters.length; i++) {
       let letter = this.letters[i];
 
-      this.getList[0].forEach((element: any) => {
+      this.getList[0].forEach((element: any, index: number) => {
         if (
           letter == element.nome[0] ||
           letter.toLowerCase() == element.nome[0]
         ) {
-          this.customerList.push({ inicial: letter, ...element });
+          if (index == 0) {
+            this.customerList.push({
+              inicial: letter,
+              isFirstLetter: true,
+              ...element,
+            });
+          } else {
+            this.customerList.push({
+              inicial: letter,
+              isFirstLetter: false,
+              ...element,
+            });
+          }
         }
       });
     }
@@ -127,8 +151,6 @@ export class CustomerMobileComponent implements OnInit {
       }
     });
   }
-
-  onSearch() {}
 
   logout() {
     this.authService.logout();

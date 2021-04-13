@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { WhatsappIconComponent } from '../../../shared/components/whatsapp-icon/whatsapp-icon.component';
 
 import { NgxMaskModule } from 'ngx-mask';
+import { ArrayFiltroPipe } from 'src/app/shared/pipes/array-filtro.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NgxMaskModule } from 'ngx-mask';
     CustomerFormComponent,
     CustomerMobileComponent,
     WhatsappIconComponent,
+    ArrayFiltroPipe,
   ],
   imports: [
     CommonModule,

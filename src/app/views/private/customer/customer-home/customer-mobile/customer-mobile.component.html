@@ -14,10 +14,17 @@
 
     <form>
       <mat-form-field>
-        <input matInput />
+        <input matInput #searchBox name="search" />
       </mat-form-field>
-      <button mat-icon-button aria-label="Pesquisar clientes">
-        <mat-icon>search</mat-icon>
+      <button
+        mat-icon-button
+        aria-label="Pesquisar clientes"
+        [disabled]="!search"
+      >
+        <mat-icon *ngIf="!search" style="color: white">search</mat-icon>
+        <mat-icon *ngIf="search" (click)="searchBox.value = ''; search = ''"
+          >close</mat-icon
+        >
       </button>
       <button
         mat-icon-button
@@ -30,9 +37,11 @@
   </mat-toolbar>
   <div style="margin-top: 56px; margin-bottom: 56px; width: 100vw">
     <div *ngFor="let letter of letters">
+      <div mat-subheader *ngIf="customerList.length && !search">
+        {{ letter }}
+      </div>
       <mat-list>
-        <div mat-subheader>{{ letter }}</div>
-        <div *ngFor="let customer of customerList">
+        <div *ngFor="let customer of customerList | arrayFiltro: search">
           <mat-list-item *ngIf="letter == customer.inicial">
             <div
               mat-list-icon
@@ -56,5 +65,13 @@
         </div>
       </mat-list>
     </div>
+  </div>
+
+  <div fxFlex *ngIf="!customerList.length && !search">
+    <h1 fxLayoutAlign="center">Estamos buscando seus dados</h1>
+  </div>
+
+  <div fxFlex *ngIf="!(customerList | arrayFiltro: search).length && search">
+    <h1 fxLayoutAlign="center">Não encontramos o nome {{ search }}</h1>
   </div>
 </div>
