@@ -1,58 +1,111 @@
-<h1 mat-dialog-title>Novo Agendamento</h1>
-<div mat-dialog-content>
-  <form>
-    <mat-form-field>
-      <mat-label>Título</mat-label>
-      <input
-        matInput
-        placeholder="Nome do Serviço"
-        autocomplete="off"
-        type="text"
-        [(ngModel)]="title"
-        name="title"
-      />
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width">
-      <mat-label>Cliente</mat-label>
-      <input
-        type="text"
-        placeholder="Pesquise um Cliente"
-        aria-label="Pesquisa de Cliente"
-        matInput
-        [(ngModel)]="customer"
-        [formControl]="customerControl"
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option
-          *ngFor="let option of filteredOptions | async"
-          [value]="option"
-        >
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <p>{{ customer }}</p>
-
-    <mat-form-field>
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </form>
+<div *ngIf="loading">
+  <mat-spinner style="margin: 0 auto"></mat-spinner>
+  <h5>Estamos buscando seus clientes, aguarde...</h5>
 </div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button
-    mat-button
-    [mat-dialog-close]="{
-      data: data,
-      title: title,
-      customer: customer
-    }"
-  >
-    Cadastrar
-  </button>
+
+<div *ngIf="!loading">
+  <h1 mat-dialog-title>Novo Agendamento</h1>
+  <div mat-dialog-content style="height: 300px">
+    <form fxLayout="column">
+      <mat-form-field style="width: 100%">
+        <mat-label>Título</mat-label>
+        <input
+          matInput
+          placeholder="Nome do Serviço"
+          autocomplete="off"
+          type="text"
+          [(ngModel)]="title"
+          name="title"
+        />
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%">
+        <mat-label>Cliente</mat-label>
+        <input
+          type="text"
+          placeholder="Pesquise um Cliente"
+          aria-label="Pesquisa de Cliente"
+          matInput
+          [formControl]="customerControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredOptions | async"
+            [value]="option.text"
+            (click)="customer = option.id"
+          >
+            {{ option.text }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field fxFlex="45">
+          <mat-label>Início</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="dateStart"
+            name="dateStart"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45">
+          <mat-label>Hora</mat-label>
+          <input
+            matInput
+            type="time"
+            [(ngModel)]="timeStart"
+            name="timeStart"
+          />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field fxFlex="45">
+          <mat-label>Término</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEnd"
+            [(ngModel)]="dateEnd"
+            name="dateEnd"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45">
+          <mat-label>Hora</mat-label>
+          <input matInput type="time" [(ngModel)]="timeEnd" name="timeEnd" />
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <div fxFlex fxLayoutAlign="end center">
+          <button mat-raised-button color="basic" mat-dialog-close>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [mat-dialog-close]="{
+              data: data,
+              title: title,
+              customer: customer
+            }"
+          >
+            Cadastrar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

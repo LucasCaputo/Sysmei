@@ -39,10 +39,11 @@ export class CalendarComponent implements OnInit {
       month: 'Mês',
       week: 'Semana',
       day: 'Dia',
-      list: 'Agendamentos',
+      list: 'Lista',
     },
+    allDaySlot: false,
     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
-    initialView: 'timeGridDay',
+    initialView: 'timeGridWeek',
     initialEvents: INITIAL_EVENTS,
     weekends: true,
     editable: true,
@@ -52,6 +53,7 @@ export class CalendarComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+    selectLongPressDelay: 500,
     locale: 'pt-br',
     /* you can update a remote database when these fire:
     eventAdd:
@@ -64,6 +66,7 @@ export class CalendarComponent implements OnInit {
   handleDateSelect(selectInfo: DateSelectArg) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
+      maxWidth: '100vw',
       data: selectInfo,
     });
 
@@ -86,12 +89,10 @@ export class CalendarComponent implements OnInit {
           },
         };
 
-        debugger;
-
-        this.scheduleService.postScheduling(schedule).subscribe((response) => {
+        /*     this.scheduleService.postScheduling(schedule).subscribe((response) => {
           console.log(response);
         });
-
+ */
         const calendarApi = selectInfo.view.calendar;
 
         calendarApi.unselect();

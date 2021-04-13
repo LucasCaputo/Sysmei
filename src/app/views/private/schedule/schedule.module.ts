@@ -21,6 +21,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { MatButtonModule } from '@angular/material/button';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -48,6 +52,9 @@ FullCalendarModule.registerPlugins([
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatProgressSpinnerModule,
+    FlexLayoutModule,
+    MatButtonModule,
   ],
   providers: [],
 })

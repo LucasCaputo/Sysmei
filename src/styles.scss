@@ -39,4 +39,25 @@ body {
       align-self: flex-end;
     }
   }
+
+  full-calendar {
+    height: calc(100vh - 105px);
+
+    .fc-toolbar-chunk {
+      &:first-child {
+        margin-left: 4px;
+      }
+
+      &:nth-child(2) {
+        position: absolute;
+        top: 86px;
+        left: 10px;
+        font-size: 8px;
+      }
+
+      &:last-child {
+        margin-right: 4px;
+      }
+    }
+  }
 }
