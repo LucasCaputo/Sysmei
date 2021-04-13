@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CustomerResponse } from '../../customer.interface';
 import { CustomerService } from '../../customer.service';
 
@@ -45,18 +46,36 @@ export class CustomerMobileComponent implements OnInit {
   ];
   user = this.authService.getUser();
 
+  @ViewChild('searchInput') searchInput: ElementRef | undefined;
+
+  search = '';
+
   constructor(
     private router: Router,
     private customerService: CustomerService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
     this.getCustomers();
   }
 
-  async formatContacts(list: CustomerResponse) {
+  getCustomers() {
+    this.customerService.getCustomer(this.user).subscribe(
+      (response) => {
+        this.formatContacts(response);
+      },
+      (error) => {
+        alert('Seu token venceu, faça login novamente');
+        this.authService.logout();
+        this.router.navigate(['login']);
+      }
+    );
+  }
+
+  formatContacts(list: CustomerResponse) {
     this.getList = [];
     this.customerList = [];
 
@@ -70,9 +89,9 @@ export class CustomerMobileComponent implements OnInit {
     });
 
     for (let i = 0; i < this.letters.length; i++) {
-      let letter = this.letters[i]; // A
+      let letter = this.letters[i];
 
-      await this.getList[0].forEach((element: any) => {
+      this.getList[0].forEach((element: any) => {
         if (
           letter == element.nome[0] ||
           letter.toLowerCase() == element.nome[0]
@@ -81,38 +100,35 @@ export class CustomerMobileComponent implements OnInit {
         }
       });
     }
-
-    console.log(this.customerList);
   }
 
-  getCustomers() {
-    this.customerService.getCustomer(this.user).subscribe(
-      (response) => this.formatContacts(response),
-      (error) => {
-        alert('Seu token venceu, faça login novamente');
-        this.authService.logout();
-        this.router.navigate(['login']);
-      }
-    );
-  }
   openDialog() {
-    const dialogRef = this.dialog.open(CustomerFormComponent, {
-      width: '500px',
-    });
+    const dialogRef = this.dialog.open(CustomerFormComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.customerService.postCustomer(result).subscribe(
           (response) => {
+            this.snackbarService.openSnackBar(
+              `Parabéns! usuário ${result.nome.toUpperCase()} cadastrado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              'X',
+              false
+            );
             this.getCustomers();
           },
           (error) => {
-            console.log(error);
+            this.snackbarService.openSnackBar(
+              `Tivemos um erro no cadastro, tente novamente`,
+              'X',
+              true
+            );
           }
         );
       }
     });
   }
+
+  onSearch() {}
 
   logout() {
     this.authService.logout();
