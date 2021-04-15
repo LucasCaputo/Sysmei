@@ -64,7 +64,7 @@ export class CustomerMobileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCustomers();
+    this.getCustomers(false);
   }
 
   ngAfterViewInit() {
@@ -76,9 +76,9 @@ export class CustomerMobileComponent implements OnInit {
       });
   }
 
-  getCustomers() {
+  getCustomers(isChangeDatabese: boolean) {
     const hasLocalStorage = this.localStorageService.getCustomer();
-    if (hasLocalStorage) {
+    if (hasLocalStorage && !isChangeDatabese) {
       this.formatContacts(hasLocalStorage);
     } else {
       this.customerService.getCustomer(this.user).subscribe(
@@ -148,7 +148,7 @@ export class CustomerMobileComponent implements OnInit {
               'X',
               false
             );
-            this.getCustomers();
+            this.getCustomers(true);
           },
           (error) => {
             this.snackbarService.openSnackBar(

@@ -11,4 +11,4 @@
     </mat-menu>
   </mat-toolbar>
 </div>
-<full-calendar [options]="calendarOptions"></full-calendar>
+<full-calendar *ngIf="!loading" [options]="calendarOptions"></full-calendar>

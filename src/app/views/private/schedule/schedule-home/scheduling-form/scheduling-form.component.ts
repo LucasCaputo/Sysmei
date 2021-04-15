@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CustomerService } from '../../../customer/customer.service';
 
@@ -45,7 +46,8 @@ export class SchedulingFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { end: Date; start: Date; startStr: string; endStr: string },
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private utilService: UtilsService
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
@@ -93,14 +95,9 @@ export class SchedulingFormComponent implements OnInit {
     response.forEach((element: any) => {
       let phone = element.telefones[0].numero;
 
-      let formatPhone = `(${phone.slice(0, 2)}) ${phone.slice(
-        2,
-        3
-      )} ${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
-
       this.options.push({
         id: element.id,
-        text: `${element.nome} - ${formatPhone}`,
+        text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
       });
     });
   }
