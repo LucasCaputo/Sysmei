@@ -25,6 +25,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -55,6 +58,9 @@ FullCalendarModule.registerPlugins([
     MatProgressSpinnerModule,
     FlexLayoutModule,
     MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
   ],
   providers: [],
 })

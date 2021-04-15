@@ -11,6 +11,7 @@ import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { ScheduleService } from '../../schedule.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar',
@@ -21,7 +22,8 @@ export class CalendarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.Name();
   }
@@ -124,5 +126,10 @@ export class CalendarComponent implements OnInit {
 
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['login']);
   }
 }

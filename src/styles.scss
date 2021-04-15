@@ -41,23 +41,72 @@ body {
   }
 
   full-calendar {
-    height: calc(100vh - 105px);
+    height: calc(100vh - 150px);
 
     .fc-toolbar-chunk {
       &:first-child {
-        margin-left: 4px;
+        position: absolute;
+        right: 4px;
+        top: 66px;
       }
 
       &:nth-child(2) {
         position: absolute;
-        top: 86px;
-        left: 10px;
-        font-size: 8px;
+        width: 100%;
+        top: 12px;
+        color: white;
+        font-size: 0.6rem;
+
+        .fc-toolbar-title {
+          margin: 0 auto;
+          width: fit-content;
+        }
       }
 
       &:last-child {
         margin-right: 4px;
+        position: absolute;
+        left: 4px;
+        top: 66px;
       }
     }
+  }
+
+  .fc-button-primary {
+    background-color: white !important;
+    color: #9c27b0 !important;
+    border: 1px solid !important;
+
+    &.fc-button-active {
+      background-color: #9c27b0 !important;
+      color: white !important;
+      border: 1px solid #9c27b0 !important;
+    }
+  }
+
+  .fc-day-today {
+    .fc-timegrid-col-frame {
+      background-color: #673ab74a !important;
+    }
+
+    .fc-scrollgrid-sync-inner {
+      background-color: #673ab74a !important;
+    }
+  }
+
+  .fc-col-header-cell-cushion {
+    color: dimgray;
+  }
+
+  .fc-timegrid-slot-label-cushion {
+    color: dimgray;
+  }
+
+  .fc-list-day-cushion {
+    color: dimgray;
+  }
+
+  .fc-list-event-dot {
+    border-color: #9c27b0 !important;
   }
 }
