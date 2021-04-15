@@ -55,7 +55,7 @@ export class CalendarComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
-    selectLongPressDelay: 500,
+    selectLongPressDelay: 100,
     locale: 'pt-br',
     /* you can update a remote database when these fire:
     eventAdd:

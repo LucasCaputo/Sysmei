@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CustomerResponse } from '../../customer.interface';
 import { CustomerService } from '../../customer.service';
@@ -58,7 +59,8 @@ export class CustomerMobileComponent implements OnInit {
     private customerService: CustomerService,
     private authService: AuthService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
@@ -75,16 +77,24 @@ export class CustomerMobileComponent implements OnInit {
   }
 
   getCustomers() {
-    this.customerService.getCustomer(this.user).subscribe(
-      (response) => {
-        this.formatContacts(response);
-      },
-      (error) => {
-        alert('Seu token venceu, faça login novamente');
-        this.authService.logout();
-        this.router.navigate(['login']);
-      }
-    );
+    const hasLocalStorage = this.localStorageService.getCustomer();
+    if (hasLocalStorage) {
+      this.formatContacts(hasLocalStorage);
+    } else {
+      this.customerService.getCustomer(this.user).subscribe(
+        (response) => {
+          this.formatContacts(response);
+
+          this.localStorageService.setCustomer(response);
+          console.log(response);
+        },
+        (error) => {
+          alert('Seu token venceu, faça login novamente');
+          this.authService.logout();
+          this.router.navigate(['login']);
+        }
+      );
+    }
   }
 
   formatContacts(list: CustomerResponse) {

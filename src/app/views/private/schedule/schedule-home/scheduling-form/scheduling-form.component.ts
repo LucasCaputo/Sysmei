@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 import { CustomerService } from '../../../customer/customer.service';
 
@@ -43,7 +44,8 @@ export class SchedulingFormComponent implements OnInit {
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
     public data: { end: Date; start: Date; startStr: string; endStr: string },
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
@@ -52,37 +54,31 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
+    const hasLocalStorage = this.localStorageService.getCustomer();
 
-    let customers = this.customerService.getCustomer(this.user).subscribe(
-      (response) => {
-        console.log(response);
+    if (hasLocalStorage) {
+      this.formatCustomers(hasLocalStorage);
+    } else {
+      this.loading = true;
 
-        response.forEach((element: any) => {
-          let phone = element.telefones[0].numero;
+      let customers = this.customerService.getCustomer(this.user).subscribe(
+        (response) => {
+          console.log(response);
 
-          let formatPhone = `(${phone.slice(0, 2)}) ${phone.slice(
-            2,
-            3
-          )} ${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
+          this.formatCustomers(response);
+        },
+        (error) => {
+          alert('Seu token venceu, faça login novamente');
+          this.authService.logout();
+          this.router.navigate(['login']);
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+      console.log(customers);
+    }
 
-          this.options.push({
-            id: element.id,
-            text: `${element.nome} - ${formatPhone}`,
-          });
-        });
-      },
-      (error) => {
-        alert('Seu token venceu, faça login novamente');
-        this.authService.logout();
-        this.router.navigate(['login']);
-      },
-      () => {
-        this.loading = false;
-      }
-    );
-
-    console.log(customers);
     console.log(this.data);
 
     this.dateStart = this.data.start;
@@ -91,6 +87,22 @@ export class SchedulingFormComponent implements OnInit {
     this.timeEnd = this.data.endStr.slice(11, 16);
 
     console.log(this.timeStart);
+  }
+
+  formatCustomers(response: any) {
+    response.forEach((element: any) => {
+      let phone = element.telefones[0].numero;
+
+      let formatPhone = `(${phone.slice(0, 2)}) ${phone.slice(
+        2,
+        3
+      )} ${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
+
+      this.options.push({
+        id: element.id,
+        text: `${element.nome} - ${formatPhone}`,
+      });
+    });
   }
 
   private _filter(value: string): Array<{ id: number; text: string }> {
