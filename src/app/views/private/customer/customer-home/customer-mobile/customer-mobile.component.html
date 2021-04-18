@@ -29,7 +29,13 @@
       <button
         mat-icon-button
         aria-label="Adicionar clientes"
-        (click)="openDialog()"
+        (click)="
+          openDialog({
+            nome: '',
+            telefones: [{ id: 0, numero: '' }],
+            email: ''
+          })
+        "
       >
         <mat-icon>add_box</mat-icon>
       </button>
@@ -44,25 +50,33 @@
         <div *ngFor="let customer of customerList | arrayFiltro: search">
           <mat-list-item *ngIf="letter == customer.inicial">
             <div
-              mat-list-icon
+              fxFlex
               fxLayoutAlign="center center"
-              [style]="customer.nome | iconColor"
-              class="icon"
+              (click)="openDialog(customer)"
             >
-              <span fxLayoutAlign="center center">
-                {{ customer.nome | iconCustomer }}
-              </span>
+              <div
+                mat-list-icon
+                fxLayoutAlign="center center"
+                [style]="customer.nome | iconColor"
+                class="icon"
+              >
+                <span fxLayoutAlign="center center">
+                  {{ customer.nome | iconCustomer }}
+                </span>
+              </div>
+              <div fxFlex style="margin-left: 16px">
+                <div mat-line>
+                  {{ customer.nome }}
+                </div>
+                <div mat-line>
+                  {{ customer.telefones[0].numero | formatPhone }}
+                </div>
+                <div mat-line>
+                  {{ customer.email }}
+                </div>
+              </div>
             </div>
 
-            <div mat-line>
-              {{ customer.nome }}
-            </div>
-            <div mat-line>
-              {{ customer.telefones[0].numero | formatPhone }}
-            </div>
-            <div mat-line>
-              {{ customer.email }}
-            </div>
             <a href="tel:{{ customer.telefones[0].numero }}" target="_blank">
               <button mat-icon-button aria-label="Telefone">
                 <mat-icon style="color: black">phone</mat-icon>
@@ -70,12 +84,12 @@
             </a>
 
             <a
-              href="https://web.whatsapp.com/send?phone=55{{
-                customer.telefones[0].numero
-              }}&text=Ol%C3%A1"
-              mat-icon-button
+              href="https://web.whatsapp.com/send?phone=5531982239489&text=Ol%C3%A1"
               target="_blank"
             >
+              <!-- {{
+              customer.telefones[0].numero
+            }} -->
               <app-whatsapp-icon></app-whatsapp-icon>
             </a>
 

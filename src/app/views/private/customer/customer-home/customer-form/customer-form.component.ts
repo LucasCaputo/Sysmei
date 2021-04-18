@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -9,13 +10,22 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class CustomerFormComponent implements OnInit {
   customerForm = this.fb.group({
-    nome: ['', this.checkName],
-    telefone1: [''],
-    email: ['', [Validators.email]],
+    nome: [this.data.nome || '', this.checkName],
+    telefone1: [this.data.telefones[0].numero || ''],
+    email: [this.data.email || '', [Validators.email]],
     login_usuario: [this.authService.getUser()?.login],
   });
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      nome: string;
+      email: string;
+      telefones: Array<{ id: number; numero: string }>;
+    }
+  ) {}
 
   ngOnInit(): void {}
 

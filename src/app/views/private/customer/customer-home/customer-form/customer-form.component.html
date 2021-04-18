@@ -1,5 +1,30 @@
-<h1 mat-dialog-title>Cadastrar novo cliente</h1>
-<div mat-dialog-content style="height: 240px">
+<div fxLayoutAlign="space-between center">
+  <button
+    mat-dialog-close
+    mat-icon-button
+    color="accent"
+    style="margin: 0 0 20px"
+  >
+    <mat-icon>highlight_off</mat-icon>
+  </button>
+  <span mat-dialog-title>{{
+    data.nome == "" ? "Cadastrar cliente" : "Editar cliente"
+  }}</span>
+  <button
+    mat-icon-button
+    color="primary"
+    style="margin: 0 0 20px"
+    [mat-dialog-close]="{
+      nome: customerForm.value.nome,
+      telefone1: customerForm.value.telefone1,
+      email: customerForm.value.email,
+      login_usuario: customerForm.value.login_usuario
+    }"
+  >
+    <mat-icon>done_outline</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content style="height: 220px">
   <form [formGroup]="customerForm" fxLayout="column">
     <mat-form-field>
       <mat-label>Nome</mat-label>
@@ -70,24 +95,11 @@
         E-mail é <strong>obrigatório</strong>
       </mat-error>
     </mat-form-field>
-    <div mat-dialog-actions>
-      <div fxFlex fxLayoutAlign="end center">
-        <button mat-dialog-close mat-raised-button color="basic">
-          Cancelar
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          [mat-dialog-close]="{
-            nome: customerForm.value.nome,
-            telefone1: customerForm.value.telefone1,
-            email: customerForm.value.email,
-            login_usuario: customerForm.value.login_usuario
-          }"
-        >
-          Cadastrar
-        </button>
-      </div>
-    </div>
   </form>
+
+  <div fxLayoutAlign="end center">
+    <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </div>

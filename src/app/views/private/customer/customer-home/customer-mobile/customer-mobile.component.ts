@@ -141,11 +141,11 @@ export class CustomerMobileComponent implements OnInit {
     }
   }
 
-  openDialog() {
+  openDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: 'selectInfo',
+      data: dataInfo,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
