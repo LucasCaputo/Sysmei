@@ -28,6 +28,9 @@ import { ArrayFiltroPipe } from 'src/app/shared/pipes/array-filtro.pipe';
 import { IconCustomerPipe } from 'src/app/shared/pipes/icon-customer.pipe';
 import { IconColorPipe } from 'src/app/shared/pipes/icon-color.pipe';
 import { FormatPhonePipe } from 'src/app/shared/pipes/format-phone.pipe';
+import { ConfirmDialogComponent } from './customer-home/confirm-dialog/confirm-dialog.component';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import { FormatPhonePipe } from 'src/app/shared/pipes/format-phone.pipe';
     IconCustomerPipe,
     IconColorPipe,
     FormatPhonePipe,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +59,7 @@ import { FormatPhonePipe } from 'src/app/shared/pipes/format-phone.pipe';
     MatMenuModule,
     MatProgressBarModule,
     MatListModule,
+    MatCheckboxModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [],

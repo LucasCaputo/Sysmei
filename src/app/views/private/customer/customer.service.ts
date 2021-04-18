@@ -36,4 +36,15 @@ export class CustomerService {
       }
     );
   }
+
+  deleteCustomer(customer: any): Observable<any> {
+    return this.httpClient.delete<any>(
+      `${environment.baseURL}/paciente/${customer.id}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
 }

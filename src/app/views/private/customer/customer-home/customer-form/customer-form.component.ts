@@ -1,7 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { CustomerService } from '../../customer.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-customer-form',
@@ -16,6 +27,10 @@ export class CustomerFormComponent implements OnInit {
     login_usuario: [this.authService.getUser()?.login],
   });
 
+  user = this.authService.getUser();
+
+  @ViewChild('myInput') myInput: ElementRef | undefined;
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -24,10 +39,21 @@ export class CustomerFormComponent implements OnInit {
       nome: string;
       email: string;
       telefones: Array<{ id: number; numero: string }>;
-    }
+    },
+    private customerService: CustomerService,
+    public dialog: MatDialog,
+    private snackbarService: SnackbarService,
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.myInput?.nativeElement.focus();
+    }, 300);
+  }
 
   checkName(input: FormControl) {
     const hasNumber = /[0-9]/.test(input.value);
@@ -44,5 +70,44 @@ export class CustomerFormComponent implements OnInit {
 
       return filtrado.length < 2 ? { isNameComplete: true } : null;
     }
+  }
+
+  onDelete(customer: any) {
+    console.log(customer);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: {
+        confirmed: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.confirmed) {
+        console.log(result.confirmed);
+
+        this.customerService.deleteCustomer(customer).subscribe(
+          (response) => {
+            localStorage.removeItem('customer');
+            console.log(response);
+            this.snackbarService.openSnackBar(
+              `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              'X',
+              false
+            );
+            this.dialog.closeAll();
+          },
+          (error) => {
+            console.log(error);
+            this.snackbarService.openSnackBar(
+              `Tivemos um erro no cadastro, tente novamente`,
+              'X',
+              true
+            );
+          }
+        );
+      }
+    });
   }
 }

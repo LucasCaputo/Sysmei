@@ -28,7 +28,7 @@
   <form [formGroup]="customerForm" fxLayout="column">
     <mat-form-field>
       <mat-label>Nome</mat-label>
-      <input matInput type="text" formControlName="nome" required />
+      <input #myInput matInput type="text" formControlName="nome" required />
       <mat-error *ngIf="customerForm.controls.nome.hasError('required')">
         Nome é <strong>obrigatório</strong>
       </mat-error>
@@ -98,7 +98,13 @@
   </form>
 
   <div fxLayoutAlign="end center">
-    <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir">
+    <button
+      *ngIf="data.nome"
+      color="warn"
+      mat-icon-button
+      aria-label="Excluir"
+      (click)="onDelete(data)"
+    >
       <mat-icon>delete</mat-icon>
     </button>
   </div>

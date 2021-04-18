@@ -167,7 +167,8 @@ export class CustomerMobileComponent implements OnInit {
             );
           }
         );
-      }
+      } else if (result == '') return;
+      else this.getCustomers(true);
     });
   }
 
