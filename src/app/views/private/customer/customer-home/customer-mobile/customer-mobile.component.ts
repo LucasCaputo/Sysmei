@@ -53,6 +53,7 @@ export class CustomerMobileComponent implements OnInit {
   searchBox!: ElementRef<HTMLInputElement>;
 
   search = '';
+  loading = false;
 
   constructor(
     private router: Router,
@@ -77,21 +78,25 @@ export class CustomerMobileComponent implements OnInit {
   }
 
   getCustomers(isChangeDatabese: boolean) {
+    this.loading = true;
     const hasLocalStorage = this.localStorageService.getCustomer();
     if (hasLocalStorage && !isChangeDatabese) {
       this.formatContacts(hasLocalStorage);
     } else {
       this.customerService.getCustomer(this.user).subscribe(
         (response) => {
-          this.formatContacts(response);
-
-          this.localStorageService.setCustomer(response);
+          if (response.length) {
+            this.formatContacts(response);
+            this.localStorageService.setCustomer(response);
+          }
           console.log(response);
+          this.loading = false;
         },
         (error) => {
           alert('Seu token venceu, faça login novamente');
           this.authService.logout();
           this.router.navigate(['login']);
+          this.loading = false;
         }
       );
     }
@@ -137,7 +142,11 @@ export class CustomerMobileComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(CustomerFormComponent);
+    const dialogRef = this.dialog.open(CustomerFormComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: 'selectInfo',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

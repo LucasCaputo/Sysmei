@@ -25,6 +25,9 @@ import { WhatsappIconComponent } from '../../../shared/components/whatsapp-icon/
 
 import { NgxMaskModule } from 'ngx-mask';
 import { ArrayFiltroPipe } from 'src/app/shared/pipes/array-filtro.pipe';
+import { IconCustomerPipe } from 'src/app/shared/pipes/icon-customer.pipe';
+import { IconColorPipe } from 'src/app/shared/pipes/icon-color.pipe';
+import { FormatPhonePipe } from 'src/app/shared/pipes/format-phone.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { ArrayFiltroPipe } from 'src/app/shared/pipes/array-filtro.pipe';
     CustomerMobileComponent,
     WhatsappIconComponent,
     ArrayFiltroPipe,
+    IconCustomerPipe,
+    IconColorPipe,
+    FormatPhonePipe,
   ],
   imports: [
     CommonModule,

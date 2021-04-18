@@ -136,7 +136,6 @@ export class CalendarComponent implements OnInit {
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
-    debugger;
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -144,7 +143,6 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      debugger;
       if (result) {
         let start = this.utilsService.clearStringData(result.data.startStr);
         let end = this.utilsService.clearStringData(result.data.endStr);
@@ -160,7 +158,6 @@ export class CalendarComponent implements OnInit {
 
         this.scheduleService.postScheduling(schedule).subscribe((response) => {
           console.log(response);
-          debugger;
         });
 
         const calendarApi = selectInfo.view.calendar;

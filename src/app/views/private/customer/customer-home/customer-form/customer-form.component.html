@@ -1,58 +1,93 @@
 <h1 mat-dialog-title>Cadastrar novo cliente</h1>
-<div mat-dialog-content>
-  <form [formGroup]="customerForm">
-    <div>
-      <mat-form-field>
-        <mat-label>Nome</mat-label>
-        <input matInput type="text" formControlName="nome" />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Telefone</mat-label>
-        <input
-          matInput
-          type="tel"
-          mask="(00) 0 0000-0000"
-          formControlName="telefone1"
-          minlength="11"
-          required
-        />
-        <mat-error
-          *ngIf="
-            customerForm.controls.telefone1.hasError('minlength') &&
-            !customerForm.controls.telefone1.hasError('required')
-          "
+<div mat-dialog-content style="height: 240px">
+  <form [formGroup]="customerForm" fxLayout="column">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" formControlName="nome" required />
+      <mat-error *ngIf="customerForm.controls.nome.hasError('required')">
+        Nome é <strong>obrigatório</strong>
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !customerForm.controls.nome.hasError('required') &&
+          customerForm.controls.nome.hasError('hasNumber')
+        "
+      >
+        Insira seu nome completo, <strong>somente letras</strong>
+      </mat-error>
+
+      <mat-error
+        *ngIf="
+          !customerForm.controls.nome.hasError('required') &&
+          customerForm.controls.nome.hasError('isNameComplete')
+        "
+      >
+        Informe seu nome <strong>completo</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Telefone</mat-label>
+      <input
+        matInput
+        type="tel"
+        mask="(00) 0 0000-0000"
+        formControlName="telefone1"
+        minlength="11"
+        required
+      />
+      <mat-error
+        *ngIf="
+          customerForm.controls.telefone1.hasError('minlength') &&
+          !customerForm.controls.telefone1.hasError('required')
+        "
+      >
+        Por favor insira um telefone <strong>celular</strong> válido
+      </mat-error>
+      <mat-error *ngIf="customerForm.controls.telefone1.hasError('required')">
+        Telefone é <strong>obrigatório</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="E-mail"
+        type="text"
+        formControlName="email"
+        required
+      />
+      <mat-error
+        *ngIf="
+          customerForm.controls.email.hasError('email') &&
+          !customerForm.controls.email.hasError('required')
+        "
+      >
+        Por favor insira um endereço de e-mail válido
+      </mat-error>
+      <mat-error *ngIf="customerForm.controls.email.hasError('required')">
+        E-mail é <strong>obrigatório</strong>
+      </mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <div fxFlex fxLayoutAlign="end center">
+        <button mat-dialog-close mat-raised-button color="basic">
+          Cancelar
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [mat-dialog-close]="{
+            nome: customerForm.value.nome,
+            telefone1: customerForm.value.telefone1,
+            email: customerForm.value.email,
+            login_usuario: customerForm.value.login_usuario
+          }"
         >
-          Por favor insira um telefone <strong>celular</strong> válido
-        </mat-error>
-        <mat-error *ngIf="customerForm.controls.telefone1.hasError('required')">
-          Telefone é <strong>obrigatório</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          placeholder="E-mail"
-          type="text"
-          formControlName="email"
-        />
-      </mat-form-field>
+          Cadastrar
+        </button>
+      </div>
     </div>
   </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancelar</button>
-  <button
-    mat-button
-    [mat-dialog-close]="{
-      nome: customerForm.value.nome,
-      telefone1: customerForm.value.telefone1,
-      email: customerForm.value.email,
-      login_usuario: customerForm.value.login_usuario
-    }"
-  >
-    Cadastrar
-  </button>
 </div>

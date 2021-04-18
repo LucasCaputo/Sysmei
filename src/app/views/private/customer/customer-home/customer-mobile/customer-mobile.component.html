@@ -45,21 +45,40 @@
           <mat-list-item *ngIf="letter == customer.inicial">
             <div
               mat-list-icon
-              style="width: 40px; height: 40px; background-color: red"
-            ></div>
+              fxLayoutAlign="center center"
+              [style]="customer.nome | iconColor"
+              class="icon"
+            >
+              <span fxLayoutAlign="center center">
+                {{ customer.nome | iconCustomer }}
+              </span>
+            </div>
+
             <div mat-line>
               {{ customer.nome }}
             </div>
             <div mat-line>
-              {{ customer.telefones[0].numero }}
+              {{ customer.telefones[0].numero | formatPhone }}
             </div>
             <div mat-line>
               {{ customer.email }}
             </div>
-            <button mat-icon-button aria-label="Telefone">
-              <mat-icon>phone</mat-icon>
-            </button>
-            <app-whatsapp-icon></app-whatsapp-icon>
+            <a href="tel:{{ customer.telefones[0].numero }}" target="_blank">
+              <button mat-icon-button aria-label="Telefone">
+                <mat-icon style="color: black">phone</mat-icon>
+              </button>
+            </a>
+
+            <a
+              href="https://web.whatsapp.com/send?phone=55{{
+                customer.telefones[0].numero
+              }}&text=Ol%C3%A1"
+              mat-icon-button
+              target="_blank"
+            >
+              <app-whatsapp-icon></app-whatsapp-icon>
+            </a>
+
             <mat-divider></mat-divider>
           </mat-list-item>
         </div>
@@ -68,7 +87,10 @@
   </div>
 
   <div fxFlex *ngIf="!customerList.length && !search">
-    <h1 fxLayoutAlign="center">Estamos buscando seus dados</h1>
+    <h1 fxLayoutAlign="center" *ngIf="loading">Estamos buscando seus dados</h1>
+    <h1 fxLayoutAlign="center" *ngIf="!loading">
+      Cadastre seu primeiro cliente
+    </h1>
   </div>
 
   <div fxFlex *ngIf="!(customerList | arrayFiltro: search).length && search">
