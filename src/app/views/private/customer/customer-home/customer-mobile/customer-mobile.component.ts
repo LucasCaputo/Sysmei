@@ -176,4 +176,14 @@ export class CustomerMobileComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['login']);
   }
+
+  checklistContent(list: any, letter: string) {
+    const found = list.find((element: any) => element.inicial == letter);
+
+    if (found) {
+      return true;
+    }
+
+    return false;
+  }
 }

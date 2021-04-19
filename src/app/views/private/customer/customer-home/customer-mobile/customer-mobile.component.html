@@ -42,11 +42,20 @@
     </form>
   </mat-toolbar>
   <div style="margin-top: 56px; margin-bottom: 56px; width: 100vw">
-    <div *ngFor="let letter of letters">
+    <div
+      *ngFor="let letter of letters"
+      [style]="
+        checklistContent(customerList | arrayFiltro: search, letter)
+          ? ''
+          : 'display:none'
+      "
+    >
       <div mat-subheader *ngIf="customerList.length && !search">
         {{ letter }}
       </div>
-      <mat-list>
+      <mat-list
+        *ngIf="checklistContent(customerList | arrayFiltro: search, letter)"
+      >
         <div *ngFor="let customer of customerList | arrayFiltro: search">
           <mat-list-item *ngIf="letter == customer.inicial">
             <div
@@ -84,7 +93,9 @@
             </a>
 
             <a
-              href="https://web.whatsapp.com/send?phone=5531982239489&text=Ol%C3%A1"
+              href="https://api.whatsapp.com/send?phone=55{{
+                customer.telefones[0].numero
+              }}text=Ol%C3%A1"
               target="_blank"
             >
               <!-- {{
