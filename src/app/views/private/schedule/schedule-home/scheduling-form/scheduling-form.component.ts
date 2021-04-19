@@ -28,12 +28,13 @@ export class SchedulingFormComponent implements OnInit {
   @ViewChild('timeStartInput') timeStartInput: ElementRef | undefined;
   user = this.authService.getUser();
 
-  title = '';
+  title = this.data.title || '';
   dateStart = new Date();
   timeStart = '';
   dateEnd = new Date();
   timeEnd = '';
   customer!: number;
+  customerEdit: any;
 
   customerControl = new FormControl();
   options: Array<{ id: number; text: string }> = [];
@@ -44,7 +45,14 @@ export class SchedulingFormComponent implements OnInit {
     private customerService: CustomerService,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
-    public data: { end: Date; start: Date; startStr: string; endStr: string },
+    public data: {
+      end: Date;
+      start: Date;
+      startStr: string;
+      endStr: string;
+      title: string;
+      extendedProps: { customer: number };
+    },
     private router: Router,
     private localStorageService: LocalStorageService,
     private utilService: UtilsService
@@ -56,7 +64,7 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const hasLocalStorage = this.localStorageService.getCustomer();
+    let hasLocalStorage = this.localStorageService.getCustomer();
 
     if (hasLocalStorage) {
       this.formatCustomers(hasLocalStorage);
@@ -88,12 +96,19 @@ export class SchedulingFormComponent implements OnInit {
     this.dateEnd = this.data.end;
     this.timeEnd = this.data.endStr.slice(11, 16);
 
-    console.log(this.timeStart);
+    console.log(hasLocalStorage);
   }
 
   formatCustomers(response: any) {
     response.forEach((element: any) => {
       let phone = element.telefones[0].numero;
+
+      if (element.id == this.data.extendedProps?.customer) {
+        (this.customerEdit = `${element.nome} - ${this.utilService.formatPhone(
+          phone
+        )}`),
+          (this.customer = element.id);
+      }
 
       this.options.push({
         id: element.id,

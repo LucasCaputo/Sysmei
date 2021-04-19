@@ -92,6 +92,7 @@ export class CalendarComponent implements OnInit {
             title: element.title,
             start: this.utilsService.formatStringData(element.start),
             end: this.utilsService.formatStringData(element.end),
+            customer: element.paciente_id,
           });
         });
 
@@ -144,8 +145,16 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let start = this.utilsService.clearStringData(result.data.startStr);
-        let end = this.utilsService.clearStringData(result.data.endStr);
+        const date = new Date(result.date).toISOString() + '0';
+
+        let clearDate = this.utilsService.clearStringData(date);
+
+        let split = clearDate.split(' ');
+
+        let start = `${split[0]} ${result.timeStart}`;
+        let end = `${split[0]} ${result.timeEnd}`;
+
+        debugger;
 
         const schedule = {
           title: result.title,
@@ -156,24 +165,29 @@ export class CalendarComponent implements OnInit {
           paciente_id: result.customer,
         };
 
-        this.scheduleService.postScheduling(schedule).subscribe((response) => {
-          console.log(response);
-        });
+        this.scheduleService.postScheduling(schedule).subscribe(
+          (response) => {
+            console.log(response);
 
-        const calendarApi = selectInfo.view.calendar;
+            const calendarApi = selectInfo.view.calendar;
 
-        calendarApi.unselect();
+            calendarApi.unselect();
 
-        calendarApi.addEvent({
-          id: createEventId(),
-          title: result.title,
-          start: this.utilsService.formatStringData(start),
-          end: this.utilsService.formatStringData(end),
-          allDay: selectInfo.allDay,
-          extendedProps: {
-            description: result.description,
+            calendarApi.addEvent({
+              id: createEventId(),
+              title: result.title,
+              start: this.utilsService.formatStringData(start),
+              end: this.utilsService.formatStringData(end),
+              allDay: selectInfo.allDay,
+              extendedProps: {
+                description: result.description,
+              },
+            });
           },
-        });
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     });
   }
@@ -184,9 +198,17 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Deseja excluir o evento?' ${clickInfo.event.title}'`)) {
+    /*   if (confirm(`Deseja excluir o evento?' ${clickInfo.event.title}'`)) {
       clickInfo.event.remove();
-    }
+    } */
+
+    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: clickInfo.event,
+    });
+
+    console.log(clickInfo.event);
   }
 
   handleEvents(events: EventApi[]) {

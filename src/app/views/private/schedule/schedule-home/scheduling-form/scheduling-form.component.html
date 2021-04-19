@@ -28,6 +28,7 @@
           matInput
           [formControl]="customerControl"
           [matAutocomplete]="auto"
+          [(ngModel)]="customerEdit"
         />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option
@@ -83,6 +84,9 @@
             [mat-dialog-close]="{
               data: data,
               title: title,
+              date: dateStart,
+              timeStart: timeStart,
+              timeEnd: timeEnd,
               customer: customer
             }"
           >
