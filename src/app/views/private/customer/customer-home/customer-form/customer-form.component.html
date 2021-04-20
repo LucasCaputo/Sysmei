@@ -8,13 +8,14 @@
     <mat-icon>highlight_off</mat-icon>
   </button>
   <span mat-dialog-title>{{
-    data.nome == "" ? "Cadastrar cliente" : "Editar cliente"
+    !data.id ? "Cadastrar cliente" : "Editar cliente"
   }}</span>
   <button
     mat-icon-button
     color="primary"
     style="margin: 0 0 20px"
     [mat-dialog-close]="{
+      id: data.id,
       nome: customerForm.value.nome,
       telefone1: customerForm.value.telefone1,
       email: customerForm.value.email,

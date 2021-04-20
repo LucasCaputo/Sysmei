@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ConfirmDialogComponent } from '../views/private/customer/customer-home/confirm-dialog/confirm-dialog.component';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -16,6 +15,7 @@ import { WhatsappIconComponent } from './components/whatsapp-icon/whatsapp-icon.
 import { ArrayFiltroPipe } from './pipes/array-filtro.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [

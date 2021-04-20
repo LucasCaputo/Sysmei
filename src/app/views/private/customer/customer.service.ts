@@ -47,4 +47,12 @@ export class CustomerService {
       }
     );
   }
+
+  updateCustomer(body: any, id: number) {
+    return this.httpClient.put(environment.baseURL + '/paciente/' + id, body, {
+      headers: {
+        Authorization: this.authService.getToken()!,
+      },
+    });
+  }
 }

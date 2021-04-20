@@ -8,11 +8,11 @@ import {
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CustomerService } from '../../customer.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-customer-form',
@@ -36,6 +36,7 @@ export class CustomerFormComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
+      id: number;
       nome: string;
       email: string;
       telefones: Array<{ id: number; numero: string }>;
@@ -84,18 +85,19 @@ export class CustomerFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.confirmed) {
+      if (result?.confirmed) {
         console.log(result.confirmed);
 
         this.customerService.deleteCustomer(customer).subscribe(
           (response) => {
-            localStorage.removeItem('customer');
             console.log(response);
             this.snackbarService.openSnackBar(
               `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
               'X',
               false
             );
+
+            localStorage.removeItem('customer');
             this.dialog.closeAll();
           },
           (error) => {

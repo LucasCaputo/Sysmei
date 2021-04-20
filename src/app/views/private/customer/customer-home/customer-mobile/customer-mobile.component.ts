@@ -149,15 +149,35 @@ export class CustomerMobileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      if (result?.id) {
+        this.customerService.updateCustomer(result, result.id).subscribe(
+          (response) => {
+            this.getCustomers(true);
+            this.snackbarService.openSnackBar(
+              `Parabéns! usuário ${result.nome.toUpperCase()} atualizado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              'X',
+              false
+            );
+          },
+          (error) => {
+            this.snackbarService.openSnackBar(
+              `Tivemos um erro na atualização, tente novamente`,
+              'X',
+              true
+            );
+          }
+        );
+        return;
+      }
       if (result) {
         this.customerService.postCustomer(result).subscribe(
           (response) => {
+            this.getCustomers(true);
             this.snackbarService.openSnackBar(
               `Parabéns! usuário ${result.nome.toUpperCase()} cadastrado com sucesso, aguarde que sua lista de clientes será atualizada`,
               'X',
               false
             );
-            this.getCustomers(true);
           },
           (error) => {
             this.snackbarService.openSnackBar(
@@ -167,8 +187,13 @@ export class CustomerMobileComponent implements OnInit {
             );
           }
         );
-      } else if (result == '') return;
-      else this.getCustomers(true);
+      } else {
+        let customerLocalStorage = localStorage.getItem('customer');
+
+        if (!customerLocalStorage) {
+          this.getCustomers(true);
+        } else return;
+      }
     });
   }
 

@@ -8,7 +8,6 @@ import {
   EventApi,
   EventInput,
 } from '@fullcalendar/angular';
-import { INITIAL_EVENTS, createEventId } from './event-utils';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { ScheduleService } from '../../schedule.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -74,66 +73,52 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getScheduling();
+    this.getScheduling(false);
   }
 
-  getScheduling() {
+  getScheduling(update: boolean) {
     this.loading = true;
-    // const hasLocalStorage = this.localStorageService.getCustomer();
-    // if (hasLocalStorage && !isChangeDatabese) {
-    // this.formatContacts(hasLocalStorage);
-    // } else {
 
-    this.scheduleService.getScheduling(this.user).subscribe(
-      (response) => {
-        response.forEach((element: any) => {
-          this.scheduling.push({
-            id: element.id.toString(),
-            title: element.title,
-            start: this.utilsService.formatStringData(element.start),
-            end: this.utilsService.formatStringData(element.end),
-            customer: element.paciente_id,
+    let hasLocalStorage = localStorage.getItem('scheduling') || '';
+
+    if (hasLocalStorage.length && !update) {
+      let schedulingLocalStorage = JSON.parse(hasLocalStorage);
+      this.calendarOptions.initialEvents = schedulingLocalStorage;
+      this.loading = false;
+      return;
+    }
+
+    if (!hasLocalStorage.length || update) {
+      this.scheduling = [];
+
+      this.scheduleService.getScheduling(this.user).subscribe(
+        (response) => {
+          response.forEach((element: any) => {
+            this.scheduling.push({
+              id: element.id.toString(),
+              title: element.title,
+              start: this.utilsService.formatStringData(element.start),
+              end: this.utilsService.formatStringData(element.end),
+              customer: element.paciente_id,
+            });
           });
-        });
 
-        return this.scheduling;
-      },
-      (error) => {
-        alert('Seu token venceu, faça login novamente');
-        this.auth.logout();
-        this.router.navigate(['login']);
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+          localStorage.removeItem('scheduling');
 
-    this.calendarOptions.initialEvents = this.scheduling;
+          localStorage.setItem('scheduling', JSON.stringify(this.scheduling));
 
-    // }
-  }
-
-  formatContacts(response: any) {
-    let scheduling:
-      | EventInput[]
-      | { id: any; title: any; start: string; end: string }[] = [];
-
-    response.forEach(
-      (element: { id: any; title: any; start: string; end: string }) => {
-        scheduling.push({
-          id: element.id,
-          title: element.title,
-          start: this.utilsService.formatStringData(element.start),
-          end: this.utilsService.formatStringData(element.end),
-        });
-      }
-    );
-
-    console.log(scheduling, 'formatado');
-
-    const initialEvents: EventInput[] = scheduling;
-
-    return initialEvents;
+          this.calendarOptions.initialEvents = this.scheduling;
+        },
+        (error) => {
+          alert('Seu token venceu, faça login novamente');
+          this.auth.logout();
+          this.router.navigate(['login']);
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
   }
 
   handleDateSelect(selectInfo: DateSelectArg) {
@@ -172,7 +157,7 @@ export class CalendarComponent implements OnInit {
             calendarApi.unselect();
 
             calendarApi.addEvent({
-              id: createEventId(),
+              id: result.id,
               title: result.title,
               start: this.utilsService.formatStringData(start),
               end: this.utilsService.formatStringData(end),
@@ -181,12 +166,14 @@ export class CalendarComponent implements OnInit {
                 description: result.description,
               },
             });
+
+            this.getScheduling(true);
           },
           (error) => {
             console.log(error);
           }
         );
-      } else this.getScheduling();
+      }
     });
   }
 

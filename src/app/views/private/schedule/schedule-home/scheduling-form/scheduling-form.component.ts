@@ -10,10 +10,10 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { ConfirmDialogComponent } from '../../../customer/customer-home/confirm-dialog/confirm-dialog.component';
 
 import { CustomerService } from '../../../customer/customer.service';
 import { ScheduleService } from '../../schedule.service';
