@@ -4,8 +4,36 @@
 </div>
 
 <div *ngIf="!loading">
-  <h1 mat-dialog-title>Novo Agendamento</h1>
-  <div mat-dialog-content style="height: 300px">
+  <div fxLayoutAlign="space-between center">
+    <button
+      mat-dialog-close
+      mat-icon-button
+      color="accent"
+      style="margin: 0 0 20px"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+    <span mat-dialog-title>{{
+      data.title == undefined ? "Novo Agendamento" : "Editar Agendamento"
+    }}</span>
+    <button
+      mat-icon-button
+      color="primary"
+      style="margin: 0 0 20px"
+      [mat-dialog-close]="{
+        data: data,
+        title: title,
+        date: dateStart,
+        timeStart: timeStart,
+        timeEnd: timeEnd,
+        customer: customer
+      }"
+    >
+      <mat-icon>done_outline</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content style="height: 180px">
     <form fxLayout="column">
       <mat-form-field style="width: 100%">
         <mat-label>Título</mat-label>
@@ -16,6 +44,7 @@
           type="text"
           [(ngModel)]="title"
           name="title"
+          #myInput
         />
       </mat-form-field>
 
@@ -72,28 +101,17 @@
           <input matInput type="time" [(ngModel)]="timeEnd" name="timeEnd" />
         </mat-form-field>
       </div>
-
-      <div mat-dialog-actions>
-        <div fxFlex fxLayoutAlign="end center">
-          <button mat-raised-button color="basic" mat-dialog-close>
-            Cancelar
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            [mat-dialog-close]="{
-              data: data,
-              title: title,
-              date: dateStart,
-              timeStart: timeStart,
-              timeEnd: timeEnd,
-              customer: customer
-            }"
-          >
-            Cadastrar
-          </button>
-        </div>
-      </div>
     </form>
+  </div>
+  <div fxLayoutAlign="end center">
+    <button
+      *ngIf="data.title != undefined"
+      color="warn"
+      mat-icon-button
+      aria-label="Excluir"
+      (click)="onDelete(data)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </div>

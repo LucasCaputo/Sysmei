@@ -38,4 +38,15 @@ export class ScheduleService {
       }
     );
   }
+
+  deleteScheduling(customerId: any): Observable<any> {
+    return this.httpClient.delete<any>(
+      `${environment.baseURL}/agenda/${customerId}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
 }

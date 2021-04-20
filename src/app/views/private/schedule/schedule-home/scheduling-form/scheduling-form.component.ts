@@ -6,15 +6,17 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { ConfirmDialogComponent } from '../../../customer/customer-home/confirm-dialog/confirm-dialog.component';
 
 import { CustomerService } from '../../../customer/customer.service';
+import { ScheduleService } from '../../schedule.service';
 
 @Component({
   selector: 'app-scheduling',
@@ -41,8 +43,11 @@ export class SchedulingFormComponent implements OnInit {
   filteredOptions: Observable<Array<{ id: number; text: string }>>;
   loading = false;
 
+  @ViewChild('myInput') myInput: ElementRef | undefined;
+
   constructor(
     private customerService: CustomerService,
+    private scheduleService: ScheduleService,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
     public data: {
@@ -55,7 +60,8 @@ export class SchedulingFormComponent implements OnInit {
     },
     private router: Router,
     private localStorageService: LocalStorageService,
-    private utilService: UtilsService
+    private utilService: UtilsService,
+    public dialog: MatDialog
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
@@ -96,7 +102,13 @@ export class SchedulingFormComponent implements OnInit {
     this.dateEnd = this.data.end;
     this.timeEnd = this.data.endStr.slice(11, 16);
 
-    console.log(hasLocalStorage);
+    console.log(this.data.title);
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.myInput?.nativeElement.focus();
+    }, 300);
   }
 
   formatCustomers(response: any) {
@@ -123,5 +135,46 @@ export class SchedulingFormComponent implements OnInit {
     return this.options.filter((option) =>
       option.text.toLowerCase().includes(filterValue)
     );
+  }
+
+  onDelete(customer: any) {
+    console.log(customer);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: {
+        confirmed: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(customer._def.publicId);
+      if (result.confirmed) {
+        console.log(result.confirmed);
+
+        this.scheduleService.deleteScheduling(customer._def.publicId).subscribe(
+          (response) => {
+            // localStorage.removeItem('customer');
+            console.log(response);
+
+            /* this.snackbarService.openSnackBar(
+              `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              'X',
+              false
+            ); */
+            this.dialog.closeAll();
+          },
+          (error) => {
+            console.log(error);
+            /*   this.snackbarService.openSnackBar(
+              `Tivemos um erro no cadastro, tente novamente`,
+              'X',
+              true
+            ); */
+          }
+        );
+      }
+    });
   }
 }

@@ -154,8 +154,6 @@ export class CalendarComponent implements OnInit {
         let start = `${split[0]} ${result.timeStart}`;
         let end = `${split[0]} ${result.timeEnd}`;
 
-        debugger;
-
         const schedule = {
           title: result.title,
           start,
@@ -188,7 +186,7 @@ export class CalendarComponent implements OnInit {
             console.log(error);
           }
         );
-      }
+      } else this.getScheduling();
     });
   }
 
