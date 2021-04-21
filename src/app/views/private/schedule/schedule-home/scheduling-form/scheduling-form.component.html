@@ -21,12 +21,13 @@
       color="primary"
       style="margin: 0 0 20px"
       [mat-dialog-close]="{
+        id: data.id,
         data: data,
         title: title,
         date: dateStart,
         timeStart: timeStart,
         timeEnd: timeEnd,
-        customer: customer
+        paciente_id: customer
       }"
     >
       <mat-icon>done_outline</mat-icon>
@@ -57,7 +58,6 @@
           matInput
           [formControl]="customerControl"
           [matAutocomplete]="auto"
-          [(ngModel)]="customerEdit"
         />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option

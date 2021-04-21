@@ -49,4 +49,12 @@ export class ScheduleService {
       }
     );
   }
+
+  updateScheduling(body: any, id: number) {
+    return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
+      headers: {
+        Authorization: this.authService.getToken()!,
+      },
+    });
+  }
 }

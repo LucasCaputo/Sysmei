@@ -22,7 +22,7 @@ import { CustomerService } from '../../customer.service';
 export class CustomerFormComponent implements OnInit {
   customerForm = this.fb.group({
     nome: [this.data.nome || '', this.checkName],
-    telefone1: [this.data.telefones[0].numero || ''],
+    telefone1: [this.data.telefone1 || ''],
     email: [this.data.email || '', [Validators.email]],
     login_usuario: [this.authService.getUser()?.login],
   });
@@ -39,7 +39,7 @@ export class CustomerFormComponent implements OnInit {
       id: number;
       nome: string;
       email: string;
-      telefones: Array<{ id: number; numero: string }>;
+      telefone1: string;
     },
     private customerService: CustomerService,
     public dialog: MatDialog,

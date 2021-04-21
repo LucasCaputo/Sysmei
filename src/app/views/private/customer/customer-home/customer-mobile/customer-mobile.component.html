@@ -79,7 +79,7 @@
                   {{ customer.nome }}
                 </div>
                 <div mat-line>
-                  {{ customer.telefones[0].numero | formatPhone }}
+                  {{ customer.telefone1 | formatPhone }}
                 </div>
                 <div mat-line>
                   {{ customer.email }}
@@ -87,7 +87,7 @@
               </div>
             </div>
 
-            <a href="tel:{{ customer.telefones[0].numero }}" target="_blank">
+            <a href="tel:{{ customer.telefone1 }}" target="_blank">
               <button mat-icon-button aria-label="Telefone">
                 <mat-icon style="color: black">phone</mat-icon>
               </button>
@@ -95,7 +95,7 @@
 
             <a
               href="https://api.whatsapp.com/send?phone=55{{
-                customer.telefones[0].numero
+                customer.telefone1
               }}text=Ol%C3%A1"
               target="_blank"
             >

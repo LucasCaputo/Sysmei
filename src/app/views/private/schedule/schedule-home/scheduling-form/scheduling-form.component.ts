@@ -13,6 +13,7 @@ import { debounceTime, map, startWith } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 import { CustomerService } from '../../../customer/customer.service';
@@ -39,7 +40,14 @@ export class SchedulingFormComponent implements OnInit {
   customerEdit: any;
 
   customerControl = new FormControl();
-  options: Array<{ id: number; text: string }> = [];
+
+  options: Array<{
+    id: number;
+    text: string;
+    phone: string;
+    nome: string;
+  }> = [];
+
   filteredOptions: Observable<Array<{ id: number; text: string }>>;
   loading = false;
 
@@ -51,17 +59,19 @@ export class SchedulingFormComponent implements OnInit {
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
     public data: {
+      id: number;
       end: Date;
       start: Date;
       startStr: string;
       endStr: string;
       title: string;
-      extendedProps: { customer: number };
+      paciente_id: number;
     },
     private router: Router,
     private localStorageService: LocalStorageService,
     private utilService: UtilsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
@@ -101,8 +111,7 @@ export class SchedulingFormComponent implements OnInit {
     this.timeStart = this.data.startStr.slice(11, 16);
     this.dateEnd = this.data.end;
     this.timeEnd = this.data.endStr.slice(11, 16);
-
-    console.log(this.data.title);
+    this.customer = this.data.paciente_id;
   }
 
   ngAfterViewInit() {
@@ -113,9 +122,9 @@ export class SchedulingFormComponent implements OnInit {
 
   formatCustomers(response: any) {
     response.forEach((element: any) => {
-      let phone = element.telefones[0].numero;
+      let phone = element.telefone1;
 
-      if (element.id == this.data.extendedProps?.customer) {
+      if (element.id == this.data.paciente_id) {
         (this.customerEdit = `${element.nome} - ${this.utilService.formatPhone(
           phone
         )}`),
@@ -123,7 +132,7 @@ export class SchedulingFormComponent implements OnInit {
       }
 
       this.options.push({
-        id: element.id,
+        ...element,
         text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
       });
     });
@@ -149,30 +158,32 @@ export class SchedulingFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(customer._def.publicId);
-      if (result.confirmed) {
-        console.log(result.confirmed);
-
+      if (result.confirmed && customer._def.publicId) {
         this.scheduleService.deleteScheduling(customer._def.publicId).subscribe(
           (response) => {
-            // localStorage.removeItem('customer');
-            console.log(response);
+            localStorage.removeItem('scheduling');
 
-            /* this.snackbarService.openSnackBar(
-              `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
+            this.snackbarService.openSnackBar(
+              `Agendamento deletado com sucesso, aguarde que será removido da sua agenda`,
               'X',
               false
-            ); */
+            );
             this.dialog.closeAll();
           },
           (error) => {
             console.log(error);
-            /*   this.snackbarService.openSnackBar(
-              `Tivemos um erro no cadastro, tente novamente`,
+            this.snackbarService.openSnackBar(
+              `Tivemos um erro para deletar, tente novamente`,
               'X',
               true
-            ); */
+            );
           }
+        );
+      } else {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro para deletar, tente novamente`,
+          'X',
+          true
         );
       }
     });
