@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { CustomerService } from '../../../customer/customer.service';
 
 @Component({
   selector: 'app-calendar',
@@ -45,13 +46,11 @@ export class CalendarComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
+    select: this.onInsertScheduling.bind(this),
+    eventClick: this.onEditScheduling.bind(this),
     selectLongPressDelay: 100,
     locale: 'pt-br',
   };
-  currentEvents: EventApi[] = [];
 
   scheduling: EventInput[] = [];
   loading = false;
@@ -62,10 +61,8 @@ export class CalendarComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private utilsService: UtilsService,
-    private localStorageService: LocalStorageService
-  ) {
-    this.Name();
-  }
+    private customerService: CustomerService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -102,6 +99,16 @@ export class CalendarComponent implements OnInit {
           this.loading = false;
         }
       );
+
+      this.customerService.getCustomer(this.user).subscribe(
+        (response) => {
+          localStorage.removeItem('customer');
+          localStorage.setItem('customer', JSON.stringify(response));
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
@@ -122,7 +129,7 @@ export class CalendarComponent implements OnInit {
 
       this.scheduleService.getScheduling(this.user).subscribe(
         (response) => {
-          debugger;
+          // debugger;
           response.forEach((element: any) => {
             this.scheduling.push({
               id: element.id.toString(),
@@ -151,7 +158,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  handleDateSelect(selectInfo: DateSelectArg) {
+  onInsertScheduling(selectInfo: DateSelectArg) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -159,7 +166,7 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      debugger;
+      // debugger;
       if (result) {
         const date = new Date(result.date).toISOString() + '0';
 
@@ -181,9 +188,7 @@ export class CalendarComponent implements OnInit {
 
         this.scheduleService.postScheduling(schedule).subscribe(
           (response) => {
-            debugger;
-            console.log(response);
-
+            // debugger;
             const calendarApi = selectInfo.view.calendar;
 
             calendarApi.unselect();
@@ -203,7 +208,7 @@ export class CalendarComponent implements OnInit {
 
                 localStorage.setItem('scheduling', JSON.stringify(response));
 
-                debugger;
+                // debugger;
               });
           },
           (error) => {
@@ -214,12 +219,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  Name() {
-    const user = this.auth.getUser();
-    return user?.nome;
-  }
-
-  handleEventClick(clickInfo: EventClickArg) {
+  onEditScheduling(clickInfo: EventClickArg) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -228,11 +228,10 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        debugger;
+        // debugger;
         if (result?.id) {
           this.scheduleService.updateScheduling(result, result.id).subscribe(
             (result) => {
-              console.log(result);
               this.getScheduling(true);
             },
             (error) => {
@@ -260,12 +259,6 @@ export class CalendarComponent implements OnInit {
         console.log(error);
       }
     );
-
-    console.log(clickInfo.event);
-  }
-
-  handleEvents(events: EventApi[]) {
-    this.currentEvents = events;
   }
 
   logout() {

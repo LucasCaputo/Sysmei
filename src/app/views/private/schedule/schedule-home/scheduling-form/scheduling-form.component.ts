@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
@@ -29,6 +29,7 @@ export class SchedulingFormComponent implements OnInit {
 
   @ViewChild('dateStartInput') dateStartInput: ElementRef | undefined;
   @ViewChild('timeStartInput') timeStartInput: ElementRef | undefined;
+
   user = this.authService.getUser();
 
   title = this.data.title || '';
@@ -37,7 +38,6 @@ export class SchedulingFormComponent implements OnInit {
   dateEnd = new Date();
   timeEnd = '';
   customer!: number;
-  customerEdit: any;
 
   customerControl = new FormControl();
 
@@ -65,10 +65,14 @@ export class SchedulingFormComponent implements OnInit {
       startStr: string;
       endStr: string;
       title: string;
-      paciente_id: number;
+      extendedProps: {
+        login_usuario: string;
+        customer: string;
+        status: boolean;
+        paciente_id: number;
+      };
     },
     private router: Router,
-    private localStorageService: LocalStorageService,
     private utilService: UtilsService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService
@@ -80,17 +84,15 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let hasLocalStorage = this.localStorageService.getCustomer();
+    const hasLocalStorage = localStorage.getItem('customer');
 
     if (hasLocalStorage) {
-      this.formatCustomers(hasLocalStorage);
+      this.formatCustomers(JSON.parse(hasLocalStorage));
     } else {
       this.loading = true;
 
-      let customers = this.customerService.getCustomer(this.user).subscribe(
+      this.customerService.getCustomer(this.user).subscribe(
         (response) => {
-          console.log(response);
-
           this.formatCustomers(response);
         },
         (error) => {
@@ -102,16 +104,26 @@ export class SchedulingFormComponent implements OnInit {
           this.loading = false;
         }
       );
-      console.log(customers);
     }
-
-    console.log(this.data);
 
     this.dateStart = this.data.start;
     this.timeStart = this.data.startStr.slice(11, 16);
     this.dateEnd = this.data.end;
     this.timeEnd = this.data.endStr.slice(11, 16);
-    this.customer = this.data.paciente_id;
+  }
+
+  displayCustomer(option: any) {
+    if (option) {
+      return `${option.nome} - (${option.telefone1.slice(
+        0,
+        2
+      )}) ${option.telefone1.slice(2, 3)} ${option.telefone1.slice(
+        3,
+        7
+      )}-${option.telefone1.slice(7, 11)}`;
+    }
+
+    return option;
   }
 
   ngAfterViewInit() {
@@ -124,11 +136,13 @@ export class SchedulingFormComponent implements OnInit {
     response.forEach((element: any) => {
       let phone = element.telefone1;
 
-      if (element.id == this.data.paciente_id) {
-        (this.customerEdit = `${element.nome} - ${this.utilService.formatPhone(
-          phone
-        )}`),
-          (this.customer = element.id);
+      if (
+        element.id == this.data.extendedProps?.customer ||
+        element.id == this.data.extendedProps?.paciente_id
+      ) {
+        this.customer = element.id;
+
+        this.customerControl.setValue(element);
       }
 
       this.options.push({
@@ -138,8 +152,13 @@ export class SchedulingFormComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): Array<{ id: number; text: string }> {
-    const filterValue = value.toLowerCase();
+  private _filter(value: any): Array<{ id: number; text: string }> {
+    let filterValue = '';
+    if (value?.text) {
+      filterValue = value.text.toLowerCase();
+    } else {
+      filterValue = value.toLowerCase();
+    }
 
     return this.options.filter((option) =>
       option.text.toLowerCase().includes(filterValue)
@@ -147,8 +166,6 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   onDelete(customer: any) {
-    console.log(customer);
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',

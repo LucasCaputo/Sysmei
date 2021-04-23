@@ -12,8 +12,6 @@ export class AuthService {
   constructor() {}
 
   setUser(user: any) {
-    console.log(user);
-
     this.user = user.usuario;
     this.token = user.token;
 

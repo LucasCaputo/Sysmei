@@ -15,8 +15,6 @@ export class ScheduleService {
   ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
-    console.log(scheduling);
-
     return this.httpClient.post<any>(
       environment.baseURL + '/agenda',
       scheduling,

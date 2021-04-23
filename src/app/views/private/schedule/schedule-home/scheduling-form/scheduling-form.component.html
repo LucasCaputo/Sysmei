@@ -59,11 +59,15 @@
           [formControl]="customerControl"
           [matAutocomplete]="auto"
         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          [displayWith]="displayCustomer"
+        >
           <mat-option
             *ngFor="let option of filteredOptions | async"
-            [value]="option.text"
-            (click)="customer = option.id"
+            [value]="option"
+            (onSelectionChange)="customer = option.id"
           >
             {{ option.text }}
           </mat-option>

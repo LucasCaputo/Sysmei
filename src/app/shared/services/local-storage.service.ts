@@ -10,8 +10,6 @@ export class LocalStorageService {
   constructor() {}
 
   setCustomer(customer: any) {
-    console.log(customer);
-
     this.customer = customer;
 
     localStorage.setItem('customer', JSON.stringify(this.customer));

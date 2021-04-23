@@ -65,7 +65,27 @@ export class CustomerMobileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCustomers(false);
+    const hasLocalStorage = localStorage.getItem('customer');
+
+    if (hasLocalStorage) {
+      this.formatContacts(JSON.parse(hasLocalStorage));
+    } else {
+      this.customerService.getCustomer(this.user).subscribe(
+        (response) => {
+          if (response.length) {
+            this.formatContacts(response);
+            this.localStorageService.setCustomer(response);
+          }
+          this.loading = false;
+        },
+        (error) => {
+          alert('Seu token venceu, faça login novamente');
+          this.authService.logout();
+          this.router.navigate(['login']);
+          this.loading = false;
+        }
+      );
+    }
   }
 
   ngAfterViewInit() {
@@ -89,7 +109,6 @@ export class CustomerMobileComponent implements OnInit {
             this.formatContacts(response);
             this.localStorageService.setCustomer(response);
           }
-          console.log(response);
           this.loading = false;
         },
         (error) => {

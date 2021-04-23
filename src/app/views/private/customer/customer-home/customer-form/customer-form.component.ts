@@ -74,8 +74,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onDelete(customer: any) {
-    console.log(customer);
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -86,11 +84,8 @@ export class CustomerFormComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        console.log(result.confirmed);
-
         this.customerService.deleteCustomer(customer).subscribe(
           (response) => {
-            console.log(response);
             this.snackbarService.openSnackBar(
               `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
               'X',
