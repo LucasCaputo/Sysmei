@@ -48,7 +48,9 @@ export class CalendarComponent implements OnInit {
     dayMaxEvents: true,
     select: this.onInsertScheduling.bind(this),
     eventClick: this.onEditScheduling.bind(this),
-    selectLongPressDelay: 100,
+    eventDrop: this.onDragAndDrop.bind(this),
+    eventResize: this.onDragAndDrop.bind(this),
+    selectLongPressDelay: 250,
     locale: 'pt-br',
   };
 
@@ -112,6 +114,44 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  onDragAndDrop(data: any) {
+    let start = this.utilsService.clearStringData(data.event.startStr);
+    let end = this.utilsService.clearStringData(data.event.endStr);
+
+    const schedule = {
+      id: data.event._def.publicId,
+      title: data.event._def.title,
+      start,
+      end,
+      status: true,
+      login_usuario: this.auth.getUser()?.login,
+      paciente_id:
+        data.event._def.extendedProps.paciente_id ||
+        data.event._def.extendedProps.customer,
+    };
+
+    // debugger;
+
+    console.log(schedule);
+
+    this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
+      (result) => {
+        console.log(result);
+
+        this.scheduleService.getScheduling(this.user).subscribe((response) => {
+          localStorage.removeItem('scheduling');
+
+          localStorage.setItem('scheduling', JSON.stringify(response));
+
+          // debugger;
+        });
+      },
+      (error) => {
+        console.log(error, 'update');
+      }
+    );
+  }
+
   getScheduling(update: boolean) {
     let hasLocalStorage = localStorage.getItem('scheduling') || '';
 
@@ -159,6 +199,16 @@ export class CalendarComponent implements OnInit {
   }
 
   onInsertScheduling(selectInfo: DateSelectArg) {
+    console.log(localStorage.getItem('customer')?.length);
+
+    let customer = localStorage.getItem('customer') || '';
+
+    if (!JSON.parse(customer).length) {
+      alert('você precisa cadastrar seu primeiro cliente');
+
+      this.router.navigate(['/clientes']);
+      return;
+    }
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
