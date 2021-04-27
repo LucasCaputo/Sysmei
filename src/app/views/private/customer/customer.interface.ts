@@ -27,4 +27,7 @@ export interface CustomerResponse {
       numero: string;
     }
   ];
+  telefone1: string;
+  telefone2: string;
+  telefone3: string;
 }

@@ -37,6 +37,17 @@ export class CustomerService {
     );
   }
 
+  getCustomerId(customerId: number): Observable<CustomerResponse> {
+    return this.httpClient.get<CustomerResponse>(
+      `${environment.baseURL}/paciente/${customerId}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
   deleteCustomer(customer: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/paciente/${customer.id}`,
