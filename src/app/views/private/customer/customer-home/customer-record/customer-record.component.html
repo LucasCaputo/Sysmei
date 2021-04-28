@@ -76,7 +76,12 @@
   </mat-list>
 
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="Dados">Dados</mat-tab>
+    <mat-tab label="Dados">
+      <div style="height: calc(100vh - 300px)">
+        <app-customer-complete-registration [data]="data">
+        </app-customer-complete-registration>
+      </div>
+    </mat-tab>
 
     <mat-tab label="Histórico"
       >Histórico
@@ -156,8 +161,3 @@
     </mat-tab>
   </mat-tab-group>
 </div>
-
-<app-customer-complete-registration
-  *ngIf="edit"
-  [data]="data"
-></app-customer-complete-registration>

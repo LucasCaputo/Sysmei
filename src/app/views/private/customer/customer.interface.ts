@@ -30,4 +30,5 @@ export interface CustomerResponse {
   telefone1: string;
   telefone2: string;
   telefone3: string;
+  pseudonimo: string;
 }

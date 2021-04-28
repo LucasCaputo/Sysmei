@@ -1,70 +1,286 @@
 <form
-  style="margin-top: 56px"
+  style="margin-top: 24px; overflow: hidden"
   [formGroup]="profileForm"
   (ngSubmit)="onSubmit()"
   fxLayout="column"
+  fxFlex="100vw"
 >
-  <mat-form-field>
-    <mat-label>Nome completo</mat-label>
-    <input matInput type="text" formControlName="nome" required />
-    <mat-error *ngIf="profileForm.controls.nome.hasError('required')">
-      Nome é <strong>obrigatório</strong>
-    </mat-error>
-    <mat-error
-      *ngIf="
-        !profileForm.controls.nome.hasError('required') &&
-        profileForm.controls.nome.hasError('hasNumber')
-      "
-    >
-      Insira seu nome completo, <strong>somente letras</strong>
-    </mat-error>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>contacts</mat-icon>
+      <!-- <div mat-line>{{folder.name}}</div> -->
 
-    <mat-error
-      *ngIf="
-        !profileForm.controls.nome.hasError('required') &&
-        profileForm.controls.nome.hasError('isNameComplete')
-      "
-    >
-      Informe seu nome <strong>completo</strong>
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field fxFlex="70">
+        <mat-label>Nome completo</mat-label>
+        <input matInput type="text" formControlName="nome" required />
+        <mat-error *ngIf="profileForm.controls.nome.hasError('required')">
+          Nome é <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            !profileForm.controls.nome.hasError('required') &&
+            profileForm.controls.nome.hasError('hasNumber')
+          "
+        >
+          Insira seu nome completo, <strong>somente letras</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            !profileForm.controls.nome.hasError('required') &&
+            profileForm.controls.nome.hasError('isNameComplete')
+          "
+        >
+          Informe seu nome <strong>completo</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
 
-  <mat-form-field>
-    <mat-label>Telefone Celular</mat-label>
-    <input
-      matInput
-      type="tel"
-      formControlName="telefone"
-      mask="(00) 0 0000-0000"
-      minlength="11"
-      required
-    />
-    <mat-error
-      *ngIf="
-        profileForm.controls.telefone.hasError('minlength') &&
-        !profileForm.controls.telefone.hasError('required')
-      "
-    >
-      Por favor insira um telefone <strong>celular</strong> válido
-    </mat-error>
-    <mat-error *ngIf="profileForm.controls.telefone.hasError('required')">
-      Telefone é <strong>obrigatório</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
 
-  <mat-form-field>
-    <mat-label>E-mail</mat-label>
-    <input type="email" matInput formControlName="email" required />
-    <mat-error
-      *ngIf="
-        profileForm.controls.email.hasError('email') &&
-        !profileForm.controls.email.hasError('required')
-      "
-    >
-      Por favor insira um endereço de e-mail válido
-    </mat-error>
-    <mat-error *ngIf="profileForm.controls.email.hasError('required')">
-      E-mail é <strong>obrigatório</strong>
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field fxFlex="70">
+        <mat-label>Pseudônimo</mat-label>
+        <input matInput type="text" formControlName="pseudonimo" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <div mat-subheader>Contato</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon>phone</mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Telefone Celular</mat-label>
+        <input
+          matInput
+          type="tel"
+          formControlName="telefone"
+          mask="(00) 0 0000-0000"
+          minlength="11"
+          required
+        />
+        <mat-error
+          *ngIf="
+            profileForm.controls.telefone1.hasError('minlength') &&
+            !profileForm.controls.telefone1.hasError('required')
+          "
+        >
+          Por favor insira um telefone <strong>celular</strong> válido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls.telefone1.hasError('required')">
+          Telefone é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Telefone Alternativo</mat-label>
+        <input
+          matInput
+          type="tel"
+          formControlName="telefone"
+          mask="(00) 0 0000-0000"
+          minlength="11"
+        />
+        <mat-error *ngIf="profileForm.controls.telefone1.hasError('minlength')">
+          Por favor insira um telefone <strong>celular</strong> válido
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>E-mail</mat-label>
+        <input type="email" matInput formControlName="email" required />
+        <mat-error
+          *ngIf="
+            profileForm.controls.email.hasError('email') &&
+            !profileForm.controls.email.hasError('required')
+          "
+        >
+          Por favor insira um endereço de e-mail válido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls.email.hasError('required')">
+          E-mail é <strong>obrigatório</strong>
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Comercial</div>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>work</mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Profissão</mat-label>
+        <input matInput type="text" formControlName="ocupacao" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+      <mat-form-field fxFlex="70">
+        <mat-label>Telefone Comercial</mat-label>
+        <input
+          matInput
+          type="tel"
+          formControlName="telefone"
+          mask="(00) 0 0000-0000"
+          minlength="11"
+        />
+        <mat-error *ngIf="profileForm.controls.telefone1.hasError('minlength')">
+          Por favor insira um telefone <strong>celular</strong> válido
+        </mat-error>
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <div mat-subheader>Outros</div>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>cake</mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Aniversário</mat-label>
+        <input matInput type="text" formControlName="nascimento" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+      <mat-form-field fxFlex="70">
+        <mat-label>Indicação</mat-label>
+        <input matInput type="text" formControlName="indicacao" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Sexo</mat-label>
+        <input matInput type="text" formControlName="sexo" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Estado Civil</mat-label>
+        <input matInput type="text" formControlName="estadoCivil" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <div mat-subheader>Endereço</div>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>place</mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Endereço</mat-label>
+        <input matInput type="text" formControlName="endereco" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Número</mat-label>
+        <input matInput type="text" formControlName="enderecoNum" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Bairro</mat-label>
+        <input matInput type="text" formControlName="bairro" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Cidade</mat-label>
+        <input matInput type="text" formControlName="cidade" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Estado</mat-label>
+        <input matInput type="text" formControlName="estado" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>CEP</mat-label>
+        <input matInput type="text" formControlName="cep" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <div mat-subheader>Dados</div>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon>person</mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>RG</mat-label>
+        <input matInput type="text" formControlName="rg" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>CPF</mat-label>
+        <input matInput type="text" formControlName="cpf" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Responsável</mat-label>
+        <input matInput type="text" formControlName="responsavel" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Plano de Saúde</mat-label>
+        <input matInput type="text" formControlName="planoSaude" />
+      </mat-form-field>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon mat-list-icon></mat-icon>
+
+      <mat-form-field fxFlex="70">
+        <mat-label>Convênio</mat-label>
+        <input matInput type="text" formControlName="convenio" />
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
 </form>

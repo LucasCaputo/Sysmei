@@ -16,9 +16,35 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
+      id: [this.data?.id || undefined],
+
       nome: [this.data?.nome || ''],
-      telefone: [this.data?.telefone1 || ''],
+      pseudonimo: [this.data?.pseudonimo || ''],
+
+      telefone1: [this.data?.telefone1 || ''],
+      telefone2: [this.data?.telefone2 || ''],
       email: [this.data?.email || '', [Validators.email]],
+
+      ocupacao: [this.data?.ocupacao || ''],
+      telefone3: [this.data?.telefone3 || ''],
+
+      nascimento: [this.data?.nascimento || ''],
+      indicacao: [this.data?.indicacao || ''],
+      sexo: [this.data?.nascimento || ''],
+      estadoCivil: [this.data?.estadoCivil || ''],
+
+      endereco: [this.data?.endereco || ''],
+      enderecoNum: [this.data?.enderecoNum || ''],
+      bairro: [this.data?.bairro || ''],
+      cidade: [this.data?.cidade || ''],
+      estado: [this.data?.estado || ''],
+      cep: [this.data?.cep || ''],
+
+      rg: [this.data?.rg || ''],
+      cpf: [this.data?.cpf || ''],
+      responsavel: [this.data?.telefone3 || ''],
+      planoSaude: [this.data?.planoSaude || ''],
+      convenio: [this.data?.convenio || ''],
     });
   }
 
