@@ -48,6 +48,17 @@ export class CustomerService {
     );
   }
 
+  getCustomerRecord(customerId: number): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.baseURL}/agenda/?id=${customerId}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
   deleteCustomer(customer: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/paciente/${customer.id}`,

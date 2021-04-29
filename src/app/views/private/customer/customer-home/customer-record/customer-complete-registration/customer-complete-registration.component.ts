@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerResponse } from '../../customer.interface';
+import { CustomerResponse } from '../../../customer.interface';
 
 @Component({
   selector: 'app-customer-complete-registration',

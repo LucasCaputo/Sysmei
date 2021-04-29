@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CustomerCompleteRegistrationComponent } from './customer-home/customer-complete-registration/customer-complete-registration.component';
 
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerRecordComponent } from './customer-home/customer-record/customer-record.component';

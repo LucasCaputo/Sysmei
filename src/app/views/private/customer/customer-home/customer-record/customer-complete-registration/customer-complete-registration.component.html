@@ -55,7 +55,7 @@
         <input
           matInput
           type="tel"
-          formControlName="telefone"
+          formControlName="telefone1"
           mask="(00) 0 0000-0000"
           minlength="11"
           required
@@ -82,11 +82,11 @@
         <input
           matInput
           type="tel"
-          formControlName="telefone"
+          formControlName="telefone2"
           mask="(00) 0 0000-0000"
           minlength="11"
         />
-        <mat-error *ngIf="profileForm.controls.telefone1.hasError('minlength')">
+        <mat-error *ngIf="profileForm.controls.telefone2.hasError('minlength')">
           Por favor insira um telefone <strong>celular</strong> válido
         </mat-error>
       </mat-form-field>
@@ -130,11 +130,11 @@
         <input
           matInput
           type="tel"
-          formControlName="telefone"
+          formControlName="telefone3"
           mask="(00) 0 0000-0000"
           minlength="11"
         />
-        <mat-error *ngIf="profileForm.controls.telefone1.hasError('minlength')">
+        <mat-error *ngIf="profileForm.controls.telefone3.hasError('minlength')">
           Por favor insira um telefone <strong>celular</strong> válido
         </mat-error>
       </mat-form-field>

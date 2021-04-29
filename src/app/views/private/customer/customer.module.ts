@@ -16,11 +16,12 @@ import { IconColorPipe } from 'src/app/shared/pipes/icon-color.pipe';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerRecordComponent } from './customer-home/customer-record/customer-record.component';
-import { CustomerCompleteRegistrationComponent } from './customer-home/customer-complete-registration/customer-complete-registration.component';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CustomerCompleteRegistrationComponent } from './customer-home/customer-record/customer-complete-registration/customer-complete-registration.component';
+import { RecordListComponent } from './customer-home/customer-record/record-list/record-list.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     IconColorPipe,
     CustomerRecordComponent,
     CustomerCompleteRegistrationComponent,
+    RecordListComponent,
   ],
   imports: [
     CustomerRoutingModule,
