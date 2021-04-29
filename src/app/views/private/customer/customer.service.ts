@@ -26,6 +26,18 @@ export class CustomerService {
     );
   }
 
+  postFile(customerId: number, file: any): Observable<CustomerResponse> {
+    return this.httpClient.post<any>(
+      environment.baseURL + '/paciente/picture/' + customerId,
+      file,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
   getCustomer(customer: any): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/paciente?login=${customer.login}`,

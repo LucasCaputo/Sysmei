@@ -5,6 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,11 +24,14 @@ export class CustomerRecordComponent implements OnInit {
   edit = false;
   loading = false;
 
+  photos: [{ id: number; url: string }] | undefined;
+
   constructor(
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +40,7 @@ export class CustomerRecordComponent implements OnInit {
     this.customerService.getCustomerId(this.id).subscribe(
       (response) => {
         this.data = response;
+        this.photos = response.documentsUrl;
       },
       (error) => {
         this.router.navigate(['/clientes']);
@@ -54,5 +59,24 @@ export class CustomerRecordComponent implements OnInit {
         console.log(erro);
       }
     );
+  }
+
+  inputFileChange(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const foto = event.target.files[0];
+
+      const formData = new FormData();
+      formData.append('file', foto);
+
+      this.customerService.postFile(this.id, formData).subscribe(
+        (result) => {
+          this.customerService.getCustomerId(this.id).subscribe((result) => {
+            console.log(result);
+            this.photos = result.documentsUrl;
+          });
+        },
+        (error) => {}
+      );
+    }
   }
 }

@@ -10,9 +10,20 @@
 
     <span fxFlex="60" style="contain: content">{{ data?.nome }}</span>
 
-    <button mat-button (click)="edit = !edit">
-      <mat-icon>edit</mat-icon>
+    <button mat-button>
+      <mat-icon>photo_camera</mat-icon>
     </button>
+    <input
+      type="file"
+      (change)="inputFileChange($event)"
+      style="
+        opacity: 0;
+        width: 32px;
+        height: 24px;
+        position: absolute;
+        right: 16px;
+      "
+    />
   </div>
 
   <div *ngIf="edit" fxFlex="100" fxLayoutAlign="space-between center">
@@ -89,14 +100,13 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Documentos"
-      >Documentos
-
-      <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile>1</mat-grid-tile>
-        <mat-grid-tile>2</mat-grid-tile>
-        <mat-grid-tile>3</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
+    <mat-tab label="Documentos">
+      <mat-grid-list cols="2" rowHeight="1:1" style="margin-top: 16px">
+        <mat-grid-tile
+          *ngFor="let photo of photos"
+          style="background-color: #fafafa"
+          ><img style="max-width: 100%; max-height: 100%" src="{{ photo.url }}"
+        /></mat-grid-tile>
       </mat-grid-list>
     </mat-tab>
   </mat-tab-group>

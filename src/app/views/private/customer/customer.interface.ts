@@ -31,4 +31,11 @@ export interface CustomerResponse {
   telefone2: string;
   telefone3: string;
   pseudonimo: string;
+
+  documentsUrl: [
+    {
+      id: number;
+      url: string;
+    }
+  ];
 }
