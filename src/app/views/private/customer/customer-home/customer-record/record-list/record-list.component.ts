@@ -5,14 +5,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  data: string;
-  titulo: string;
-  valor: string;
-  description: string;
-}
+import { Component, Input, OnInit } from '@angular/core';
+import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 
 @Component({
   selector: 'app-record-list',
@@ -30,116 +24,37 @@ export interface PeriodicElement {
   ],
 })
 export class RecordListComponent implements OnInit {
-  dataSource: PeriodicElement[] = [
-    {
-      data: '28-04-21',
-      titulo: 'Luzes Loiras',
-      valor: 'R$ 335,00',
-      description: `Luzes loiras coloração número 7.1 marca Mirra`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-    {
-      data: '28-04-21',
-      titulo: 'Corte XPOTS',
-      valor: 'R$ 135,00',
-      description: `Hydrogen is a chemical element with valor H and atomic number 1. With a standard
-          atomic titulo of 1.008, hydrogen is the lightest element on the periodic table.`,
-    },
-  ];
+  @Input() data: any;
+
+  dataSource: any;
   columnsToDisplay = ['data', 'titulo', 'valor'];
 
-  expandedElement: PeriodicElement[] = [];
-  constructor() {}
+  expandedElement = [];
 
-  ngOnInit(): void {}
+  constructor() {
+    console.log('entrourecord');
+  }
+
+  ngOnInit(): void {
+    this.dataSource = [];
+
+    this.data?.forEach((e: any) => {
+      let data = `${e.start.slice(8, 10)}-${e.start.slice(
+        5,
+        7
+      )}-${e.start.slice(2, 4)}`;
+      console.log(e);
+
+      this.dataSource.push({
+        data,
+        titulo: e.title.slice(0, 20),
+        valor: e.valor || 'R$',
+        description: e.detalhes || 'Sem observações',
+      });
+    });
+
+    console.log(this.dataSource);
+  }
+
+  ngAfterViewInit() {}
 }

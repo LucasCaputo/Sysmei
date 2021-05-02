@@ -47,4 +47,7 @@
       class="example-detail-row"
     ></tr>
   </table>
+  <p *ngIf="!dataSource.length" style="text-align: center">
+    Esse cliente não possui histórico
+  </p>
 </div>

@@ -30,7 +30,8 @@ export interface CustomerResponse {
   telefone1: string;
   telefone2: string;
   telefone3: string;
-  pseudonimo: string;
+  socialName: string;
+  login_usuario: string;
 
   documentsUrl: [
     {

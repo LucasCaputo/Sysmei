@@ -87,7 +87,7 @@ export class CustomerFormComponent implements OnInit {
         this.customerService.deleteCustomer(customer).subscribe(
           (response) => {
             this.snackbarService.openSnackBar(
-              `Usuário deletado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              `Usuário deletado com sucesso`,
               'X',
               false
             );

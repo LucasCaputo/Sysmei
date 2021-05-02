@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CustomerCompleteRegistrationComponent } from './customer-home/customer-record/customer-complete-registration/customer-complete-registration.component';
 import { RecordListComponent } from './customer-home/customer-record/record-list/record-list.component';
+import { OpenPhotoComponent } from './customer-home/customer-record/open-photo/open-photo.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RecordListComponent } from './customer-home/customer-record/record-list
     CustomerRecordComponent,
     CustomerCompleteRegistrationComponent,
     RecordListComponent,
+    OpenPhotoComponent,
   ],
   imports: [
     CustomerRoutingModule,

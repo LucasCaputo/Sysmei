@@ -6,33 +6,86 @@ import {
   trigger,
 } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CustomerResponse } from '../../customer.interface';
 import { CustomerService } from '../../customer.service';
+import { Scheduling } from '../../../../../shared/interfaces/scheduling.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { OpenPhotoComponent } from './open-photo/open-photo.component';
 
 @Component({
   selector: 'app-customer-record',
   templateUrl: './customer-record.component.html',
   styleUrls: ['./customer-record.component.scss'],
+  animations: [
+    trigger('enter', [
+      state(
+        'void',
+        style({
+          height: '0px',
+          overflow: 'hidden',
+        })
+      ),
+      transition(':enter', [
+        animate(
+          '500ms ease-in-out',
+          style({
+            height: '*',
+            overflow: 'hidden',
+          })
+        ),
+      ]),
+      //element being removed from DOM.
+      transition(':leave', [
+        animate(
+          '500ms ease-in-out',
+          style({
+            height: '0px',
+            overflow: 'hidden',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class CustomerRecordComponent implements OnInit {
   id = 0;
   data: CustomerResponse | undefined;
-  edit = false;
   loading = false;
 
+  tabSelected = 0;
+
   photos: [{ id: number; url: string }] | undefined;
+
+  edit = false;
+
+  eventsSubject: Subject<void> = new Subject<void>();
+
+  records: Scheduling | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private customerService: CustomerService,
     private snackbarService: SnackbarService,
     private router: Router,
-    private http: HttpClient
+    public dialog: MatDialog
   ) {}
+
+  emitEventToChild() {
+    this.eventsSubject.next();
+
+    setTimeout(() => {
+      this.edit = false;
+    }, 1000);
+  }
+
+  test(tabSelected: number) {
+    this.tabSelected = tabSelected;
+  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -53,7 +106,7 @@ export class CustomerRecordComponent implements OnInit {
 
     this.customerService.getCustomerRecord(this.id).subscribe(
       (response) => {
-        console.log(response);
+        this.records = response;
       },
       (erro) => {
         console.log(erro);
@@ -78,5 +131,15 @@ export class CustomerRecordComponent implements OnInit {
         (error) => {}
       );
     }
+  }
+
+  onOpenPhoto(photo: string) {
+    const dialogRef = this.dialog.open(OpenPhotoComponent, {
+      data: photo,
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+    });
   }
 }

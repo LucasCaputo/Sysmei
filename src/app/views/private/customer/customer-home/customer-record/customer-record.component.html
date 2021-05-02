@@ -3,48 +3,63 @@
   fxFlex="100vw"
   style="position: fixed; padding: 0; z-index: 9"
 >
-  <div *ngIf="!edit" fxFlex="100" fxLayoutAlign="space-between center">
-    <button mat-button routerLink="/clientes">
+  <div fxFlex="100" fxLayoutAlign="space-between center">
+    <button *ngIf="!edit" mat-button routerLink="/clientes">
       <mat-icon>arrow_back</mat-icon>
     </button>
 
-    <span fxFlex="60" style="contain: content">{{ data?.nome }}</span>
-
-    <button mat-button>
-      <mat-icon>photo_camera</mat-icon>
-    </button>
-    <input
-      type="file"
-      (change)="inputFileChange($event)"
-      style="
-        opacity: 0;
-        width: 32px;
-        height: 24px;
-        position: absolute;
-        right: 16px;
-      "
-    />
-  </div>
-
-  <div *ngIf="edit" fxFlex="100" fxLayoutAlign="space-between center">
-    <button mat-button (click)="edit = !edit">
-      <mat-icon>highlight_off</mat-icon>
+    <button *ngIf="edit" mat-button (click)="edit = !edit">
+      <mat-icon>close</mat-icon>
     </button>
 
-    <span>Cadastro Completo</span>
+    <!-- <span fxFlex="60" style="contain: content">{{ data?.nome }}</span> -->
 
-    <button mat-button>
-      <mat-icon>done_outline</mat-icon>
+    <div *ngIf="tabSelected == 2">
+      <button mat-button>
+        <mat-icon>photo_camera</mat-icon>
+      </button>
+      <input
+        type="file"
+        (change)="inputFileChange($event)"
+        style="
+          opacity: 0;
+          width: 32px;
+          height: 24px;
+          position: absolute;
+          right: 16px;
+        "
+      />
+    </div>
+
+    <!-- <button
+      *ngIf="tabSelected == 1"
+      mat-icon-button
+      aria-label="Adicionar clientes"
+      style="margin-right: 8px"
+    >
+      <mat-icon>add_box</mat-icon>
+    </button> -->
+
+    <button
+      *ngIf="tabSelected == 0"
+      type="button"
+      mat-icon-button
+      aria-label="Ediar cliente"
+      (click)="!edit ? (edit = !edit) : emitEventToChild()"
+      style="margin-right: 8px"
+    >
+      <mat-icon *ngIf="!edit">edit</mat-icon>
+      <mat-icon *ngIf="edit">check</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
 <div
-  *ngIf="!loading && !edit"
+  *ngIf="!loading"
   style="margin-top: 56px; margin-bottom: 56px; width: 100vw"
 >
-  <mat-list>
-    <mat-list-item (click)="edit = !edit">
+  <mat-list *ngIf="!edit" @enter>
+    <mat-list-item>
       <div fxFlex fxLayoutAlign="center center" fxFlex="77">
         <div
           mat-list-icon
@@ -86,28 +101,38 @@
     </mat-list-item>
   </mat-list>
 
-  <mat-tab-group mat-align-tabs="center">
+  <mat-tab-group mat-align-tabs="center" (selectedIndexChange)="test($event)">
     <mat-tab label="Dados">
-      <div style="height: calc(100vh - 300px)">
-        <app-customer-complete-registration [data]="data">
+      <div [style]="!edit ? 'height: calc(100vh - 300px)' : 'height:auto'">
+        <app-customer-complete-registration
+          [data]="data"
+          [edit]="edit"
+          [events]="eventsSubject.asObservable()"
+        >
         </app-customer-complete-registration>
       </div>
     </mat-tab>
 
-    <mat-tab label="Histórico">
+    <mat-tab label="Histórico" *ngIf="!edit">
       <div style="height: calc(100vh - 300px)">
-        <app-record-list></app-record-list>
+        <app-record-list [data]="records"></app-record-list>
       </div>
     </mat-tab>
 
-    <mat-tab label="Documentos">
-      <mat-grid-list cols="2" rowHeight="1:1" style="margin-top: 16px">
-        <mat-grid-tile
-          *ngFor="let photo of photos"
-          style="background-color: #fafafa"
-          ><img style="max-width: 100%; max-height: 100%" src="{{ photo.url }}"
-        /></mat-grid-tile>
-      </mat-grid-list>
+    <mat-tab label="Documentos" *ngIf="!edit">
+      <div style="height: calc(100vh - 300px)">
+        <div *ngIf="!photos?.length" style="text-align: center">
+          Cadastre a primeira foto do cliente
+        </div>
+        <mat-grid-list cols="2" rowHeight="1:1" style="margin-top: 16px">
+          <mat-grid-tile
+            *ngFor="let photo of photos"
+            style="background-color: #fafafa"
+            (click)="onOpenPhoto(photo.url)"
+            ><img style="max-width: 100%" src="{{ photo.url }}"
+          /></mat-grid-tile>
+        </mat-grid-list>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>
