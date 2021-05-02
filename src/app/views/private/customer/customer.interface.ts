@@ -27,4 +27,16 @@ export interface CustomerResponse {
       numero: string;
     }
   ];
+  telefone1: string;
+  telefone2: string;
+  telefone3: string;
+  socialName: string;
+  login_usuario: string;
+
+  documentsUrl: [
+    {
+      id: number;
+      url: string;
+    }
+  ];
 }

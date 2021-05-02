@@ -26,9 +26,43 @@ export class CustomerService {
     );
   }
 
+  postFile(customerId: number, file: any): Observable<CustomerResponse> {
+    return this.httpClient.post<any>(
+      environment.baseURL + '/paciente/picture/' + customerId,
+      file,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
   getCustomer(customer: any): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/paciente?login=${customer.login}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
+  getCustomerId(customerId: number): Observable<CustomerResponse> {
+    return this.httpClient.get<CustomerResponse>(
+      `${environment.baseURL}/paciente/${customerId}`,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
+      }
+    );
+  }
+
+  getCustomerRecord(customerId: number): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.baseURL}/agenda/?id=${customerId}`,
       {
         headers: {
           Authorization: this.authService.getToken()!,

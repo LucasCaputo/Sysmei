@@ -1,11 +1,15 @@
-
 // import { Customer } from './customer.interface';
 
 export interface Scheduling {
-    // id: number;
-    title: string;
-    description: string;
-    // customer: Customer;
-    // start: Date;
-    // end: Date;
+  allDay: string;
+  detalhes: string;
+  end: string;
+  id: number;
+  login_usuario: string;
+  paciente_id: number;
+  pagamento: string;
+  start: string;
+  status: boolean;
+  title: string;
+  valor: number;
 }

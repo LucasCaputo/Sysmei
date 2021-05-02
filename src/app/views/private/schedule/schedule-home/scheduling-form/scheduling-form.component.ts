@@ -196,12 +196,6 @@ export class SchedulingFormComponent implements OnInit {
             );
           }
         );
-      } else {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para deletar, tente novamente`,
-          'X',
-          true
-        );
       }
     });
   }

@@ -173,7 +173,7 @@ export class CustomerMobileComponent implements OnInit {
           (response) => {
             this.getCustomers(true);
             this.snackbarService.openSnackBar(
-              `Parabéns! usuário ${result.nome.toUpperCase()} atualizado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              `Parabéns! usuário ${result.nome.toUpperCase()} atualizado com sucesso`,
               'X',
               false
             );
@@ -193,7 +193,7 @@ export class CustomerMobileComponent implements OnInit {
           (response) => {
             this.getCustomers(true);
             this.snackbarService.openSnackBar(
-              `Parabéns! usuário ${result.nome.toUpperCase()} cadastrado com sucesso, aguarde que sua lista de clientes será atualizada`,
+              `Parabéns! usuário ${result.nome.toUpperCase()} cadastrado com sucesso`,
               'X',
               false
             );

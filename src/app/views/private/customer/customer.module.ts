@@ -15,6 +15,14 @@ import { IconCustomerPipe } from 'src/app/shared/pipes/icon-customer.pipe';
 import { IconColorPipe } from 'src/app/shared/pipes/icon-color.pipe';
 
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CustomerRecordComponent } from './customer-home/customer-record/customer-record.component';
+
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { CustomerCompleteRegistrationComponent } from './customer-home/customer-record/customer-complete-registration/customer-complete-registration.component';
+import { RecordListComponent } from './customer-home/customer-record/record-list/record-list.component';
+import { OpenPhotoComponent } from './customer-home/customer-record/open-photo/open-photo.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +31,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CustomerMobileComponent,
     IconCustomerPipe,
     IconColorPipe,
+    CustomerRecordComponent,
+    CustomerCompleteRegistrationComponent,
+    RecordListComponent,
+    OpenPhotoComponent,
   ],
   imports: [
     CustomerRoutingModule,
@@ -31,6 +43,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatListModule,
     NgxMaskModule.forRoot(),
     SharedModule,
+    MatTabsModule,
+    MatTableModule,
+    MatGridListModule,
   ],
   providers: [],
 })
