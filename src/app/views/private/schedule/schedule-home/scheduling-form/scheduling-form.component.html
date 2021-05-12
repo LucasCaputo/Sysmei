@@ -27,7 +27,10 @@
         date: dateStart,
         timeStart: timeStart,
         timeEnd: timeEnd,
-        paciente_id: customer
+        paciente_id: customer,
+        valor: valor,
+        detalhes: detalhes,
+        pagamento: pagamento
       }"
     >
       <mat-icon>done_outline</mat-icon>
@@ -105,6 +108,42 @@
           <input matInput type="time" [(ngModel)]="timeEnd" name="timeEnd" />
         </mat-form-field>
       </div>
+
+      <div fxFlex fxLayoutAlign="space-between">
+        <mat-form-field fxFlex="45">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            placeholder="Valor"
+            [(ngModel)]="valor"
+            name="valor"
+            type="text"
+            mask="separator"
+            prefix="R$ "
+            thousandSeparator="."
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45">
+          <mat-select [(ngModel)]="pagamento" name="pagamento">
+            <mat-option value="Dinheiro">Dinheiro</mat-option>
+            <mat-option value="Cartão de Débito">Cartão de Débito</mat-option>
+            <mat-option value="Cartão Crédito">Cartão Crédito</mat-option>
+            <mat-option value="Cheque">Cheque</mat-option>
+            <mat-option value="Fiado">Fiado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="100%">
+        <mat-label>Detalhes</mat-label>
+        <textarea
+          matInput
+          placeholder="Detalhes"
+          [(ngModel)]="detalhes"
+          name="detalhes"
+        ></textarea>
+      </mat-form-field>
     </form>
   </div>
   <div fxLayoutAlign="end center">

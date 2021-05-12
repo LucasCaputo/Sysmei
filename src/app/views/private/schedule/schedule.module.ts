@@ -19,6 +19,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -44,6 +45,7 @@ FullCalendarModule.registerPlugins([
     MatMenuModule,
     MatToolbarModule,
     SharedModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
 })

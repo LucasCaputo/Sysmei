@@ -85,6 +85,9 @@ export class CalendarComponent implements OnInit {
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
               customer: element.paciente_id,
+              valor: element.valor,
+              pagamento: element.pagamento,
+              detalhes: element.detalhes,
             });
           });
 
@@ -130,21 +133,11 @@ export class CalendarComponent implements OnInit {
         data.event._def.extendedProps.customer,
     };
 
-    // debugger;
-
-    console.log(schedule);
-
     this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
       (result) => {
         console.log(result);
 
-        this.scheduleService.getScheduling(this.user).subscribe((response) => {
-          localStorage.removeItem('scheduling');
-
-          localStorage.setItem('scheduling', JSON.stringify(response));
-
-          // debugger;
-        });
+        this.getScheduling(true);
       },
       (error) => {
         console.log(error, 'update');
@@ -169,7 +162,6 @@ export class CalendarComponent implements OnInit {
 
       this.scheduleService.getScheduling(this.user).subscribe(
         (response) => {
-          // debugger;
           response.forEach((element: any) => {
             this.scheduling.push({
               id: element.id.toString(),
@@ -177,6 +169,9 @@ export class CalendarComponent implements OnInit {
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
               customer: element.paciente_id,
+              valor: parseInt(element.valor),
+              detalhes: element.detalhes,
+              pagamento: element.pagamento,
             });
           });
 
@@ -216,7 +211,6 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // debugger;
       if (result) {
         const date = new Date(result.date).toISOString() + '0';
 
@@ -234,11 +228,14 @@ export class CalendarComponent implements OnInit {
           status: true,
           login_usuario: this.auth.getUser()?.login,
           paciente_id: result.paciente_id,
+          allDay: split[0],
+          valor: parseInt(result.valor),
+          detalhes: result.detalhes,
+          pagamento: result.pagamento,
         };
 
         this.scheduleService.postScheduling(schedule).subscribe(
           (response) => {
-            // debugger;
             const calendarApi = selectInfo.view.calendar;
 
             calendarApi.unselect();
@@ -249,17 +246,12 @@ export class CalendarComponent implements OnInit {
               start: this.utilsService.formatStringData(start),
               end: this.utilsService.formatStringData(end),
               paciente_id: response.paciente.id,
+              valor: parseInt(result.valor),
+              detalhes: result.detalhes,
+              pagamento: result.pagamento,
             });
 
-            this.scheduleService
-              .getScheduling(this.user)
-              .subscribe((response) => {
-                localStorage.removeItem('scheduling');
-
-                localStorage.setItem('scheduling', JSON.stringify(response));
-
-                // debugger;
-              });
+            this.getScheduling(true);
           },
           (error) => {
             console.log(error);
@@ -278,9 +270,31 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        // debugger;
         if (result?.id) {
-          this.scheduleService.updateScheduling(result, result.id).subscribe(
+          const date = new Date(result.date).toISOString() + '0';
+
+          let clearDate = this.utilsService.clearStringData(date);
+
+          let split = clearDate.split(' ');
+
+          let start = `${split[0]} ${result.timeStart}`;
+          let end = `${split[0]} ${result.timeEnd}`;
+
+          const schedule = {
+            id: result.id,
+            title: result.title,
+            start,
+            end,
+            status: true,
+            login_usuario: this.auth.getUser()?.login,
+            paciente_id: result.paciente_id,
+            allDay: split[0],
+            valor: parseInt(result.valor),
+            detalhes: result.detalhes,
+            pagamento: result.pagamento,
+          };
+
+          this.scheduleService.updateScheduling(schedule, result.id).subscribe(
             (result) => {
               this.getScheduling(true);
             },

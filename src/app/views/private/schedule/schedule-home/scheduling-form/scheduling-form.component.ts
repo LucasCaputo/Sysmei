@@ -38,6 +38,9 @@ export class SchedulingFormComponent implements OnInit {
   dateEnd = new Date();
   timeEnd = '';
   customer!: number;
+  valor = this.data.extendedProps?.valor || '';
+  detalhes = this.data.extendedProps?.detalhes || '';
+  pagamento = this.data.extendedProps?.pagamento || '';
 
   customerControl = new FormControl();
 
@@ -70,6 +73,9 @@ export class SchedulingFormComponent implements OnInit {
         customer: string;
         status: boolean;
         paciente_id: number;
+        valor: number;
+        detalhes: string;
+        pagamento: string;
       };
     },
     private router: Router,
