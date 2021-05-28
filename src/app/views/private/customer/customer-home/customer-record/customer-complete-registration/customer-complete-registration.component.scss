@@ -2,3 +2,11 @@ mat-icon {
   margin-right: 32px;
   color: lightgray;
 }
+
+@media (min-width: 600px) {
+  .list {
+    max-width: 800px !important;
+    min-width: auto !important;
+    margin: 0 auto;
+  }
+}

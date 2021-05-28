@@ -3,9 +3,9 @@
     color="primary"
     fxFlex
     fxLayoutAlign="space-between center"
-    style="position: fixed; padding-left: 0; z-index: 9"
+    class="header"
   >
-    <button mat-button [matMenuTriggerFor]="menu">
+    <button mat-button class="menu" [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -41,7 +41,7 @@
       </button>
     </form>
   </mat-toolbar>
-  <div style="margin-top: 56px; margin-bottom: 56px; width: 100vw">
+  <div class="list">
     <div
       *ngFor="let letter of letters"
       [style]="
@@ -63,6 +63,7 @@
               fxLayoutAlign="center center"
               fxFlex="66"
               routerLink="ficha/{{ customer.id }}"
+              style="cursor: pointer"
             >
               <div
                 mat-list-icon

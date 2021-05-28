@@ -13,7 +13,6 @@ import { ScheduleService } from '../../schedule.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { CustomerService } from '../../../customer/customer.service';
 
 @Component({
