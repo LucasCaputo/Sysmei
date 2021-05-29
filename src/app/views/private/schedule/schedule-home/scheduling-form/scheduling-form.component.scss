@@ -1,0 +1,9 @@
+.form {
+  height: 180px;
+}
+
+@media (min-width: 600px) {
+  .form {
+    height: 320px;
+  }
+}

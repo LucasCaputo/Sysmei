@@ -5,7 +5,7 @@
   fxFlex="100vw"
   class="list"
 >
-  <mat-list>
+  <mat-list [style]="edit ? 'height: calc(100vh - 230px); overflow: auto' : ''">
     <mat-list-item>
       <mat-icon mat-list-icon>contacts</mat-icon>
 

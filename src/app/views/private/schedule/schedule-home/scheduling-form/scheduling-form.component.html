@@ -20,6 +20,7 @@
       mat-icon-button
       color="primary"
       style="margin: 0 0 20px"
+      [disabled]="!title || !customer"
       [mat-dialog-close]="{
         id: data.id,
         data: data,
@@ -37,7 +38,7 @@
     </button>
   </div>
 
-  <div mat-dialog-content style="height: 180px">
+  <div mat-dialog-content class="form">
     <form fxLayout="column">
       <mat-form-field style="width: 100%">
         <mat-label>Título</mat-label>
@@ -79,7 +80,7 @@
 
       <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
         <mat-form-field fxFlex="30">
-          <mat-label>Início</mat-label>
+          <mat-label>Data</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
@@ -94,7 +95,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="30">
-          <mat-label>Hora</mat-label>
+          <mat-label>Início</mat-label>
           <input
             matInput
             type="time"
@@ -104,7 +105,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="30">
-          <mat-label>Hora</mat-label>
+          <mat-label>Fim</mat-label>
           <input matInput type="time" [(ngModel)]="timeEnd" name="timeEnd" />
         </mat-form-field>
       </div>
@@ -125,10 +126,15 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="45">
-          <mat-select [(ngModel)]="pagamento" name="pagamento">
+          <mat-select
+            [(ngModel)]="pagamento"
+            name="pagamento"
+            placeholder="Forma de Pagamento"
+          >
             <mat-option value="Dinheiro">Dinheiro</mat-option>
             <mat-option value="Cartão de Débito">Cartão de Débito</mat-option>
             <mat-option value="Cartão Crédito">Cartão Crédito</mat-option>
+            <mat-option value="Pix">Pix</mat-option>
             <mat-option value="Cheque">Cheque</mat-option>
             <mat-option value="Fiado">Fiado</mat-option>
           </mat-select>
