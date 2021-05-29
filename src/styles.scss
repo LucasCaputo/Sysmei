@@ -75,6 +75,7 @@ full-calendar {
   full-calendar {
     max-width: 1000px;
     margin: 0 auto;
+    height: calc(100vh - 100px);
 
     .fc-header-toolbar {
       margin-bottom: 55px !important;
@@ -122,10 +123,18 @@ full-calendar {
   color: #9c27b0 !important;
   border: 1px solid !important;
 
+  &:focus {
+    box-shadow: none !important;
+  }
+
   &.fc-button-active {
     background-color: #9c27b0 !important;
     color: white !important;
     border: 1px solid #9c27b0 !important;
+
+    &:focus {
+      box-shadow: none !important;
+    }
   }
 }
 
@@ -141,6 +150,9 @@ full-calendar {
 
 .fc-col-header-cell-cushion {
   color: dimgray;
+}
+.fc-timegrid-slot {
+  height: 50px !important;
 }
 
 .fc-timegrid-slot-label-cushion {
