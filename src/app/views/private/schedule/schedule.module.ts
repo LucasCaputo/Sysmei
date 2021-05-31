@@ -20,6 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { ScheduleDialogModule } from '../shared/schedule-dialog/schedule-dialog.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -46,6 +47,7 @@ FullCalendarModule.registerPlugins([
     MatToolbarModule,
     SharedModule,
     NgxMaskModule.forRoot(),
+    ScheduleDialogModule,
   ],
   providers: [],
 })

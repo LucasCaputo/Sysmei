@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerService } from '../../../customer/customer.service';
+import { ScheduleDialogComponent } from '../../../shared/schedule-dialog/schedule-dialog.component';
 
 @Component({
   selector: 'app-calendar',
@@ -233,6 +234,8 @@ export class CalendarComponent implements OnInit {
           pagamento: result.pagamento,
         };
 
+        console.log('schedule funcioanndo', schedule);
+
         this.scheduleService.postScheduling(schedule).subscribe(
           (response) => {
             const calendarApi = selectInfo.view.calendar;
@@ -327,5 +330,18 @@ export class CalendarComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.router.navigate(['login']);
+  }
+
+  Schedule() {
+    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: '',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.loading = true;
+      this.getScheduling(true);
+    });
   }
 }

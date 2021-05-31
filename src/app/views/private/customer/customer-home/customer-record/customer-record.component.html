@@ -31,14 +31,15 @@
       />
     </div>
 
-    <!-- <button
+    <button
       *ngIf="tabSelected == 1"
       mat-icon-button
       aria-label="Adicionar clientes"
       style="margin-right: 8px"
+      (click)="addSchedule()"
     >
       <mat-icon>add_box</mat-icon>
-    </button> -->
+    </button>
 
     <button
       *ngIf="tabSelected == 0"

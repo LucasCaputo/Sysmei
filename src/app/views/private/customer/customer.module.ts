@@ -23,6 +23,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CustomerCompleteRegistrationComponent } from './customer-home/customer-record/customer-complete-registration/customer-complete-registration.component';
 import { RecordListComponent } from './customer-home/customer-record/record-list/record-list.component';
 import { OpenPhotoComponent } from './customer-home/customer-record/open-photo/open-photo.component';
+import { ScheduleDialogModule } from '../shared/schedule-dialog/schedule-dialog.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { OpenPhotoComponent } from './customer-home/customer-record/open-photo/o
     MatTabsModule,
     MatTableModule,
     MatGridListModule,
+    ScheduleDialogModule,
   ],
   providers: [],
 })
