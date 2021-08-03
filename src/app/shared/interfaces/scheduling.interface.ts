@@ -9,7 +9,7 @@ export interface Scheduling {
   paciente_id: number;
   pagamento: string;
   start: string;
-  status: boolean;
+  status: number;
   title: string;
   valor: number;
 }

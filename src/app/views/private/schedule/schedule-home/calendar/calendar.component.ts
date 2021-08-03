@@ -125,7 +125,7 @@ export class CalendarComponent implements OnInit {
       title: data.event._def.title,
       start,
       end,
-      status: true,
+      status: 0,
       login_usuario: this.auth.getUser()?.login,
       paciente_id:
         data.event._def.extendedProps.paciente_id ||
@@ -224,7 +224,7 @@ export class CalendarComponent implements OnInit {
           title: result.title,
           start,
           end,
-          status: true,
+          status: 0,
           login_usuario: this.auth.getUser()?.login,
           paciente_id: result.paciente_id,
           allDay: split[0],
@@ -284,7 +284,7 @@ export class CalendarComponent implements OnInit {
             title: result.title,
             start,
             end,
-            status: true,
+            status: 0,
             login_usuario: this.auth.getUser()?.login,
             paciente_id: result.paciente_id,
             allDay: split[0],
