@@ -1,12 +1,10 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
-
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
+import { animate, style, transition, trigger } from '@angular/animations';
+
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-
-import { LoginService } from 'src/app/views/public/login/login.service';
-
+import { UserService } from '../shared/services/user/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +18,7 @@ import { LoginService } from 'src/app/views/public/login/login.service';
     ]),
   ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm = this.fb.group({
     usuario: ['', [Validators.email]],
     senha: [''],
@@ -29,17 +27,15 @@ export class LoginComponent implements OnInit {
   type = 'password';
 
   constructor(
-    private loginService: LoginService,
+    private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
-
   onSubmit() {
     if (this.loginForm.valid) {
-      this.loginService.postLogin(this.loginForm.value).subscribe(
+      this.userService.postLogin(this.loginForm.value).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
             `Bem-vindo ${response.usuario.nome}`,

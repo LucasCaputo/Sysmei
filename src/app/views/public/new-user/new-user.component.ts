@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
 import { Router } from '@angular/router';
-
-import { NewUserService } from './new-user.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UserService } from '../shared/services/user/user.service';
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -21,12 +18,13 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class NewUserComponent implements OnInit {
+export class NewUserComponent {
   profileForm = this.fb.group({
     telefone: [''],
     login: ['', [Validators.email]],
     nome: ['', this.checkName],
     senha: [''],
+    confirmarSenha: [''],
   });
 
   type = 'password';
@@ -34,13 +32,11 @@ export class NewUserComponent implements OnInit {
   isOpen = true;
 
   constructor(
-    private newUserService: NewUserService,
+    private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
     private fb: FormBuilder
   ) {}
-
-  ngOnInit(): void {}
 
   checkName(input: FormControl) {
     const hasNumber = /[0-9]/.test(input.value);
@@ -61,7 +57,7 @@ export class NewUserComponent implements OnInit {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      this.newUserService.postUser(this.profileForm.value).subscribe(
+      this.userService.postUser(this.profileForm.value).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
             `Parabéns! usuário ${this.profileForm.value.nome} cadastrado com sucesso, faça login`,
@@ -79,6 +75,18 @@ export class NewUserComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+
+  confirmPassword() {
+    if (
+      this.profileForm.value.senha !== this.profileForm.value.confirmarSenha &&
+      this.profileForm.value.senha.length >= 6 &&
+      this.profileForm.value.confirmarSenha.length >= 6
+    ) {
+      this.profileForm.controls.confirmarSenha.setErrors({
+        passwordNotEqual: true,
+      });
     }
   }
 }

@@ -100,6 +100,49 @@
             >
           </mat-form-field>
 
+          <mat-form-field>
+            <mat-label>Confirmar senha</mat-label>
+            <input
+              matInput
+              [type]="type"
+              formControlName="confirmarSenha"
+              (keyup)="confirmPassword()"
+              minlength="6"
+              required
+            />
+            <mat-error
+              *ngIf="profileForm.controls.confirmarSenha.hasError('required')"
+            >
+              Confirmar a senha é <strong>obrigatório</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="profileForm.controls.confirmarSenha.hasError('minlength')"
+            >
+              A senha deve ter <strong>no mínimo 6 caracteres</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                profileForm.controls.confirmarSenha.hasError('passwordNotEqual')
+              "
+            >
+              A senha não confere
+            </mat-error>
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'text'"
+              (click)="type = 'password'"
+              >remove_red_eye</mat-icon
+            >
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'password'"
+              (click)="type = 'text'"
+              >visibility_off</mat-icon
+            >
+          </mat-form-field>
+
           <p style="margin: 16px 0">
             Já tem uma conta?
             <span routerLink="/login" class="create-account">
