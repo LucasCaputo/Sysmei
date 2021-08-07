@@ -1,10 +1,10 @@
-import { NewUser } from '../../public/new-user/new-user.interface';
+import { User } from '../../public/shared/interfaces/user';
 
 export interface CustomerResponse {
   id: number;
   nome: string;
   email: string;
-  usuario: NewUser;
+  usuario: User;
   nascimento: string;
   responsavel: string;
   sexo: string;

@@ -16,6 +16,7 @@ import { CustomerService } from '../../customer.service';
 import { Scheduling } from '../../../../../shared/interfaces/scheduling.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenPhotoComponent } from './open-photo/open-photo.component';
+import { ScheduleDialogComponent } from '../../../shared/schedule-dialog/schedule-dialog.component';
 
 @Component({
   selector: 'app-customer-record',
@@ -88,6 +89,10 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.populate();
+  }
+
+  populate() {
     this.loading = true;
     this.id = this.route.snapshot.params['id'];
     this.customerService.getCustomerId(this.id).subscribe(
@@ -140,6 +145,18 @@ export class CustomerRecordComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
+    });
+  }
+
+  addSchedule() {
+    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: '',
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.populate();
     });
   }
 }

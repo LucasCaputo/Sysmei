@@ -1,6 +1,6 @@
 <div>
   <mat-toolbar color="primary" style="padding-left: 0; margin-bottom: 34px">
-    <!-- style="position: fixed; padding-left: 0; z-index: 9" -->
+    <!-- style="position: fixed; ping-left: 0; z-index: 9" -->
     <button mat-button [matMenuTriggerFor]="menu" style="z-index: 99">
       <mat-icon>menu</mat-icon>
     </button>
@@ -8,5 +8,16 @@
       <button mat-menu-item (click)="logout()">Sair</button>
     </mat-menu>
   </mat-toolbar>
+  <full-calendar *ngIf="!loading" [options]="calendarOptions"></full-calendar>
+
+  <button
+    mat-icon-button
+    aria-label="Adicionar clientes"
+    style="position: absolute; z-index: 9; right: 16px; top: 8px"
+    (click)="Schedule()"
+  >
+    <mat-icon style="font-size: 30px; color: white"
+      >add_circle_outline</mat-icon
+    >
+  </button>
 </div>
-<full-calendar *ngIf="!loading" [options]="calendarOptions"></full-calendar>
