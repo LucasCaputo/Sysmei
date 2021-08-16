@@ -71,7 +71,7 @@ export class SchedulingFormComponent implements OnInit {
       extendedProps: {
         login_usuario: string;
         customer: string;
-        status: boolean;
+        status: number;
         paciente_id: number;
         valor: number;
         detalhes: string;
