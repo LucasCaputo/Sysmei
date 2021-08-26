@@ -1,0 +1,112 @@
+<div fxLayoutAlign="space-between center">
+  <button
+    mat-dialog-close
+    mat-icon-button
+    color="accent"
+    style="margin: 0 0 20px"
+  >
+    <mat-icon>highlight_off</mat-icon>
+  </button>
+  <span mat-dialog-title>{{
+    !data.id ? "Cadastrar cliente" : "Editar cliente"
+  }}</span>
+  <button
+    mat-icon-button
+    color="primary"
+    style="margin: 0 0 20px"
+    [mat-dialog-close]="{
+      id: data.id,
+      nome: form.value.nome,
+      telefone1: form.value.telefone1,
+      email: form.value.email,
+      login_usuario: form.value.login_usuario
+    }"
+  >
+    <mat-icon>done_outline</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content style="height: 220px">
+  <form [formGroup]="form" fxLayout="column">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input #myInput matInput type="text" formControlName="nome" required />
+      <mat-error *ngIf="form.controls.nome.hasError('required')">
+        Nome é <strong>obrigatório</strong>
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !form.controls.nome.hasError('required') &&
+          form.controls.nome.hasError('hasNumber')
+        "
+      >
+        Insira seu nome completo, <strong>somente letras</strong>
+      </mat-error>
+
+      <mat-error
+        *ngIf="
+          !form.controls.nome.hasError('required') &&
+          form.controls.nome.hasError('isNameComplete')
+        "
+      >
+        Informe seu nome <strong>completo</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Telefone</mat-label>
+      <input
+        matInput
+        type="tel"
+        mask="(00) 0 0000-0000"
+        formControlName="telefone1"
+        minlength="11"
+        required
+      />
+      <mat-error
+        *ngIf="
+          form.controls.telefone1.hasError('minlength') &&
+          !form.controls.telefone1.hasError('required')
+        "
+      >
+        Por favor insira um telefone <strong>celular</strong> válido
+      </mat-error>
+      <mat-error *ngIf="form.controls.telefone1.hasError('required')">
+        Telefone é <strong>obrigatório</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="E-mail"
+        type="text"
+        formControlName="email"
+        required
+      />
+      <mat-error
+        *ngIf="
+          form.controls.email.hasError('email') &&
+          !form.controls.email.hasError('required')
+        "
+      >
+        Por favor insira um endereço de e-mail válido
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        E-mail é <strong>obrigatório</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+  <div fxLayoutAlign="end center">
+    <button
+      *ngIf="data.nome"
+      color="warn"
+      mat-icon-button
+      aria-label="Excluir"
+      (click)="onDelete(data)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

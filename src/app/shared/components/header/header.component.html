@@ -16,7 +16,7 @@
           : ''
       "
     >
-      <div *ngIf="!isMobile">
+      <div *ngIf="!isMobile" style="margin-right: 60px">
         <button
           mat-flat-button
           color="primary"
@@ -34,15 +34,6 @@
           routerLinkActive="active"
         >
           Clientes
-        </button>
-
-        <button
-          mat-icon-button
-          color="secondary"
-          (click)="logout()"
-          aria-label="Logout"
-        >
-          <mat-icon>power_settings_new</mat-icon>
         </button>
       </div>
 

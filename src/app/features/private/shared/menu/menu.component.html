@@ -1,0 +1,60 @@
+<mat-nav-list>
+  <a mat-list-item>
+    <mat-list style="flex: 1; padding: 0">
+      <mat-list-item>
+        <span
+          mat-list-icon
+          style="
+            width: 40px;
+            height: 40px;
+            background-color: #673ab7;
+            border-radius: 50%;
+          "
+        >
+        </span>
+        <div mat-line style="font-weight: 500">Lucas Caputo</div>
+        <div mat-line>lccaputo@hotmail.com</div>
+        <mat-icon style="margin-left: 16px">settings</mat-icon>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </a>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title (click)="redirect('agenda')">Agenda</mat-panel-title>
+        <mat-panel-description style="justify-content: flex-end">
+          <mat-icon>date_range</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p style="margin-left: 16px">Novo Agendamento</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title (click)="redirect('clientes')">
+          Clientes
+        </mat-panel-title>
+        <mat-panel-description style="justify-content: flex-end">
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p style="margin-left: 16px">Adicionar Cliente</p>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title (click)="redirect('prestador')"
+          >Prestador</mat-panel-title
+        >
+        <mat-panel-description style="justify-content: flex-end">
+          <mat-icon>badge</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p style="margin-left: 16px">Adicionar Prestador</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <a mat-list-item (click)="logout()" style="position: absolute; bottom: 16px">
+    Sair
+  </a>
+</mat-nav-list>

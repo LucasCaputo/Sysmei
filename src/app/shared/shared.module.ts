@@ -16,6 +16,8 @@ import { ArrayFiltroPipe } from './pipes/array-filtro.pipe';
 import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { IconColorPipe } from './pipes/icon-color.pipe';
+import { IconCustomerPipe } from './pipes/icon-customer.pipe';
 
 @NgModule({
   imports: [
@@ -39,6 +41,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     WhatsappIconComponent,
     ArrayFiltroPipe,
     FormatPhonePipe,
+    IconColorPipe,
+    IconCustomerPipe,
   ],
   exports: [
     CommonModule,
@@ -52,13 +56,14 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     MatDialogModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatDialogModule,
     MatIconModule,
     HttpClientModule,
     MatProgressBarModule,
     ArrayFiltroPipe,
     FormatPhonePipe,
     MatSnackBarModule,
+    IconColorPipe,
+    IconCustomerPipe,
   ],
 })
 export class SharedModule {}

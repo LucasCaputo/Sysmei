@@ -4,8 +4,8 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { PrivateComponent } from './views/private/private.component';
-import { PublicComponent } from './views/public/public.component';
+import { PrivateComponent } from './features/private/private.component';
+import { PublicComponent } from './features/public/public.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -14,6 +14,7 @@ import { InterceptorService } from './shared/components/loader/interceptor.servi
 
 import { LoaderComponent } from './shared/components/loader/loader/loader.component';
 import { SharedModule } from './shared/shared.module';
+import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,6 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatProgressBarModule,
-
     SharedModule,
   ],
   providers: [
@@ -45,7 +45,8 @@ import { SharedModule } from './shared/shared.module';
       useClass: InterceptorService,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

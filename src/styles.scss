@@ -40,20 +40,24 @@ body {
 }
 
 full-calendar {
-  height: calc(100vh - 150px);
+  height: calc(100vh - 56px);
+
+  .fc-scrollgrid.fc-scrollgrid-liquid {
+    margin-top: 54px;
+    padding-bottom: 55px;
+  }
 
   .fc-toolbar-chunk {
     &:first-child {
       position: absolute;
       right: 4px;
-      top: 66px;
+      top: 30px;
     }
 
     &:nth-child(2) {
       position: absolute;
       width: 100%;
-      top: 12px;
-      color: white;
+      color: #673ab7;
       font-size: 0.6rem;
 
       .fc-toolbar-title {
@@ -65,7 +69,7 @@ full-calendar {
     &:last-child {
       position: absolute;
       left: 4px;
-      top: 66px;
+      top: 30px;
       margin-right: 4px;
     }
   }

@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrivateRoutesGuard } from './shared/guards/private-routes/private-routes.guard';
 import { PublicRoutesGuard } from './shared/guards/public-routes/public-routes.guard';
 import { Erro404Component } from './shared/pages/erro404/erro404.component';
-import { PrivateComponent } from './views/private/private.component';
-import { PublicComponent } from './views/public/public.component';
+import { PrivateComponent } from './features/private/private.component';
+import { PublicComponent } from './features/public/public.component';
 
 const routes: Routes = [
   {
@@ -20,15 +20,22 @@ const routes: Routes = [
       {
         path: 'clientes',
         loadChildren: () =>
-          import('./views/private/customer/customer.module').then(
+          import('./features/private/customer/customer.module').then(
             (m) => m.CustomerModule
           ),
       },
       {
         path: 'agenda',
         loadChildren: () =>
-          import('./views/private/schedule/schedule.module').then(
+          import('./features/private/schedule/schedule.module').then(
             (m) => m.ScheduleModule
+          ),
+      },
+      {
+        path: 'prestador',
+        loadChildren: () =>
+          import('./features/private/employee/employee.module').then(
+            (m) => m.EmployeeModule
           ),
       },
     ],
@@ -41,14 +48,14 @@ const routes: Routes = [
       {
         path: 'cadastro',
         loadChildren: () =>
-          import('./views/public/new-user/new-user.module').then(
+          import('./features/public/new-user/new-user.module').then(
             (m) => m.NewUserModule
           ),
       },
       {
         path: 'login',
         loadChildren: () =>
-          import('./views/public/login/login.module').then(
+          import('./features/public/login/login.module').then(
             (m) => m.LoginModule
           ),
       },
