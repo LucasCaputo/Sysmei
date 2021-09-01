@@ -62,7 +62,7 @@ export class CustomerService {
 
   getCustomerRecord(customerId: number): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/?id=${customerId}`,
+      `${environment.baseURL}/agenda/` + customerId,
       {
         headers: {
           Authorization: this.authService.getToken()!,
