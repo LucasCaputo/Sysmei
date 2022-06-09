@@ -39,7 +39,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // server-side error
             errorMessage = `Error Code: ${error.status} \nMessage: ${error.message}`;
 
-            debugger
             if (error.status == 403) {
               errorMessage = "Seu Token venceu faça login novamente"
               this.auth.logout()
