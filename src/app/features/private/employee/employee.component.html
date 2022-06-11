@@ -25,64 +25,9 @@
     <app-menu></app-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content style="height: calc(100vh - 70px)">
+  <mat-sidenav-content style="height: calc(100vh - 70px)" *ngIf="show">
       <div style="width: 96vw; max-width: 500px;">
-          <mat-list>
-            <div *ngFor="let customer of customerList">
-              <mat-list-item >
-                <div
-                  fxFlex
-                  fxLayoutAlign="center center"
-                  fxFlex="66"
-                  style="cursor: pointer"
-                >
-                  <div
-                    mat-list-icon
-                    fxLayoutAlign="center center"
-                    [style]="customer.nome | iconColor"
-                    class="icon"
-                  >
-                    <span fxLayoutAlign="center center">
-                      {{ customer.nome | iconCustomer }}
-                    </span>
-                  </div>
-                  <div fxFlex style="margin-left: 16px" fxFlex="80">
-                    <div mat-line>
-                      {{ customer.nome }}
-                    </div>
-                    <div mat-line>
-                      {{ customer.telefone | formatPhone }}
-                    </div>
-                  </div>
-                </div>
-  
-                <a href="tel:{{ customer.telefone }}" target="_blank">
-                  <button mat-icon-button aria-label="Telefone">
-                    <mat-icon style="color: black">phone</mat-icon>
-                  </button>
-                </a>
-  
-                <button
-                  mat-icon-button
-                  aria-label="Ediar cliente"
-                  (click)="openDialog(customer)"
-                >
-                  <mat-icon style="color: black">edit</mat-icon>
-                </button>
-  
-                <a
-                  href="https://api.whatsapp.com/send?phone=55{{
-                    customer.telefone
-                  }}text=Ol%C3%A1"
-                  target="_blank"
-                >
-                  <app-whatsapp-icon></app-whatsapp-icon>
-                </a>
-  
-                <mat-divider></mat-divider>
-              </mat-list-item>
-            </div>
-          </mat-list>
+        <app-card [customerList]="customerList"></app-card>
       </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

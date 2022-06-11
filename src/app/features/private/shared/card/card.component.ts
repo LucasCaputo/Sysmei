@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
+import { Component, Input, OnInit } from '@angular/core';
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
+import { CardInfo } from './interfaces/card-info';
 
 @Component({
   selector: 'app-card',
@@ -8,12 +8,9 @@ import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
-  @Input()
-  customerList!: Array<EmployeeResponse>;
+  @Input() customerList!: Array<EmployeeResponse>;
 
-
-  @Input()
-  search: string = '';
+  @Input() search: string = '';
 
   letters: Array<string> = [
     'A',
@@ -44,48 +41,30 @@ export class CardComponent implements OnInit {
     'Z',
   ];
 
-  getList: Array<any> = [];
-
-  constructor() {}
+  getList: Array<CardInfo> = [];
 
   ngOnInit(): void {
-    let list = this.customerList
-    console.log(this.customerList, 'CARD');
     this.formatContacts(this.customerList);
-
-
-   
   }
 
-  formatContacts(list: Array<EmployeeResponse>) {
-    this.getList = [];
-    this.customerList = [];
-
-    this.getList.push(list);
-    this.getList[0].sort((a: any, b: any) => {
-      if (a.nome < b.nome) {
-        return -1;
-      } else {
-        return true;
-      }
-    });
+  private formatContacts(list: Array<EmployeeResponse>) {
 
     for (let i = 0; i < this.letters.length; i++) {
       let letter = this.letters[i];
 
-      this.getList[0].forEach((element: any, index: number) => {
+      list.forEach((element: EmployeeResponse, index: number) => {
         if (
           letter == element.nome[0] ||
           letter.toLowerCase() == element.nome[0]
         ) {
           if (index == 0) {
-            this.customerList.push({
+            this.getList.push({
               inicial: letter,
               isFirstLetter: true,
               ...element,
             });
           } else {
-            this.customerList.push({
+            this.getList.push({
               inicial: letter,
               isFirstLetter: false,
               ...element,
@@ -99,14 +78,8 @@ export class CardComponent implements OnInit {
   checklistContent(list: any, letter: string) {
     const found = list.find((element: any) => element.inicial == letter);
 
-    if (found) {
-      return true;
-    }
+    if (found) return true;
 
     return false;
-  }
-
-  openDialog(customer: any) {
-    console.log(customer);
   }
 }

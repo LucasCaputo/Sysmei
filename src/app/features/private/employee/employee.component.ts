@@ -14,35 +14,7 @@ import { EmployeeService } from '../shared/services/employee/employee.service';
 })
 export class EmployeeComponent implements OnInit {
   customerList: Array<EmployeeResponse> = [];
-
-  letters: Array<string> = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
+  show = false
 
   constructor(
     private employeeService: EmployeeService,
@@ -61,6 +33,10 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.$employee.subscribe((result) => {
       console.log(result);
       this.customerList = result;
+
+      if(result.length){
+        this.show = true
+      }
     });
   }
 

@@ -1,62 +1,37 @@
-<div style="width: 98vw">
+<div *ngIf="getList.length" class="container">
   <div
     *ngFor="let letter of letters"
     [style]="
-      checklistContent(customerList | arrayFiltro: search, letter)
+      checklistContent(getList | arrayFiltro: search, letter)
         ? ''
         : 'display:none'
     "
   >
-    <div mat-subheader *ngIf="customerList.length && !search">
+    <div mat-subheader *ngIf="getList.length && !search">
       {{ letter }}
     </div>
     <mat-list
-      *ngIf="checklistContent(customerList | arrayFiltro: search, letter)"
+      *ngIf="checklistContent(getList | arrayFiltro: search, letter)"
     >
-      <div *ngFor="let customer of customerList | arrayFiltro: search">
-        <mat-list-item *ngIf="letter == customer.inicial" style="height: 88px">
+      <div *ngFor="let customer of getList | arrayFiltro: search">
+        <mat-list-item *ngIf="letter == customer.inicial" class="card">
           <div
             fxFlex
             fxLayoutAlign="center center"
             fxFlex="66"
             routerLink="ficha/{{ customer.id }}"
-            style="cursor: pointer"
+            class="badge"
           >
             <app-badge [name]="customer.nome"></app-badge>
 
-            <div fxFlex style="margin-left: 16px" fxFlex="80">
+            <div fxFlex fxFlex="80">
               <app-contact-info
-                [info]="{
-                  name: customer.nome,
-                  phone: customer.telefone,
-                  email: customer.email
-                }"
+                [info]="customer"
               ></app-contact-info>
             </div>
           </div>
 
-          <a href="tel:{{ customer.telefone1 }}" target="_blank">
-            <button mat-icon-button aria-label="Telefone">
-              <mat-icon style="color: black">phone</mat-icon>
-            </button>
-          </a>
-
-          <button
-            mat-icon-button
-            aria-label="Ediar cliente"
-            (click)="openDialog(customer)"
-          >
-            <mat-icon style="color: black">edit</mat-icon>
-          </button>
-
-          <a
-            href="https://api.whatsapp.com/send?phone=55{{
-              customer.telefone1
-            }}text=Ol%C3%A1"
-            target="_blank"
-          >
-            <app-whatsapp-icon></app-whatsapp-icon>
-          </a>
+          <app-contact-actions [customer]="customer"></app-contact-actions>
 
           <mat-divider></mat-divider>
         </mat-list-item>

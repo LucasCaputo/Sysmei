@@ -1,0 +1,15 @@
+.container {
+    width: 98vw;
+
+    .card {
+        height: 88px;
+
+        .badge {
+            cursor: pointer;
+        }
+
+        .details {
+            margin-left: 16px;
+        }
+    }
+}

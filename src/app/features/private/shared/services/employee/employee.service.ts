@@ -9,8 +9,7 @@ import { EmployeeRepository } from 'src/app/repository/services/employee/employe
 })
 export class EmployeeService {
   public employee!: Array<EmployeeResponse>;
-  public $employee: BehaviorSubject<Array<EmployeeResponse>> =
-    new BehaviorSubject<Array<EmployeeResponse>>([]);
+  public $employee: BehaviorSubject<Array<EmployeeResponse>> = new BehaviorSubject<Array<EmployeeResponse>>([]);
 
   constructor(private employeeRepository: EmployeeRepository) {}
 

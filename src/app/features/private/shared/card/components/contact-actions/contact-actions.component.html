@@ -1,0 +1,22 @@
+<a href="tel:{{ customer.telefone }}" target="_blank">
+    <button mat-icon-button aria-label="Telefone">
+      <mat-icon style="color: black">phone</mat-icon>
+    </button>
+  </a>
+
+  <button
+    mat-icon-button
+    aria-label="Ediar cliente"
+    (click)="openDialog(customer)"
+  >
+    <mat-icon style="color: black">edit</mat-icon>
+  </button>
+
+  <a
+    href="https://api.whatsapp.com/send?phone=55{{
+      customer.telefone
+    }}text=Ol%C3%A1"
+    target="_blank"
+  >
+    <app-whatsapp-icon></app-whatsapp-icon>
+  </a>

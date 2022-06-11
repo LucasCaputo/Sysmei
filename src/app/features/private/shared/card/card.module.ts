@@ -5,9 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatListModule } from '@angular/material/list';
 import { BadgeComponent } from './components/badge/badge.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
+import { ContactActionsComponent } from './components/contact-actions/contact-actions.component';
 
 @NgModule({
-  declarations: [CardComponent, BadgeComponent, ContactInfoComponent],
+  declarations: [CardComponent, BadgeComponent, ContactInfoComponent, ContactActionsComponent],
   imports: [CommonModule, SharedModule, MatListModule],
   exports: [CardComponent],
 })

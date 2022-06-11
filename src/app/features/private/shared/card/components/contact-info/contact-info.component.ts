@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Info } from './interface/info';
+import { CardInfo } from '../../interfaces/card-info';
 
 @Component({
   selector: 'app-contact-info',
@@ -7,9 +7,10 @@ import { Info } from './interface/info';
   styleUrls: ['./contact-info.component.scss'],
 })
 export class ContactInfoComponent implements OnInit {
-  @Input() info: any | undefined;
+  @Input() info: CardInfo | undefined;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {    
+  }
 }
