@@ -9,7 +9,7 @@
       mat-dialog-close
       mat-icon-button
       color="accent"
-      style="margin: 0 0 20px"
+      class="action-buttons"
     >
       <mat-icon>highlight_off</mat-icon>
     </button>
@@ -19,7 +19,7 @@
     <button
       mat-icon-button
       color="primary"
-      style="margin: 0 0 20px"
+      class="action-buttons"
       [disabled]="!title || !customer"
       [mat-dialog-close]="{
         id: data.id,

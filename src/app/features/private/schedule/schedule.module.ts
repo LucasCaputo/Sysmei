@@ -19,7 +19,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
-import { ScheduleDialogModule } from '../shared/dialogs/schedule-dialog/schedule-dialog.module';
 import { MenuModule } from '../shared/menu/menu.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -45,7 +44,6 @@ FullCalendarModule.registerPlugins([
     MatToolbarModule,
     SharedModule,
     NgxMaskModule.forRoot(),
-    ScheduleDialogModule,
     MenuModule,
     MatSidenavModule,
     MatListModule,

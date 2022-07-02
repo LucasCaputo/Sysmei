@@ -52,7 +52,6 @@ export class CustomerComponent implements OnInit {
   searchBox!: ElementRef<HTMLInputElement>;
 
   search = '';
-  loading = false;
 
   constructor(
     private customerRepository: CustomerRepository,
@@ -79,7 +78,6 @@ export class CustomerComponent implements OnInit {
   private getCustomers(): void {
     this.customerService.$customers.subscribe(
       (result: Array<CustomerResponse>) => {
-        console.log(result);
         this.formatContacts(result);
       }
     );
@@ -135,7 +133,7 @@ export class CustomerComponent implements OnInit {
       if (result?.id) {
         this.customerRepository.updateCustomer(result, result.id).subscribe(
           (response) => {
-            this.customerService.searchCustomerList(this.user?.login);
+            this.customerService.searchCustomerList();
             this.getCustomers();
             this.snackbarService.openSnackBar(
               `Parabéns! usuário ${result.nome.toUpperCase()} atualizado com sucesso`,
@@ -156,7 +154,7 @@ export class CustomerComponent implements OnInit {
       if (result) {
         this.customerRepository.postCustomer(result).subscribe(
           (response) => {
-            this.customerService.searchCustomerList(this.user?.login);
+            this.customerService.searchCustomerList();
             this.getCustomers();
             this.snackbarService.openSnackBar(
               `Parabéns! usuário ${result.nome.toUpperCase()} cadastrado com sucesso`,
@@ -172,9 +170,6 @@ export class CustomerComponent implements OnInit {
             );
           }
         );
-      } else {
-        this.customerService.searchCustomerList(this.user?.login);
-        this.getCustomers();
       }
     });
   }

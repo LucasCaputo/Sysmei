@@ -26,8 +26,8 @@ export class CustomerService {
   ) {}
 
   /** Busca lista de usuários e salva na variável customers */
-  public searchCustomerList(user: string | undefined | User): void {
-    this.customerRepository.getCustomer(user).subscribe((customerList) => {
+  public searchCustomerList(): void {
+    this.customerRepository.getCustomer(this.authService.getUser()?.login).subscribe((customerList) => {
       this.customers = customerList;
       this.$customers.next(customerList);
       this.formatCustomerList(this.customers);

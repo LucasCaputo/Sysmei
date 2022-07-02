@@ -40,7 +40,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content style="height: calc(100vh - 70px)">
-    <div style="width: 98vw">
+    <div *ngIf="(customerList | arrayFiltro: search).length" style="width: 98vw" >
       <div
         *ngFor="let letter of letters"
         [style]="
@@ -117,17 +117,15 @@
       </div>
     </div>
 
-    <div fxFlex *ngIf="!customerList.length && !search">
-      <h1 fxLayoutAlign="center" *ngIf="loading">
-        Estamos buscando seus dados
-      </h1>
-      <h1 fxLayoutAlign="center" *ngIf="!loading">
-        Cadastre seu primeiro cliente
-      </h1>
+      <div fxFlex fxLayoutAlign="center center" *ngIf="!customerList.length && !search">
+      <h1> Cadastre seu primeiro cliente </h1>
     </div>
 
-    <div fxFlex *ngIf="!(customerList | arrayFiltro: search).length && search">
-      <h1 fxLayoutAlign="center">Não encontramos o nome {{ search }}</h1>
+    <div fxFlex fxLayoutAlign="center center" *ngIf="!(customerList | arrayFiltro: search).length && search">
+       <div>
+        <h1>Não encontramos o cliente</h1>
+        <h1>{{ search }}</h1>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

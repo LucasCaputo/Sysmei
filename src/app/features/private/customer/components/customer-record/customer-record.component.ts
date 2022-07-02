@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ScheduleDialogComponent } from '../../../shared/dialogs/schedule-dialog/schedule-dialog.component';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import {
-  CustomerResponse,
+  CustomerResponse, 
   DocumentsUrl,
 } from 'src/app/repository/intefaces/customer-response';
 import { OpenPhotoComponent } from '../open-photo/open-photo.component';

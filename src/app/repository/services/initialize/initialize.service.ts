@@ -20,7 +20,7 @@ export class InitializeService {
     if (!user) {
       user = this.auth.getUser()?.login;
     }
-    this.customerService.searchCustomerList(user);
+    this.customerService.searchCustomerList();
     this.scheduleService.searchScheduleList(user);
     this.employeeService.searchEmployeeList();
   }

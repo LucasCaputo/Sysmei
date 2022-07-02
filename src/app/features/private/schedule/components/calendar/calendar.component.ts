@@ -87,10 +87,10 @@ export class CalendarComponent implements OnInit {
             });
           });
 
-          this.calendarOptions.initialEvents = this.scheduling;
-          this.loading = false;
-          this.scheduleService.$schedule.unsubscribe;
         }
+        this.calendarOptions.initialEvents = this.scheduling;
+        this.loading = false;
+        this.scheduleService.$schedule.unsubscribe;
       }
     );
   }
@@ -179,9 +179,9 @@ export class CalendarComponent implements OnInit {
       return;
     }
 
-    console.log(selectInfo);
+    console.log(selectInfo);  
 
-    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
       data: selectInfo,

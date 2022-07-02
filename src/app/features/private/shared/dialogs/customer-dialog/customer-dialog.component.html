@@ -21,6 +21,7 @@
       email: form.value.email,
       login_usuario: form.value.login_usuario
     }"
+    [disabled]="form.invalid || !form.dirty"
   >
     <mat-icon>done_outline</mat-icon>
   </button>
@@ -82,7 +83,6 @@
         placeholder="E-mail"
         type="text"
         formControlName="email"
-        required
       />
       <mat-error
         *ngIf="

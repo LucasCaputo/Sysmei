@@ -7,15 +7,17 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
+import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { CustomerService } from '../../../shared/services/customer/customer.service';
+import { AutocompleteOptions } from './interfaces/autocomplete-options';
+import { CustomerData } from './interfaces/customer-data';
 
 @Component({
   selector: 'app-scheduling',
@@ -23,11 +25,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
   styleUrls: ['./scheduling-form.component.scss'],
 })
 export class SchedulingFormComponent implements OnInit {
-  @ViewChild('titleInput') titleInput: ElementRef | undefined;
-
-  @ViewChild('dateStartInput') dateStartInput: ElementRef | undefined;
-  @ViewChild('timeStartInput') timeStartInput: ElementRef | undefined;
-
+  
   user = this.authService.getUser();
 
   title = this.data.title || '';
@@ -42,20 +40,15 @@ export class SchedulingFormComponent implements OnInit {
 
   customerControl = new FormControl();
 
-  options: Array<{
-    id: number;
-    text: string;
-    phone: string;
-    nome: string;
-  }> = [];
+  customerData: Array<CustomerData> = [];
 
-  filteredOptions: Observable<Array<{ id: number; text: string }>>;
+  filteredOptions: Observable<Array<AutocompleteOptions>>;
   loading = false;
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
 
   constructor(
-    private customerRepository: CustomerRepository,
+    private customerService: CustomerService,
     private scheduleRepository: ScheduleRepository,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
@@ -76,7 +69,6 @@ export class SchedulingFormComponent implements OnInit {
         pagamento: string;
       };
     },
-    private router: Router,
     private utilService: UtilsService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService
@@ -88,27 +80,12 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const hasLocalStorage = localStorage.getItem('customer');
 
-    if (hasLocalStorage) {
-      this.formatCustomers(JSON.parse(hasLocalStorage));
-    } else {
-      this.loading = true;
-
-      this.customerRepository.getCustomer(this.user?.login).subscribe(
-        (response) => {
-          this.formatCustomers(response);
-        },
-        (error) => {
-          alert('Seu token venceu, faça login novamente');
-          this.authService.logout();
-          this.router.navigate(['login']);
-        },
-        () => {
-          this.loading = false;
-        }
-      );
-    }
+    this.customerService.$customers.subscribe(
+      (result: Array<CustomerResponse>) => {
+        this.formatCustomers(result);
+      }
+    );
 
     this.dateStart = this.data.start;
     this.timeStart = this.data.startStr.slice(11, 16);
@@ -149,14 +126,14 @@ export class SchedulingFormComponent implements OnInit {
         this.customerControl.setValue(element);
       }
 
-      this.options.push({
+      this.customerData.push({
         ...element,
         text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
       });
     });
   }
 
-  private _filter(value: any): Array<{ id: number; text: string }> {
+  private _filter(value: any): Array<AutocompleteOptions> {
     let filterValue = '';
     if (value?.text) {
       filterValue = value.text.toLowerCase();
@@ -164,7 +141,7 @@ export class SchedulingFormComponent implements OnInit {
       filterValue = value.toLowerCase();
     }
 
-    return this.options.filter((option) =>
+    return this.customerData.filter((option) =>
       option.text.toLowerCase().includes(filterValue)
     );
   }

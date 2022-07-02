@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { CustomerService } from '../../services/customer/customer.service';
 
 @Component({
   selector: 'app-customer-dialog',
@@ -24,7 +24,7 @@ export class CustomerDialogComponent implements OnInit {
     email: [this.data.email || '', [Validators.email]],
     login_usuario: [this.authService.getUser()?.login],
   });
-
+  
   user = this.authService.getUser();
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
@@ -39,7 +39,7 @@ export class CustomerDialogComponent implements OnInit {
       email: string;
       telefone1: string;
     },
-    private customerRepository: CustomerRepository,
+    private customerService: CustomerService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService
   ) {}
@@ -70,7 +70,7 @@ export class CustomerDialogComponent implements OnInit {
   }
 
   onDelete(customer: any) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
       data: {
@@ -80,13 +80,15 @@ export class CustomerDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        this.customerRepository.deleteCustomer(customer).subscribe(
+        this.customerService.deleteCustomer(customer).subscribe(
           (response) => {
             this.snackbarService.openSnackBar(
               `Usuário deletado com sucesso`,
               'X',
               false
             );
+
+            this.customerService.searchCustomerList()
 
             this.dialog.closeAll();
           },

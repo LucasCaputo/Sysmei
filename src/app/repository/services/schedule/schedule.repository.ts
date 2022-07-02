@@ -37,9 +37,9 @@ export class ScheduleRepository {
   }
 
   /** Busca lista de todos os agendamentos */
-  public getSchedule(user: string): Observable<any> {
+  public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda?login=${user}`,
+      `${environment.baseURL}/agenda?login=${this.authService.getUser()?.login}`,
       {
         headers: {
           Authorization: this.authService.getToken()!,
