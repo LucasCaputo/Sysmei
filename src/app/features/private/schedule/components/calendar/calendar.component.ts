@@ -6,6 +6,7 @@ import {
   DateSelectArg,
   EventClickArg,
   EventInput,
+  EventApi,
 } from '@fullcalendar/angular';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -16,6 +17,7 @@ import { ScheduleRepository } from 'src/app/repository/services/schedule/schedul
 import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
 import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
 import { CustomerService } from '../../../shared/services/customer/customer.service';
+import { EmployeeService } from '../../../shared/services/employee/employee.service';
 
 @Component({
   selector: 'app-calendar',
@@ -51,12 +53,14 @@ export class CalendarComponent implements OnInit {
     eventClick: this.onEditScheduling.bind(this),
     eventDrop: this.onDragAndDrop.bind(this),
     eventResize: this.onDragAndDrop.bind(this),
+    eventsSet: this.handleEvents.bind(this),
     selectLongPressDelay: 250,
     locale: 'pt-br',
   };
 
+  currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
-  loading = false;
+  loading = true;
 
   constructor(
     public dialog: MatDialog,
@@ -65,12 +69,15 @@ export class CalendarComponent implements OnInit {
     private customerService: CustomerService,
     private auth: AuthService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.populateSchedule();
+  }
 
+  populateSchedule() {
     this.scheduleService.$schedule.subscribe(
       (scheduleResponse: Array<ScheduleResponse>) => {
         if (scheduleResponse.length) {
@@ -84,15 +91,16 @@ export class CalendarComponent implements OnInit {
               valor: element.valor,
               pagamento: element.pagamento,
               detalhes: element.detalhes,
+              prestador_id: element.prestador_id
             });
           });
+          this.calendarOptions.initialEvents = this.scheduling;
 
+          this.loading = false
         }
-        this.calendarOptions.initialEvents = this.scheduling;
-        this.loading = false;
-        this.scheduleService.$schedule.unsubscribe;
       }
-    );
+          
+    )
   }
 
   onDragAndDrop(data: any) {
@@ -123,6 +131,7 @@ export class CalendarComponent implements OnInit {
     );
   }
 
+  // possivelmente não vou utilizar essa função
   getScheduling(update: boolean) {
     let hasLocalStorage = localStorage.getItem('scheduling') || '';
 
@@ -150,6 +159,7 @@ export class CalendarComponent implements OnInit {
               valor: parseInt(element.valor),
               detalhes: element.detalhes,
               pagamento: element.pagamento,
+              prestador_id: element.prestador_id,
             });
           });
 
@@ -172,14 +182,12 @@ export class CalendarComponent implements OnInit {
   }
 
   onInsertScheduling(selectInfo: DateSelectArg) {
-    if (!this.customerService.customers.length) {
+    if (!this.customerService?.customers?.length) {
       alert('você precisa cadastrar seu primeiro cliente');
 
       this.router.navigate(['/clientes']);
       return;
     }
-
-    console.log(selectInfo);  
 
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
@@ -209,6 +217,7 @@ export class CalendarComponent implements OnInit {
           valor: parseInt(result.valor),
           detalhes: result.detalhes,
           pagamento: result.pagamento,
+          prestador_id: this.employeeService.employee[0]?.id,
         };
 
         console.log('schedule funcioanndo', schedule);
@@ -228,10 +237,11 @@ export class CalendarComponent implements OnInit {
               valor: parseInt(result.valor),
               detalhes: result.detalhes,
               pagamento: result.pagamento,
+              prestador_id: result.prestador_id
             });
 
-            this.getScheduling(true);
-          },
+            this.scheduleService.searchScheduleList()
+          },  
           (error) => {
             console.log(error);
           }
@@ -250,6 +260,8 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result?.id) {
+          console.log(result);
+          
           const date = new Date(result.date).toISOString() + '0';
 
           let clearDate = this.utilsService.clearStringData(date);
@@ -271,6 +283,7 @@ export class CalendarComponent implements OnInit {
             valor: parseInt(result.valor),
             detalhes: result.detalhes,
             pagamento: result.pagamento,
+            prestador_id: 34,
           };
 
           this.scheduleRepository
@@ -317,5 +330,11 @@ export class CalendarComponent implements OnInit {
       this.loading = true;
       this.getScheduling(true);
     });
+  }
+
+  handleEvents(events: EventApi[]) {
+    console.log(events);
+    
+    this.currentEvents = events;
   }
 }

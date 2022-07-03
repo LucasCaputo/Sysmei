@@ -59,10 +59,12 @@ export class ScheduleRepository {
     );
   }
 
-  updateScheduling(body: any, id: number) {
+  updateScheduling(body:any, id: number) {
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
+        PacienteID: `${body.paciente_id}`,
+        PrestadorID: `${body.prestador_id}`
       },
     });
   }

@@ -10,4 +10,5 @@ export interface ScheduleResponse {
   status: number;
   title: string;
   valor: number;
+  prestador_id: string
 }
