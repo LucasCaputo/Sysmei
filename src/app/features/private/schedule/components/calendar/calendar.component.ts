@@ -49,8 +49,8 @@ export class CalendarComponent implements OnInit {
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.onInsertScheduling.bind(this),
-    eventClick: this.onEditScheduling.bind(this),
+    select: this.insertSchedule.bind(this),
+    eventClick: this.editSchedule.bind(this),
     eventDrop: this.onDragAndDrop.bind(this),
     eventResize: this.onDragAndDrop.bind(this),
     eventsSet: this.handleEvents.bind(this),
@@ -77,6 +77,7 @@ export class CalendarComponent implements OnInit {
     this.populateSchedule();
   }
 
+  /** Recebe os dados de todos os agendamentos e popula a lista */
   populateSchedule() {
     this.scheduleService.$schedule.subscribe(
       (scheduleResponse: Array<ScheduleResponse>) => {
@@ -181,23 +182,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  onInsertScheduling(selectInfo: DateSelectArg) {
-    if (!this.customerService?.customers?.length) {
-      alert('você precisa cadastrar seu primeiro cliente');
-
-      this.router.navigate(['/clientes']);
-      return;
-    }
-
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
-      width: '500px',
-      maxWidth: '100vw',
-      data: selectInfo,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const date = new Date(result.date).toISOString() + '0';
+  /** Edita objeto como back espera receber */
+  private formatRequestPayload(result: any) {
+    const date = new Date(result.date).toISOString() + '0';
 
         let clearDate = this.utilsService.clearStringData(date);
 
@@ -220,6 +207,29 @@ export class CalendarComponent implements OnInit {
           prestador_id: this.employeeService.employee[0]?.id,
         };
 
+        return schedule
+  }
+
+  insertSchedule(selectInfo: DateSelectArg) {
+    if (!this.customerService?.customers?.length) {
+      alert('você precisa cadastrar seu primeiro cliente');
+
+      this.router.navigate(['/clientes']);
+      return;
+    }
+
+    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data: selectInfo,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result, "INSERT");
+      
+      if (result) {
+       const schedule = this.formatRequestPayload(result)
+
         console.log('schedule funcioanndo', schedule);
 
         this.scheduleRepository.postScheduling(schedule).subscribe(
@@ -231,9 +241,9 @@ export class CalendarComponent implements OnInit {
             calendarApi.addEvent({
               id: response.id,
               title: response.title,
-              start: this.utilsService.formatStringData(start),
-              end: this.utilsService.formatStringData(end),
-              paciente_id: response.paciente.id,
+              start: this.utilsService.formatStringData(schedule.start),
+              end: this.utilsService.formatStringData(schedule.end),
+              paciente_id: response.paciente_id,
               valor: parseInt(result.valor),
               detalhes: result.detalhes,
               pagamento: result.pagamento,
@@ -250,7 +260,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  onEditScheduling(clickInfo: EventClickArg) {
+  editSchedule(clickInfo: EventClickArg) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -259,58 +269,34 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
+        console.log(result, "EDIT");
+        
         if (result?.id) {
           console.log(result);
           
-          const date = new Date(result.date).toISOString() + '0';
-
-          let clearDate = this.utilsService.clearStringData(date);
-
-          let split = clearDate.split(' ');
-
-          let start = `${split[0]} ${result.timeStart}`;
-          let end = `${split[0]} ${result.timeEnd}`;
-
-          const schedule = {
-            id: result.id,
-            title: result.title,
-            start,
-            end,
-            status: 0,
-            login_usuario: this.auth.getUser()?.login,
-            paciente_id: result.paciente_id,
-            allDay: split[0],
-            valor: parseInt(result.valor),
-            detalhes: result.detalhes,
-            pagamento: result.pagamento,
-            prestador_id: 34,
-          };
+          const schedule = this.formatRequestPayload(result)
 
           this.scheduleRepository
             .updateScheduling(schedule, result.id)
             .subscribe(
-              (result) => {
-                this.getScheduling(true);
-              },
+              (resultUpdate) => {
+                clickInfo.view.calendar.addEvent({
+                  id: result.id,
+                  title: result.title,
+                  start: this.utilsService.formatStringData(schedule.start),
+                  end: this.utilsService.formatStringData(schedule.end),
+                  paciente_id: result.paciente_id,
+                  valor: parseInt(result.valor),
+                  detalhes: result.detalhes,
+                  pagamento: result.pagamento,
+                  prestador_id: result.prestador_id
+                });
+                clickInfo.event.remove();
+              },  
               (error) => {
                 console.log(error, 'update');
               }
             );
-        } else {
-          if (!localStorage.getItem('scheduling')?.length) {
-            this.scheduleRepository.getScheduling(this.user).subscribe(
-              (response) => {
-                localStorage.setItem('scheduling', JSON.stringify(response));
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-
-            clickInfo.event.remove();
-
-            return;
-          }
         }
       },
       (error) => {
@@ -337,4 +323,5 @@ export class CalendarComponent implements OnInit {
     
     this.currentEvents = events;
   }
+
 }
