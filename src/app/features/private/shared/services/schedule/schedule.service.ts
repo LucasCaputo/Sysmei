@@ -46,18 +46,7 @@ export class ScheduleService {
       }
     );
   }
-
-  getScheduling(scheduling: any): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda?login=${scheduling.login}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      }
-    );
-  }
-
+  
   deleteScheduling(customerId: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/agenda/${customerId}`,

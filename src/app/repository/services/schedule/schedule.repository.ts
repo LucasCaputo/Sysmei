@@ -24,18 +24,7 @@ export class ScheduleRepository {
       }
     );
   }
-
-  getScheduling(scheduling: any): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda?login=${scheduling.login}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      }
-    );
-  }
-
+  
   /** Busca lista de todos os agendamentos */
   public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
@@ -59,7 +48,7 @@ export class ScheduleRepository {
     );
   }
 
-  updateScheduling(body:any, id: number) {
+  updateScheduling(body:any, id: string) {
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
