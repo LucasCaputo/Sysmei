@@ -2,7 +2,7 @@ export interface ScheduleResponse {
   allDay: string;
   detalhes: string;
   end: string;
-  id: number;
+  id?: number;
   login_usuario: string;
   paciente_id: number;
   pagamento: string;

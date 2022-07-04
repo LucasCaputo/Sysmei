@@ -3,9 +3,9 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -28,12 +28,15 @@ export class SchedulingFormComponent implements OnInit {
   
   user = this.authService.getUser();
 
+  form!: FormGroup;
+
   title = this.data.title || '';
   dateStart = new Date();
   timeStart = '';
   dateEnd = new Date();
   timeEnd = '';
   customer!: number;
+  prestador_id = this.data.extendedProps?.prestador_id || '';
   valor = this.data.extendedProps?.valor || '';
   detalhes = this.data.extendedProps?.detalhes || '';
   pagamento = this.data.extendedProps?.pagamento || '';
@@ -43,7 +46,6 @@ export class SchedulingFormComponent implements OnInit {
   customerData: Array<CustomerData> = [];
 
   filteredOptions: Observable<Array<AutocompleteOptions>>;
-  loading = false;
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
 
@@ -64,6 +66,7 @@ export class SchedulingFormComponent implements OnInit {
         customer: string;
         status: number;
         paciente_id: number;
+        prestador_id: number,
         valor: number;
         detalhes: string;
         pagamento: string;
@@ -71,7 +74,8 @@ export class SchedulingFormComponent implements OnInit {
     },
     private utilService: UtilsService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private formBuilder: FormBuilder,
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
@@ -80,6 +84,20 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.form = this.formBuilder.group({
+      allDay: '',
+      detalhes: '',
+      end: '',
+      login_usuario: '',
+      paciente: '',
+      pagamento: '',
+      start: '',
+      status: null,
+      title: '',
+      valor: null,
+    });
+
 
     this.customerService.$customers.subscribe(
       (result: Array<CustomerResponse>) => {

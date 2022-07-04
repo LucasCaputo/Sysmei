@@ -1,26 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {
   CalendarOptions,
-  DateSelectArg,
-  EventClickArg,
-  EventInput,
-  EventApi,
-  EventDropArg,
+  DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput
 } from '@fullcalendar/angular';
-import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { Router } from '@angular/router';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { ScheduleDialogComponent } from '../../../shared/dialogs/schedule-dialog/schedule-dialog.component';
-import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
-import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
+import { EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
+import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerService } from '../../../shared/services/customer/customer.service';
 import { EmployeeService } from '../../../shared/services/employee/employee.service';
+import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
 import { DialogCloseOptions } from '../scheduling-form/interfaces/dialog-close-options';
-import { EventResizeDoneArg } from '@fullcalendar/interaction';
+import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
+import { calendarSelectedOptions } from './calendar.options';
 
 @Component({
   selector: 'app-calendar',
@@ -28,45 +24,23 @@ import { EventResizeDoneArg } from '@fullcalendar/interaction';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  user = this.auth.getUser();
 
   calendarOptions: CalendarOptions = {
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-    },
-    buttonText: {
-      today: 'Hoje',
-      month: 'Mês',
-      week: 'Semana',
-      day: 'Dia',
-      list: 'Lista',
-    },
-    allDaySlot: false,
-    titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
-    initialView: 'timeGridWeek',
-    initialEvents: [],
-    weekends: true,
-    editable: true,
-    selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
+    ...calendarSelectedOptions,
     select: this.insertSchedule.bind(this),
     eventClick: this.editSchedule.bind(this),
     eventDrop: this.onDragAndDrop.bind(this),
     eventResize: this.onDragAndDrop.bind(this),
-    eventsSet: this.handleEvents.bind(this),
-    selectLongPressDelay: 250,
-    locale: 'pt-br',
-  };
+    eventsSet: this.handleEvents.bind(this)
+  }
 
+  user = this.auth.getUser();
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   loading = true;
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private scheduleRepository: ScheduleRepository,
     private scheduleService: ScheduleService,
     private customerService: CustomerService,
@@ -84,12 +58,10 @@ export class CalendarComponent implements OnInit {
   populateSchedule() {
     this.scheduleService.$schedule.subscribe(
       (scheduleResponse: Array<ScheduleResponse>) => {
-        console.log(scheduleResponse);
-        
         if (scheduleResponse.length) {
           scheduleResponse.forEach((element: ScheduleResponse) => {
             this.scheduling.push({
-              id: element.id.toString(),
+              id: element.id!.toString(),
               title: element.title,
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
@@ -108,13 +80,10 @@ export class CalendarComponent implements OnInit {
     )
   }
 
-  /** 
-   * Atualiza agendamento por drag and drop 
+  /** Atualiza agendamento por drag and drop 
    * @Input data: EventDropArg | EventResizeDoneArg
    * */
   onDragAndDrop(data: EventDropArg | EventResizeDoneArg) {
-    console.log(data);
-    
     let start = this.utilsService.clearStringData(data.event.startStr);
     let end = this.utilsService.clearStringData(data.event.endStr);
 
@@ -142,36 +111,35 @@ export class CalendarComponent implements OnInit {
   }
 
   /** Edita objeto como back espera receber */
-  private formatRequestPayload(result: any) {
+  private formatRequestPayload(result: any): ScheduleResponse {
     
     const date = new Date(result.date).toISOString() + '0';
 
-        let clearDate = this.utilsService.clearStringData(date);
+    let clearDate = this.utilsService.clearStringData(date);
 
-        let split = clearDate.split(' ');
+    let split = clearDate.split(' ');
 
-        let start = `${split[0]} ${result.timeStart}`;
-        let end = `${split[0]} ${result.timeEnd}`;
+    let start = `${split[0]} ${result.timeStart}`;
+    let end = `${split[0]} ${result.timeEnd}`;
 
-        const schedule = {
-          title: result.title,
-          start,
-          end,
-          status: 0,
-          login_usuario: this.auth.getUser()?.login,
-          paciente_id: result.paciente_id,
-          allDay: split[0],
-          valor: parseInt(result.valor),
-          detalhes: result.detalhes,
-          pagamento: result.pagamento,
-          prestador_id: this.employeeService.employee[0]?.id,
-        };
+    const schedule = {
+      title: result.title,
+      start,
+      end,
+      status: 0,
+      login_usuario: this.auth.getUser()?.login!,
+      paciente_id: result.paciente_id,
+      allDay: split[0],
+      valor: parseInt(result.valor),
+      detalhes: result.detalhes,
+      pagamento: result.pagamento,
+      prestador_id: this.employeeService.employee[0]?.id,
+    };
 
-        return schedule
+    return schedule
   }
 
-  /** 
-   * Edita dados para inserir no formato do calendário 
+  /** Edita dados para inserir no formato do calendário 
    * @Input result: DialogCloseOptions
    * @Output object: EventInput
    * */
@@ -192,7 +160,7 @@ export class CalendarComponent implements OnInit {
   }
 
   /** Adiciona um novo agendamento*/
-  private insertSchedule(selectInfo: DateSelectArg) {
+  private insertSchedule(selectInfo?: DateSelectArg) {
     if (!this.customerService?.customers?.length) {
       alert('você precisa cadastrar seu primeiro cliente');
 
@@ -209,7 +177,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result, "INSERT");
       
-      if (result) {
+      if (result && selectInfo) {
        const schedule = this.formatRequestPayload(result)
        const scheduleCalendar = this.formatCalendarData(result)
 
@@ -235,7 +203,7 @@ export class CalendarComponent implements OnInit {
   }
 
   /** Edita um agendamento */
-  editSchedule(clickInfo: EventClickArg) {
+  private editSchedule(clickInfo: EventClickArg) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
@@ -270,20 +238,8 @@ export class CalendarComponent implements OnInit {
       }
     );
   }
-
-  Schedule() {
-    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
-      width: '500px',
-      maxWidth: '100vw',
-      data: '',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.loading = true;
-    });
-  }
-
-  handleEvents(events: EventApi[]) {
+ 
+  private handleEvents(events: EventApi[]) {
     console.log(events);
     
     this.currentEvents = events;
