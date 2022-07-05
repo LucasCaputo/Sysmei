@@ -24,6 +24,16 @@
 
   <div mat-dialog-content class="form">
     <form fxLayout="column" [formGroup]="form">
+      <mat-form-field  appearance="fill">
+        <mat-label>Atendente</mat-label>
+        <mat-select formControlName="employee">
+          <mat-option *ngFor="let employee of employeeData" [value]="employee">
+            {{employee.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
       <mat-form-field fxFlex>
         <mat-label>Nome do Serviço</mat-label>
         <input
@@ -51,12 +61,11 @@
         <mat-autocomplete
           autoActiveFirstOption
           #auto="matAutocomplete"
+          [displayWith]="displayCustomer"
           >
-          <!-- [displayWith]="displayCustomer" -->
           <mat-option
             *ngFor="let option of filteredOptions | async"
-            [value]="option.id"
-            (onSelectionChange)="form.value.customer = option.id"
+            [value]="option"
           >
             {{ option.text }}
           </mat-option>

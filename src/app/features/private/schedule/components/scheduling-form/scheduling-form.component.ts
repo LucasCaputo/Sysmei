@@ -9,13 +9,13 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
+import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerService } from '../../../shared/services/customer/customer.service';
+import { EmployeeService } from '../../../shared/services/employee/employee.service';
 import { AutocompleteOptions } from './interfaces/autocomplete-options';
 import { CustomerData } from './interfaces/customer-data';
 
@@ -30,11 +30,10 @@ export class SchedulingFormComponent implements OnInit {
 
   form!: FormGroup;
   
-  customer!: number;
-  
   customerControl = new FormControl();
 
-  customerData: Array<CustomerData> = [];
+  customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
+  employeeData: Array<EmployeeResponse> = this.employeeService.employee;
 
   filteredOptions: Observable<Array<AutocompleteOptions>>;
 
@@ -43,27 +42,25 @@ export class SchedulingFormComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private scheduleRepository: ScheduleRepository,
+    private employeeService: EmployeeService,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       id: number;
       end: Date;
       start: Date;
-      startStr: string;
-      endStr: string;
       title: string;
       extendedProps: {
         login_usuario: string;
-        customer: string;
-        status: number;
         paciente_id: number;
-        prestador_id: number,
+        status: number;
+        prestador_id: number;
         valor: number;
         detalhes: string;
         pagamento: string;
+        customer: any;
       };
     },
-    private utilService: UtilsService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
@@ -75,70 +72,30 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
     this.form = this.formBuilder.group({
       id: this.data?.id,
       allDay: this.data?.start || '',
       start: `${('0'+this.data?.start.getHours()).slice(-2)}:${('0'+this.data?.start.getMinutes()).slice(-2)}` || '',
       end: `${('0'+this.data?.end.getHours()).slice(-2)}:${('0'+this.data?.end.getMinutes()).slice(-2)}` || '',
       login_usuario: this.user?.login,
-      customer: `${this.data?.extendedProps?.customer}` || new FormControl(),
-      status: 0,
+      customer: this.customerData.find((e)=> e.id === this.data?.extendedProps?.paciente_id),
+      status: 0,  
       title: this.data?.title,
       valor: this.data?.extendedProps?.valor || '',
       pagamento: this.data?.extendedProps?.pagamento || '',
       detalhes: this.data?.extendedProps?.detalhes || '',
-      prestador_id: this.data?.extendedProps?.prestador_id || ''
-      
+      employee: this.employeeData.find((e)=> e.id === this.data?.extendedProps?.prestador_id) || this.employeeData[0],
     });
-
-
-    this.customerService.$customers.subscribe(
-      (result: Array<CustomerResponse>) => {
-        this.formatCustomers(result);
-      }
-    );
 
     console.log(this.form);
     
-  }
-
-  displayCustomer(option: any) {
-    if (option.nome && option.telefone1) {
-      return `${option.nome} - (${option.telefone1.slice(
-        0,
-        2
-      )}) ${option.telefone1.slice(2, 3)} ${option.telefone1.slice(
-        3,
-        7
-      )}-${option.telefone1.slice(7, 11)}`;
-    }
-
-    return '';
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.myInput?.nativeElement.focus();
     }, 300);
-  }
-
-  formatCustomers(response: any) {
-    response.forEach((element: any) => {
-      let phone = element.telefone1;
-
-      if (
-        element.id == this.data.extendedProps?.customer ||
-        element.id == this.data.extendedProps?.paciente_id
-      ) {
-        this.form.value.customer = element.id;
-      }
-
-      this.customerData.push({
-        ...element,
-        text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
-      });
-    });
   }
 
   private _filter(value: any): Array<AutocompleteOptions> {
@@ -152,6 +109,10 @@ export class SchedulingFormComponent implements OnInit {
     return this.customerData.filter((option) =>
       option.text.toLowerCase().includes(filterValue)
     );
+  }
+
+  displayCustomer(option: any) {
+    return option?.text || ''
   }
 
   onDelete(customer: any) {

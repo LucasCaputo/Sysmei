@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
-import { CustomerData } from '../../dialogs/schedule-dialog/interfaces/customer-data';
+import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { User } from 'src/app/features/public/shared/interfaces/user';
+import { environment } from 'src/environments/environment';
+import { CustomerData } from '../../dialogs/schedule-dialog/interfaces/customer-data';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +43,7 @@ export class CustomerService {
         text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
       });
     });
-    this.formattedCustomerList = list;
+    this.formattedCustomerList = list;    
   }
 
   postCustomer(customer: any): Observable<CustomerResponse> {

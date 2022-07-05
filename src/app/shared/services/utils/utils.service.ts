@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DialogCloseOptions } from "../../../features/private/schedule/components/scheduling-form/interfaces/dialog-close-options";
 
 @Injectable({
   providedIn: 'root',
@@ -23,27 +24,19 @@ export class UtilsService {
     return `${split[0]}T${split[1]}:00-03:00`;
   }
 
-  formatDateRequestPayload(result:any) {
-    const date = new Date(result.date).toISOString() + '0';
+  formatDateRequestPayload(result:DialogCloseOptions) {
 
-    const clearDate = this.clearStringData(date);
+    let month = (`0${1+result.allDay.getMonth()}`).slice(-2)
+    let day = (`0${result.allDay.getDate()}`).slice(-2)
 
-    const split = clearDate?.split(' ');
-
+    const date = `${result.allDay.getFullYear()}-${month}-${day}`
+      
     let dateRequestPayload = {
-      allDay: '',
-      start: '',
-      end: ''
+      allDay: `${date}`,
+      start: `${date} ${result.start}`,
+      end: `${date} ${result.end}`
     }
-
-    if(split[0]) {
-      return dateRequestPayload = {
-        allDay: `${split[0]}`,
-        start: `${split[0]} ${result.timeStart}`,
-        end: `${split[0]} ${result.timeEnd}`,
-      }
-    }
-
+    
     return dateRequestPayload
     
   }

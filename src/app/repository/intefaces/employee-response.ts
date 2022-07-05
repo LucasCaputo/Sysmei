@@ -1,5 +1,5 @@
 export interface EmployeeResponse {
-  id: string;
+  id: number;
   login_usuario: string;
   nome: string;
   telefone: string;

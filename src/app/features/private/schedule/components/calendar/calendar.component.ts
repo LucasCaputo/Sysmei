@@ -65,7 +65,7 @@ export class CalendarComponent implements OnInit {
               title: element.title,
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
-              customer: element.paciente_id,
+              paciente_id: element.paciente_id,
               valor: element.valor,
               pagamento: element.pagamento,
               detalhes: element.detalhes,
@@ -121,12 +121,12 @@ export class CalendarComponent implements OnInit {
       end: datePayload.end,
       status: 0,
       login_usuario: this.auth.getUser()?.login!,
-      paciente_id: result.paciente_id,
+      paciente_id: result.customer?.id,
       allDay: datePayload.allDay,
       valor: parseInt(result.valor),
       detalhes: result.detalhes,
       pagamento: result.pagamento,
-      prestador_id: this.employeeService.employee[0]?.id,
+      prestador_id: result.employee?.id,
     };
 
     return schedule
@@ -139,16 +139,16 @@ export class CalendarComponent implements OnInit {
   private formatCalendarData(result: DialogCloseOptions) : EventInput{
     const schedule = this.formatRequestPayload(result)
 
-    return {
+    return {  
       id: result.id,
       title: result.title,
       start: this.utilsService.formatStringData(schedule.start),
       end: this.utilsService.formatStringData(schedule.end),
-      paciente_id: result.paciente_id,
+      prestador_id: result.employee.id,
       valor: parseInt(result.valor),
       detalhes: result.detalhes,
       pagamento: result.pagamento,
-      prestador_id: result.prestador_id
+      paciente_id: result.customer.id
     }
   }
 
@@ -169,12 +169,11 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result, "INSERT");
-      
+        
       if (result && selectInfo) {
        const schedule = this.formatRequestPayload(result)
        const scheduleCalendar = this.formatCalendarData(result)
-
-
+        
         console.log('schedule funcioanndo', schedule);
 
         this.scheduleRepository.postScheduling(schedule).subscribe(
