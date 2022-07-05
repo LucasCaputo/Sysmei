@@ -55,7 +55,7 @@ export class CalendarComponent implements OnInit {
   }
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
-  populateSchedule() {
+  private populateSchedule() {
     this.scheduleService.$schedule.subscribe(
       (scheduleResponse: Array<ScheduleResponse>) => {
         if (scheduleResponse.length) {
@@ -83,7 +83,7 @@ export class CalendarComponent implements OnInit {
   /** Atualiza agendamento por drag and drop 
    * @Input data: EventDropArg | EventResizeDoneArg
    * */
-  onDragAndDrop(data: EventDropArg | EventResizeDoneArg) {
+  private onDragAndDrop(data: EventDropArg | EventResizeDoneArg) {
     let start = this.utilsService.clearStringData(data.event.startStr);
     let end = this.utilsService.clearStringData(data.event.endStr);
 
@@ -113,23 +113,16 @@ export class CalendarComponent implements OnInit {
   /** Edita objeto como back espera receber */
   private formatRequestPayload(result: any): ScheduleResponse {
     
-    const date = new Date(result.date).toISOString() + '0';
-
-    let clearDate = this.utilsService.clearStringData(date);
-
-    let split = clearDate.split(' ');
-
-    let start = `${split[0]} ${result.timeStart}`;
-    let end = `${split[0]} ${result.timeEnd}`;
+    const datePayload = this.utilsService.formatDateRequestPayload(result);
 
     const schedule = {
       title: result.title,
-      start,
-      end,
+      start: datePayload.start,
+      end: datePayload.end,
       status: 0,
       login_usuario: this.auth.getUser()?.login!,
       paciente_id: result.paciente_id,
-      allDay: split[0],
+      allDay: datePayload.allDay,
       valor: parseInt(result.valor),
       detalhes: result.detalhes,
       pagamento: result.pagamento,
@@ -216,7 +209,7 @@ export class CalendarComponent implements OnInit {
         
         if (result?.id) {
           console.log(result);
-          
+            
           const scheduleUpdate = this.formatRequestPayload(result)
           const scheduleCalendar = this.formatCalendarData(result)
 
@@ -240,7 +233,7 @@ export class CalendarComponent implements OnInit {
   }
  
   private handleEvents(events: EventApi[]) {
-    console.log(events);
+    // console.log(events);
     
     this.currentEvents = events;
   }

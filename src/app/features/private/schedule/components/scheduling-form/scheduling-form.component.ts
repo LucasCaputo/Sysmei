@@ -29,18 +29,9 @@ export class SchedulingFormComponent implements OnInit {
   user = this.authService.getUser();
 
   form!: FormGroup;
-
-  title = this.data.title || '';
-  dateStart = new Date();
-  timeStart = '';
-  dateEnd = new Date();
-  timeEnd = '';
+  
   customer!: number;
-  prestador_id = this.data.extendedProps?.prestador_id || '';
-  valor = this.data.extendedProps?.valor || '';
-  detalhes = this.data.extendedProps?.detalhes || '';
-  pagamento = this.data.extendedProps?.pagamento || '';
-
+  
   customerControl = new FormControl();
 
   customerData: Array<CustomerData> = [];
@@ -86,16 +77,19 @@ export class SchedulingFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      allDay: '',
-      detalhes: '',
-      end: '',
-      login_usuario: '',
-      paciente: '',
-      pagamento: '',
-      start: '',
-      status: null,
-      title: '',
-      valor: null,
+      id: this.data?.id,
+      allDay: this.data?.start || '',
+      start: `${('0'+this.data?.start.getHours()).slice(-2)}:${('0'+this.data?.start.getMinutes()).slice(-2)}` || '',
+      end: `${('0'+this.data?.end.getHours()).slice(-2)}:${('0'+this.data?.end.getMinutes()).slice(-2)}` || '',
+      login_usuario: this.user?.login,
+      customer: `${this.data?.extendedProps?.customer}` || new FormControl(),
+      status: 0,
+      title: this.data?.title,
+      valor: this.data?.extendedProps?.valor || '',
+      pagamento: this.data?.extendedProps?.pagamento || '',
+      detalhes: this.data?.extendedProps?.detalhes || '',
+      prestador_id: this.data?.extendedProps?.prestador_id || ''
+      
     });
 
 
@@ -105,14 +99,12 @@ export class SchedulingFormComponent implements OnInit {
       }
     );
 
-    this.dateStart = this.data.start;
-    this.timeStart = this.data.startStr.slice(11, 16);
-    this.dateEnd = this.data.end;
-    this.timeEnd = this.data.endStr.slice(11, 16);
+    console.log(this.form);
+    
   }
 
   displayCustomer(option: any) {
-    if (option) {
+    if (option.nome && option.telefone1) {
       return `${option.nome} - (${option.telefone1.slice(
         0,
         2
@@ -122,7 +114,7 @@ export class SchedulingFormComponent implements OnInit {
       )}-${option.telefone1.slice(7, 11)}`;
     }
 
-    return option;
+    return '';
   }
 
   ngAfterViewInit() {
@@ -139,9 +131,7 @@ export class SchedulingFormComponent implements OnInit {
         element.id == this.data.extendedProps?.customer ||
         element.id == this.data.extendedProps?.paciente_id
       ) {
-        this.customer = element.id;
-
-        this.customerControl.setValue(element);
+        this.form.value.customer = element.id;
       }
 
       this.customerData.push({

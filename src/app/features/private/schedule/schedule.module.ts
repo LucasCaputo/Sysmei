@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 
-import { ScheduleRoutingModule } from './schedule-routing.module';
-import { SchedulingFormComponent } from './components/scheduling-form/scheduling-form.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { SchedulingFormComponent } from './components/scheduling-form/scheduling-form.component';
+import { ScheduleRoutingModule } from './schedule-routing.module';
 
+import { MatSelectModule } from '@angular/material/select';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { MatSelectModule } from '@angular/material/select';
+import listPlugin from '@fullcalendar/list';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { NgxMaskModule } from 'ngx-mask';
-import { MenuModule } from '../shared/menu/menu.module';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgxMaskModule } from 'ngx-mask';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MenuModule } from '../shared/menu/menu.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -33,6 +34,7 @@ FullCalendarModule.registerPlugins([
 @NgModule({
   declarations: [CalendarComponent, SchedulingFormComponent],
   imports: [
+    ReactiveFormsModule,
     ScheduleRoutingModule,
     FullCalendarModule,
     MatSelectModule,

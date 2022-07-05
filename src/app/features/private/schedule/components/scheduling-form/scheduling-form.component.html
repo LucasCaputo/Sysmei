@@ -15,27 +15,15 @@
       mat-icon-button
       color="primary"
       class="action-buttons"
-      [disabled]="!title || !customer"
-      [mat-dialog-close]="{
-        id: data.id,
-        data: data,
-        title: title,
-        date: dateStart,
-        timeStart: timeStart,
-        timeEnd: timeEnd,
-        paciente_id: customer,
-        valor: valor,
-        detalhes: detalhes,
-        pagamento: pagamento,
-        prestador_id: prestador_id
-      }"
+      [disabled]="!form.value.title || !form.value.customer"
+      [mat-dialog-close]="form.value"
     >
       <mat-icon>done_outline</mat-icon>
     </button>
   </div>
 
   <div mat-dialog-content class="form">
-    <form fxLayout="column">
+    <form fxLayout="column" [formGroup]="form">
       <mat-form-field fxFlex>
         <mat-label>Nome do Serviço</mat-label>
         <input
@@ -43,7 +31,7 @@
           placeholder="Nome do Serviço"
           autocomplete="off"
           type="text"
-          [(ngModel)]="title"
+          formControlName="title"
           name="title"
           #myInput
         />
@@ -56,18 +44,19 @@
           placeholder="Pesquise um Cliente"
           aria-label="Pesquisa de Cliente"
           matInput
-          [formControl]="customerControl"
+          formControlName="customer"
           [matAutocomplete]="auto"
+          required
         />
         <mat-autocomplete
           autoActiveFirstOption
           #auto="matAutocomplete"
-          [displayWith]="displayCustomer"
-        >
+          >
+          <!-- [displayWith]="displayCustomer" -->
           <mat-option
             *ngFor="let option of filteredOptions | async"
-            [value]="option"
-            (onSelectionChange)="customer = option.id"
+            [value]="option.id"
+            (onSelectionChange)="form.value.customer = option.id"
           >
             {{ option.text }}
           </mat-option>
@@ -80,8 +69,9 @@
           <input
             matInput
             [matDatepicker]="picker"
-            [(ngModel)]="dateStart"
+            formControlName="allDay"
             name="dateStart"
+            required
           />
           <mat-datepicker-toggle
             matSuffix
@@ -95,14 +85,21 @@
           <input
             matInput
             type="time"
-            [(ngModel)]="timeStart"
+            formControlName="start"
             name="timeStart"
+            required
           />
         </mat-form-field>
 
         <mat-form-field fxFlex="30">
           <mat-label>Fim</mat-label>
-          <input matInput type="time" [(ngModel)]="timeEnd" name="timeEnd" />
+          <input 
+            matInput 
+            type="time" 
+            formControlName="end" 
+            name="timeEnd"
+            required
+          />
         </mat-form-field>
       </div>
 
@@ -112,7 +109,7 @@
           <input
             matInput
             placeholder="Valor"
-            [(ngModel)]="valor"
+            formControlName="valor"
             name="valor"
             type="text"
             mask="separator"
@@ -123,7 +120,7 @@
 
         <mat-form-field fxFlex="45">
           <mat-select
-            [(ngModel)]="pagamento"
+            formControlName="pagamento"
             name="pagamento"
             placeholder="Forma de Pagamento"
           >
@@ -142,7 +139,7 @@
         <textarea
           matInput
           placeholder="Detalhes"
-          [(ngModel)]="detalhes"
+          formControlName="detalhes"
           name="detalhes"
         ></textarea>
       </mat-form-field>

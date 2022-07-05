@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
+import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,8 @@ export class ScheduleService {
     this.ScheduleRepository.getSchedule().subscribe((scheduleList) => {
       this.schedule = scheduleList;
       this.$schedule.next(scheduleList);
+      console.log(this.schedule);
+      
     });
   }
 

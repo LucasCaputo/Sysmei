@@ -22,4 +22,29 @@ export class UtilsService {
 
     return `${split[0]}T${split[1]}:00-03:00`;
   }
+
+  formatDateRequestPayload(result:any) {
+    const date = new Date(result.date).toISOString() + '0';
+
+    const clearDate = this.clearStringData(date);
+
+    const split = clearDate?.split(' ');
+
+    let dateRequestPayload = {
+      allDay: '',
+      start: '',
+      end: ''
+    }
+
+    if(split[0]) {
+      return dateRequestPayload = {
+        allDay: `${split[0]}`,
+        start: `${split[0]} ${result.timeStart}`,
+        end: `${split[0]} ${result.timeEnd}`,
+      }
+    }
+
+    return dateRequestPayload
+    
+  }
 }
