@@ -62,7 +62,7 @@ export class CalendarComponent implements OnInit {
           scheduleResponse.forEach((element: ScheduleResponse) => {
             this.scheduling.push({
               id: element.id!.toString(),
-              title: element.title,
+              title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)].nome,
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
               paciente_id: element.paciente_id,

@@ -47,15 +47,21 @@ full-calendar {
     padding-bottom: 55px;
   }
 
+  .fc-listWeek-view {
+    margin-top: 54px;
+  }
+
   .fc-toolbar-chunk {
     &:first-child {
       position: absolute;
+      z-index: 99;
       right: 4px;
       top: 30px;
     }
 
     &:nth-child(2) {
       position: absolute;
+      z-index: 99;
       width: 100%;
       color: #673ab7;
       font-size: 0.6rem;
@@ -68,6 +74,7 @@ full-calendar {
 
     &:last-child {
       position: absolute;
+      z-index: 99;
       left: 4px;
       top: 30px;
       margin-right: 4px;
