@@ -1,4 +1,4 @@
-<div style="height: 80px" fxLayoutAlign="center center" (swipe)="onSwipe($event)">
+<div style="position: fixed; width:100%; bottom: 0; z-index: 99; background-color: white;height: 80px;" fxLayoutAlign="center center" (swipe)="onSwipe($event)">
       <ng-container *ngFor="let viewOption of calendarViewOptions">
         <mat-icon style="padding: 16px;" fxFlex="20" fxLayoutAlign="center center" *ngIf="actionIcon===viewOption.calendarView" (click)="change(viewOption.redirectTo)" color="primary">{{viewOption.icon}}</mat-icon>
       </ng-container>
@@ -9,7 +9,7 @@
         aria-label="volta">arrow_back_ios</mat-icon>
   
         <p style="margin: 0; width: 50%; text-align: center; color: #673ab7;" >
-          {{ '...'}}
+          ...
         </p>
   
         <mat-icon style="padding: 16px;" (click)="change('next')" color="primary" aria-hidden="false"
