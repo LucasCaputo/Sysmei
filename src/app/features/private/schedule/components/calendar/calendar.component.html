@@ -20,7 +20,11 @@
     </mat-sidenav>
 
     <mat-sidenav-content style="overflow: hidden">
+     
+      <app-calendar-naviagtion [title]="calendarDateTitle" (action)="calendarNavigate($event)"></app-calendar-naviagtion>
+
       <full-calendar
+        #calendar
         *ngIf="!loading"
         [options]="calendarOptions"
       ></full-calendar>

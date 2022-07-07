@@ -24,6 +24,10 @@ import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuModule } from '../shared/menu/menu.module';
 
+import { MatIconModule } from '@angular/material/icon';
+import { CalendarNaviagtionComponent } from './components/calendar-naviagtion/calendar-naviagtion.component';
+
+
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   timeGridPlugin,
@@ -32,7 +36,7 @@ FullCalendarModule.registerPlugins([
 ]);
 
 @NgModule({
-  declarations: [CalendarComponent, SchedulingFormComponent],
+  declarations: [CalendarComponent, SchedulingFormComponent, CalendarNaviagtionComponent],
   imports: [
     ReactiveFormsModule,
     ScheduleRoutingModule,
@@ -44,6 +48,7 @@ FullCalendarModule.registerPlugins([
     MatProgressSpinnerModule,
     MatMenuModule,
     MatToolbarModule,
+    MatIconModule,
     SharedModule,
     NgxMaskModule.forRoot(),
     MenuModule,

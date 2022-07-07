@@ -2,16 +2,9 @@ import { CalendarOptions } from "@fullcalendar/core";
 
 export const calendarSelectedOptions: CalendarOptions = {
     headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
-    },
-    buttonText: {
-      today: 'Hoje',
-      month: 'Mês',
-      week: 'Semana',
-      day: 'Dia',
-      list: 'Lista',
+      left: '',
+      center: '',
+      right: '',
     },
     allDaySlot: false,
     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },

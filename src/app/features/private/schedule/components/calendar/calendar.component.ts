@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
   CalendarOptions,
-  DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput
+  DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, FullCalendarComponent, ViewApi
 } from '@fullcalendar/angular';
 import { EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
@@ -25,6 +25,8 @@ import { calendarSelectedOptions } from './calendar.options';
 })
 export class CalendarComponent implements OnInit {
 
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+
   calendarOptions: CalendarOptions = {
     ...calendarSelectedOptions,
     select: this.insertSchedule.bind(this),
@@ -37,6 +39,8 @@ export class CalendarComponent implements OnInit {
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
+  viewApi!: ViewApi;
+  calendarDateTitle=''
   loading = true;
 
   constructor(
@@ -53,6 +57,34 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.populateSchedule();
   }
+
+  calendarNavigate(action?: string) {
+    let calendarApi = this.calendarComponent.getApi();
+
+    if(action) {
+      switch (action) {
+        case 'next':
+          calendarApi.next();
+          break;
+  
+        case 'prev':
+          calendarApi.prev();
+          break;
+  
+        case 'today':
+          calendarApi.today();
+          break;
+  
+        default:
+            calendarApi.changeView(action)
+          break;
+      }
+    }
+    
+    this.calendarDateTitle = calendarApi.view.title
+    
+  }
+  
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
   private populateSchedule() {
@@ -75,6 +107,12 @@ export class CalendarComponent implements OnInit {
           this.calendarOptions.initialEvents = this.scheduling;
 
           this.loading = false
+
+          setTimeout(() => {
+            this.calendarNavigate();
+            
+          }, 2000);
+
         }
       }
     )

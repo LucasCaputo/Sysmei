@@ -1,0 +1,22 @@
+<div style="height: 80px" fxLayoutAlign="center center" (swipe)="onSwipe($event)">
+      <ng-container *ngFor="let viewOption of calendarViewOptions">
+        <mat-icon style="padding: 16px;" fxFlex="20" fxLayoutAlign="center center" *ngIf="actionIcon===viewOption.calendarView" (click)="change(viewOption.redirectTo)" color="primary">{{viewOption.icon}}</mat-icon>
+      </ng-container>
+
+
+      <ng-container fxFlex="60" >
+        <mat-icon style="padding: 16px;" (click)="change('prev')" color="primary" aria-hidden="false"
+        aria-label="volta">arrow_back_ios</mat-icon>
+  
+        <p style="margin: 0; width: 50%; text-align: center; color: #673ab7;" >
+          {{ title ||'...'}}
+        </p>
+  
+        <mat-icon style="padding: 16px;" (click)="change('next')" color="primary" aria-hidden="false"
+        aria-label="volta">arrow_forward_ios</mat-icon>
+      </ng-container>
+
+        <mat-icon style="padding: 16px;" fxFlex="20" fxLayoutAlign="center center" (click)="change('today')" color="primary" aria-hidden="false"
+      aria-label="Hoje">event_repeat</mat-icon>
+
+</div>
