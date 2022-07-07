@@ -1,8 +1,12 @@
 <div>
-  <mat-toolbar color="primary" fxLayoutAlign="space-between center">
+  <mat-toolbar *ngIf="!loading" color="primary" fxLayoutAlign="space-between center">
     <button mat-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
+
+    <p style="margin: 0; width: 50%; text-align: center; color: white;">
+      {{calendarDateTitle}}
+    </p>
 
     <button
       mat-icon-button
@@ -21,13 +25,13 @@
 
     <mat-sidenav-content style="overflow: hidden">
      
-      <app-calendar-naviagtion [title]="calendarDateTitle" (action)="calendarNavigate($event)"></app-calendar-naviagtion>
-
+      
       <full-calendar
-        #calendar
-        *ngIf="!loading"
-        [options]="calendarOptions"
+      #calendar
+      *ngIf="!loading"
+      [options]="calendarOptions"
       ></full-calendar>
+      <app-calendar-naviagtion *ngIf="!loading" [title]="calendarDateTitle" (action)="calendarNavigate($event)"></app-calendar-naviagtion>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
