@@ -40,8 +40,10 @@ export class CalendarComponent implements OnInit {
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
-  calendarDateTitle=''
+  calendarDateTitle='...'
   loading = true;
+  todayIcon = 'primary'
+  timeElapsed = Date.now();
 
   constructor(
     private dialog: MatDialog,
@@ -57,34 +59,6 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.populateSchedule();
   }
-
-  calendarNavigate(action?: string) {
-    let calendarApi = this.calendarComponent.getApi();
-
-    if(action) {
-      switch (action) {
-        case 'next':
-          calendarApi.next();
-          break;
-  
-        case 'prev':
-          calendarApi.prev();
-          break;
-  
-        case 'today':
-          calendarApi.today();
-          break;
-  
-        default:
-            calendarApi.changeView(action)
-          break;
-      }
-    }
-    
-    this.calendarDateTitle = calendarApi.view.title
-    
-  }
-  
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
   private populateSchedule() {
@@ -104,6 +78,7 @@ export class CalendarComponent implements OnInit {
               prestador_id: element.prestador_id
             });
           });
+          
           this.calendarOptions.initialEvents = this.scheduling;
 
           this.loading = false
@@ -268,10 +243,53 @@ export class CalendarComponent implements OnInit {
       }
     );
   }
+
+  /**Executa ação de navegação no calendário
+   * @param action nome da ação seleciona
+   */
+  calendarNavigate(action?: string) {
+    let calendarApi = this.calendarComponent.getApi();
+
+    if(action) {  
+      switch (action) {
+        case 'next':
+          calendarApi.next();
+          break;
+  
+        case 'prev':
+          calendarApi.prev();
+          break;
+  
+        case 'today':
+          calendarApi.today();
+          break;
+  
+        default:
+            calendarApi.changeView(action)
+          break;
+      }
+    }
+    
+    this.calendarDateTitle = calendarApi.view.title
+
+    this.setColorIconToday(calendarApi)
+  }
+
+  /** Seta cor do ícone de dia atual
+   * @param calendarApi
+   */
+  setColorIconToday(calendarApi: any) {
+    const today = new Date(this.timeElapsed);
+
+    if(calendarApi.view.activeStart < today && calendarApi.view.activeEnd > today){
+      this.todayIcon = 'primary'
+    }else {
+      this.todayIcon = 'secondary'
+    }
+  }
  
   private handleEvents(events: EventApi[]) {
     // console.log(events);
-    
     this.currentEvents = events;
   }
 

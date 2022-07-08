@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CalendarViewOptions } from './calendar.navigation.options';
 
 @Component({
@@ -6,24 +6,21 @@ import { CalendarViewOptions } from './calendar.navigation.options';
   templateUrl: './calendar-naviagtion.component.html',
   styleUrls: ['./calendar-naviagtion.component.scss']
 })
-export class CalendarNaviagtionComponent implements OnInit {
+export class CalendarNaviagtionComponent {
 
   @Input() title = ''
+  @Input() todayIcon = ''
   @Output() action = new EventEmitter<string>();
 
   calendarViewOptions = CalendarViewOptions;
+  direction= "";
+  actionIcon="timeGridWeek";
 
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  direction= ""
-  actionIcon="timeGridWeek"
-
+  /**
+   * Emite evento de clique com ação selecionada
+   * @param action nome da ação
+   */
   change(action: string) {
-    
     if(!(action === 'today' || action === 'next' || action === 'prev'))  {
       this.actionIcon=action;
       
@@ -31,6 +28,10 @@ export class CalendarNaviagtionComponent implements OnInit {
     this.action.emit(action);    
   }
   
+  /**
+   * Verifica o movimento do usuário para esquerda ou direita e emite evento
+   * @param event dados do evento de arrastar
+   */
   onSwipe(event:any) {
     const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? "Right" : "Left") : "";
         
@@ -40,4 +41,6 @@ export class CalendarNaviagtionComponent implements OnInit {
       this.change('prev')
     }
   }
+
+
 }

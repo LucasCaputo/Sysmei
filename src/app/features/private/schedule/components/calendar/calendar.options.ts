@@ -6,6 +6,7 @@ export const calendarSelectedOptions: CalendarOptions = {
       center: '',
       right: '',
     },
+    noEventsText: 'Nenhum agendamento cadastrado',
     allDaySlot: false,
     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
     initialView: 'timeGridWeek',

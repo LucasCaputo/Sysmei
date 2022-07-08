@@ -4,8 +4,8 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div fxFlex="60" style="overflow: scroll; text-align: center;">
-      <p style="margin: 0; color: white;  font-size: 16px; ">
+    <div fxFlex="60" class="title">
+      <p class="text">
         {{calendarDateTitle}}
       </p>
     </div>
@@ -15,7 +15,7 @@
       aria-label="Adicionar Agendamento"
       fxFlex="20"
     >
-      <mat-icon style="font-size: 30px; color: white"
+      <mat-icon class="icon"
         >add_circle_outline</mat-icon
       >
     </button>
@@ -26,15 +26,20 @@
       <app-menu></app-menu>
     </mat-sidenav>
 
-    <mat-sidenav-content style="overflow: hidden; height: 100vh;">
-     
+    <mat-sidenav-content class="content">
       
       <full-calendar
       #calendar
       *ngIf="!loading"
       [options]="calendarOptions"
       ></full-calendar>
-      <app-calendar-naviagtion  *ngIf="!loading" [title]="calendarDateTitle" (action)="calendarNavigate($event)"></app-calendar-naviagtion>
+
+      <app-calendar-naviagtion 
+        *ngIf="!loading" 
+        [todayIcon]="todayIcon" 
+        [title]="calendarDateTitle" 
+        (action)="calendarNavigate($event)">
+      </app-calendar-naviagtion>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

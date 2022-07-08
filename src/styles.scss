@@ -30,43 +30,43 @@ body {
 }
 
 full-calendar {
-  height: calc(100vh - 80px);
-}
-
-.fc-toolbar.fc-header-toolbar {
-  margin-bottom: 0 !important;
-}
-
-.fc-toolbar-title {
-  color: #673ab7;
-  font-size: 16px;
-}
-
-.fc-day-today {
-  .fc-timegrid-col-frame {
-    background-color: #673ab74a !important;
+  height: calc(100vh - 110px);
+  
+  .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0 !important;
   }
-
-  .fc-scrollgrid-sync-inner {
-    background-color: #673ab74a !important;
+  
+  .fc-toolbar-title {
+    color: #673ab7;
+    font-size: 16px;
   }
-}
-
-.fc-col-header-cell-cushion {
-  color: dimgray;
-}
-.fc-timegrid-slot {
-  height: 30px !important;
-}
-
-.fc-timegrid-slot-label-cushion {
-  color: dimgray;
-}
-
-.fc-list-day-cushion {
-  color: dimgray;
-}
-
-.fc-list-event-dot {
-  border-color: #9c27b0 !important;
+  
+  .fc-day-today {
+    .fc-timegrid-col-frame {
+      background-color: #673ab74a !important;
+    }
+  
+    .fc-scrollgrid-sync-inner {
+      background-color: #673ab74a !important;
+    }
+  }
+  
+  .fc-col-header-cell-cushion {
+    color: dimgray;
+  }
+  .fc-timegrid-slot {
+    height: 30px !important;
+  }
+  
+  .fc-timegrid-slot-label-cushion {
+    color: dimgray;
+  }
+  
+  .fc-list-day-cushion {
+    color: dimgray;
+  }
+  
+  .fc-list-event-dot {
+    border-color: #9c27b0 !important;
+  }
 }

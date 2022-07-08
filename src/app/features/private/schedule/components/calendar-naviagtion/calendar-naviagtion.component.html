@@ -1,22 +1,27 @@
-<div style="position: fixed; width:100%; bottom: 0; z-index: 99; background-color: white;height: 80px;" fxLayoutAlign="center center" (swipe)="onSwipe($event)">
-      <ng-container *ngFor="let viewOption of calendarViewOptions">
-        <mat-icon style="padding: 16px;" fxFlex="20" fxLayoutAlign="center center" *ngIf="actionIcon===viewOption.calendarView" (click)="change(viewOption.redirectTo)" color="primary">{{viewOption.icon}}</mat-icon>
-      </ng-container>
+<div class="navigation" fxLayoutAlign="center center" (swipe)="onSwipe($event)">
+  <ng-container *ngFor="let viewOption of calendarViewOptions">
+    <mat-icon *ngIf="actionIcon===viewOption.calendarView" (click)="change(viewOption.redirectTo)" class="icon"
+      fxFlex="20" fxLayoutAlign="center center" color="primary">
+      {{viewOption.icon}}
+    </mat-icon>
+  </ng-container>
 
 
-      <ng-container fxFlex="60" >
-        <mat-icon style="padding: 16px;" (click)="change('prev')" color="primary" aria-hidden="false"
-        aria-label="volta">arrow_back_ios</mat-icon>
-  
-        <p style="margin: 0; width: 50%; text-align: center; color: #673ab7;" >
-          ...
-        </p>
-  
-        <mat-icon style="padding: 16px;" (click)="change('next')" color="primary" aria-hidden="false"
-        aria-label="volta">arrow_forward_ios</mat-icon>
-      </ng-container>
+  <div fxFlex="60" fxLayoutAlign="center center">
+    <mat-icon class="icon" (click)="change('prev')" color="primary" aria-hidden="false" aria-label="volta">
+      arrow_back_ios</mat-icon>
 
-        <mat-icon style="padding: 16px;" fxFlex="20" fxLayoutAlign="center center" (click)="change('today')" color="primary" aria-hidden="false"
-      aria-label="Hoje">event_repeat</mat-icon>
+    <p class="text">
+      ...
+    </p>
+
+    <mat-icon class="icon" (click)="change('next')" color="primary" aria-hidden="false" aria-label="volta">
+      arrow_forward_ios</mat-icon>
+  </div>
+
+  <mat-icon class="icon" fxFlex="20" fxLayoutAlign="center center" (click)="change('today')" [color]="todayIcon"
+    aria-hidden="false" aria-label="Hoje">
+    event_repeat
+  </mat-icon>
 
 </div>
