@@ -1,7 +1,7 @@
 <div>
   <div fxLayoutAlign="space-between center">
     <button
-      mat-dialog-close
+      [mat-dialog-close]="'close'"
       mat-icon-button
       color="accent"
       class="action-buttons"
@@ -9,13 +9,13 @@
       <mat-icon>highlight_off</mat-icon>
     </button>
     <span mat-dialog-title>{{
-      data.title ? "Editar Agendamento" : "Novo Agendamento" 
+      data?.title ? "Editar Agendamento" : "Novo Agendamento" 
     }}</span>
     <button
       mat-icon-button
       color="primary"
       class="action-buttons"
-      [disabled]="!form.value.title || !form.value.customer"
+      [disabled]="form.invalid || !form.dirty"
       [mat-dialog-close]="form.value"
     >
       <mat-icon>done_outline</mat-icon>
@@ -26,7 +26,7 @@
     <form fxLayout="column" [formGroup]="form">
       <mat-form-field  appearance="fill">
         <mat-label>Atendente</mat-label>
-        <mat-select formControlName="employee">
+        <mat-select formControlName="employee" required>
           <mat-option *ngFor="let employee of employeeData" [value]="employee">
             {{employee.nome}}
           </mat-option>
@@ -44,6 +44,7 @@
           formControlName="title"
           name="title"
           #myInput
+          required
         />
       </mat-form-field>
 
@@ -156,7 +157,7 @@
   </div>
   <div fxLayoutAlign="end center">
     <button
-      *ngIf="data.title != undefined"
+      *ngIf="data?.title != undefined"
       color="warn"
       mat-icon-button
       aria-label="Excluir"

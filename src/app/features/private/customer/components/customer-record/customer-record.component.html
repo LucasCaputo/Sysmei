@@ -1,9 +1,10 @@
 <mat-toolbar
   color="primary"
   fxFlex="100vw"
-  style="position: fixed; padding: 0; z-index: 9"
+  class="toolbar"
 >
   <div fxFlex="100" fxLayoutAlign="space-between center">
+    
     <button *ngIf="!edit" mat-button routerLink="/clientes">
       <mat-icon>arrow_back</mat-icon>
     </button>
@@ -12,7 +13,24 @@
       <mat-icon>close</mat-icon>
     </button>
 
-    <!-- <span fxFlex="60" style="contain: content">{{ data?.nome }}</span> -->
+    <button *ngIf="tabSelected == 0"
+      mat-icon-button
+      (click)="!edit ? (edit = !edit) : emitEventToChild()"
+      class="icon-right"
+      aria-label="Ediar cliente"
+    >
+      <mat-icon *ngIf="!edit">edit</mat-icon>
+      <mat-icon *ngIf="edit">check</mat-icon>
+    </button>
+
+    <button *ngIf="tabSelected == 1"
+      mat-icon-button
+      (click)="addSchedule()"
+      class="icon-right"
+      aria-label="Adicionar clientes"
+    >
+      <mat-icon>add_box</mat-icon>
+    </button>
 
     <div *ngIf="tabSelected == 2">
       <button mat-button>
@@ -21,42 +39,16 @@
       <input
         type="file"
         (change)="inputFileChange($event)"
-        style="
-          opacity: 0;
-          width: 32px;
-          height: 24px;
-          position: absolute;
-          right: 16px;
-        "
+        class="input-photo"
       />
     </div>
 
-    <button
-      *ngIf="tabSelected == 1"
-      mat-icon-button
-      aria-label="Adicionar clientes"
-      style="margin-right: 8px"
-      (click)="addSchedule()"
-    >
-      <mat-icon>add_box</mat-icon>
-    </button>
-
-    <button
-      *ngIf="tabSelected == 0"
-      type="button"
-      mat-icon-button
-      aria-label="Ediar cliente"
-      (click)="!edit ? (edit = !edit) : emitEventToChild()"
-      style="margin-right: 8px"
-    >
-      <mat-icon *ngIf="!edit">edit</mat-icon>
-      <mat-icon *ngIf="edit">check</mat-icon>
-    </button>
   </div>
 </mat-toolbar>
 
 <div *ngIf="!loading" class="list">
   <mat-list *ngIf="!edit" @enter>
+
     <mat-list-item>
       <div fxFlex fxLayoutAlign="center center" fxFlex="77">
         <div
@@ -99,9 +91,9 @@
     </mat-list-item>
   </mat-list>
 
-  <mat-tab-group mat-align-tabs="center" (selectedIndexChange)="test($event)">
+  <mat-tab-group mat-align-tabs="center" (selectedIndexChange)="selectedIndexChange($event)">
     <mat-tab label="Dados">
-      <div [style]="!edit ? 'height: calc(100vh - 300px)' : 'height:auto'">
+      <div [style]="!edit ? 'height: calc(100vh - 56px)' : 'height:auto'">
         <app-customer-complete-registration
           [data]="data"
           [edit]="edit"
@@ -112,13 +104,13 @@
     </mat-tab>
 
     <mat-tab label="Histórico" *ngIf="!edit">
-      <div style="height: calc(100vh - 300px)">
+      <div class="tab-container">
         <app-record-list [data]="records"></app-record-list>
       </div>
     </mat-tab>
 
     <mat-tab label="Documentos" *ngIf="!edit">
-      <div style="height: calc(100vh - 300px)">
+      <div class="tab-container">
         <div *ngIf="!photos?.length" style="text-align: center">
           Cadastre a primeira foto do cliente
         </div>

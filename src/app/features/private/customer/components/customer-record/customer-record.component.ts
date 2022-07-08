@@ -3,20 +3,19 @@ import {
   state,
   style,
   transition,
-  trigger,
+  trigger
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import {
+  CustomerResponse
+} from 'src/app/repository/intefaces/customer-response';
+import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Scheduling } from '../../../../../shared/interfaces/scheduling.interface';
-import { MatDialog } from '@angular/material/dialog';
-import { ScheduleDialogComponent } from '../../../shared/dialogs/schedule-dialog/schedule-dialog.component';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
-import {
-  CustomerResponse, 
-  DocumentsUrl,
-} from 'src/app/repository/intefaces/customer-response';
+import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
 import { OpenPhotoComponent } from '../open-photo/open-photo.component';
 
 @Component({
@@ -85,7 +84,7 @@ export class CustomerRecordComponent implements OnInit {
     }, 1000);
   }
 
-  test(tabSelected: number) {
+  selectedIndexChange(tabSelected: number) {
     this.tabSelected = tabSelected;
   }
 
@@ -150,14 +149,15 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   addSchedule() {
-    const dialogRef = this.dialog.open(ScheduleDialogComponent, {
+    const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
       data: '',
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      this.populate();
+      console.log(result);
+      
     });
   }
 }

@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
+  FormControl, Validators
 } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
@@ -94,20 +92,6 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
 
   ngOnDestroy() {
     this.eventsSubscription?.unsubscribe();
-  }
-
-  onSubmit() {
-    console.log('submit');
-  }
-
-  update(form: FormGroup) {
-    if (form.status == 'INVALID') {
-      this.snackbarService.openSnackBar('Erro ao atualizar', 'x', true);
-    } else {
-      this.snackbarService.openSnackBar('Atualizado', 'x', false);
-    }
-
-    console.log(form);
   }
 
   checkName(input: FormControl) {

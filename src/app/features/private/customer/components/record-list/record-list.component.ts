@@ -3,7 +3,7 @@ import {
   state,
   style,
   transition,
-  trigger,
+  trigger
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -32,61 +32,28 @@ export class RecordListComponent implements OnInit {
 
   expandedElement = [];
 
-  loading = false;
-
   constructor(
     private route: ActivatedRoute,
     private customerRepository: CustomerRepository
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
     this.dataSource = [];
 
-    if ((this.data = [])) {
-      let id = this.route.snapshot.params['id'];
-      this.customerRepository.getCustomerRecord(id).subscribe(
-        (response) => {
-          this.data = response;
+    this.data?.forEach((e: any) => {
+      let data = `${e.start.slice(8, 10)}-${e.start.slice(
+        5,
+        7
+      )}-${e.start.slice(2, 4)}`;
 
-          this.data?.forEach((e: any) => {
-            let data = `${e.start.slice(8, 10)}-${e.start.slice(
-              5,
-              7
-            )}-${e.start.slice(2, 4)}`;
-
-            this.dataSource.push({
-              data,
-              titulo: e.title.slice(0, 20),
-              valor: e.valor || 'R$',
-              description: e.detalhes || 'Sem observações',
-            });
-          });
-
-          this.loading = false;
-          return;
-        },
-        (erro) => {
-          console.log(erro);
-        }
-      );
-    } else {
-      this.data?.forEach((e: any) => {
-        let data = `${e.start.slice(8, 10)}-${e.start.slice(
-          5,
-          7
-        )}-${e.start.slice(2, 4)}`;
-
-        this.dataSource.push({
-          data,
-          titulo: e.title.slice(0, 20),
-          valor: e.valor || 'R$',
-          description: e.detalhes || 'Sem observações',
-        });
+      this.dataSource.push({
+        data,
+        titulo: e.title.slice(0, 20),
+        valor: e.valor || 'R$',
+        description: e.detalhes || 'Sem observações',
       });
-      this.loading = false;
-    }
+    });
+
   }
 
-  ngAfterViewInit() {}
 }

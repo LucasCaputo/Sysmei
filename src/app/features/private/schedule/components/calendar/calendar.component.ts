@@ -12,7 +12,6 @@ import { ScheduleRepository } from 'src/app/repository/services/schedule/schedul
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerService } from '../../../shared/services/customer/customer.service';
-import { EmployeeService } from '../../../shared/services/employee/employee.service';
 import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
 import { DialogCloseOptions } from '../scheduling-form/interfaces/dialog-close-options';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
@@ -53,7 +52,6 @@ export class CalendarComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private utilsService: UtilsService,
-    private employeeService: EmployeeService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +66,7 @@ export class CalendarComponent implements OnInit {
           scheduleResponse.forEach((element: ScheduleResponse) => {
             this.scheduling.push({
               id: element.id!.toString(),
-              title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)].nome,
+              title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)]?.nome,
               start: this.utilsService.formatStringData(element.start),
               end: this.utilsService.formatStringData(element.end),
               paciente_id: element.paciente_id,
@@ -107,10 +105,8 @@ export class CalendarComponent implements OnInit {
       end,
       status: 0,
       login_usuario: this.auth.getUser()?.login,
-      paciente_id:
-        data.event._def?.extendedProps?.paciente_id ||
-        data.event._def?.extendedProps?.customer,
-      prestador_id: this.employeeService.employee[0]?.id,
+      paciente_id: data.event._def?.extendedProps?.paciente_id,
+      prestador_id: data.event._def?.extendedProps?.prestador_id,
     };
 
     this.scheduleRepository.updateScheduling(schedule, schedule.id).subscribe(
@@ -166,7 +162,7 @@ export class CalendarComponent implements OnInit {
   }
 
   /** Adiciona um novo agendamento*/
-  private insertSchedule(selectInfo?: DateSelectArg) {
+  public insertSchedule(selectInfo?: DateSelectArg) {
     if (!this.customerService?.customers?.length) {
       alert('você precisa cadastrar seu primeiro cliente');
 
@@ -182,8 +178,12 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result, "INSERT");
+
+      if( result === 'close') {
+        return
+      }
         
-      if (result && selectInfo) {
+      if (result) {
        const schedule = this.formatRequestPayload(result)
        const scheduleCalendar = this.formatCalendarData(result)
         
@@ -191,9 +191,11 @@ export class CalendarComponent implements OnInit {
 
         this.scheduleRepository.postScheduling(schedule).subscribe(
           (response) => {
-            const calendarApi = selectInfo.view.calendar;
+            const calendarApi = this.calendarComponent.getApi().view.calendar;
 
             calendarApi.unselect();
+
+            scheduleCalendar.id = response.id
 
             calendarApi.addEvent(scheduleCalendar);
 
@@ -218,6 +220,10 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         console.log(result, "EDIT");
+
+        if(result === 'close') {
+          return
+        }
         
         if (result?.id) {
           console.log(result);
@@ -231,11 +237,16 @@ export class CalendarComponent implements OnInit {
               (resultUpdate) => {
                 clickInfo.view.calendar.addEvent(scheduleCalendar);
                 clickInfo.event.remove();
+                this.scheduleService.searchScheduleList()
+
               },  
               (error) => {
                 console.log(error, 'update');
               }
             );
+        }else {
+          clickInfo.event.remove();
+          this.scheduleService.searchScheduleList()
         }
       },
       (error) => {
@@ -247,7 +258,7 @@ export class CalendarComponent implements OnInit {
   /**Executa ação de navegação no calendário
    * @param action nome da ação seleciona
    */
-  calendarNavigate(action?: string) {
+  public calendarNavigate(action?: string) {
     let calendarApi = this.calendarComponent.getApi();
 
     if(action) {  
@@ -270,7 +281,7 @@ export class CalendarComponent implements OnInit {
       }
     }
     
-    this.calendarDateTitle = calendarApi.view.title
+    this.calendarDateTitle = calendarApi?.view?.title
 
     this.setColorIconToday(calendarApi)
   }
@@ -278,10 +289,10 @@ export class CalendarComponent implements OnInit {
   /** Seta cor do ícone de dia atual
    * @param calendarApi
    */
-  setColorIconToday(calendarApi: any) {
+  private setColorIconToday(calendarApi: any) {
     const today = new Date(this.timeElapsed);
 
-    if(calendarApi.view.activeStart < today && calendarApi.view.activeEnd > today){
+    if(calendarApi?.view && calendarApi.view.activeStart < today && calendarApi.view.activeEnd > today){
       this.todayIcon = 'primary'
     }else {
       this.todayIcon = 'secondary'

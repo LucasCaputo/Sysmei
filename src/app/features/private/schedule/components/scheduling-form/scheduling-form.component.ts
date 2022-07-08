@@ -72,16 +72,24 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    let end = '';
+    let start = '';
+
+    if(this.data?.start && this.data?.end) {
+      start = `${('0'+this.data?.start?.getHours())?.slice(-2)}:${('0'+this.data?.start?.getMinutes())?.slice(-2)}`
+      end = `${('0'+this.data?.end?.getHours())?.slice(-2)}:${('0'+this.data?.end?.getMinutes())?.slice(-2)}`
+    }
     
     this.form = this.formBuilder.group({
       id: this.data?.id,
       allDay: this.data?.start || '',
-      start: `${('0'+this.data?.start.getHours()).slice(-2)}:${('0'+this.data?.start.getMinutes()).slice(-2)}` || '',
-      end: `${('0'+this.data?.end.getHours()).slice(-2)}:${('0'+this.data?.end.getMinutes()).slice(-2)}` || '',
+      start,
+      end,
       login_usuario: this.user?.login,
       customer: this.customerData.find((e)=> e.id === this.data?.extendedProps?.paciente_id),
       status: 0,  
-      title: this.data?.title,
+      title: this.data?.title || '',
       valor: this.data?.extendedProps?.valor || '',
       pagamento: this.data?.extendedProps?.pagamento || '',
       detalhes: this.data?.extendedProps?.detalhes || '',
@@ -125,19 +133,18 @@ export class SchedulingFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result.confirmed && customer._def.publicId) {
+      if (result?.confirmed && customer?._def?.publicId) {
+        this.dialog.closeAll();
         this.scheduleRepository
           .deleteScheduling(customer._def.publicId)
           .subscribe(
             (response) => {
-              localStorage.removeItem('scheduling');
 
               this.snackbarService.openSnackBar(
-                `Agendamento deletado com sucesso, aguarde que será removido da sua agenda`,
+                `Agendamento deletado com sucesso`,
                 'X',
                 false
               );
-              this.dialog.closeAll();
             },
             (error) => {
               console.log(error);

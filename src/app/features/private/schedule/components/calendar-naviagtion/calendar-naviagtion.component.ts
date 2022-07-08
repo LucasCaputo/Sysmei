@@ -20,7 +20,7 @@ export class CalendarNaviagtionComponent {
    * Emite evento de clique com ação selecionada
    * @param action nome da ação
    */
-  change(action: string) {
+  public change(action: string) {
     if(!(action === 'today' || action === 'next' || action === 'prev'))  {
       this.actionIcon=action;
       
@@ -32,7 +32,7 @@ export class CalendarNaviagtionComponent {
    * Verifica o movimento do usuário para esquerda ou direita e emite evento
    * @param event dados do evento de arrastar
    */
-  onSwipe(event:any) {
+  public onSwipe(event:any) {
     const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? "Right" : "Left") : "";
         
     if(x === 'Right') {

@@ -1,23 +1,19 @@
 import {
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpRequest,
-  HttpResponse,
-  HttpErrorResponse,
+  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
 
-import { retry, catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -42,6 +38,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             if (error.status == 403) {
               errorMessage = "Seu Token venceu faça login novamente"
               this.auth.logout()
+              this.router.navigate(['login']);
             }
           }
 

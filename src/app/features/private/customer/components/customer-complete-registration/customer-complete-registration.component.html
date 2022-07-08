@@ -1,9 +1,8 @@
 <form
-  style="margin-top: 24px; overflow: hidden"
   [formGroup]="profileForm"
   fxLayout="column"
-  fxFlex="100vw"
-  class="list"
+  fxFlex="98vw"
+  class="container-form"
 >
   <mat-list [style]="edit ? 'height: calc(100vh - 230px); overflow: auto' : ''">
     <mat-list-item>
@@ -58,6 +57,7 @@
     <mat-divider></mat-divider>
 
     <div mat-subheader>Contato</div>
+
     <mat-list-item>
       <mat-icon mat-list-icon>phone</mat-icon>
 
@@ -130,7 +130,9 @@
         </mat-error>
       </mat-form-field>
     </mat-list-item>
+
     <mat-divider></mat-divider>
+    
     <div mat-subheader>Comercial</div>
 
     <mat-list-item>

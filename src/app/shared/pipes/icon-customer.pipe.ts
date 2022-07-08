@@ -13,6 +13,8 @@ export class IconCustomerPipe implements PipeTransform {
       let lastName = name[1];
 
       return firstname[0].toUpperCase() + lastName[0].toUpperCase();
+    } else if(name[0]){
+      return name[0][0].toUpperCase()
     } else {
       return '';
     }
