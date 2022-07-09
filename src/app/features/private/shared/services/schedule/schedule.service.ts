@@ -26,8 +26,6 @@ export class ScheduleService {
     this.ScheduleRepository.getSchedule().subscribe((scheduleList) => {
       this.schedule = scheduleList;
       this.$schedule.next(scheduleList);
-      console.log(this.schedule);
-      
     });
   }
 

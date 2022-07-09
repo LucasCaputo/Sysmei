@@ -1,5 +1,5 @@
 <div>
-  <mat-toolbar *ngIf="!loading" color="primary" fxLayoutAlign="space-between center">
+  <mat-toolbar color="primary" fxLayoutAlign="space-between center">
     <button fxFlex="20" mat-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -31,12 +31,10 @@
       
       <full-calendar
       #calendar
-      *ngIf="!loading"
       [options]="calendarOptions"
       ></full-calendar>
 
       <app-calendar-naviagtion 
-        *ngIf="!loading" 
         [todayIcon]="todayIcon" 
         [title]="calendarDateTitle" 
         (action)="calendarNavigate($event)">

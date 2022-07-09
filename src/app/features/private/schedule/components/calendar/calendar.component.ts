@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { calendarSelectedOptions } from './calendar.options';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
 
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
@@ -40,9 +40,9 @@ export class CalendarComponent implements OnInit {
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
   calendarDateTitle='...'
-  loading = true;
   todayIcon = 'primary'
   timeElapsed = Date.now();
+  calendarApi:any
 
   constructor(
     private dialog: MatDialog,
@@ -54,7 +54,8 @@ export class CalendarComponent implements OnInit {
     private utilsService: UtilsService,
   ) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
+    this.calendarApi = this.calendarComponent.getApi();
     this.populateSchedule();
   }
 
@@ -63,8 +64,9 @@ export class CalendarComponent implements OnInit {
     this.scheduleService.$schedule.subscribe(
       (scheduleResponse: Array<ScheduleResponse>) => {
         if (scheduleResponse.length) {
+          this.calendarApi.removeAllEvents()
           scheduleResponse.forEach((element: ScheduleResponse) => {
-            this.scheduling.push({
+            const scheduleItem = {
               id: element.id!.toString(),
               title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)]?.nome,
               start: this.utilsService.formatStringData(element.start),
@@ -74,19 +76,14 @@ export class CalendarComponent implements OnInit {
               pagamento: element.pagamento,
               detalhes: element.detalhes,
               prestador_id: element.prestador_id
-            });
+            }
+
+            this.scheduling.push(scheduleItem);
+            this.calendarApi.view.calendar.addEvent(scheduleItem)
           });
-          
-          this.calendarOptions.initialEvents = this.scheduling;
-
-          this.loading = false
-
-          setTimeout(() => {
-            this.calendarNavigate();
-            
-          }, 2000);
-
+          this.calendarNavigate();
         }
+        
       }
     )
   }
@@ -177,35 +174,16 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result, "INSERT");
-
       if( result === 'close') {
         return
       }
         
-      if (result) {
-       const schedule = this.formatRequestPayload(result)
-       const scheduleCalendar = this.formatCalendarData(result)
-        
-        console.log('schedule funcioanndo', schedule);
+      const scheduleCalendar = this.formatCalendarData(result)
+              
+      this.calendarApi.view.calendar.unselect();
 
-        this.scheduleRepository.postScheduling(schedule).subscribe(
-          (response) => {
-            const calendarApi = this.calendarComponent.getApi().view.calendar;
-
-            calendarApi.unselect();
-
-            scheduleCalendar.id = response.id
-
-            calendarApi.addEvent(scheduleCalendar);
-
-            this.scheduleService.searchScheduleList()
-          },  
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
+      this.calendarApi.view.calendar.addEvent(scheduleCalendar);
+     
     });
   }
 
@@ -219,35 +197,14 @@ export class CalendarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       (result) => {
-        console.log(result, "EDIT");
-
         if(result === 'close') {
           return
         }
-        
-        if (result?.id) {
-          console.log(result);
-            
-          const scheduleUpdate = this.formatRequestPayload(result)
-          const scheduleCalendar = this.formatCalendarData(result)
 
-          this.scheduleRepository
-            .updateScheduling(scheduleUpdate, result.id)
-            .subscribe(
-              (resultUpdate) => {
-                clickInfo.view.calendar.addEvent(scheduleCalendar);
-                clickInfo.event.remove();
-                this.scheduleService.searchScheduleList()
+        const scheduleCalendar = this.formatCalendarData(result)
 
-              },  
-              (error) => {
-                console.log(error, 'update');
-              }
-            );
-        }else {
-          clickInfo.event.remove();
-          this.scheduleService.searchScheduleList()
-        }
+        clickInfo.view.calendar.addEvent(scheduleCalendar);
+        clickInfo.event.remove();
       },
       (error) => {
         console.log(error);
@@ -259,40 +216,38 @@ export class CalendarComponent implements OnInit {
    * @param action nome da ação seleciona
    */
   public calendarNavigate(action?: string) {
-    let calendarApi = this.calendarComponent.getApi();
-
     if(action) {  
       switch (action) {
         case 'next':
-          calendarApi.next();
+          this.calendarApi.next();
           break;
   
         case 'prev':
-          calendarApi.prev();
+          this.calendarApi.prev();
           break;
   
         case 'today':
-          calendarApi.today();
+          this.calendarApi.today();
           break;
   
         default:
-            calendarApi.changeView(action)
+            this.calendarApi.changeView(action)
           break;
       }
     }
     
-    this.calendarDateTitle = calendarApi?.view?.title
+    this.calendarDateTitle = this.calendarApi?.view?.title
 
-    this.setColorIconToday(calendarApi)
+    this.setColorIconToday()
   }
 
   /** Seta cor do ícone de dia atual
    * @param calendarApi
    */
-  private setColorIconToday(calendarApi: any) {
+  private setColorIconToday() {
     const today = new Date(this.timeElapsed);
 
-    if(calendarApi?.view && calendarApi.view.activeStart < today && calendarApi.view.activeEnd > today){
+    if(this.calendarApi?.view && this.calendarApi.view.activeStart < today && this.calendarApi.view.activeEnd > today){
       this.todayIcon = 'primary'
     }else {
       this.todayIcon = 'secondary'

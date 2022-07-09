@@ -70,7 +70,9 @@ export class ScheduleDialogComponent implements OnInit {
   }
 
   populate() {
-    this.customerData = this.customerService.formattedCustomerList;
+    this.customerService.$customers.subscribe((result)=>{
+      this.customerData =  result
+    });
   }
 
   private _filter(value: string) {

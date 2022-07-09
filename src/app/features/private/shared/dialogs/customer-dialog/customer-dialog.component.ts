@@ -3,7 +3,7 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ import { CustomerService } from '../../services/customer/customer.service';
 })
 export class CustomerDialogComponent implements OnInit {
   form = this.fb.group({
+    id: [this.data.id || null],
     nome: [this.data.nome || '', this.checkName],
     telefone1: [this.data.telefone1 || ''],
     email: [this.data.email || '', [Validators.email]],
@@ -103,5 +104,48 @@ export class CustomerDialogComponent implements OnInit {
         );
       }
     });
+  }
+
+  /**Adiciona e edita dados do Customer */
+  saveCustomer() : void {
+    if (this.form.value?.id) {
+      this.customerService.updateCustomer(this.form.value, this.form.value.id).subscribe(
+        (response) => {
+          this.customerService.searchCustomerList();
+          this.snackbarService.openSnackBar(
+            `Parabéns! usuário ${this.form.value.nome.toUpperCase()} atualizado com sucesso`,
+            'X',
+            false
+          );
+        },
+        (error) => {
+          this.snackbarService.openSnackBar(
+            `Tivemos um erro na atualização, tente novamente`,
+            'X',
+            true
+          );
+        }
+      );
+      return;
+    }
+    if (this.form.value) {
+      this.customerService.postCustomer(this.form.value).subscribe(
+        (response) => {
+          this.customerService.searchCustomerList();
+          this.snackbarService.openSnackBar(
+            `Parabéns! usuário ${this.form.value.nome.toUpperCase()} cadastrado com sucesso`,
+            'X',
+            false
+          );
+        },
+        (error) => {
+          this.snackbarService.openSnackBar(
+            `Tivemos um erro no cadastro, tente novamente`,
+            'X',
+            true
+          );
+        }
+      );
+    }
   }
 }

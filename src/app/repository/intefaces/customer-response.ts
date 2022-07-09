@@ -1,4 +1,8 @@
 export interface CustomerResponse {
+  text: string;
+  inicial: string;
+  isFirstLetter: boolean;
+
   email: string;
   endereco: string;
   enderecoNum: string;

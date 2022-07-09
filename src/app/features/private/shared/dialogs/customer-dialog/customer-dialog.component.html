@@ -14,13 +14,8 @@
     mat-icon-button
     color="primary"
     style="margin: 0 0 20px"
-    [mat-dialog-close]="{
-      id: data.id,
-      nome: form.value.nome,
-      telefone1: form.value.telefone1,
-      email: form.value.email,
-      login_usuario: form.value.login_usuario
-    }"
+    (click)="saveCustomer()"
+    mat-dialog-close
     [disabled]="form.invalid || !form.dirty"
   >
     <mat-icon>done_outline</mat-icon>

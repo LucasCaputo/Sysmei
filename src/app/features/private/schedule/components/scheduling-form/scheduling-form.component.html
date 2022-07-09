@@ -16,8 +16,9 @@
       color="primary"
       class="action-buttons"
       [disabled]="form.invalid || !form.dirty"
+      (click)="saveScheduleData()"
       [mat-dialog-close]="form.value"
-    >
+      >
       <mat-icon>done_outline</mat-icon>
     </button>
   </div>

@@ -10,12 +10,15 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
+import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerService } from '../../../shared/services/customer/customer.service';
 import { EmployeeService } from '../../../shared/services/employee/employee.service';
+import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
 import { AutocompleteOptions } from './interfaces/autocomplete-options';
 import { CustomerData } from './interfaces/customer-data';
 
@@ -40,6 +43,8 @@ export class SchedulingFormComponent implements OnInit {
   @ViewChild('myInput') myInput: ElementRef | undefined;
 
   constructor(
+    private scheduleService: ScheduleService,
+    private utilsService: UtilsService,
     private customerService: CustomerService,
     private scheduleRepository: ScheduleRepository,
     private employeeService: EmployeeService,
@@ -121,6 +126,57 @@ export class SchedulingFormComponent implements OnInit {
 
   displayCustomer(option: any) {
     return option?.text || ''
+  }
+
+  /** Edita objeto como back espera receber */
+  private formatRequestPayload(result: any): ScheduleResponse {
+  
+    const datePayload = this.utilsService.formatDateRequestPayload(result);
+
+    const schedule = {
+      id: result.id,
+      title: result.title,
+      start: datePayload.start,
+      end: datePayload.end,
+      status: 0,
+      login_usuario: this.authService.getUser()?.login!,
+      paciente_id: result.customer?.id,
+      allDay: datePayload.allDay,
+      valor: parseInt(result.valor),
+      detalhes: result.detalhes,
+      pagamento: result.pagamento,
+      prestador_id: result.employee?.id,
+    };
+
+    return schedule
+  }
+
+  saveScheduleData() {
+    const schedule = this.formatRequestPayload(this.form.value)
+    console.log(this.form.value);
+    
+
+    if(schedule.id) {
+      this.scheduleRepository
+      .updateScheduling(schedule, `${schedule.id}`)
+      .subscribe(
+        (resultUpdate) => {
+          this.scheduleService.searchScheduleList()
+        },  
+        (error) => {
+          console.log(error, 'update');
+        }
+      );
+    } else {
+      this.scheduleRepository.postScheduling(schedule).subscribe(
+        (response) => {
+          this.scheduleService.searchScheduleList()
+        },  
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   onDelete(customer: any) {

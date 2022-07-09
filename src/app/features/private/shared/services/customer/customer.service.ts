@@ -28,22 +28,54 @@ export class CustomerService {
   public searchCustomerList(): void {
     this.customerRepository.getCustomer(this.authService.getUser()?.login).subscribe((customerList) => {
       this.customers = customerList;
-      this.$customers.next(customerList);
-      this.formatCustomerList(this.customers);
+      this.$customers.next(this.formatCustomerList(this.customers));
+      
     });
   }
 
   /** Formata dados do customer para atender a interface do autocomplete no html */
-  private formatCustomerList(customerList: Array<CustomerResponse>): void {
-    let list: Array<CustomerData> = [];
-    customerList.forEach((element: any) => {
-      let phone: string = element.telefone1;
-      list.push({
-        ...element,
-        text: `${element.nome} - ${this.utilService.formatPhone(phone)}`,
-      });
-    });
-    this.formattedCustomerList = list;    
+  private formatCustomerList(customerList: Array<CustomerResponse>): Array<CustomerResponse> {
+    let list: Array<CustomerResponse> = [];
+    let letter = ''
+
+    if(customerList?.length) {
+      customerList.forEach((customer, index)=>{
+        let phone: string = customer.telefone1;
+  
+        if(index === 0) {
+          letter = customer.nome[0]?.toUpperCase();
+  
+          list.push({
+            ...customer,
+            inicial: letter,
+            isFirstLetter: true,
+            text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
+          });
+  
+        } else {
+          if(letter === customer.nome[0]?.toUpperCase()) {
+            list.push({
+              ...customer,
+              inicial: letter,
+              isFirstLetter: false,
+              text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
+            });
+          } else {
+            letter = customer.nome[0]?.toUpperCase()
+
+            list.push({
+              ...customer,
+              inicial: letter,
+              isFirstLetter: true,
+              text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
+            });
+          } 
+        };
+      })
+    }
+    this.formattedCustomerList = list;   
+
+    return list;    
   }
 
   postCustomer(customer: any): Observable<CustomerResponse> {
