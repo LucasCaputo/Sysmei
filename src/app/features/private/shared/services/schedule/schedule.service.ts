@@ -21,7 +21,7 @@ export class ScheduleService {
     private ScheduleRepository: ScheduleRepository
   ) {}
 
-  /** Busca lista de usuários e salva na variável customers */
+  /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(user?: string): void {
     this.ScheduleRepository.getSchedule().subscribe((scheduleList) => {
       this.schedule = scheduleList;

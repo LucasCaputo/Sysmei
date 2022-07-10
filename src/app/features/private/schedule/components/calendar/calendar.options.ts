@@ -18,4 +18,5 @@ export const calendarSelectedOptions: CalendarOptions = {
     dayMaxEvents: true,
     selectLongPressDelay: 250,
     locale: 'pt-br',
+    nowIndicator: true,
   };

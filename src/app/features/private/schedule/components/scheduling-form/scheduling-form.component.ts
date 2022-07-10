@@ -94,15 +94,17 @@ export class SchedulingFormComponent implements OnInit {
       login_usuario: this.user?.login,
       customer: this.customerData.find((e)=> e.id === this.data?.extendedProps?.paciente_id),
       status: 0,  
-      title: this.data?.title || '',
+      title: '',
       valor: this.data?.extendedProps?.valor || '',
       pagamento: this.data?.extendedProps?.pagamento || '',
       detalhes: this.data?.extendedProps?.detalhes || '',
       employee: this.employeeData.find((e)=> e.id === this.data?.extendedProps?.prestador_id) || this.employeeData[0],
     });
 
-    console.log(this.form);
-    
+    if(this.data?.title) {
+      this.form.controls.title.setValue(this.data?.title?.replace(` - ${this.form?.value?.customer?.nome}`, ''))
+    }
+
   }
 
   ngAfterViewInit() {
@@ -135,7 +137,7 @@ export class SchedulingFormComponent implements OnInit {
 
     const schedule = {
       id: result.id,
-      title: result.title,
+      title: result.title.replaceAll(` - ${this.form?.value?.customer?.nome}`, ''),
       start: datePayload.start,
       end: datePayload.end,
       status: 0,
@@ -153,27 +155,45 @@ export class SchedulingFormComponent implements OnInit {
 
   saveScheduleData() {
     const schedule = this.formatRequestPayload(this.form.value)
-    console.log(this.form.value);
-    
 
     if(schedule.id) {
       this.scheduleRepository
       .updateScheduling(schedule, `${schedule.id}`)
       .subscribe(
         (resultUpdate) => {
-          this.scheduleService.searchScheduleList()
+          this.scheduleService.searchScheduleList();
+          this.snackbarService.openSnackBar(
+            `Agendamento atualizado com sucesso`,
+            'X',
+            false
+          );
         },  
         (error) => {
           console.log(error, 'update');
+          this.snackbarService.openSnackBar(
+            `Tivemos um erro para atualizar, tente novamente`,
+            'X',
+            true
+          );
         }
       );
     } else {
       this.scheduleRepository.postScheduling(schedule).subscribe(
         (response) => {
-          this.scheduleService.searchScheduleList()
+          this.scheduleService.searchScheduleList();
+          this.snackbarService.openSnackBar(
+            `Agendamento adicionado com sucesso`,
+            'X',
+            false
+          );
         },  
         (error) => {
           console.log(error);
+          this.snackbarService.openSnackBar(
+            `Tivemos um erro para inserir, tente novamente`,
+            'X',
+            true
+          );
         }
       );
     }
@@ -196,6 +216,7 @@ export class SchedulingFormComponent implements OnInit {
           .subscribe(
             (response) => {
 
+              this.scheduleService.searchScheduleList()
               this.snackbarService.openSnackBar(
                 `Agendamento deletado com sucesso`,
                 'X',

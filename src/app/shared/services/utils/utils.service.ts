@@ -24,20 +24,20 @@ export class UtilsService {
     return `${split[0]}T${split[1]}:00-03:00`;
   }
 
-  formatDateRequestPayload(result:DialogCloseOptions) {
+  formatDateRequestPayload(result: DialogCloseOptions) {
 
-    let month = (`0${1+result.allDay.getMonth()}`).slice(-2)
-    let day = (`0${result.allDay.getDate()}`).slice(-2)
+    let month = (`0${1 + result?.allDay?.getMonth()}`).slice(-2)
+    let day = (`0${result?.allDay?.getDate()}`).slice(-2)
 
-    const date = `${result.allDay.getFullYear()}-${month}-${day}`
-      
+    const date = `${result?.allDay?.getFullYear()}-${month}-${day}`
+
     let dateRequestPayload = {
       allDay: `${date}`,
-      start: `${date} ${result.start}`,
-      end: `${date} ${result.end}`
+      start: `${date} ${result?.start}`,
+      end: `${date} ${result?.end}`
     }
-    
+
     return dateRequestPayload
-    
+
   }
 }
