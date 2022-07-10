@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ import { calendarSelectedOptions } from './calendar.options';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent {
+export class CalendarComponent implements AfterViewInit {
 
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
@@ -40,7 +40,7 @@ export class CalendarComponent {
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
-  calendarDateTitle='...'
+  calendarDateTitle = '...'
   todayIcon = 'primary'
   timeElapsed = Date.now();
   calendarApi:any
@@ -59,6 +59,10 @@ export class CalendarComponent {
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
     this.populateSchedule();
+
+    setTimeout(() => {
+      this.calendarNavigate();
+    }, 0);
   }
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
@@ -83,7 +87,6 @@ export class CalendarComponent {
             this.scheduling.push(scheduleItem);
             this.calendarApi.view.calendar.addEvent(scheduleItem)
           });
-          this.calendarNavigate();
         }
         
       }
@@ -184,8 +187,11 @@ export class CalendarComponent {
           break;
       }
     }
+
+    if(this.calendarApi?.view?.title) {
+      this.calendarDateTitle = this.calendarApi?.view?.title;
+    }
     
-    this.calendarDateTitle = this.calendarApi?.view?.title
 
     this.setColorIconToday()
   }

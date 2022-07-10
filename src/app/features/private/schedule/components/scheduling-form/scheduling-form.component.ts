@@ -38,6 +38,8 @@ export class SchedulingFormComponent implements OnInit {
   customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
   employeeData: Array<EmployeeResponse> = this.employeeService.employee;
 
+  hiddenEmployee = false;
+
   filteredOptions: Observable<Array<AutocompleteOptions>>;
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
@@ -103,6 +105,12 @@ export class SchedulingFormComponent implements OnInit {
 
     if(this.data?.title) {
       this.form.controls.title.setValue(this.data?.title?.replace(` - ${this.form?.value?.customer?.nome}`, ''))
+    }
+
+    if(this.employeeData?.length > 1){
+      this.hiddenEmployee = true 
+      console.log(this.hiddenEmployee);
+      
     }
 
   }

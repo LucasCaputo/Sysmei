@@ -1,41 +1,22 @@
-<div *ngIf="getList.length" class="container">
-  <div
-    *ngFor="let letter of letters"
-    [style]="
-      checklistContent(getList | arrayFiltro: search, letter)
-        ? ''
-        : 'display:none'
-    "
-  >
-    <div mat-subheader *ngIf="getList.length && !search">
-      {{ letter }}
-    </div>
-    <mat-list
-      *ngIf="checklistContent(getList | arrayFiltro: search, letter)"
+
+  <mat-list-item class="card">
+    <div
+      fxFlex
+      fxLayoutAlign="center center"
+      fxFlex="66"
+      class="badge"
     >
-      <div *ngFor="let customer of getList | arrayFiltro: search">
-        <mat-list-item *ngIf="letter == customer.inicial" class="card">
-          <div
-            fxFlex
-            fxLayoutAlign="center center"
-            fxFlex="66"
-            routerLink="ficha/{{ customer.id }}"
-            class="badge"
-          >
-            <app-badge [name]="customer.nome"></app-badge>
+      <app-badge [name]="cardData.nome"></app-badge>
 
-            <div fxFlex fxFlex="80" style="margin-left: 16px;">
-              <app-contact-info
-                [info]="customer"
-              ></app-contact-info>
-            </div>
-          </div>
-
-          <app-contact-actions [customer]="customer"></app-contact-actions>
-
-          <mat-divider></mat-divider>
-        </mat-list-item>
+      <div fxFlex fxFlex="80" style="margin-left: 16px;">
+        <app-contact-info
+          [info]="cardData"
+        ></app-contact-info>
       </div>
-    </mat-list>
-  </div>
-</div>
+    </div>
+
+    <app-contact-actions [customer]="cardData"></app-contact-actions>
+
+    <mat-divider></mat-divider>
+  </mat-list-item>
+

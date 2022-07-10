@@ -3,11 +3,10 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User } from 'src/app/features/public/shared/interfaces/user';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -80,8 +79,7 @@ export class EmployeeDialogComponent implements OnInit {
             'X',
             false
           );
-
-          this.dialog.closeAll();
+          this.employeeService.searchEmployeeList();
         },
         (error) => {
           this.snackbarService.openSnackBar(

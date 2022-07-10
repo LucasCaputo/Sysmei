@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { Observable, throwError } from 'rxjs';
 
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
@@ -21,8 +21,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next
       .handle(request)
       .pipe(
-        retry(1),
-
+        // retry(1),
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
