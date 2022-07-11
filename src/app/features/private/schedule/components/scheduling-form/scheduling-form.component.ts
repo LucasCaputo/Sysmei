@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -33,14 +33,12 @@ export class SchedulingFormComponent implements OnInit {
 
   form!: FormGroup;
   
-  customerControl = new FormControl();
-
   customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
   employeeData: Array<EmployeeResponse> = this.employeeService.employee;
 
   hiddenEmployee = false;
 
-  filteredOptions: Observable<Array<AutocompleteOptions>>;
+  filteredOptions!: Observable<Array<AutocompleteOptions>>;
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
 
@@ -72,10 +70,12 @@ export class SchedulingFormComponent implements OnInit {
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
   ) {
-    this.filteredOptions = this.customerControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value))
-    );
+    setTimeout(() => {
+      this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value))
+      );
+    }, 0);
   }
 
   ngOnInit(): void {
