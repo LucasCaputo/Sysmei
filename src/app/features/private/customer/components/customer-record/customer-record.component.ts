@@ -16,7 +16,7 @@ import { CustomerRepository } from 'src/app/repository/services/customer/custome
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { Scheduling } from '../../../../../shared/interfaces/scheduling.interface';
 import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
-import { OpenPhotoComponent } from '../open-photo/open-photo.component';
+import { OpenPhotoComponent } from './open-photo/open-photo.component';
 
 @Component({
   selector: 'app-customer-record',

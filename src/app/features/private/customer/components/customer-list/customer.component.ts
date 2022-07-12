@@ -4,8 +4,8 @@ import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { CustomerDialogComponent } from '../shared/dialogs/customer-dialog/customer-dialog.component';
-import { CustomerService } from '../shared/services/customer/customer.service';
+import { CustomerDialogComponent } from '../../../shared/dialogs/customer-dialog/customer-dialog.component';
+import { CustomerService } from '../../../shared/services/customer/customer.service';
 
 @Component({
   selector: 'app-customer',
