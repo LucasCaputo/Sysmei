@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
+import { ScheduleFormatResponse, ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
+import { CustomerService } from '../customer/customer.service';
+import { EmployeeService } from '../employee/employee.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,39 +15,98 @@ import { environment } from 'src/environments/environment';
 export class ScheduleService {
   schedule!: Array<ScheduleResponse>;
 
-  public $schedule: BehaviorSubject<Array<ScheduleResponse>> =
-    new BehaviorSubject<Array<ScheduleResponse>>([]);
+  public $schedule: BehaviorSubject<Array<ScheduleResponse>> = new BehaviorSubject<Array<ScheduleResponse>>([]);
+
+  public $formatedSchedule: BehaviorSubject<Array<ScheduleFormatResponse>> = new BehaviorSubject<Array<ScheduleFormatResponse>>([]);
 
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-    private ScheduleRepository: ScheduleRepository
+    private ScheduleRepository: ScheduleRepository,
+    private customerService: CustomerService,
+    private employeeService: EmployeeService,
+    private utilsService: UtilsService,
   ) {}
 
   /** Busca lista de agendamentos e salva na variável schedule */
-  public searchScheduleList(user?: string): void {
-    this.ScheduleRepository.getSchedule().subscribe((scheduleList) => {
+  public searchScheduleList(): void {
+    this.ScheduleRepository.getSchedule().subscribe((scheduleList: Array<ScheduleResponse>) => {
       this.schedule = scheduleList;
       this.$schedule.next(scheduleList);
+      this.$formatedSchedule.next(this.formatScheduleResponse(scheduleList));     
     });
   }
 
-  /**Retorna observable dos agendamentos */
+  /** Formata retorno do back para formato que front espera receber */
+  public formatScheduleResponse(scheduleList: Array<ScheduleResponse>): Array<ScheduleFormatResponse> {
 
-  public scheduleObservable(): Observable<Array<ScheduleResponse>> {
-    return this.$schedule.asObservable();
+    let formatedSchedule: Array<ScheduleFormatResponse> = []
+
+    scheduleList.map((element: ScheduleResponse)=>{
+
+      const scheduleFormat: ScheduleFormatResponse = {
+        title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)]?.nome,
+        customer: this.customerService.customers.find((e:any)=> e.id === element.paciente_id),
+        detalhes: element.detalhes,
+        employee: this.employeeService.employee.find((e:any)=> e.id === element.prestador_id),
+        end: this.setDate(element.end),
+        id: element.id?.toString(),
+        schedule_id: element.id,
+        pagamento: element.pagamento,
+        start: this.setDate(element.start),
+        Title: element.title,
+        valor: element.valor
+      }
+      
+      formatedSchedule.push(scheduleFormat)
+
+    })
+
+    return formatedSchedule
+
   }
 
-  public postScheduling(scheduling: any): Observable<any> {
-    return this.httpClient.post<any>(
-      environment.baseURL + '/agenda',
-      scheduling,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      }
-    );
+    /** Edita objeto como back espera receber */
+    public formatRequestPayload(result: any): any {
+  
+      const datePayload = this.utilsService.formatDateRequestPayload(result); 
+  
+      const schedule = {
+        id: result.id,
+        title: result.title,
+        start: datePayload.start,
+        end: datePayload.end,      
+        paciente_id: result.customer?.id,
+        valor: parseInt(result.valor),
+        detalhes: result.detalhes,
+        pagamento: result.pagamento,
+        prestador_id: result.employee?.id,
+      };
+  
+      return schedule
+    }
+
+  /**Formata data */
+  public setDate(_date: string): Date {
+
+    const allDayArray: Array<string> = _date?.split(' ')[0]?.split('-');
+    const time: Array<string> = _date?.split(' ')[1]?.split(':')
+
+    const date = new Date(parseInt(allDayArray[0]), parseInt(allDayArray[1]) -1, parseInt(allDayArray[2]), parseInt(time[0]), parseInt(time[1])  )
+
+    return date
+  }
+
+  public postScheduling(body: any): Observable<any> {
+
+    const payload = {
+      ...body,
+      login_usuario: this.authService.getUser()?.login,
+      status: 0,
+      allDay: body.start.split(' ')[0]
+    }
+
+    return this.ScheduleRepository.postScheduling(payload)
   }
   
   deleteScheduling(customerId: any): Observable<any> {
@@ -58,11 +120,15 @@ export class ScheduleService {
     );
   }
 
-  updateScheduling(body: any, id: number) {
-    return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
-      headers: {
-        Authorization: this.authService.getToken()!,
-      },
-    });
+  public updateScheduling(body: any, id: number): Observable<any> {
+
+    const payload = {
+      ...body,
+      login_usuario: this.authService.getUser()?.login,
+      status: 0,
+      allDay: body.start.split(' ')[0]
+    }
+
+    return this.ScheduleRepository.updateScheduling(payload, id)
   }
 }

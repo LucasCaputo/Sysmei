@@ -7,8 +7,7 @@ import {
   DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, FullCalendarComponent, ViewApi
 } from '@fullcalendar/angular';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
-import { ScheduleResponse } from 'src/app/repository/intefaces/schedule-response';
-import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
+import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
@@ -47,7 +46,6 @@ export class CalendarComponent implements AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private scheduleRepository: ScheduleRepository,
     private scheduleService: ScheduleService,
     private customerService: CustomerService,
     private auth: AuthService,
@@ -67,28 +65,17 @@ export class CalendarComponent implements AfterViewInit {
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
   private populateSchedule() {
-    this.scheduleService.$schedule.subscribe(
-      (scheduleResponse: Array<ScheduleResponse>) => {
-        if (scheduleResponse.length) {
+    this.scheduleService.$formatedSchedule.subscribe(
+      (scheduleFormatResponse: Array<ScheduleFormatResponse>) => {
+        if (scheduleFormatResponse.length) {
           this.calendarApi.removeAllEvents()
-          scheduleResponse.forEach((element: ScheduleResponse) => {
-            const scheduleItem = {
-              id: element.id!.toString(),
-              title: element.title +' - '+ this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e)=>e.id ===element.paciente_id)]?.nome,
-              start: this.utilsService.formatStringData(element.start),
-              end: this.utilsService.formatStringData(element.end),
-              paciente_id: element.paciente_id,
-              valor: element.valor,
-              pagamento: element.pagamento,
-              detalhes: element.detalhes,
-              prestador_id: element.prestador_id
-            }
 
-            this.scheduling.push(scheduleItem);
-            this.calendarApi.view.calendar.addEvent(scheduleItem)
+          scheduleFormatResponse.forEach((element: any) => {
+            
+            this.scheduling.push(element);
+            this.calendarApi.view.calendar.addEvent(element)
           });
         }
-        
       }
     )
   }
@@ -101,16 +88,14 @@ export class CalendarComponent implements AfterViewInit {
     let end = this.utilsService.clearStringData(data.event.endStr);
 
     const schedule = {
-      id: data.event?._def?.publicId,
+      id: parseInt(data.event?._def?.publicId),
       start,
       end,
-      status: 0,
-      login_usuario: this.auth.getUser()?.login,
-      paciente_id: data.event._def?.extendedProps?.paciente_id,
-      prestador_id: data.event._def?.extendedProps?.prestador_id,
+      paciente_id: data.event._def?.extendedProps?.customer.id,
+      prestador_id: data.event._def?.extendedProps?.employee.id,
     };
 
-    this.scheduleRepository.updateScheduling(schedule, schedule.id).subscribe(
+    this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
       (result) => {
         this.scheduleService.searchScheduleList();
         this.snackbarService.openSnackBar(
@@ -138,12 +123,30 @@ export class CalendarComponent implements AfterViewInit {
       this.router.navigate(['/clientes']);
       return;
     }
+    
+    let dateClick = null
+
+    if(selectInfo) {
+      const {start, end} = selectInfo;
+      dateClick = { start, end,}
+    }
 
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: selectInfo,
+      data: dateClick,
     });
+
+    dialogRef.afterClosed().subscribe((result)=>{
+
+      if(!result) {
+        return
+      }
+
+      this.calendarApi.view.calendar.unselect();
+      
+      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result))
+    })
   }
 
   /** Edita um agendamento */
@@ -151,8 +154,34 @@ export class CalendarComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: clickInfo.event,
-    });
+      data: {
+        ...clickInfo?.event?._def?.extendedProps,
+        start: clickInfo?.event?.start,
+        end: clickInfo?.event?.end
+      },
+    }); 
+
+    dialogRef.afterClosed().subscribe((result)=>{
+
+      if(!result) {
+        return
+      }
+
+      clickInfo.event.remove();
+      
+      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result))
+    })
+  }
+
+  /** Formata retorno do dialog para inserir no calendário */
+  private formatScheduleToCalendar(result: any) {
+
+    let resultFormat = this.scheduleService.formatRequestPayload(result)
+      
+    resultFormat = this.scheduleService.formatScheduleResponse([{...resultFormat, id: 'tempID'}]) 
+
+    return resultFormat[0]
+
   }
 
   /** Redireciona para dia selecionado quando em calendário tipo Mês */

@@ -66,7 +66,7 @@ export class CustomerRecordComponent implements OnInit {
 
   eventsSubject: Subject<void> = new Subject<void>();
 
-  records: Scheduling | undefined;
+  records: Array<Scheduling> | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -90,6 +90,8 @@ export class CustomerRecordComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
+    console.log(this.route.snapshot.params['id']);
+    
   }
 
   populate() {
@@ -111,11 +113,13 @@ export class CustomerRecordComponent implements OnInit {
 
     this.customerRepository.getCustomerRecord(this.id).subscribe(
       (response) => {
+        console.log(response);
+        
         this.records = response;
       },
       (erro) => {
         console.log(erro);
-      }
+      },
     );
   }
 
@@ -149,15 +153,34 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   addSchedule() {
+
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: '',
+      data: {paciente_id: parseInt(this.route.snapshot.params['id'])},
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
+
+      if(result =='close') return
       
+      if(result.title)  {
+
+        setTimeout(() => {
+          this.customerRepository.getCustomerRecord(this.id).subscribe(
+            (response) => {
+              this.records = response;
+              console.log(response);
+              
+            },
+            (erro) => {
+              console.log(erro);
+            },
+          );
+        }, 2000);
+        
+      }
     });
   }
 }

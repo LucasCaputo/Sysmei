@@ -6,8 +6,10 @@ import {
   trigger
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
+import { SchedulingFormComponent } from 'src/app/features/private/schedule/components/scheduling-form/scheduling-form.component';
+import { ScheduleService } from 'src/app/features/private/shared/services/schedule/schedule.service';
 
 @Component({
   selector: 'app-record-list',
@@ -34,10 +36,13 @@ export class RecordListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private customerRepository: CustomerRepository
+    public dialog: MatDialog,
+    private scheduleService: ScheduleService
   ) {}
 
   ngOnInit(): void {
+    console.log(this.route.snapshot.params['id']);
+
     this.dataSource = [];
 
     this.data?.forEach((e: any) => {
@@ -47,6 +52,7 @@ export class RecordListComponent implements OnInit {
       )}-${e.start.slice(2, 4)}`;
 
       this.dataSource.push({
+        ...e,
         data,
         titulo: e.title.slice(0, 20),
         valor: e.valor || 'R$',
@@ -56,4 +62,13 @@ export class RecordListComponent implements OnInit {
 
   }
 
+  click(el: any) {
+    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      data:  this.scheduleService.formatScheduleResponse([el])[0],
+    });
+
+    
+  }
 }

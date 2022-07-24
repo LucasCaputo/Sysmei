@@ -1,7 +1,7 @@
 <div>
   <div fxLayoutAlign="space-between center">
     <button
-      [mat-dialog-close]="'close'"
+      mat-dialog-close
       mat-icon-button
       color="accent"
       class="action-buttons"
@@ -9,7 +9,7 @@
       <mat-icon>highlight_off</mat-icon>
     </button>
     <span mat-dialog-title>{{
-      data?.title ? "Editar Agendamento" : "Novo Agendamento" 
+      data?.Title ? "Editar Agendamento" : "Novo Agendamento" 
     }}</span>
     <button
       mat-icon-button
@@ -81,8 +81,8 @@
             matInput
             [matDatepicker]="picker"
             formControlName="allDay"
-            name="dateStart"
             required
+            readonly
           />
           <mat-datepicker-toggle
             matSuffix

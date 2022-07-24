@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class ScheduleRepository {
     );
   }
 
-  updateScheduling(body:any, id: string) {
+  updateScheduling(body:any, id: number) {
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
