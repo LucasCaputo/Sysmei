@@ -157,7 +157,7 @@ export class CustomerRecordComponent implements OnInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: {paciente_id: parseInt(this.route.snapshot.params['id'])},
+      data: {customer: {id: parseInt(this.route.snapshot.params['id'])}},
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -165,7 +165,9 @@ export class CustomerRecordComponent implements OnInit {
 
       if(result =='close') return
       
-      if(result.title)  {
+      if(result.title) {
+        
+        this.records = []
 
         setTimeout(() => {
           this.customerRepository.getCustomerRecord(this.id).subscribe(
@@ -178,9 +180,36 @@ export class CustomerRecordComponent implements OnInit {
               console.log(erro);
             },
           );
-        }, 2000);
+        }, 8000);
         
       }
     });
   }
+
+    /**
+   * Verifica o movimento do usuário para esquerda ou direita e emite evento
+   * @param event dados do evento de arrastar
+   */
+     public onSwipe(event:any) {
+       
+       const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? "Right" : "Left") : "";
+       console.log(x, "entrou");
+          
+      if(x === 'Right') {
+        if(this.tabSelected < 2) {
+          this.tabSelected++
+          console.log(this.tabSelected);
+          
+          this.selectedIndexChange(this.tabSelected)
+        }
+      } else if (x === 'Left') {
+        if(this.tabSelected > 0) {
+          this.tabSelected--
+          console.log(this.tabSelected);
+
+          this.selectedIndexChange(this.tabSelected)
+        }
+      }
+    }
+
 }

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SchedulingFormComponent } from 'src/app/features/private/schedule/components/scheduling-form/scheduling-form.component';
 import { ScheduleService } from 'src/app/features/private/shared/services/schedule/schedule.service';
+import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 
 @Component({
   selector: 'app-record-list',
@@ -29,6 +30,7 @@ import { ScheduleService } from 'src/app/features/private/shared/services/schedu
 export class RecordListComponent implements OnInit {
   @Input() data: any;
 
+  customerId = this.route.snapshot.params['id']
   dataSource: any;
   columnsToDisplay = ['data', 'titulo', 'valor'];
 
@@ -37,14 +39,17 @@ export class RecordListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private scheduleService: ScheduleService
+    private scheduleService: ScheduleService,
+    private customerRepository: CustomerRepository
   ) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.params['id']);
-
+    this.formatData()
+  }
+  
+  formatData() {
+    
     this.dataSource = [];
-
     this.data?.forEach((e: any) => {
       let data = `${e.start.slice(8, 10)}-${e.start.slice(
         5,
@@ -67,6 +72,33 @@ export class RecordListComponent implements OnInit {
       width: '500px',
       maxWidth: '100vw',
       data:  this.scheduleService.formatScheduleResponse([el])[0],
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+
+      if(result =='close') return
+      
+      if(result.title)  {
+        console.log(this.customerId);
+        
+        this.customerId = this.route.snapshot.params['id']
+
+        setTimeout(() => {
+          this.customerRepository.getCustomerRecord(this.customerId).subscribe(
+            (response) => {
+              this.data = response;
+              console.log(response);
+              this.formatData()
+              
+            },
+            (erro) => {
+              console.log(erro);
+            },
+          );
+        }, 8000);
+        
+      }
     });
 
     
