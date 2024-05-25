@@ -12,7 +12,7 @@ import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-c
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { NgxMaskModule } from 'ngx-mask';
+// import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [NewUserComponent],
@@ -25,7 +25,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MatCardModule,
     MatButtonModule,
     ReactiveFormsModule,
-    NgxMaskModule.forRoot(),
+    // NgxMaskModule.forRoot(),
     MatIconModule,
   ],
   providers: [],

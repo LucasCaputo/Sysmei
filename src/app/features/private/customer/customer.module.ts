@@ -7,7 +7,7 @@ import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-t
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { NgxMaskModule } from 'ngx-mask';
+// import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from '../../../shared/shared.module';
 import { CustomerDialogModule } from '../shared/dialogs/customer-dialog/customer-dialog.module';
 import { ScheduleDialogModule } from '../shared/dialogs/schedule-dialog/schedule-dialog.module';
@@ -18,6 +18,8 @@ import { CustomerRecordComponent } from './components/customer-record/customer-r
 import { OpenPhotoComponent } from './components/customer-record/open-photo/open-photo.component';
 import { RecordListComponent } from './components/customer-record/record-list/record-list.component';
 import { CustomerRoutingModule } from './customer-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -32,10 +34,12 @@ import { CustomerRoutingModule } from './customer-routing.module';
     MatToolbarModule,
     MatMenuModule,
     MatListModule,
-    NgxMaskModule.forRoot(),
+    // NgxMaskModule.forRoot(),
     SharedModule,
     MatTabsModule,
     MatTableModule,
+    MatIconModule,
+    MatDividerModule,
     MatGridListModule,
     ScheduleDialogModule,
     MenuModule,

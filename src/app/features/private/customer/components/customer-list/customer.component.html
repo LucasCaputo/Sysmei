@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+<mat-toolbar color="primary" style="justify-content: space-between; align-items: center;">
   <button mat-button (click)="snav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
@@ -49,23 +49,20 @@
         <mat-list>
           <mat-list-item>
             <div
-              fxFlex
-              fxLayoutAlign="center center"
-              fxFlex="66"
               routerLink="ficha/{{ customer.id }}"
-              style="cursor: pointer"
+              style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 66%;"
             >
               <div
                 mat-list-icon
-                fxLayoutAlign="center center"
+                style="align-items: center; justify-content: center;"
                 [style]="customer.nome | iconColor"
                 class="icon"
               >
-                <span fxLayoutAlign="center center">
+                <span style="align-items: center; justify-content: center;">
                   {{ customer.nome | iconCustomer }}
                 </span>
               </div>
-              <div fxFlex style="margin-left: 16px" fxFlex="80">
+              <div style="margin-left: 16px; display: flex; width: 80%;">
                 <div mat-line>
                   {{ customer.nome }}
                 </div>
@@ -107,7 +104,7 @@
       </ng-container>
     </div>
 
-    <div fxFlex fxLayoutAlign="center center" *ngIf="!(customerList | arrayFiltro: search)?.length && search">
+    <div style="align-items: center; justify-content: center;" *ngIf="!(customerList | arrayFiltro: search)?.length && search">
        <div>
         <h1>Não encontramos o cliente</h1>
         <h1>{{ search }}</h1>

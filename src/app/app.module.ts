@@ -19,15 +19,15 @@ import { LoaderComponent } from './shared/components/loader/loader/loader.compon
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 
-import { HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import * as Hammer from 'hammerjs';
+// import { HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+// import * as Hammer from 'hammerjs';
 
 @Injectable()
-export class MyHammerConfig extends HammerGestureConfig {
-  override = {
-    swipe: { direction: Hammer.DIRECTION_ALL },
-  };
-}
+// export class MyHammerConfig extends HammerGestureConfig {
+//   override = {
+//     swipe: { direction: Hammer.DIRECTION_ALL },
+//   };
+// }
 
 @NgModule({
   declarations: [  
@@ -43,7 +43,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatToolbarModule,
     MatProgressBarModule,
     SharedModule,
-    BrowserModule, FormsModule, HammerModule
+    BrowserModule, FormsModule, 
+    // HammerModule
   ],
   providers: [
     {
@@ -60,10 +61,10 @@ export class MyHammerConfig extends HammerGestureConfig {
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useClass: MyHammerConfig,
-    }
+    // {
+    //   provide: HAMMER_GESTURE_CONFIG,
+    //   useClass: MyHammerConfig,
+    // }
   ],
   bootstrap: [AppComponent],
 })

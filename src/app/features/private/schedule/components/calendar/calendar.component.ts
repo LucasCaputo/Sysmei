@@ -2,10 +2,10 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
-import {
-  CalendarOptions,
-  DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, FullCalendarComponent, ViewApi
-} from '@fullcalendar/angular';
+// import {
+//   CalendarOptions,
+//   DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, FullCalendarComponent, ViewApi
+// } from '@fullcalendar/angular';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -15,6 +15,7 @@ import { CustomerService } from '../../../shared/services/customer/customer.serv
 import { ScheduleService } from '../../../shared/services/schedule/schedule.service';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { calendarSelectedOptions } from './calendar.options';
+import { DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-calendar',
@@ -23,17 +24,17 @@ import { calendarSelectedOptions } from './calendar.options';
 })
 export class CalendarComponent implements AfterViewInit {
 
-  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+  // @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
-  calendarOptions: CalendarOptions = {
-    ...calendarSelectedOptions,
-    select: this.insertSchedule.bind(this),
-    eventClick: this.editSchedule.bind(this),
-    eventDrop: this.onDragAndDrop.bind(this),
-    eventResize: this.onDragAndDrop.bind(this),
-    eventsSet: this.handleEvents.bind(this),
-    dateClick: this.redirectMonthToDay.bind(this)    
-  }
+  // calendarOptions: CalendarOptions = {
+  //   ...calendarSelectedOptions,
+  //   select: this.insertSchedule.bind(this),
+  //   eventClick: this.editSchedule.bind(this),
+  //   eventDrop: this.onDragAndDrop.bind(this),
+  //   eventResize: this.onDragAndDrop.bind(this),
+  //   eventsSet: this.handleEvents.bind(this),
+  //   dateClick: this.redirectMonthToDay.bind(this)    
+  // }
 
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
@@ -55,12 +56,12 @@ export class CalendarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    this.calendarApi = this.calendarComponent.getApi();
-    this.populateSchedule();
+    // this.calendarApi = this.calendarComponent.getApi();
+    // this.populateSchedule();
 
-    setTimeout(() => {
-      this.calendarNavigate();
-    }, 0);
+    // setTimeout(() => {
+    //   this.calendarNavigate();
+    // }, 0);
   }
 
   /** Recebe os dados de todos os agendamentos e popula a lista */

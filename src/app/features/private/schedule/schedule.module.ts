@@ -20,7 +20,7 @@ import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-m
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgxMaskModule } from 'ngx-mask';
+// import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MenuModule } from '../shared/menu/menu.module';
 
@@ -28,12 +28,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { CalendarNaviagtionComponent } from './components/calendar-naviagtion/calendar-naviagtion.component';
 
 
-FullCalendarModule.registerPlugins([
-  dayGridPlugin,
-  timeGridPlugin,
-  listPlugin,
-  interactionPlugin,
-]);
+// FullCalendarModule.registerPlugins([
+//   dayGridPlugin,
+//   timeGridPlugin,
+//   listPlugin,
+//   interactionPlugin,
+// ]);
 
 @NgModule({
   declarations: [CalendarComponent, SchedulingFormComponent, CalendarNaviagtionComponent],
@@ -50,7 +50,7 @@ FullCalendarModule.registerPlugins([
     MatToolbarModule,
     MatIconModule,
     SharedModule,
-    NgxMaskModule.forRoot(),
+    // NgxMaskModule.forRoot(),
     MenuModule,
     MatSidenavModule,
     MatListModule,
