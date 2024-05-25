@@ -33,11 +33,11 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
   ],
   imports: [
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatProgressBarModule,
     SharedModule,
-    BrowserModule,
     FormsModule, 
     LoaderComponent,
     // HammerModule

@@ -13,6 +13,11 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
 import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
 import { NgxMaskDirective } from 'ngx-mask';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -35,7 +40,9 @@ import { NgxMaskDirective } from 'ngx-mask';
     HeaderComponent,
     CardContainerComponent,
     MessageTipComponent,
-    NgxMaskDirective
+    NgxMaskDirective,
+    MatIconModule,
+    MatButtonModule,
   ]
 })
 export class NewUserComponent {

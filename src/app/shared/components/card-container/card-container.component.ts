@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -10,5 +10,7 @@ import { MatCardModule } from '@angular/material/card';
   imports: [CommonModule, MatCardModule ]
 })
 export class CardContainerComponent {
+
+  @Input() public title!: string;
 
 }

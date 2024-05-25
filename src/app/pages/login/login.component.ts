@@ -12,6 +12,8 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginRequest } from 'src/app/shared/interfaces/user';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,7 +33,7 @@ import { CardContainerComponent } from 'src/app/shared/components/card-container
     MatCardModule,
     HeaderComponent,
     LoginFormComponent,
-    CardContainerComponent
+    CardContainerComponent,
   ]
 })
 export class LoginComponent {

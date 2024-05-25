@@ -1,6 +1,6 @@
 <app-header [isPrivate]="false"></app-header>
-<app-card-container>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+<app-card-container  [title]="'Criar Conta'">
+  <form class="flex flex-col" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Telefone Celular</mat-label>
       <input matInput type="tel" formControlName="telefone" mask="(00) 0 0000-0000" minlength="11" required />
@@ -88,7 +88,7 @@
 
   <app-message-tip [title]="' Já tem uma conta?'" [linkText]="'Faça Login!'" [linkUrl]="'/login'"/>
 
-    <mat-card-actions fxLayoutAlign="end center">
+    <mat-card-actions class="flex justify-end">
       <button mat-raised-button color="primary" type="submit">
         Cadastrar
       </button>
