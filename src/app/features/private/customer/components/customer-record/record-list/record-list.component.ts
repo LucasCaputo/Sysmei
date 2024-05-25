@@ -6,7 +6,7 @@ import {
   trigger
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SchedulingFormComponent } from 'src/app/features/private/schedule/components/scheduling-form/scheduling-form.component';
 import { ScheduleService } from 'src/app/features/private/shared/services/schedule/schedule.service';

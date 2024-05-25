@@ -9,7 +9,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { InterceptorService } from './shared/components/loader/interceptor.service';
 
 import { FormsModule } from '@angular/forms';

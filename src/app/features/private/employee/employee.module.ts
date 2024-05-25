@@ -9,7 +9,7 @@ import { MenuModule } from '../shared/menu/menu.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CardModule } from '../shared/card/card.module';
 import { EmployeeDialogModule } from '../shared/dialogs/employee-dialog/employee-dialog.module';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 
 @NgModule({
   declarations: [EmployeeComponent],
