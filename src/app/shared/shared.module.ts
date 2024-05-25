@@ -6,7 +6,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,7 +23,6 @@ import { IconCustomerPipe } from './pipes/icon-customer.pipe';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     MatInputModule,
     RouterModule,
     MatDialogModule,
@@ -48,7 +46,6 @@ import { IconCustomerPipe } from './pipes/icon-customer.pipe';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     MatInputModule,
     ConfirmDialogComponent,
     WhatsappIconComponent,
