@@ -1,10 +1,16 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UserService } from '../shared/services/user/user.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { UserService } from '../../shared/services/user/user.service';
+import { CardContainerComponent } from '../../shared/components/card-container/card-container.component';
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -17,6 +23,16 @@ import { UserService } from '../shared/services/user/user.service';
       ]),
     ]),
   ],
+  standalone: true,
+  imports: [
+    CommonModule, 
+    HttpClientModule, 
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    HeaderComponent,
+    CardContainerComponent
+  ]
 })
 export class NewUserComponent {
   profileForm = this.fb.group({

@@ -4,7 +4,8 @@ import { PrivateRoutesGuard } from './shared/guards/private-routes/private-route
 import { PublicRoutesGuard } from './shared/guards/public-routes/public-routes.guard';
 import { Erro404Component } from './shared/pages/erro404/erro404.component';
 import { PrivateComponent } from './features/private/private.component';
-import { PublicComponent } from './features/public/public.component';
+import { NewUserComponent } from './features/public/pages/new-user/new-user.component';
+import { LoginComponent } from './features/public/pages/login/login.component';
 
 const routes: Routes = [
   {
@@ -42,22 +43,15 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: PublicComponent,
     canActivate: [PublicRoutesGuard],
     children: [
       {
         path: 'cadastro',
-        loadChildren: () =>
-          import('./features/public/new-user/new-user.module').then(
-            (m) => m.NewUserModule
-          ),
+        component: NewUserComponent
       },
       {
         path: 'login',
-        loadChildren: () =>
-          import('./features/public/login/login.module').then(
-            (m) => m.LoginModule
-          ),
+       component: LoginComponent
       },
     ],
   },

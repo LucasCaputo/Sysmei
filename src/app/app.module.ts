@@ -4,8 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrivateComponent } from './features/private/private.component';
-import { PublicComponent } from './features/public/public.component';
-import { HeaderComponent } from './shared/components/header/header.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -32,10 +30,7 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [  
     AppComponent,
-    HeaderComponent,
     PrivateComponent,
-    PublicComponent,
-    LoaderComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -43,7 +38,9 @@ import { SharedModule } from './shared/shared.module';
     MatToolbarModule,
     MatProgressBarModule,
     SharedModule,
-    BrowserModule, FormsModule, 
+    BrowserModule,
+    FormsModule, 
+    LoaderComponent,
     // HammerModule
   ],
   providers: [

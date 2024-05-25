@@ -4,11 +4,18 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UserService } from '../shared/services/user/user.service';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import {MatCardModule} from '@angular/material/card';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { UserService } from '../../shared/services/user/user.service';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { CardContainerComponent } from '../../shared/components/card-container/card-container.component';
+import { LoginRequest } from '../../shared/interfaces/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', '../../../app.component.scss'],
+  styleUrls: ['./login.component.scss', '../../../../app.component.scss'],
   animations: [
     trigger('enter', [
       transition(':enter', [
@@ -17,25 +24,26 @@ import { UserService } from '../shared/services/user/user.service';
       ]),
     ]),
   ],
+  standalone: true,
+  imports: [ 
+    CommonModule,
+    HttpClientModule,
+    MatCardModule,
+    HeaderComponent,
+    LoginFormComponent,
+    CardContainerComponent
+  ]
 })
 export class LoginComponent {
-  loginForm = this.fb.group({
-    usuario: ['', [Validators.email]],
-    senha: [''],
-  });
-
-  type = 'password';
-
   constructor(
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private fb: UntypedFormBuilder
   ) {}
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      this.userService.postLogin(this.loginForm.value).subscribe(
+  onSubmit(event: LoginRequest) {
+    if (event) {
+      this.userService.postLogin(event).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
             `Bem-vindo ${response.usuario.nome}`,
