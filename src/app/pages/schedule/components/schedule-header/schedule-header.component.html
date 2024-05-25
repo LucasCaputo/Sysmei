@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="flex justify-between centers" fxLayoutAlign="space-between center">
+    <button mat-button (click)="onMenuButtonClick()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div fxFlex="60" class="title">
+      <p class="text">
+        {{calendarDateTitle}}
+      </p>
+    </div>
+
+    <button
+      mat-icon-button
+      aria-label="Adicionar Agendamento"
+      (click)="onAddButtonClick()"
+    >
+      <mat-icon class="icon" style="font-size: 30px; 
+      color: white"
+        >add_circle_outline</mat-icon
+      >
+    </button>
+  </mat-toolbar>

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { HeaderBaseComponent } from './components/header-base/header-base.component';
 
 @Component({
   selector: 'app-header',
@@ -15,10 +16,10 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     RouterModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HeaderBaseComponent,
   ]
 })
 export class HeaderComponent {
   @Input() isPrivate: boolean | undefined;
-  @Input() isMobile: boolean = false;
 }

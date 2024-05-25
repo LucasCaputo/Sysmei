@@ -26,6 +26,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CalendarNaviagtionComponent } from './components/calendar-naviagtion/calendar-naviagtion.component';
 import { MenuModule } from 'src/app/shared/components/menu/menu.module';
 import { NgxMaskDirective } from 'ngx-mask';
+import { ScheduleHeaderComponent } from './components/schedule-header/schedule-header.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 
 
 // FullCalendarModule.registerPlugins([
@@ -54,6 +56,8 @@ import { NgxMaskDirective } from 'ngx-mask';
     MenuModule,
     MatSidenavModule,
     MatListModule,
+    ScheduleHeaderComponent,
+    HeaderComponent
   ],
   providers: [],
 })

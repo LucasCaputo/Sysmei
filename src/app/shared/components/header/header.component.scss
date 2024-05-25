@@ -1,3 +1,10 @@
 .active {
   background-color: rgb(0 0 0 / 12%);
 }
+
+
+@media (max-width: 600px) {
+  .logo {
+    display: none;
+  }
+}

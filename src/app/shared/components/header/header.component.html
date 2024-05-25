@@ -1,38 +1,14 @@
 <header>
-  <mat-toolbar color="{{ !isMobile ? 'primary' : '' }}">
-    <img src="../../../../assets/logo.svg" class="h-10 cursor-pointer" *ngIf="!isMobile"
+  <mat-toolbar color="primary">
+    <img src="../../../../assets/logo.svg" class="logo h-10 cursor-pointer"
     routerLink="{{ isPrivate ? 'agenda' : 'login' }}" />
 
-    <div *ngIf="isPrivate; else public">
-      <div *ngIf="isMobile; else desktop">
-        <button mat-icon-button color="primary" routerLink="agenda" aria-label="Agenda" routerLinkActive="active"
-          style="margin-right: 16px">
-          <mat-icon>today</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" routerLink="clientes" aria-label="Clientes" routerLinkActive="active"
-          style="margin-left: 16px">
-          <mat-icon>groups</mat-icon>
-        </button>
-      </div>
-      <ng-template #desktop>
-        <button mat-flat-button color="primary" routerLink="agenda" aria-label="Agenda" routerLinkActive="active">
-          Agenda
-        </button>
-        <button mat-flat-button color="primary" routerLink="clientes" aria-label="Clientes" routerLinkActive="active">
-          Clientes
-        </button>
-      </ng-template>
-
+    <div *ngIf="isPrivate; else public" class="flex w-full">
+      <ng-content></ng-content>
     </div>
+    
     <ng-template #public>
-      <div class="w-full flex justify-end">
-        <button  mat-flat-button color="primary" routerLink="/cadastro" aria-label="Cadastro" routerLinkActive="active">
-          Cadastro
-        </button>
-        <button mat-flat-button color="primary" routerLink="/login" aria-label="Login" routerLinkActive="active">
-          Login
-        </button>
-      </div>
+      <app-header-base [headerList]="[{urlLink: '/cadastro', text: 'Cadastro' }, {urlLink: '/login', text: 'Login' }]"></app-header-base>
     </ng-template>
   </mat-toolbar>
 </header>
