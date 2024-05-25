@@ -13,9 +13,10 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { calendarSelectedOptions } from './calendar.options';
-import { DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
+import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-calendar',
@@ -24,17 +25,17 @@ import { ScheduleService } from 'src/app/shared/services/schedule/schedule.servi
 })
 export class CalendarComponent implements AfterViewInit {
 
-  // @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
+   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
-  // calendarOptions: CalendarOptions = {
-  //   ...calendarSelectedOptions,
-  //   select: this.insertSchedule.bind(this),
-  //   eventClick: this.editSchedule.bind(this),
-  //   eventDrop: this.onDragAndDrop.bind(this),
-  //   eventResize: this.onDragAndDrop.bind(this),
-  //   eventsSet: this.handleEvents.bind(this),
-  //   dateClick: this.redirectMonthToDay.bind(this)    
-  // }
+   calendarOptions: CalendarOptions = {
+     ...calendarSelectedOptions,
+     select: this.insertSchedule.bind(this),
+     eventClick: this.editSchedule.bind(this),
+     eventDrop: this.onDragAndDrop.bind(this),
+     eventResize: this.onDragAndDrop.bind(this),
+     eventsSet: this.handleEvents.bind(this),
+     dateClick: this.redirectMonthToDay.bind(this)    
+   }
 
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];

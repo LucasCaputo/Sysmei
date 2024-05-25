@@ -1,4 +1,5 @@
 import { CalendarOptions } from "@fullcalendar/core";
+import timeGridPlugin from '@fullcalendar/timegrid'
 
 export const calendarSelectedOptions: CalendarOptions = {
     headerToolbar: {
@@ -9,6 +10,7 @@ export const calendarSelectedOptions: CalendarOptions = {
     noEventsText: 'Nenhum agendamento cadastrado',
     allDaySlot: false,
     titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
+    plugins: [timeGridPlugin],
     initialView: 'timeGridWeek',
     initialEvents: [],
     weekends: true,
