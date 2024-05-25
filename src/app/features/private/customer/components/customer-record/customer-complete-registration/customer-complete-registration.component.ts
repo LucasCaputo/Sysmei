@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl, Validators
+  UntypedFormBuilder,
+  UntypedFormControl, Validators
 } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
@@ -22,7 +22,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
   profileForm: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private snackbarService: SnackbarService,
     private auth: AuthService,
     private customerRepository: CustomerRepository
@@ -94,7 +94,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
     this.eventsSubscription?.unsubscribe();
   }
 
-  checkName(input: FormControl) {
+  checkName(input: UntypedFormControl) {
     const hasNumber = /[0-9]/.test(input.value);
 
     if (hasNumber) return { hasNumber: true };

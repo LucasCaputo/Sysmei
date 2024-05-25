@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -21,20 +21,20 @@ export class ScheduleDialogComponent implements OnInit {
   user = this.authService.getUser();
   filteredOptions: Observable<Array<AutocompleteOptions>>;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   customerData: Array<CustomerData> = [];
 
   customer: any;
   isDisabled = true;
 
-  customerControl = new FormControl();
+  customerControl = new UntypedFormControl();
 
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private scheduleRepository: ScheduleRepository,
     private snackbarService: SnackbarService,
     private utilService: UtilsService

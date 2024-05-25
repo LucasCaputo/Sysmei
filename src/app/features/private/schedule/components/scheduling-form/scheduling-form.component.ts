@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -32,7 +32,7 @@ export class SchedulingFormComponent implements OnInit {
   
   user = this.authService.getUser();
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   
   customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
   employeeData: Array<EmployeeResponse> = this.employeeService.employee;
@@ -54,7 +54,7 @@ export class SchedulingFormComponent implements OnInit {
     public data: ScheduleFormatResponse,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
   ) {
     setTimeout(() => {

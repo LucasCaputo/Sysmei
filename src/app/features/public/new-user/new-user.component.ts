@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -35,10 +35,10 @@ export class NewUserComponent {
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
-  checkName(input: FormControl) {
+  checkName(input: UntypedFormControl) {
     const hasNumber = /[0-9]/.test(input.value);
 
     if (hasNumber) return { hasNumber: true };

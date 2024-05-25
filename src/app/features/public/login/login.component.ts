@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -30,7 +30,7 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   onSubmit() {

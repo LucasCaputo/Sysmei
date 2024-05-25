@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -32,7 +32,7 @@ export class CustomerDialogComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       id: number;
@@ -53,7 +53,7 @@ export class CustomerDialogComponent implements OnInit {
     }, 300);
   }
 
-  checkName(input: FormControl) {
+  checkName(input: UntypedFormControl) {
     const hasNumber = /[0-9]/.test(input.value);
 
     if (hasNumber) return { hasNumber: true };
