@@ -3,11 +3,9 @@ import { DEFAULT_CURRENCY_CODE, Injectable, LOCALE_ID, NgModule } from '@angular
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PrivateComponent } from './features/private/private.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import { InterceptorService } from './shared/components/loader/interceptor.service';
 
 import { FormsModule } from '@angular/forms';
@@ -16,6 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LoaderComponent } from './shared/components/loader/loader/loader.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // import { HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 // import * as Hammer from 'hammerjs';
@@ -30,7 +29,6 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [  
     AppComponent,
-    PrivateComponent,
   ],
   imports: [
     AppRoutingModule,
