@@ -9,8 +9,9 @@ import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@ang
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from 'src/app/shared/shared.module';
-// import { NgxMaskModule } from 'ngx-mask';
+
 import { ScheduleDialogComponent } from './schedule-dialog.component';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @NgModule({
   declarations: [ScheduleDialogComponent],
@@ -23,7 +24,7 @@ import { ScheduleDialogComponent } from './schedule-dialog.component';
     MatMenuModule,
     MatToolbarModule,
     SharedModule,
-    // NgxMaskModule.forRoot(),
+    NgxMaskDirective
   ],
   exports: [ScheduleDialogComponent],
 })

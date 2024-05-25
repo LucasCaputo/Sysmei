@@ -15,6 +15,7 @@ import { LoaderComponent } from './shared/components/loader/loader/loader.compon
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 // import { HammerGestureConfig, HammerModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 // import * as Hammer from 'hammerjs';
@@ -56,6 +57,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    provideEnvironmentNgxMask()
     // {
     //   provide: HAMMER_GESTURE_CONFIG,
     //   useClass: MyHammerConfig,

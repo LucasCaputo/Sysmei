@@ -1,84 +1,38 @@
 <header>
   <mat-toolbar color="{{ !isMobile ? 'primary' : '' }}">
-    <img
-      src="../../../../assets/logo.svg"
-      height="40px"
-      *ngIf="!isMobile"
-      routerLink="{{ isPrivate ? 'agenda' : 'login' }}"
-      style="outline: none; cursor: pointer"
-    />
-    <span style="flex: 1 1 auto"></span>
-    <div
-      *ngIf="isPrivate; else public"
-      [style]="
-        isMobile
-          ? 'width: 100%; justify-content: space-around; display: flex'
-          : ''
-      "
-    >
-      <div *ngIf="!isMobile" style="margin-right: 60px">
-        <button
-          mat-flat-button
-          color="primary"
-          routerLink="agenda"
-          aria-label="Agenda"
-          routerLinkActive="active"
-        >
-          Agenda
-        </button>
-        <button
-          mat-flat-button
-          color="primary"
-          routerLink="clientes"
-          aria-label="Clientes"
-          routerLinkActive="active"
-        >
-          Clientes
-        </button>
-      </div>
+    <img src="../../../../assets/logo.svg" class="h-10 cursor-pointer" *ngIf="!isMobile"
+    routerLink="{{ isPrivate ? 'agenda' : 'login' }}" />
 
-      <div *ngIf="isMobile">
-        <button
-          mat-icon-button
-          color="primary"
-          routerLink="agenda"
-          aria-label="Agenda"
-          routerLinkActive="active"
-          style="margin-right: 16px"
-        >
+    <div *ngIf="isPrivate; else public">
+      <div *ngIf="isMobile; else desktop">
+        <button mat-icon-button color="primary" routerLink="agenda" aria-label="Agenda" routerLinkActive="active"
+          style="margin-right: 16px">
           <mat-icon>today</mat-icon>
         </button>
-        <button
-          mat-icon-button
-          color="primary"
-          routerLink="clientes"
-          aria-label="Clientes"
-          routerLinkActive="active"
-          style="margin-left: 16px"
-        >
+        <button mat-icon-button color="primary" routerLink="clientes" aria-label="Clientes" routerLinkActive="active"
+          style="margin-left: 16px">
           <mat-icon>groups</mat-icon>
         </button>
       </div>
+      <ng-template #desktop>
+        <button mat-flat-button color="primary" routerLink="agenda" aria-label="Agenda" routerLinkActive="active">
+          Agenda
+        </button>
+        <button mat-flat-button color="primary" routerLink="clientes" aria-label="Clientes" routerLinkActive="active">
+          Clientes
+        </button>
+      </ng-template>
+
     </div>
     <ng-template #public>
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="cadastro"
-        aria-label="Cadastro"
-        routerLinkActive="active"
-      >
-        Cadastro
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        routerLink="login"
-        aria-label="Login"
-        routerLinkActive="active"
-      >
-        Login
-      </button>
+      <div class="w-full flex justify-end">
+        <button  mat-flat-button color="primary" routerLink="/cadastro" aria-label="Cadastro" routerLinkActive="active">
+          Cadastro
+        </button>
+        <button mat-flat-button color="primary" routerLink="/login" aria-label="Login" routerLinkActive="active">
+          Login
+        </button>
+      </div>
     </ng-template>
   </mat-toolbar>
 </header>

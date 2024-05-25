@@ -7,7 +7,6 @@ import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-t
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
-// import { NgxMaskModule } from 'ngx-mask';
 import { CustomerComponent } from './components/customer-list/customer.component';
 import { CustomerCompleteRegistrationComponent } from './components/customer-record/customer-complete-registration/customer-complete-registration.component';
 import { CustomerRecordComponent } from './components/customer-record/customer-record.component';
@@ -20,6 +19,7 @@ import { CustomerDialogModule } from 'src/app/shared/components/dialogs/customer
 import { ScheduleDialogModule } from 'src/app/shared/components/dialogs/schedule-dialog/schedule-dialog.module';
 import { MenuModule } from 'src/app/shared/components/menu/menu.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatToolbarModule,
     MatMenuModule,
     MatListModule,
-    // NgxMaskModule.forRoot(),
     SharedModule,
     MatTabsModule,
     MatTableModule,
@@ -45,6 +44,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MenuModule,
     CustomerDialogModule,
     MatSidenavModule,
+    NgxMaskDirective
   ],
   providers: [],
 })

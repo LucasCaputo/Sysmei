@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form class="flex flex-col" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>E-mail</mat-label>
     <input matInput type="text" formControlName="usuario" required />
@@ -28,11 +28,7 @@
       (click)="type = 'text'">visibility_off</mat-icon>
   </mat-form-field>
 
-  <app-message-tip />
-
-  <div class="flex w-100 h-100 justify-end">
-meu texto
-  </div>
+  <app-message-tip [title]="'Não tem uma conta?'" [linkText]="'Crie uma!'" [linkUrl]="'/cadastro'"/>
 
   <mat-card-actions class="flex justify-end">
     <button type="submit" mat-raised-button color="primary">

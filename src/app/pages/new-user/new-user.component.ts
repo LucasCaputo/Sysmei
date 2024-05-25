@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
+import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
+import { NgxMaskDirective } from 'ngx-mask';
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -31,7 +33,9 @@ import { CardContainerComponent } from 'src/app/shared/components/card-container
     MatCardModule,
     MatInputModule,
     HeaderComponent,
-    CardContainerComponent
+    CardContainerComponent,
+    MessageTipComponent,
+    NgxMaskDirective
   ]
 })
 export class NewUserComponent {

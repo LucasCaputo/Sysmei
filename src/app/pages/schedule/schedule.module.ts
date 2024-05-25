@@ -20,12 +20,12 @@ import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-m
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-// import { NgxMaskModule } from 'ngx-mask';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MatIconModule } from '@angular/material/icon';
 import { CalendarNaviagtionComponent } from './components/calendar-naviagtion/calendar-naviagtion.component';
 import { MenuModule } from 'src/app/shared/components/menu/menu.module';
+import { NgxMaskDirective } from 'ngx-mask';
 
 
 // FullCalendarModule.registerPlugins([
@@ -50,7 +50,7 @@ import { MenuModule } from 'src/app/shared/components/menu/menu.module';
     MatToolbarModule,
     MatIconModule,
     SharedModule,
-    // NgxMaskModule.forRoot(),
+    NgxMaskDirective,
     MenuModule,
     MatSidenavModule,
     MatListModule,

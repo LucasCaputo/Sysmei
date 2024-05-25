@@ -86,12 +86,7 @@
         (click)="type = 'text'">visibility_off</mat-icon>
     </mat-form-field>
 
-    <p style="margin: 16px 0">
-      Já tem uma conta?
-      <span routerLink="/login" class="create-account">
-        Faça Login!
-      </span>
-    </p>
+  <app-message-tip [title]="' Já tem uma conta?'" [linkText]="'Faça Login!'" [linkUrl]="'/login'"/>
 
     <mat-card-actions fxLayoutAlign="end center">
       <button mat-raised-button color="primary" type="submit">
