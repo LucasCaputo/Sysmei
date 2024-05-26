@@ -71,6 +71,9 @@ export class RecordListComponent implements OnInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data:  this.scheduleService.formatScheduleResponse([el])[0],
     });
 

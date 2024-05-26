@@ -172,16 +172,19 @@ export class SchedulingFormComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: {
         confirmed: false,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result?.confirmed && customer?._def?.publicId) {
+      if (result?.confirmed && customer?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository
-          .deleteScheduling(customer._def.publicId)
+          .deleteScheduling(customer.schedule_id)
           .subscribe(
             (response) => {
 

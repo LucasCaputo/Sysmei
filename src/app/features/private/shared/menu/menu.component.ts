@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatAccordion } from '@angular/material/expansion';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from '../services/customer/customer.service';
@@ -10,8 +9,8 @@ import { CustomerService } from '../services/customer/customer.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
-  @ViewChild(MatAccordion)
-  accordion!: MatAccordion;
+
+  user = this.auth.getUser();
 
   constructor(public auth: AuthService, public router: Router, private customerService: CustomerService) {}
 

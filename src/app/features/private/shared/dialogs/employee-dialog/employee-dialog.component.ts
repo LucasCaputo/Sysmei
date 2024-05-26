@@ -97,6 +97,9 @@ export class EmployeeDialogComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: {
         confirmed: false,
       },

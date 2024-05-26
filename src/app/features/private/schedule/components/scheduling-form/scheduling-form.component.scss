@@ -11,3 +11,10 @@
     height: 320px;
   }
 }
+
+@media (max-width: 600px) {
+  .cdk-overlay-pane {
+    position: absolute;
+    top: 0;
+  }
+}

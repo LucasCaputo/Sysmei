@@ -55,6 +55,9 @@ export class CustomerComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: dataInfo,
     });
   }

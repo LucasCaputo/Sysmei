@@ -134,6 +134,9 @@ export class CalendarComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: dateClick,
     });
 
@@ -154,6 +157,9 @@ export class CalendarComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: {
         ...clickInfo?.event?._def?.extendedProps,
         start: clickInfo?.event?.start,

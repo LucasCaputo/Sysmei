@@ -46,7 +46,7 @@
   </div>
 </mat-toolbar>
 
-<div *ngIf="!loading" class="list">
+<div *ngIf="!loading" class="list" style="height: calc(100vh - 170px);">
   <mat-list *ngIf="!edit" @enter>
 
     <mat-list-item>
@@ -81,7 +81,18 @@
       </a>
 
       <a
+      *ngIf="data?.telefone1?.length === 11"
         href="https://api.whatsapp.com/send?phone=55{{
+          data?.telefone1
+        }}text=Ol%C3%A1"
+        target="_blank"
+      >
+        <app-whatsapp-icon></app-whatsapp-icon>
+      </a>
+
+      <a
+      *ngIf="data?.telefone1?.length === 13"
+        href="https://api.whatsapp.com/send?phone={{
           data?.telefone1
         }}text=Ol%C3%A1"
         target="_blank"
@@ -91,7 +102,7 @@
     </mat-list-item>
   </mat-list>
 
-  <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected" (selectedIndexChange)="selectedIndexChange($event)">
+  <mat-tab-group style="height: 100%;" mat-align-tabs="center" [selectedIndex]="tabSelected" (selectedIndexChange)="selectedIndexChange($event)">
     <mat-tab label="Dados">
       <div (swipe)="onSwipe($event)" [style]="!edit ? 'height: calc(100vh - 56px)' : 'height:auto'">
         <app-customer-complete-registration

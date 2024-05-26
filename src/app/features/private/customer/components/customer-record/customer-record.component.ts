@@ -144,6 +144,9 @@ export class CustomerRecordComponent implements OnInit {
 
   onOpenPhoto(photo: string) {
     const dialogRef = this.dialog.open(OpenPhotoComponent, {
+      position: {
+        top: '0px'
+      },
       data: photo,
     });
 
@@ -157,6 +160,9 @@ export class CustomerRecordComponent implements OnInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '0px'
+      },
       data: {customer: {id: parseInt(this.route.snapshot.params['id'])}},
     });
 
