@@ -1,6 +1,11 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -32,8 +37,8 @@ import { BrowserModule } from '@angular/platform-browser';
   ],
   standalone: true,
   imports: [
-    CommonModule, 
-    HttpClientModule, 
+    CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
     MatCardModule,
     MatInputModule,
@@ -43,7 +48,7 @@ import { BrowserModule } from '@angular/platform-browser';
     NgxMaskDirective,
     MatIconModule,
     MatButtonModule,
-  ]
+  ],
 })
 export class NewUserComponent {
   profileForm = this.fb.group({
@@ -62,7 +67,7 @@ export class NewUserComponent {
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
   ) {}
 
   checkName(input: UntypedFormControl) {
@@ -89,7 +94,7 @@ export class NewUserComponent {
           this.snackbarService.openSnackBar(
             `Parabéns! usuário ${this.profileForm.value.nome} cadastrado com sucesso, faça login`,
             'X',
-            false
+            false,
           );
           this.router.navigate(['/login']);
         },
@@ -97,10 +102,10 @@ export class NewUserComponent {
           this.snackbarService.openSnackBar(
             `Tente novamente ( ${error.error}) `,
             'X',
-            true
+            true,
           );
           console.log(error);
-        }
+        },
       );
     }
   }

@@ -1,21 +1,19 @@
-<mat-toolbar color="primary" class="flex justify-between items-center" >
-    <button mat-button (click)="onMenuButtonClick()">
-      <mat-icon>menu</mat-icon>
-    </button>
+<mat-toolbar color="primary" class="flex justify-between items-center">
+  <button mat-button (click)="onMenuButtonClick()">
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <div class="title">
-      <p class="text">
-        {{calendarDateTitle}}
-      </p>
-    </div>
+  <div class="title">
+    <p class="text">
+      {{ calendarDateTitle }}
+    </p>
+  </div>
 
-    <button
-      mat-icon-button
-      aria-label="Adicionar Agendamento"
-      (click)="onAddButtonClick()"
-    >
-      <mat-icon 
-        >add_circle_outline</mat-icon
-      >
-    </button>
-  </mat-toolbar>
+  <button
+    mat-icon-button
+    aria-label="Adicionar Agendamento"
+    (click)="onAddButtonClick()"
+  >
+    <mat-icon>add_circle_outline</mat-icon>
+  </button>
+</mat-toolbar>

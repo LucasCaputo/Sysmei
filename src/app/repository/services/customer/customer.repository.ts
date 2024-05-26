@@ -11,7 +11,7 @@ import { CustomerResponse } from '../../intefaces/customer-response';
 export class CustomerRepository {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   postCustomer(customer: any): Observable<CustomerResponse> {
@@ -22,7 +22,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -34,7 +34,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -45,7 +45,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -56,7 +56,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -67,7 +67,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -78,7 +78,7 @@ export class CustomerRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 

@@ -1,14 +1,22 @@
 <header>
   <mat-toolbar color="primary">
-    <img src="../../../../assets/logo.svg" class="logo h-10 cursor-pointer"
-    routerLink="{{ isPrivate ? 'agenda' : 'login' }}" />
+    <img
+      src="../../../../assets/logo.svg"
+      class="logo h-10 cursor-pointer"
+      routerLink="{{ isPrivate ? 'agenda' : 'login' }}"
+    />
 
     <div *ngIf="isPrivate; else public" class="flex w-full">
       <ng-content></ng-content>
     </div>
-    
+
     <ng-template #public>
-      <app-header-base [headerList]="[{urlLink: '/cadastro', text: 'Cadastro' }, {urlLink: '/login', text: 'Login' }]"></app-header-base>
+      <app-header-base
+        [headerList]="[
+          { urlLink: '/cadastro', text: 'Cadastro' },
+          { urlLink: '/login', text: 'Login' }
+        ]"
+      ></app-header-base>
     </ng-template>
   </mat-toolbar>
 </header>

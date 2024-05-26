@@ -8,9 +8,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header-base.component.html',
   styleUrls: ['./header-base.component.scss'],
   standalone: true,
-  imports: [CommonModule ,MatButtonModule, RouterModule]
+  imports: [CommonModule, MatButtonModule, RouterModule],
 })
 export class HeaderBaseComponent {
-  @Input({required: true}) public headerList!: {urlLink: string, text: string}[]
-
+  @Input({ required: true }) public headerList!: {
+    urlLink: string;
+    text: string;
+  }[];
 }

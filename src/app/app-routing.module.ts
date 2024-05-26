@@ -20,21 +20,21 @@ const routes: Routes = [
         path: 'clientes',
         loadChildren: () =>
           import('./pages/customer/customer.module').then(
-            (m) => m.CustomerModule
+            (m) => m.CustomerModule,
           ),
       },
       {
         path: 'agenda',
         loadChildren: () =>
           import('./pages/schedule/schedule.module').then(
-            (m) => m.ScheduleModule
+            (m) => m.ScheduleModule,
           ),
       },
       {
         path: 'prestador',
         loadChildren: () =>
           import('./pages/employee/employee.module').then(
-            (m) => m.EmployeeModule
+            (m) => m.EmployeeModule,
           ),
       },
     ],
@@ -45,11 +45,11 @@ const routes: Routes = [
     children: [
       {
         path: 'cadastro',
-        component: NewUserComponent
+        component: NewUserComponent,
       },
       {
         path: 'login',
-       component: LoginComponent
+        component: LoginComponent,
       },
     ],
   },

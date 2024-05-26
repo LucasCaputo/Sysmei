@@ -8,7 +8,7 @@ describe('MessageTipComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MessageTipComponent]
+      declarations: [MessageTipComponent],
     });
     fixture = TestBed.createComponent(MessageTipComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -37,11 +41,11 @@ export class ScheduleDialogComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private scheduleRepository: ScheduleRepository,
     private snackbarService: SnackbarService,
-    private utilService: UtilsService
+    private utilService: UtilsService,
   ) {
     this.filteredOptions = this.customerControl.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value))
+      map((value) => this._filter(value)),
     );
   }
 
@@ -70,8 +74,8 @@ export class ScheduleDialogComponent implements OnInit {
   }
 
   populate() {
-    this.customerService.$customers.subscribe((result)=>{
-      this.customerData =  result
+    this.customerService.$customers.subscribe((result) => {
+      this.customerData = result;
     });
   }
 
@@ -83,10 +87,10 @@ export class ScheduleDialogComponent implements OnInit {
     if (option) {
       return `${option.nome} - (${option.telefone1.slice(
         0,
-        2
+        2,
       )}) ${option.telefone1.slice(2, 3)} ${option.telefone1.slice(
         3,
-        7
+        7,
       )}-${option.telefone1.slice(7, 11)}`;
     }
 
@@ -102,7 +106,7 @@ export class ScheduleDialogComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Cadastrado com Sucesso!`,
             'X',
-            false
+            false,
           );
 
           this.dialog.closeAll();
@@ -112,15 +116,15 @@ export class ScheduleDialogComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Tivemos um erro no cadastro, tente novamente`,
             'X',
-            true
+            true,
           );
-        }
+        },
       );
     } else {
       this.snackbarService.openSnackBar(
         `Preencha os campos obrigatórios`,
         'X',
-        true
+        true,
       );
       // this.myInput1?.nativeElement.focus();
       // this.myInput2?.nativeElement.focus();

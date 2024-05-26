@@ -24,7 +24,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     MatMenuModule,
     MatToolbarModule,
     SharedModule,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   exports: [ScheduleDialogComponent],
 })

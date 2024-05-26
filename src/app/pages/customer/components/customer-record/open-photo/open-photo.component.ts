@@ -1,5 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-open-photo',
@@ -9,7 +12,7 @@ import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA
 export class OpenPhotoComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: { data: string }
+    @Inject(MAT_DIALOG_DATA) public data: { data: string },
   ) {}
 
   ngOnInit(): void {}

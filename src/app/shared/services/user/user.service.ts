@@ -18,14 +18,14 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   public postUser(newUser: User): Observable<User> {
     return this.httpClient.post<User>(
       environment.baseURL + '/user',
       newUser,
-      this.httpOptions
+      this.httpOptions,
     );
   }
 
@@ -34,12 +34,12 @@ export class UserService {
       .post<LoginRequest>(
         environment.baseURL + '/user/login',
         loginRequest,
-        this.httpOptions
+        this.httpOptions,
       )
       .pipe(
         tap((response: any) => {
           this.authService.setUser(response);
-        })
+        }),
       );
   }
 }

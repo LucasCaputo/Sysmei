@@ -5,8 +5,11 @@ import { AuthService } from '../../services/auth/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PublicRoutesGuard  {
-  constructor(private authService: AuthService, private router: Router) {}
+export class PublicRoutesGuard {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   canActivate(): boolean {
     const isLoged = this.authService.isLoged();

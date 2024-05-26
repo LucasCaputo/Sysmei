@@ -1,4 +1,7 @@
-<mat-toolbar color="primary" style="justify-content: space-between; align-items: center;">
+<mat-toolbar
+  color="primary"
+  style="justify-content: space-between; align-items: center"
+>
   <button mat-button (click)="snav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
@@ -40,9 +43,11 @@
   </mat-sidenav>
 
   <mat-sidenav-content style="height: calc(100vh - 70px)">
-
-    <div *ngIf="(customerList | arrayFiltro: search)?.length" style="width: 98vw" >
-      <ng-container *ngFor="let customer of customerList | arrayFiltro: search" >
+    <div
+      *ngIf="(customerList | arrayFiltro: search)?.length"
+      style="width: 98vw"
+    >
+      <ng-container *ngFor="let customer of customerList | arrayFiltro: search">
         <div mat-subheader *ngIf="customer.isFirstLetter && !search">
           {{ customer.inicial }}
         </div>
@@ -50,19 +55,25 @@
           <mat-list-item>
             <div
               routerLink="ficha/{{ customer.id }}"
-              style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 66%;"
+              style="
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 66%;
+              "
             >
               <div
                 mat-list-icon
-                style="align-items: center; justify-content: center;"
+                style="align-items: center; justify-content: center"
                 [style]="customer.nome | iconColor"
                 class="icon"
               >
-                <span style="align-items: center; justify-content: center;">
+                <span style="align-items: center; justify-content: center">
                   {{ customer.nome | iconCustomer }}
                 </span>
               </div>
-              <div style="margin-left: 16px; display: flex; width: 80%;">
+              <div style="margin-left: 16px; display: flex; width: 80%">
                 <div mat-line>
                   {{ customer.nome }}
                 </div>
@@ -104,8 +115,11 @@
       </ng-container>
     </div>
 
-    <div style="align-items: center; justify-content: center;" *ngIf="!(customerList | arrayFiltro: search)?.length && search">
-       <div>
+    <div
+      style="align-items: center; justify-content: center"
+      *ngIf="!(customerList | arrayFiltro: search)?.length && search"
+    >
+      <div>
         <h1>Não encontramos o cliente</h1>
         <h1>{{ search }}</h1>
       </div>

@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class IconColorPipe implements PipeTransform {
   transform(value: string): any {
-
     switch (value?.length) {
       case 0:
         return `background-color: #FF8000`;
@@ -38,7 +37,7 @@ export class IconColorPipe implements PipeTransform {
       case 14:
         return `background-color: #0000FF`;
       case 15:
-        return `background-color: #01DFA5`;    
+        return `background-color: #01DFA5`;
 
       case 16:
         return `background-color: #FF8000`;
@@ -71,11 +70,10 @@ export class IconColorPipe implements PipeTransform {
       case 30:
         return `background-color: #0000FF`;
       case 31:
-        return `background-color: #01DFA5`; 
-  
+        return `background-color: #01DFA5`;
+
       default:
         return `background-color: #000`;
-
     }
   }
 }

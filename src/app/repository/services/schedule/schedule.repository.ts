@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ScheduleRepository {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
@@ -21,10 +21,10 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
-  
+
   /** Busca lista de todos os agendamentos */
   public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
@@ -33,7 +33,7 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -44,16 +44,16 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
-  updateScheduling(body:any, id: number) {
+  updateScheduling(body: any, id: number) {
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
         PacienteID: `${body.paciente_id}`,
-        PrestadorID: `${body.prestador_id}`
+        PrestadorID: `${body.prestador_id}`,
       },
     });
   }

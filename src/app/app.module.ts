@@ -1,5 +1,10 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DEFAULT_CURRENCY_CODE, Injectable, LOCALE_ID, NgModule } from '@angular/core';
+import {
+  DEFAULT_CURRENCY_CODE,
+  Injectable,
+  LOCALE_ID,
+  NgModule,
+} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +33,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 // }
 
 @NgModule({
-  declarations: [  
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -38,7 +41,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
     MatToolbarModule,
     MatProgressBarModule,
     SharedModule,
-    FormsModule, 
+    FormsModule,
     LoaderComponent,
     // HammerModule
   ],
@@ -57,7 +60,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
     // {
     //   provide: HAMMER_GESTURE_CONFIG,
     //   useClass: MyHammerConfig,
@@ -65,4 +68,4 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

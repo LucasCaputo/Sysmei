@@ -20,13 +20,12 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchEmployeeList();
-    
   }
 
   /**Busca lista de prestadores e salva na variável */
   private searchEmployeeList() {
     this.employeeService.$employee.subscribe((result) => {
-      if(result.length){
+      if (result.length) {
         this.customerList = result;
       }
     });

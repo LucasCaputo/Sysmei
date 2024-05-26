@@ -3,10 +3,13 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -29,12 +32,12 @@ import { ScheduleService } from 'src/app/shared/services/schedule/schedule.servi
   styleUrls: ['./scheduling-form.component.scss'],
 })
 export class SchedulingFormComponent implements OnInit {
-  
   user = this.authService.getUser();
 
   form!: UntypedFormGroup;
-  
-  customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
+
+  customerData: Array<CustomerData> =
+    this.customerService.formattedCustomerList;
   employeeData: Array<EmployeeResponse> = this.employeeService.employee;
 
   hiddenEmployee = false;
@@ -60,27 +63,27 @@ export class SchedulingFormComponent implements OnInit {
     setTimeout(() => {
       this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
         startWith(''),
-        map((value) => this._filter(value))
+        map((value) => this._filter(value)),
       );
     }, 0);
   }
 
   ngOnInit(): void {
-
     let end = '';
     let start = '';
 
-    if(this.data?.start && this.data?.end) {
-      start = `${('0'+this.data?.start?.getHours())?.slice(-2)}:${('0'+this.data?.start?.getMinutes())?.slice(-2)}`
-      end = `${('0'+this.data?.end?.getHours())?.slice(-2)}:${('0'+this.data?.end?.getMinutes())?.slice(-2)}`
-    }    
-    
+    if (this.data?.start && this.data?.end) {
+      start = `${('0' + this.data?.start?.getHours())?.slice(-2)}:${('0' + this.data?.start?.getMinutes())?.slice(-2)}`;
+      end = `${('0' + this.data?.end?.getHours())?.slice(-2)}:${('0' + this.data?.end?.getMinutes())?.slice(-2)}`;
+    }
+
     this.form = this.formBuilder.group({
       allDay: this.data?.start || new Date(),
       detalhes: this.data?.detalhes || '',
       end,
       id: this.data?.schedule_id,
-      customer: this.customerData.find((e)=> e.id === this.data?.customer?.id) || '',
+      customer:
+        this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
       pagamento: this.data?.pagamento || '',
       employee: this.data?.employee || this.employeeData[0],
       start,
@@ -88,15 +91,14 @@ export class SchedulingFormComponent implements OnInit {
       valor: this.data?.valor || '',
     });
 
-    if(this.employeeData?.length > 1){
-      this.hiddenEmployee = true 
+    if (this.employeeData?.length > 1) {
+      this.hiddenEmployee = true;
     }
   }
 
   ngAfterViewInit() {
-
-    if(this.data?.schedule_id) {
-      return
+    if (this.data?.schedule_id) {
+      return;
     }
     setTimeout(() => {
       this.myInput?.nativeElement.focus();
@@ -112,38 +114,36 @@ export class SchedulingFormComponent implements OnInit {
     }
 
     return this.customerData.filter((option) =>
-      option.text.toLowerCase().includes(filterValue)
+      option.text.toLowerCase().includes(filterValue),
     );
   }
 
   displayCustomer(option: any) {
-    return option?.text || ''
+    return option?.text || '';
   }
 
   saveScheduleData() {
-    const schedule = this.scheduleService.formatRequestPayload(this.form.value)
+    const schedule = this.scheduleService.formatRequestPayload(this.form.value);
 
-    if(schedule.id) {
-      this.scheduleService
-      .updateScheduling(schedule, schedule.id)
-      .subscribe(
+    if (schedule.id) {
+      this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
         (resultUpdate) => {
           this.scheduleService.searchScheduleList();
           this.snackbarService.openSnackBar(
             `Agendamento atualizado com sucesso`,
             'X',
-            false
+            false,
           );
-        },  
+        },
         (error) => {
           console.log(error, 'update');
           this.scheduleService.searchScheduleList();
           this.snackbarService.openSnackBar(
             `Tivemos um erro para atualizar, tente novamente`,
             'X',
-            true
+            true,
           );
-        }
+        },
       );
     } else {
       this.scheduleService.postScheduling(schedule).subscribe(
@@ -152,18 +152,18 @@ export class SchedulingFormComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Agendamento adicionado com sucesso`,
             'X',
-            false
+            false,
           );
-        },  
+        },
         (error) => {
           console.log(error);
           this.scheduleService.searchScheduleList();
           this.snackbarService.openSnackBar(
             `Tivemos um erro para inserir, tente novamente`,
             'X',
-            true
+            true,
           );
-        }
+        },
       );
     }
   }
@@ -184,12 +184,11 @@ export class SchedulingFormComponent implements OnInit {
           .deleteScheduling(customer._def.publicId)
           .subscribe(
             (response) => {
-
-              this.scheduleService.searchScheduleList()
+              this.scheduleService.searchScheduleList();
               this.snackbarService.openSnackBar(
                 `Agendamento deletado com sucesso`,
                 'X',
-                false
+                false,
               );
             },
             (error) => {
@@ -197,9 +196,9 @@ export class SchedulingFormComponent implements OnInit {
               this.snackbarService.openSnackBar(
                 `Tivemos um erro para deletar, tente novamente`,
                 'X',
-                true
+                true,
               );
-            }
+            },
           );
       }
     });

@@ -1,5 +1,9 @@
 import {
-  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,38 +17,37 @@ import { AuthService } from '../services/auth/auth.service';
   providedIn: 'root',
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {}
   intercept(
     request: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    return next
-      .handle(request)
-      .pipe(
-        // retry(1),
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-          if (error.error instanceof ErrorEvent) {
-            // client-side error
+    return next.handle(request).pipe(
+      // retry(1),
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
 
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${error.status} \nMessage: ${error.message}`;
 
-
-            errorMessage = `Error: ${error.error.message}`;
-          } else {
-            // server-side error
-            errorMessage = `Error Code: ${error.status} \nMessage: ${error.message}`;
-
-            if (error.status == 403) {
-              errorMessage = "Seu Token venceu faça login novamente"
-              this.auth.logout()
-              this.router.navigate(['login']);
-            }
+          if (error.status == 403) {
+            errorMessage = 'Seu Token venceu faça login novamente';
+            this.auth.logout();
+            this.router.navigate(['login']);
           }
+        }
 
-          // window.alert(errorMessage);
+        // window.alert(errorMessage);
 
-          return throwError(errorMessage);
-        })
-      );
+        return throwError(errorMessage);
+      }),
+    );
   }
 }

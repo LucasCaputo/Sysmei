@@ -17,7 +17,7 @@ export class ArrayFiltroPipe implements PipeTransform {
             .toUpperCase()
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
-            .indexOf(filtro.normalize('NFD')) >= 0
+            .indexOf(filtro.normalize('NFD')) >= 0,
       );
     } else {
       return value;

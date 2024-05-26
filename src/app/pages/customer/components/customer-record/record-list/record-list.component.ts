@@ -3,7 +3,7 @@ import {
   state,
   style,
   transition,
-  trigger
+  trigger,
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
@@ -22,7 +22,7 @@ import { SchedulingFormComponent } from 'src/app/pages/schedule/components/sched
       state('expanded', style({ height: '*' })),
       transition(
         'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
       ),
     ]),
   ],
@@ -30,7 +30,7 @@ import { SchedulingFormComponent } from 'src/app/pages/schedule/components/sched
 export class RecordListComponent implements OnInit {
   @Input() data: any;
 
-  customerId = this.route.snapshot.params['id']
+  customerId = this.route.snapshot.params['id'];
   dataSource: any;
   columnsToDisplay = ['data', 'titulo', 'valor'];
 
@@ -40,20 +40,19 @@ export class RecordListComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
-    private customerRepository: CustomerRepository
+    private customerRepository: CustomerRepository,
   ) {}
 
   ngOnInit(): void {
-    this.formatData()
+    this.formatData();
   }
-  
+
   formatData() {
-    
     this.dataSource = [];
     this.data?.forEach((e: any) => {
       let data = `${e.start.slice(8, 10)}-${e.start.slice(
         5,
-        7
+        7,
       )}-${e.start.slice(2, 4)}`;
 
       this.dataSource.push({
@@ -64,43 +63,38 @@ export class RecordListComponent implements OnInit {
         description: e.detalhes || 'Sem observações',
       });
     });
-
   }
 
   click(el: any) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data:  this.scheduleService.formatScheduleResponse([el])[0],
+      data: this.scheduleService.formatScheduleResponse([el])[0],
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
 
-      if(result =='close') return
-      
-      if(result.title)  {
+      if (result == 'close') return;
+
+      if (result.title) {
         console.log(this.customerId);
-        
-        this.customerId = this.route.snapshot.params['id']
+
+        this.customerId = this.route.snapshot.params['id'];
 
         setTimeout(() => {
           this.customerRepository.getCustomerRecord(this.customerId).subscribe(
             (response) => {
               this.data = response;
               console.log(response);
-              this.formatData()
-              
+              this.formatData();
             },
             (erro) => {
               console.log(erro);
             },
           );
         }, 8000);
-        
       }
     });
-
-    
   }
 }

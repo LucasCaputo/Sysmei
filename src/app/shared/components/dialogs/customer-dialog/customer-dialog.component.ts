@@ -3,10 +3,17 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+} from '@angular/forms';
+import {
+  MatLegacyDialog as MatDialog,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -25,7 +32,7 @@ export class CustomerDialogComponent implements OnInit {
     email: [this.data.email || '', [Validators.email]],
     login_usuario: [this.authService.getUser()?.login],
   });
-  
+
   user = this.authService.getUser();
 
   @ViewChild('myInput') myInput: ElementRef | undefined;
@@ -42,7 +49,7 @@ export class CustomerDialogComponent implements OnInit {
     },
     private customerService: CustomerService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {}
@@ -71,7 +78,7 @@ export class CustomerDialogComponent implements OnInit {
   }
 
   onDelete(customer: any) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
       data: {
@@ -86,10 +93,10 @@ export class CustomerDialogComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Usuário deletado com sucesso`,
               'X',
-              false
+              false,
             );
 
-            this.customerService.searchCustomerList()
+            this.customerService.searchCustomerList();
 
             this.dialog.closeAll();
           },
@@ -98,34 +105,36 @@ export class CustomerDialogComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Tivemos um erro no cadastro, tente novamente`,
               'X',
-              true
+              true,
             );
-          }
+          },
         );
       }
     });
   }
 
   /**Adiciona e edita dados do Customer */
-  saveCustomer() : void {
+  saveCustomer(): void {
     if (this.form.value?.id) {
-      this.customerService.updateCustomer(this.form.value, this.form.value.id).subscribe(
-        (response) => {
-          this.customerService.searchCustomerList();
-          this.snackbarService.openSnackBar(
-            `Parabéns! usuário ${this.form.value.nome.toUpperCase()} atualizado com sucesso`,
-            'X',
-            false
-          );
-        },
-        (error) => {
-          this.snackbarService.openSnackBar(
-            `Tivemos um erro na atualização, tente novamente`,
-            'X',
-            true
-          );
-        }
-      );
+      this.customerService
+        .updateCustomer(this.form.value, this.form.value.id)
+        .subscribe(
+          (response) => {
+            this.customerService.searchCustomerList();
+            this.snackbarService.openSnackBar(
+              `Parabéns! usuário ${this.form.value.nome.toUpperCase()} atualizado com sucesso`,
+              'X',
+              false,
+            );
+          },
+          (error) => {
+            this.snackbarService.openSnackBar(
+              `Tivemos um erro na atualização, tente novamente`,
+              'X',
+              true,
+            );
+          },
+        );
       return;
     }
     if (this.form.value) {
@@ -135,16 +144,16 @@ export class CustomerDialogComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Parabéns! usuário ${this.form.value.nome.toUpperCase()} cadastrado com sucesso`,
             'X',
-            false
+            false,
           );
         },
         (error) => {
           this.snackbarService.openSnackBar(
             `Tivemos um erro no cadastro, tente novamente`,
             'X',
-            true
+            true,
           );
-        }
+        },
       );
     }
   }

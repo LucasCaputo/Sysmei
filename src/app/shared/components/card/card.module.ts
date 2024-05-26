@@ -8,7 +8,12 @@ import { ContactInfoComponent } from './components/contact-info/contact-info.com
 import { ContactActionsComponent } from './components/contact-actions/contact-actions.component';
 
 @NgModule({
-  declarations: [CardComponent, BadgeComponent, ContactInfoComponent, ContactActionsComponent],
+  declarations: [
+    CardComponent,
+    BadgeComponent,
+    ContactInfoComponent,
+    ContactActionsComponent,
+  ],
   imports: [CommonModule, SharedModule, MatListModule],
   exports: [CardComponent],
 })

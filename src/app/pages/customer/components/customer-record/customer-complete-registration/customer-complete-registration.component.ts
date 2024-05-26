@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
-  UntypedFormControl, Validators
+  UntypedFormControl,
+  Validators,
 } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
@@ -25,7 +26,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private snackbarService: SnackbarService,
     private auth: AuthService,
-    private customerRepository: CustomerRepository
+    private customerRepository: CustomerRepository,
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +75,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Parabéns! usuário ${this.profileForm.value.nome.toUpperCase()} atualizado com sucesso`,
               'X',
-              false
+              false,
             );
             console.log(response);
           },
@@ -82,10 +83,10 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Tivemos um erro na atualização, tente novamente`,
               'X',
-              true
+              true,
             );
             console.log(error);
-          }
+          },
         );
     }
   }

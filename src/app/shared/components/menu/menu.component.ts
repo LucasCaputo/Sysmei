@@ -13,7 +13,11 @@ export class MenuComponent {
   @ViewChild(MatAccordion)
   accordion!: MatAccordion;
 
-  constructor(public auth: AuthService, public router: Router, private customerService: CustomerService) {}
+  constructor(
+    public auth: AuthService,
+    public router: Router,
+    private customerService: CustomerService,
+  ) {}
 
   /** Faz logout do sistema */
   public logout(): void {

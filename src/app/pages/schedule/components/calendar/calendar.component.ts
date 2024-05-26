@@ -13,7 +13,15 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
 import { calendarSelectedOptions } from './calendar.options';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
+import {
+  CalendarOptions,
+  DateSelectArg,
+  EventApi,
+  EventClickArg,
+  EventDropArg,
+  EventInput,
+  ViewApi,
+} from '@fullcalendar/core';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
@@ -24,27 +32,26 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements AfterViewInit {
+  @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
 
-   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
-
-   calendarOptions: CalendarOptions = {
-     ...calendarSelectedOptions,
-     select: this.insertSchedule.bind(this),
-     eventClick: this.editSchedule.bind(this),
-     eventDrop: this.onDragAndDrop.bind(this),
-     eventResize: this.onDragAndDrop.bind(this),
-     eventsSet: this.handleEvents.bind(this),
-     dateClick: this.redirectMonthToDay.bind(this)    
-   }
+  calendarOptions: CalendarOptions = {
+    ...calendarSelectedOptions,
+    select: this.insertSchedule.bind(this),
+    eventClick: this.editSchedule.bind(this),
+    eventDrop: this.onDragAndDrop.bind(this),
+    eventResize: this.onDragAndDrop.bind(this),
+    eventsSet: this.handleEvents.bind(this),
+    dateClick: this.redirectMonthToDay.bind(this),
+  };
 
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
-  calendarDateTitle = '...'
-  todayIcon = 'primary'
+  calendarDateTitle = '...';
+  todayIcon = 'primary';
   timeElapsed = Date.now();
-  calendarApi:any
+  calendarApi: any;
 
   constructor(
     private dialog: MatDialog,
@@ -70,19 +77,18 @@ export class CalendarComponent implements AfterViewInit {
     this.scheduleService.$formatedSchedule.subscribe(
       (scheduleFormatResponse: Array<ScheduleFormatResponse>) => {
         if (scheduleFormatResponse.length) {
-          this.calendarApi.removeAllEvents()
+          this.calendarApi.removeAllEvents();
 
           scheduleFormatResponse.forEach((element: any) => {
-            
             this.scheduling.push(element);
-            this.calendarApi.view.calendar.addEvent(element)
+            this.calendarApi.view.calendar.addEvent(element);
           });
         }
-      }
-    )
+      },
+    );
   }
 
-  /** Atualiza agendamento por drag and drop 
+  /** Atualiza agendamento por drag and drop
    * @Input data: EventDropArg | EventResizeDoneArg
    * */
   private onDragAndDrop(data: EventDropArg | EventResizeDoneArg) {
@@ -103,7 +109,7 @@ export class CalendarComponent implements AfterViewInit {
         this.snackbarService.openSnackBar(
           `Agendamento atualizado com sucesso`,
           'X',
-          false
+          false,
         );
       },
       (error) => {
@@ -111,9 +117,9 @@ export class CalendarComponent implements AfterViewInit {
         this.snackbarService.openSnackBar(
           `Tivemos um erro para atualizar, tente novamente`,
           'X',
-          true
+          true,
         );
-      }
+      },
     );
   }
 
@@ -125,12 +131,12 @@ export class CalendarComponent implements AfterViewInit {
       this.router.navigate(['/clientes']);
       return;
     }
-    
-    let dateClick = null
 
-    if(selectInfo) {
-      const {start, end} = selectInfo;
-      dateClick = { start, end,}
+    let dateClick = null;
+
+    if (selectInfo) {
+      const { start, end } = selectInfo;
+      dateClick = { start, end };
     }
 
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
@@ -139,16 +145,17 @@ export class CalendarComponent implements AfterViewInit {
       data: dateClick,
     });
 
-    dialogRef.afterClosed().subscribe((result)=>{
-
-      if(!result) {
-        return
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
       }
 
       this.calendarApi.view.calendar.unselect();
-      
-      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result))
-    })
+
+      this.calendarApi.view.calendar.addEvent(
+        this.formatScheduleToCalendar(result),
+      );
+    });
   }
 
   /** Edita um agendamento */
@@ -159,39 +166,40 @@ export class CalendarComponent implements AfterViewInit {
       data: {
         ...clickInfo?.event?._def?.extendedProps,
         start: clickInfo?.event?.start,
-        end: clickInfo?.event?.end
+        end: clickInfo?.event?.end,
       },
-    }); 
+    });
 
-    dialogRef.afterClosed().subscribe((result)=>{
-
-      if(!result) {
-        return
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
       }
 
       clickInfo.event.remove();
-      
-      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result))
-    })
+
+      this.calendarApi.view.calendar.addEvent(
+        this.formatScheduleToCalendar(result),
+      );
+    });
   }
 
   /** Formata retorno do dialog para inserir no calendário */
   private formatScheduleToCalendar(result: any) {
+    let resultFormat = this.scheduleService.formatRequestPayload(result);
 
-    let resultFormat = this.scheduleService.formatRequestPayload(result)
-      
-    resultFormat = this.scheduleService.formatScheduleResponse([{...resultFormat, id: 'tempID'}]) 
+    resultFormat = this.scheduleService.formatScheduleResponse([
+      { ...resultFormat, id: 'tempID' },
+    ]);
 
-    return resultFormat[0]
-
+    return resultFormat[0];
   }
 
   /** Redireciona para dia selecionado quando em calendário tipo Mês */
-  private redirectMonthToDay(clickInfo: DateClickArg){
-    if(this.calendarApi?.view?.type === "dayGridMonth") {
-      this.calendarApi.changeView('timeGridDay')
-      this.calendarApi.view.calendar.gotoDate(clickInfo.date)
-      this.calendarDateTitle = this.calendarApi?.view?.title
+  private redirectMonthToDay(clickInfo: DateClickArg) {
+    if (this.calendarApi?.view?.type === 'dayGridMonth') {
+      this.calendarApi.changeView('timeGridDay');
+      this.calendarApi.view.calendar.gotoDate(clickInfo.date);
+      this.calendarDateTitle = this.calendarApi?.view?.title;
     }
   }
 
@@ -199,32 +207,31 @@ export class CalendarComponent implements AfterViewInit {
    * @param action nome da ação seleciona
    */
   public calendarNavigate(action?: string) {
-    if(action) {  
+    if (action) {
       switch (action) {
         case 'next':
           this.calendarApi.next();
           break;
-  
+
         case 'prev':
           this.calendarApi.prev();
           break;
-  
+
         case 'today':
           this.calendarApi.today();
           break;
-  
+
         default:
-            this.calendarApi.changeView(action)
+          this.calendarApi.changeView(action);
           break;
       }
     }
 
-    if(this.calendarApi?.view?.title) {
+    if (this.calendarApi?.view?.title) {
       this.calendarDateTitle = this.calendarApi?.view?.title;
     }
-    
 
-    this.setColorIconToday()
+    this.setColorIconToday();
   }
 
   /** Seta cor do ícone de dia atual
@@ -233,16 +240,19 @@ export class CalendarComponent implements AfterViewInit {
   private setColorIconToday() {
     const today = new Date(this.timeElapsed);
 
-    if(this.calendarApi?.view && this.calendarApi.view.activeStart < today && this.calendarApi.view.activeEnd > today){
-      this.todayIcon = 'primary'
-    }else {
-      this.todayIcon = 'secondary'
+    if (
+      this.calendarApi?.view &&
+      this.calendarApi.view.activeStart < today &&
+      this.calendarApi.view.activeEnd > today
+    ) {
+      this.todayIcon = 'primary';
+    } else {
+      this.todayIcon = 'secondary';
     }
   }
- 
+
   private handleEvents(events: EventApi[]) {
     // console.log(events);
     this.currentEvents = events;
   }
-
 }

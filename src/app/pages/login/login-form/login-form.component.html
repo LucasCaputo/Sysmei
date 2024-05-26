@@ -2,10 +2,12 @@
   <mat-form-field>
     <mat-label>E-mail</mat-label>
     <input matInput type="text" formControlName="usuario" required />
-    <mat-error *ngIf="
-          loginForm.controls.usuario.hasError('email') &&
-          !loginForm.controls.usuario.hasError('required')
-        ">
+    <mat-error
+      *ngIf="
+        loginForm.controls.usuario.hasError('email') &&
+        !loginForm.controls.usuario.hasError('required')
+      "
+    >
       Por favor insira um endereço de e-mail válido
     </mat-error>
     <mat-error *ngIf="loginForm.controls.usuario.hasError('required')">
@@ -15,24 +17,42 @@
 
   <mat-form-field>
     <mat-label>Senha</mat-label>
-    <input matInput [type]="type" formControlName="senha" minlength="6" required />
+    <input
+      matInput
+      [type]="type"
+      formControlName="senha"
+      minlength="6"
+      required
+    />
     <mat-error *ngIf="loginForm.controls.senha.hasError('required')">
       A senha é <strong>obrigatório</strong>
     </mat-error>
     <mat-error *ngIf="loginForm.controls.senha.hasError('minlength')">
       A senha deve ter <strong>no mínimo 6 caracteres</strong>
     </mat-error>
-    <mat-icon style="cursor: pointer" matSuffix *ngIf="type == 'text'"
-      (click)="type = 'password'">remove_red_eye</mat-icon>
-    <mat-icon style="cursor: pointer" matSuffix *ngIf="type == 'password'"
-      (click)="type = 'text'">visibility_off</mat-icon>
+    <mat-icon
+      style="cursor: pointer"
+      matSuffix
+      *ngIf="type == 'text'"
+      (click)="type = 'password'"
+      >remove_red_eye</mat-icon
+    >
+    <mat-icon
+      style="cursor: pointer"
+      matSuffix
+      *ngIf="type == 'password'"
+      (click)="type = 'text'"
+      >visibility_off</mat-icon
+    >
   </mat-form-field>
 
-  <app-message-tip [title]="'Não tem uma conta?'" [linkText]="'Crie uma!'" [linkUrl]="'/cadastro'"/>
+  <app-message-tip
+    [title]="'Não tem uma conta?'"
+    [linkText]="'Crie uma!'"
+    [linkUrl]="'/cadastro'"
+  />
 
   <mat-card-actions class="flex justify-end">
-    <button type="submit" mat-raised-button color="primary">
-      Entrar
-    </button>
+    <button type="submit" mat-raised-button color="primary">Entrar</button>
   </mat-card-actions>
 </form>

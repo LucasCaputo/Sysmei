@@ -1,13 +1,12 @@
 .card {
-    height: 88px;
-    width: 98vw;
+  height: 88px;
+  width: 98vw;
 
+  .badge {
+    cursor: pointer;
+  }
 
-    .badge {
-        cursor: pointer;
-    }
-
-    .details {
-        margin-left: 16px;
-    }
+  .details {
+    margin-left: 16px;
+  }
 }

@@ -7,10 +7,8 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './card-container.component.html',
   styleUrls: ['./card-container.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatCardModule ]
+  imports: [CommonModule, MatCardModule],
 })
 export class CardContainerComponent {
-
   @Input() public title!: string;
-
 }

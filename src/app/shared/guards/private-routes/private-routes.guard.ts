@@ -6,13 +6,13 @@ import { AuthService } from '../../services/auth/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PrivateRoutesGuard  {
+export class PrivateRoutesGuard {
   user: any = this.authService.getUser();
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private InitializeService: InitializeService
+    private InitializeService: InitializeService,
   ) {}
 
   canActivate(): boolean {

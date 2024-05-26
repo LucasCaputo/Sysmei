@@ -1,5 +1,5 @@
-import { CustomerResponse } from "./customer-response";
-import { EmployeeResponse } from "./employee-response";
+import { CustomerResponse } from './customer-response';
+import { EmployeeResponse } from './employee-response';
 
 export interface ScheduleResponse {
   allDay: string;
@@ -19,10 +19,10 @@ export interface ScheduleResponse {
 export interface ScheduleFormatResponse {
   customer?: CustomerResponse;
   detalhes: string;
-  employee?: EmployeeResponse
+  employee?: EmployeeResponse;
   end: Date;
   id?: string;
-  schedule_id?:number;
+  schedule_id?: number;
   pagamento: string;
   start: Date;
   title: string;

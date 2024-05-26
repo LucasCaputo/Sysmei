@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,12 +17,20 @@ import { LoginRequest } from 'src/app/shared/interfaces/user';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatButtonModule, MatIconModule, MatInputModule, MessageTipComponent]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MessageTipComponent,
+  ],
 })
 export class LoginFormComponent {
   @Output() action = new EventEmitter<LoginRequest>();
 
-  constructor(private readonly formGroup: UntypedFormBuilder) { }
+  constructor(private readonly formGroup: UntypedFormBuilder) {}
   loginForm = this.formGroup.group({
     usuario: ['', [Validators.email]],
     senha: [''],

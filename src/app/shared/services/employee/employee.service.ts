@@ -9,14 +9,14 @@ import { EmployeeRepository } from 'src/app/repository/services/employee/employe
 })
 export class EmployeeService {
   public employee!: Array<EmployeeResponse>;
-  public $employee: BehaviorSubject<Array<EmployeeResponse>> = new BehaviorSubject<Array<EmployeeResponse>>([]);
+  public $employee: BehaviorSubject<Array<EmployeeResponse>> =
+    new BehaviorSubject<Array<EmployeeResponse>>([]);
 
   constructor(private employeeRepository: EmployeeRepository) {}
 
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {
     this.employeeRepository.getEmployee().subscribe((employeeList) => {
-
       this.employee = employeeList;
       this.$employee.next(employeeList);
     });
@@ -24,7 +24,7 @@ export class EmployeeService {
 
   /** Cadastra novo prestador */
   public postEmployee(
-    employee: EmployeeResponse
+    employee: EmployeeResponse,
   ): Observable<EmployeeResponse> {
     return this.employeeRepository.postEmployee(employee);
   }

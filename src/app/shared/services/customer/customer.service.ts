@@ -21,39 +21,41 @@ export class CustomerService {
     private httpClient: HttpClient,
     private authService: AuthService,
     private customerRepository: CustomerRepository,
-    private utilService: UtilsService
+    private utilService: UtilsService,
   ) {}
 
   /** Busca lista de usuários e salva na variável customers */
   public searchCustomerList(): void {
-    this.customerRepository.getCustomer(this.authService.getUser()?.login).subscribe((customerList) => {
-      this.customers = customerList;
-      this.$customers.next(this.formatCustomerList(this.customers));
-      
-    });
+    this.customerRepository
+      .getCustomer(this.authService.getUser()?.login)
+      .subscribe((customerList) => {
+        this.customers = customerList;
+        this.$customers.next(this.formatCustomerList(this.customers));
+      });
   }
 
   /** Formata dados do customer para atender a interface do autocomplete no html */
-  private formatCustomerList(customerList: Array<CustomerResponse>): Array<CustomerResponse> {
+  private formatCustomerList(
+    customerList: Array<CustomerResponse>,
+  ): Array<CustomerResponse> {
     let list: Array<CustomerResponse> = [];
-    let letter = ''
+    let letter = '';
 
-    if(customerList?.length) {
-      customerList.forEach((customer, index)=>{
+    if (customerList?.length) {
+      customerList.forEach((customer, index) => {
         let phone: string = customer.telefone1;
-  
-        if(index === 0) {
+
+        if (index === 0) {
           letter = customer.nome[0]?.toUpperCase();
-  
+
           list.push({
             ...customer,
             inicial: letter,
             isFirstLetter: true,
             text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
           });
-  
         } else {
-          if(letter === customer.nome[0]?.toUpperCase()) {
+          if (letter === customer.nome[0]?.toUpperCase()) {
             list.push({
               ...customer,
               inicial: letter,
@@ -61,7 +63,7 @@ export class CustomerService {
               text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
             });
           } else {
-            letter = customer.nome[0]?.toUpperCase()
+            letter = customer.nome[0]?.toUpperCase();
 
             list.push({
               ...customer,
@@ -69,13 +71,13 @@ export class CustomerService {
               isFirstLetter: true,
               text: `${customer.nome} - ${this.utilService.formatPhone(phone)}`,
             });
-          } 
-        };
-      })
+          }
+        }
+      });
     }
-    this.formattedCustomerList = list;   
+    this.formattedCustomerList = list;
 
-    return list;    
+    return list;
   }
 
   postCustomer(customer: any): Observable<CustomerResponse> {
@@ -86,7 +88,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -98,7 +100,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -109,7 +111,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -120,7 +122,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -131,7 +133,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -142,7 +144,7 @@ export class CustomerService {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 

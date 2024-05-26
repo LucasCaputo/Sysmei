@@ -8,9 +8,8 @@ describe('OpenPhotoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OpenPhotoComponent ]
-    })
-    .compileComponents();
+      declarations: [OpenPhotoComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

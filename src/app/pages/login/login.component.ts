@@ -6,7 +6,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginRequest } from 'src/app/shared/interfaces/user';
@@ -27,14 +27,14 @@ import { BrowserModule } from '@angular/platform-browser';
     ]),
   ],
   standalone: true,
-  imports: [ 
+  imports: [
     CommonModule,
     HttpClientModule,
     MatCardModule,
     HeaderComponent,
     LoginFormComponent,
     CardContainerComponent,
-  ]
+  ],
 })
 export class LoginComponent {
   constructor(
@@ -50,7 +50,7 @@ export class LoginComponent {
           this.snackbarService.openSnackBar(
             `Bem-vindo ${response.usuario.nome}`,
             'X',
-            false
+            false,
           );
           this.router.navigate(['/agenda']);
         },
@@ -58,10 +58,10 @@ export class LoginComponent {
           this.snackbarService.openSnackBar(
             `Tente novamente ( ${error.error}) `,
             'X',
-            true
+            true,
           );
           console.log(error);
-        }
+        },
       );
     }
   }

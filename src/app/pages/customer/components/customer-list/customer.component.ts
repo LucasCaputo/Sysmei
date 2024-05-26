@@ -15,7 +15,7 @@ import { CustomerService } from 'src/app/shared/services/customer/customer.servi
 export class CustomerComponent implements OnInit {
   getList: Array<any> = [];
   customerList: Array<any> = [];
-  
+
   user = this.authService.getUser();
 
   @ViewChild('searchBox')
@@ -46,8 +46,8 @@ export class CustomerComponent implements OnInit {
   private getCustomers(): void {
     this.customerService.$customers.subscribe(
       (result: Array<CustomerResponse>) => {
-        this.customerList = result
-      }
+        this.customerList = result;
+      },
     );
   }
 

@@ -3,10 +3,13 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import {
+  MatLegacyDialog as MatDialog,
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+} from '@angular/material/legacy-dialog';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -42,7 +45,7 @@ export class EmployeeDialogComponent implements OnInit {
     private customerRepository: CustomerRepository,
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {}
@@ -77,7 +80,7 @@ export class EmployeeDialogComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Parabéns! Prestador ${this.form.value.nome} cadastrado com sucesso!`,
             'X',
-            false
+            false,
           );
           this.employeeService.searchEmployeeList();
         },
@@ -85,10 +88,10 @@ export class EmployeeDialogComponent implements OnInit {
           this.snackbarService.openSnackBar(
             `Tente novamente ( ${error.error}) `,
             'X',
-            true
+            true,
           );
           console.log(error);
-        }
+        },
       );
     }
   }
@@ -109,7 +112,7 @@ export class EmployeeDialogComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Usuário deletado com sucesso`,
               'X',
-              false
+              false,
             );
 
             this.dialog.closeAll();
@@ -119,9 +122,9 @@ export class EmployeeDialogComponent implements OnInit {
             this.snackbarService.openSnackBar(
               `Tivemos um erro no cadastro, tente novamente`,
               'X',
-              true
+              true,
             );
-          }
+          },
         );
       }
     });

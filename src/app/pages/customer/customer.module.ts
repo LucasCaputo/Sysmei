@@ -44,7 +44,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     MenuModule,
     CustomerDialogModule,
     MatSidenavModule,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   providers: [],
 })

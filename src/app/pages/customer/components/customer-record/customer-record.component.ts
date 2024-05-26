@@ -3,15 +3,13 @@ import {
   state,
   style,
   transition,
-  trigger
+  trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import {
-  CustomerResponse
-} from 'src/app/repository/intefaces/customer-response';
+import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
@@ -29,7 +27,7 @@ import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
         style({
           height: '0px',
           overflow: 'hidden',
-        })
+        }),
       ),
       transition(':enter', [
         animate(
@@ -37,7 +35,7 @@ import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
           style({
             height: '*',
             overflow: 'hidden',
-          })
+          }),
         ),
       ]),
       //element being removed from DOM.
@@ -47,7 +45,7 @@ import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
           style({
             height: '0px',
             overflow: 'hidden',
-          })
+          }),
         ),
       ]),
     ]),
@@ -73,7 +71,7 @@ export class CustomerRecordComponent implements OnInit {
     private customerRepository: CustomerRepository,
     private snackbarService: SnackbarService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {}
 
   emitEventToChild() {
@@ -91,7 +89,6 @@ export class CustomerRecordComponent implements OnInit {
   ngOnInit(): void {
     this.populate();
     console.log(this.route.snapshot.params['id']);
-    
   }
 
   populate() {
@@ -108,13 +105,13 @@ export class CustomerRecordComponent implements OnInit {
       },
       () => {
         this.loading = false;
-      }
+      },
     );
 
     this.customerRepository.getCustomerRecord(this.id).subscribe(
       (response) => {
         console.log(response);
-        
+
         this.records = response;
       },
       (erro) => {
@@ -137,7 +134,7 @@ export class CustomerRecordComponent implements OnInit {
             this.photos = result.documentsUrl;
           });
         },
-        (error) => {}
+        (error) => {},
       );
     }
   }
@@ -153,63 +150,58 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   addSchedule() {
-
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: {customer: {id: parseInt(this.route.snapshot.params['id'])}},
+      data: { customer: { id: parseInt(this.route.snapshot.params['id']) } },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
 
-      if(result =='close') return
-      
-      if(result.title) {
-        
-        this.records = []
+      if (result == 'close') return;
+
+      if (result.title) {
+        this.records = [];
 
         setTimeout(() => {
           this.customerRepository.getCustomerRecord(this.id).subscribe(
             (response) => {
               this.records = response;
               console.log(response);
-              
             },
             (erro) => {
               console.log(erro);
             },
           );
         }, 8000);
-        
       }
     });
   }
 
-    /**
+  /**
    * Verifica o movimento do usuário para esquerda ou direita e emite evento
    * @param event dados do evento de arrastar
    */
-     public onSwipe(event:any) {
-       
-       const x = Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? "Right" : "Left") : "";
-       console.log(x, "entrou");
-          
-      if(x === 'Right') {
-        if(this.tabSelected < 2) {
-          this.tabSelected++
-          console.log(this.tabSelected);
-          
-          this.selectedIndexChange(this.tabSelected)
-        }
-      } else if (x === 'Left') {
-        if(this.tabSelected > 0) {
-          this.tabSelected--
-          console.log(this.tabSelected);
+  public onSwipe(event: any) {
+    const x =
+      Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'Right' : 'Left') : '';
+    console.log(x, 'entrou');
 
-          this.selectedIndexChange(this.tabSelected)
-        }
+    if (x === 'Right') {
+      if (this.tabSelected < 2) {
+        this.tabSelected++;
+        console.log(this.tabSelected);
+
+        this.selectedIndexChange(this.tabSelected);
+      }
+    } else if (x === 'Left') {
+      if (this.tabSelected > 0) {
+        this.tabSelected--;
+        console.log(this.tabSelected);
+
+        this.selectedIndexChange(this.tabSelected);
       }
     }
-
+  }
 }

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
   standalone: true,
-  imports: [CommonModule ,MatProgressBarModule]
+  imports: [CommonModule, MatProgressBarModule],
 })
 export class LoaderComponent implements OnInit {
   constructor(public loaderService: LoaderService) {}

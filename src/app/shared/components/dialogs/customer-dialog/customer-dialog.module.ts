@@ -6,12 +6,9 @@ import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/materia
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMaskDirective } from 'ngx-mask';
 
-
 @NgModule({
   declarations: [CustomerDialogComponent],
-  imports: [CommonModule, MatFormFieldModule, SharedModule,
-    NgxMaskDirective
-    ],
+  imports: [CommonModule, MatFormFieldModule, SharedModule, NgxMaskDirective],
   exports: [CustomerDialogComponent],
 })
 export class CustomerDialogModule {}

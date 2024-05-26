@@ -12,19 +12,20 @@ import { EmployeeResponse } from '../../intefaces/employee-response';
 export class EmployeeRepository {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   /** Busca lista de prestadores */
   getEmployee(): Observable<Array<EmployeeResponse>> {
     return this.httpClient.get<Array<EmployeeResponse>>(
-      `${environment.baseURL}/prestador?login=${this.authService.getUser()?.login
+      `${environment.baseURL}/prestador?login=${
+        this.authService.getUser()?.login
       }`,
       {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -37,7 +38,7 @@ export class EmployeeRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 }

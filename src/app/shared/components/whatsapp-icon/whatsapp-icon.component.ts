@@ -16,11 +16,11 @@ export class WhatsappIconComponent implements OnInit {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('icon.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('icon.svg'),
     );
     iconRegistry.addSvgIconLiteral(
       'thumbs-up',
-      sanitizer.bypassSecurityTrustHtml(this.THUMBUP_ICON)
+      sanitizer.bypassSecurityTrustHtml(this.THUMBUP_ICON),
     );
   }
 

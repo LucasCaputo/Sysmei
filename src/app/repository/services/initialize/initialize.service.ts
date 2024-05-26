@@ -12,7 +12,7 @@ export class InitializeService {
     private customerService: CustomerService,
     private scheduleService: ScheduleService,
     private employeeService: EmployeeService,
-    private auth: AuthService
+    private auth: AuthService,
   ) {}
 
   /** Método de inicialização */

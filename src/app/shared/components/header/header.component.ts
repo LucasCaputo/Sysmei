@@ -18,7 +18,7 @@ import { HeaderBaseComponent } from './components/header-base/header-base.compon
     MatIconModule,
     MatButtonModule,
     HeaderBaseComponent,
-  ]
+  ],
 })
 export class HeaderComponent {
   @Input() isPrivate: boolean | undefined;

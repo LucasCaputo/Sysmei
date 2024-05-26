@@ -29,7 +29,6 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { ScheduleHeaderComponent } from './components/schedule-header/schedule-header.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 
-
 // FullCalendarModule.registerPlugins([
 //   dayGridPlugin,
 //   timeGridPlugin,
@@ -38,7 +37,11 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 // ]);
 
 @NgModule({
-  declarations: [CalendarComponent, SchedulingFormComponent, CalendarNaviagtionComponent],
+  declarations: [
+    CalendarComponent,
+    SchedulingFormComponent,
+    CalendarNaviagtionComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     ScheduleRoutingModule,
@@ -57,7 +60,7 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
     MatSidenavModule,
     MatListModule,
     ScheduleHeaderComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   providers: [],
 })

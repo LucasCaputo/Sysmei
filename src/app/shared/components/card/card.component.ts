@@ -9,9 +9,5 @@ import { CardInfo } from './interfaces/card-info';
 export class CardComponent implements OnInit {
   @Input() cardData!: CardInfo;
 
-
-  ngOnInit(): void {
-
-    
-  }
+  ngOnInit(): void {}
 }

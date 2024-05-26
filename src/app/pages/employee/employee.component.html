@@ -25,11 +25,11 @@
     <app-menu></app-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content style="height: calc(100vh - 56px);" >
-      <mat-list>
-        <ng-container *ngFor="let customer of customerList">
-          <app-card [cardData]="customer"></app-card>
-        </ng-container>
-      </mat-list>
+  <mat-sidenav-content style="height: calc(100vh - 56px)">
+    <mat-list>
+      <ng-container *ngFor="let customer of customerList">
+        <app-card [cardData]="customer"></app-card>
+      </ng-container>
+    </mat-list>
   </mat-sidenav-content>
 </mat-sidenav-container>

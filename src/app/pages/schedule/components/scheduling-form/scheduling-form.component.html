@@ -9,7 +9,7 @@
       <mat-icon>highlight_off</mat-icon>
     </button>
     <span mat-dialog-title>{{
-      data.Title ? "Editar Agendamento" : "Novo Agendamento" 
+      data.Title ? 'Editar Agendamento' : 'Novo Agendamento'
     }}</span>
     <button
       mat-icon-button
@@ -18,22 +18,21 @@
       [disabled]="form.invalid || !form.dirty"
       (click)="saveScheduleData()"
       [mat-dialog-close]="form.value"
-      >
+    >
       <mat-icon>done_outline</mat-icon>
     </button>
   </div>
 
   <div mat-dialog-content class="form">
     <form fxLayout="column" [formGroup]="form">
-      <mat-form-field  appearance="fill" *ngIf="hiddenEmployee">
+      <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
         <mat-label>Atendente</mat-label>
         <mat-select formControlName="employee" required>
           <mat-option *ngFor="let employee of employeeData" [value]="employee">
-            {{employee.nome}}
+            {{ employee.nome }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
 
       <mat-form-field fxFlex>
         <mat-label>Nome do Serviço</mat-label>
@@ -64,7 +63,7 @@
           autoActiveFirstOption
           #auto="matAutocomplete"
           [displayWith]="displayCustomer"
-          >
+        >
           <mat-option
             *ngFor="let option of filteredOptions | async"
             [value]="option"
@@ -104,10 +103,10 @@
 
         <mat-form-field fxFlex="30">
           <mat-label>Fim</mat-label>
-          <input 
-            matInput 
-            type="time" 
-            formControlName="end" 
+          <input
+            matInput
+            type="time"
+            formControlName="end"
             name="timeEnd"
             required
           />
