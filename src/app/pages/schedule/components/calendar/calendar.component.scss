@@ -1,16 +1,4 @@
-.title {
-    overflow: auto; 
-    text-align: center;
-
-    .text {
-        margin: 0; 
-        color: white;  
-        font-size: 16px;
-        margin-top: 4px;
-    }
-
-    .content {
-        overflow: hidden; 
-        height: 100vh;
-    }
+.content {
+    overflow: hidden; 
+    height: 100%;
 }

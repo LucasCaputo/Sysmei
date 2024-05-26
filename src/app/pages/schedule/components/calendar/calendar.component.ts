@@ -57,12 +57,12 @@ export class CalendarComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit() {
-    // this.calendarApi = this.calendarComponent.getApi();
-    // this.populateSchedule();
+    this.calendarApi = this.calendarComponent.getApi();
+    this.populateSchedule();
 
-    // setTimeout(() => {
-    //   this.calendarNavigate();
-    // }, 0);
+    setTimeout(() => {
+      this.calendarNavigate();
+    }, 0);
   }
 
   /** Recebe os dados de todos os agendamentos e popula a lista */

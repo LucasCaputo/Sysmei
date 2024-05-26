@@ -1,13 +1,14 @@
-<app-header [isPrivate]="true">
-  <app-schedule-header [calendarDateTitle]="'11/11/22'" />
-</app-header>
 
-<mat-sidenav-container>
+<mat-sidenav-container class="h-full">
   <mat-sidenav #snav>
     <app-menu></app-menu>
   </mat-sidenav>
-
-  <mat-sidenav-content class="content">
+  
+  <mat-sidenav-content>
+    <app-header [isPrivate]="true">
+      <app-schedule-header [calendarDateTitle]="calendarDateTitle" (menuButtonClick)="snav.toggle()"
+        (addButtonClick)="insertSchedule()" />
+    </app-header>
 
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
 
