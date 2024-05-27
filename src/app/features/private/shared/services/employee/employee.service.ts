@@ -17,6 +17,8 @@ export class EmployeeService {
   public searchEmployeeList(): void {
     this.employeeRepository.getEmployee().subscribe((employeeList) => {
 
+      localStorage.setItem('employee', JSON.stringify(employeeList));
+
       this.employee = employeeList;
       this.$employee.next(employeeList);
     });

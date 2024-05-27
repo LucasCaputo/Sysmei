@@ -40,3 +40,34 @@ export class UtilsService {
 
   }
 }
+
+export function getDate30DaysAgo(): string {
+  const currentDate = new Date();
+  const pastDate = new Date(currentDate.setDate(currentDate.getDate() - 90));
+
+  const year = pastDate.getFullYear();
+  const month = String(pastDate.getMonth() + 1).padStart(2, '0');
+  const day = String(pastDate.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+export function getCurrentDate(): string {
+  const currentDate = new Date();
+  const pastDate = new Date(currentDate.setDate(currentDate.getDate() + 90));
+
+  const year = pastDate.getFullYear();
+  const month = String(pastDate.getMonth() + 1).padStart(2, '0');
+  const day = String(pastDate.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+export function getEmployee(): number {
+  let employeeLocalStorage = localStorage.getItem('employee');
+  let employee: Array<{id: number}> = [{id: 0}]
+
+  if(employeeLocalStorage){ employee = JSON.parse(employeeLocalStorage)}
+  
+  return employee[0].id
+}

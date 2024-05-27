@@ -20,8 +20,11 @@ export class InitializeService {
     if (!user) {
       user = this.auth.getUser()?.login;
     }
-    this.customerService.searchCustomerList();
-    this.scheduleService.searchScheduleList();
+    this.customerService.searchCustomerList();  
     this.employeeService.searchEmployeeList();
+    setTimeout(() => {
+    this.scheduleService.searchScheduleList();
+      
+    }, 2000);
   }
 }

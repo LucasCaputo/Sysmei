@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { getCurrentDate, getDate30DaysAgo, getEmployee } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -28,7 +29,7 @@ export class ScheduleRepository {
   /** Busca lista de todos os agendamentos */
   public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda?login=${this.authService.getUser()?.login}`,
+      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=${getEmployee()}`,
       {
         headers: {
           Authorization: this.authService.getToken()!,
