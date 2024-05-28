@@ -18,7 +18,7 @@
 
 <mat-sidenav-container class="h-full">
   <mat-sidenav #snav>
-    <app-menu></app-menu>
+    <app-menu (click)="snav.toggle()"></app-menu>
   </mat-sidenav>
 
   <mat-sidenav-content>

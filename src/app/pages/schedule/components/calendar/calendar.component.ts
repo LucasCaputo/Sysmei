@@ -61,7 +61,7 @@ export class CalendarComponent implements AfterViewInit {
     private router: Router,
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
-  ) {}
+  ) { }
 
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
@@ -143,6 +143,9 @@ export class CalendarComponent implements AfterViewInit {
       width: '500px',
       maxWidth: '100vw',
       data: dateClick,
+      position: {
+        top: '70px'
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -167,6 +170,9 @@ export class CalendarComponent implements AfterViewInit {
         ...clickInfo?.event?._def?.extendedProps,
         start: clickInfo?.event?.start,
         end: clickInfo?.event?.end,
+      },
+      position: {
+        top: '70px'
       },
     });
 

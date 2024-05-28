@@ -27,7 +27,7 @@ export class CustomerComponent implements OnInit {
     private customerService: CustomerService,
     private authService: AuthService,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCustomers();
@@ -55,6 +55,9 @@ export class CustomerComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
+      position: {
+        top: '70px'
+      },
       data: dataInfo,
     });
   }

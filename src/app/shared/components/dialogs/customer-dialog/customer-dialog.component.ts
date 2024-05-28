@@ -50,9 +50,9 @@ export class CustomerDialogComponent implements OnInit {
     private customerService: CustomerService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -83,6 +83,9 @@ export class CustomerDialogComponent implements OnInit {
       maxWidth: '100vw',
       data: {
         confirmed: false,
+      },
+      position: {
+        top: '70px'
       },
     });
 

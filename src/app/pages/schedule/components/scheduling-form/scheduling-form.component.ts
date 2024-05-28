@@ -176,6 +176,9 @@ export class SchedulingFormComponent implements OnInit {
       data: {
         confirmed: false,
       },
+      position: {
+        top: '70px'
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

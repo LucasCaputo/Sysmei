@@ -46,9 +46,9 @@ export class EmployeeDialogComponent implements OnInit {
     private employeeService: EmployeeService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -102,6 +102,9 @@ export class EmployeeDialogComponent implements OnInit {
       maxWidth: '100vw',
       data: {
         confirmed: false,
+      },
+      position: {
+        top: '70px'
       },
     });
 

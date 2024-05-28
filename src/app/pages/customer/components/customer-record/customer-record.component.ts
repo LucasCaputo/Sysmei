@@ -71,7 +71,7 @@ export class CustomerRecordComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -133,7 +133,7 @@ export class CustomerRecordComponent implements OnInit {
             this.photos = result.documentsUrl;
           });
         },
-        (error) => {},
+        (error) => { },
       );
     }
   }
@@ -153,6 +153,9 @@ export class CustomerRecordComponent implements OnInit {
       width: '500px',
       maxWidth: '100vw',
       data: { customer: { id: parseInt(this.route.snapshot.params['id']) } },
+      position: {
+        top: '70px'
+      },
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

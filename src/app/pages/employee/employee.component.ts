@@ -16,7 +16,7 @@ export class EmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.searchEmployeeList();
@@ -36,6 +36,9 @@ export class EmployeeComponent implements OnInit {
       width: '500px',
       maxWidth: '100vw',
       data: dataInfo,
+      position: {
+        top: '70px'
+      },
     });
   }
 }
