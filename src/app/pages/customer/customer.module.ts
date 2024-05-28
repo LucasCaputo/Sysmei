@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
-import { MatLegacyTabsModule as MatTabsModule } from '@angular/material/legacy-tabs';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomerComponent } from './components/customer-list/customer.component';

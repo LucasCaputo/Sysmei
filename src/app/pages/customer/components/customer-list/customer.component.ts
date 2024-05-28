@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';

@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';

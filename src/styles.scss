@@ -15,7 +15,7 @@ body {
   background-color: #f44336;
   color: white;
   margin-top: 70px !important;
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   .mat-button-wrapper {
     color: white;
   }
@@ -25,7 +25,7 @@ body {
   background-color: rgb(50, 107, 153);
   color: white;
   margin-top: 70px !important;
-
+  /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
   .mat-button-wrapper {
     color: white;
   }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CardInfo } from './interfaces/card-info';
 import { CommonModule } from '@angular/common';
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatListModule } from '@angular/material/list';
 import { SharedModule } from '../../shared.module';
 import { BadgeComponent } from './components/badge/badge.component';
 import { ContactActionsComponent } from './components/contact-actions/contact-actions.component';

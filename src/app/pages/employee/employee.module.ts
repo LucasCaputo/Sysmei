@@ -5,7 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeeComponent } from './employee.component';
-import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatListModule } from '@angular/material/list';
 import { EmployeeDialogModule } from 'src/app/shared/components/dialogs/employee-dialog/employee-dialog.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
