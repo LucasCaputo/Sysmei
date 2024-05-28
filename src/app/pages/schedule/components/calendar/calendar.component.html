@@ -1,12 +1,12 @@
 <app-schedule-header [calendarDateTitle]="calendarDateTitle" (menuButtonClick)="snav.toggle()"
   (addButtonClick)="insertSchedule()" />
 
-<mat-sidenav-container class="h-full">
+<mat-sidenav-container>
   <mat-sidenav #snav>
     <app-menu></app-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content class="h-body-height">
 
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
 

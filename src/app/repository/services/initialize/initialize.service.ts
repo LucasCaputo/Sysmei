@@ -13,7 +13,7 @@ export class InitializeService {
     private scheduleService: ScheduleService,
     private employeeService: EmployeeService,
     private auth: AuthService,
-  ) {}
+  ) { }
 
   /** Método de inicialização */
   public initialize(user: any) {
@@ -21,7 +21,10 @@ export class InitializeService {
       user = this.auth.getUser()?.login;
     }
     this.customerService.searchCustomerList();
-    this.scheduleService.searchScheduleList();
     this.employeeService.searchEmployeeList();
+
+    setTimeout(() => {
+      this.scheduleService.searchScheduleList();
+    }, 3000);
   }
 }

@@ -171,6 +171,7 @@ export class SchedulingFormComponent implements OnInit {
   onDelete(customer: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
+      height: '280px',
       maxWidth: '100vw',
       data: {
         confirmed: false,
@@ -178,10 +179,11 @@ export class SchedulingFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result?.confirmed && customer?._def?.publicId) {
+      console.log(customer)
+      if (result?.confirmed && customer?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository
-          .deleteScheduling(customer._def.publicId)
+          .deleteScheduling(customer.schedule_id)
           .subscribe(
             (response) => {
               this.scheduleService.searchScheduleList();

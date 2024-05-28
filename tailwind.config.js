@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'body-height': 'calc(100vh - 70px)'
+      }
+    },
   },
   plugins: [],
 }

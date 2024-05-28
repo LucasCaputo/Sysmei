@@ -1,7 +1,7 @@
 <div class="flex w-full p-3 justify-around items-center">
   <app-badge [name]="cardData.nome" class="mr-4"></app-badge>
 
-  <app-contact-info [info]="cardData"></app-contact-info>
+  <app-contact-info [info]="cardData" class="w-2/5"></app-contact-info>
 
   <app-contact-actions [customer]="cardData" (edit)="openDialog()"></app-contact-actions>
 
