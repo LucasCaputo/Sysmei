@@ -1,9 +1,5 @@
-.tab-container {
-  height: calc(100vh - 56px);
-}
-
 .toolbar {
-  position: fixed; 
+  position: absolute; 
   padding: 0; 
   z-index: 9;
 
@@ -35,7 +31,7 @@ mat-grid-tile {
 
 .list {
   margin-top: 56px;
-  height: 100%;
+  width: 100%;
 }
 
 @media (min-width: 600px) {
