@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardInfo } from '../../interfaces/card-info';
-import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -11,11 +10,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [SharedModule]
 })
 export class ContactActionsComponent implements OnInit {
+  @Output() edit = new EventEmitter();
+
   @Input() customer!: CardInfo;
 
   constructor() { }
 
   ngOnInit(): void { }
 
-  openDialog(param: any) { }
+  openDialog() {
+    this.edit.emit()
+  }
 }

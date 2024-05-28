@@ -2,15 +2,13 @@
   <button mat-button (click)="snav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <form>
-    <mat-form-field>
-      <input matInput #searchBox name="search" />
-    </mat-form-field>
-    <button mat-icon-button aria-label="Pesquisar clientes" [disabled]="!search">
-      <mat-icon *ngIf="!search" style="color: white">search</mat-icon>
-      <mat-icon *ngIf="search" (click)="searchBox.value = ''; search = ''">close</mat-icon>
-    </button>
-  </form>
+  <mat-form-field>
+    <input matInput type="text" #searchBox name="search" />
+  </mat-form-field>
+  <button mat-icon-button aria-label="Pesquisar clientes" [disabled]="!search">
+    <mat-icon *ngIf="!search" style="color: white">search</mat-icon>
+    <mat-icon *ngIf="search" (click)="searchBox.value = ''; search = ''">close</mat-icon>
+  </button>
   <button mat-icon-button aria-label="Adicionar clientes" (click)="
       openDialog({
         nome: '',
@@ -34,44 +32,8 @@
           {{ customer.inicial }}
         </div>
         <mat-list>
-          <mat-list-item>
-            <div routerLink="ficha/{{ customer.id }}" class="flex cursor-pointer">
-              <div mat-list-icon class="icon flex items-center justify-center" [style]="customer.nome | iconColor">
-                <span style="align-items: center; justify-content: center">
-                  {{ customer.nome | iconCustomer }}
-                </span>
-              </div>
-              <div style="margin-left: 16px; display: flex; width: 80%">
-                <div mat-line>
-                  {{ customer.nome }}
-                </div>
-                <div mat-line>
-                  {{ customer.telefone1 | formatPhone }}
-                </div>
-                <div mat-line>
-                  {{ customer.email }}
-                </div>
-              </div>
-            </div>
 
-            <a href="tel:{{ customer.telefone1 }}" target="_blank">
-              <button mat-icon-button aria-label="Telefone">
-                <mat-icon style="color: black">phone</mat-icon>
-              </button>
-            </a>
-
-            <button mat-icon-button aria-label="Ediar cliente" (click)="openDialog(customer)">
-              <mat-icon style="color: black">edit</mat-icon>
-            </button>
-
-            <a href="https://api.whatsapp.com/send?phone=55{{
-                customer.telefone1
-              }}text=Ol%C3%A1" target="_blank">
-              <app-whatsapp-icon></app-whatsapp-icon>
-            </a>
-
-            <mat-divider></mat-divider>
-          </mat-list-item>
+          <app-card [cardData]="customer" (edit)="openDialog($event)"></app-card>
         </mat-list>
       </ng-container>
     </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardInfo } from './interfaces/card-info';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
@@ -15,7 +15,13 @@ import { ContactInfoComponent } from './components/contact-info/contact-info.com
   imports: [CommonModule, SharedModule, MatListModule, BadgeComponent, ContactActionsComponent, ContactInfoComponent]
 })
 export class CardComponent implements OnInit {
+  @Output() edit = new EventEmitter();
+
   @Input() cardData!: CardInfo;
 
   ngOnInit(): void { }
+
+  openDialog() {
+    this.edit.emit(this.cardData)
+  }
 }

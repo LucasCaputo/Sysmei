@@ -18,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxMaskDirective } from 'ngx-mask';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
     NgxMaskDirective,
     HeaderComponent,
     MenuComponent,
+    CardComponent
   ],
   providers: [],
 })
