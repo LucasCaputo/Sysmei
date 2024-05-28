@@ -1,24 +1,16 @@
+<app-schedule-header [calendarDateTitle]="calendarDateTitle" (menuButtonClick)="snav.toggle()"
+  (addButtonClick)="insertSchedule()" />
+
 <mat-sidenav-container class="h-full">
   <mat-sidenav #snav>
     <app-menu></app-menu>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-header [isPrivate]="true">
-      <app-schedule-header
-        [calendarDateTitle]="calendarDateTitle"
-        (menuButtonClick)="snav.toggle()"
-        (addButtonClick)="insertSchedule()"
-      />
-    </app-header>
 
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
 
-    <app-calendar-naviagtion
-      [todayIcon]="todayIcon"
-      [title]="calendarDateTitle"
-      (action)="calendarNavigate($event)"
-    >
+    <app-calendar-naviagtion [todayIcon]="todayIcon" [title]="calendarDateTitle" (action)="calendarNavigate($event)">
     </app-calendar-naviagtion>
   </mat-sidenav-content>
 </mat-sidenav-container>

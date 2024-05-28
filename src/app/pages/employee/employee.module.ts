@@ -6,10 +6,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { EmployeeRoutingModule } from './employee-routing.module';
 import { EmployeeComponent } from './employee.component';
 import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
-import { CardModule } from 'src/app/shared/components/card/card.module';
 import { EmployeeDialogModule } from 'src/app/shared/components/dialogs/employee-dialog/employee-dialog.module';
-import { MenuModule } from 'src/app/shared/components/menu/menu.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [EmployeeComponent],
@@ -19,10 +20,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MenuModule,
     SharedModule,
-    CardModule,
     EmployeeDialogModule,
+    HeaderComponent,
+    CardComponent,
+    MenuComponent,
   ],
 })
-export class EmployeeModule {}
+export class EmployeeModule { }

@@ -1,31 +1,27 @@
-<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+<app-header [isPrivate]="true">
   <button mat-button (click)="snav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <button
-    mat-icon-button
-    aria-label="Adicionar Prestador"
-    (click)="
-      openDialog({
-        nome: '',
-        telefones: [{ id: 0, numero: '' }],
-        email: ''
-      })
-    "
-  >
-    <mat-icon style="font-size: 30px; color: white"
-      >add_circle_outline</mat-icon
-    >
-  </button>
-</mat-toolbar>
+  <div class="flex w-full justify-end">
+    <button mat-icon-button aria-label="Adicionar Prestador" (click)="
+        openDialog({
+          nome: '',
+          telefones: [{ id: 0, numero: '' }],
+          email: ''
+        })
+      ">
+      <mat-icon style="color: white">add_circle_outline</mat-icon>
+    </button>
+  </div>
+</app-header>
 
-<mat-sidenav-container>
+<mat-sidenav-container class="h-full">
   <mat-sidenav #snav>
     <app-menu></app-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content style="height: calc(100vh - 56px)">
+  <mat-sidenav-content>
     <mat-list>
       <ng-container *ngFor="let customer of customerList">
         <app-card [cardData]="customer"></app-card>

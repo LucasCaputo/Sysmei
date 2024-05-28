@@ -1,4 +1,4 @@
-<div fxFlex fxLayoutAlign="center center">
+<div>
   <a href="tel:{{ customer.telefone }}" target="_blank">
     <button mat-icon-button aria-label="Telefone">
       <mat-icon style="color: black">phone</mat-icon>
@@ -13,12 +13,9 @@
     <mat-icon style="color: black">edit</mat-icon>
   </button> -->
 
-  <a
-    href="https://api.whatsapp.com/send?phone=55{{
+  <a href="https://api.whatsapp.com/send?phone=55{{
       customer.telefone
-    }}text=Ol%C3%A1"
-    target="_blank"
-  >
+    }}text=Ol%C3%A1" target="_blank">
     <app-whatsapp-icon></app-whatsapp-icon>
   </a>
 </div>

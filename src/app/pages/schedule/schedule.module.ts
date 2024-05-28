@@ -24,10 +24,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { MatIconModule } from '@angular/material/icon';
 import { CalendarNaviagtionComponent } from './components/calendar-naviagtion/calendar-naviagtion.component';
-import { MenuModule } from 'src/app/shared/components/menu/menu.module';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ScheduleHeaderComponent } from './components/schedule-header/schedule-header.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 
 // FullCalendarModule.registerPlugins([
 //   dayGridPlugin,
@@ -56,12 +56,12 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
     MatIconModule,
     SharedModule,
     NgxMaskDirective,
-    MenuModule,
     MatSidenavModule,
     MatListModule,
     ScheduleHeaderComponent,
     HeaderComponent,
+    MenuComponent
   ],
   providers: [],
 })
-export class ScheduleModule {}
+export class ScheduleModule { }

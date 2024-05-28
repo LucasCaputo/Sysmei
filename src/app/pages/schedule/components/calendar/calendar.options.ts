@@ -11,6 +11,8 @@ export const calendarSelectedOptions: CalendarOptions = {
   allDaySlot: false,
   titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
   plugins: [timeGridPlugin],
+  slotMinTime: '05:00:00',
+  slotMaxTime: '22:00:00',
   initialView: 'timeGridWeek',
   initialEvents: [],
   weekends: true,

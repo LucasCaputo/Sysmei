@@ -1,9 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   Validators,
 } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -13,6 +18,8 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   selector: 'app-customer-complete-registration',
   templateUrl: './customer-complete-registration.component.html',
   styleUrls: ['./customer-complete-registration.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatFormFieldModule, MatListModule, MatIconModule, ReactiveFormsModule]
 })
 export class CustomerCompleteRegistrationComponent implements OnInit {
   eventsSubscription: Subscription | undefined;

@@ -13,7 +13,6 @@ import { CustomerResponse } from 'src/app/repository/intefaces/customer-response
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
-import { OpenPhotoComponent } from './open-photo/open-photo.component';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 
 @Component({
@@ -139,15 +138,15 @@ export class CustomerRecordComponent implements OnInit {
     }
   }
 
-  onOpenPhoto(photo: string) {
-    const dialogRef = this.dialog.open(OpenPhotoComponent, {
-      data: photo,
-    });
+  // onOpenPhoto(photo: string) {
+  //   const dialogRef = this.dialog.open(OpenPhotoComponent, {
+  //     data: photo,
+  //   });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((result: any) => {
+  //     console.log(result);
+  //   });
+  // }
 
   addSchedule() {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
