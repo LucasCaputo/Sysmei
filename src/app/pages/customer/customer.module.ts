@@ -42,7 +42,7 @@ import { CardComponent } from 'src/app/shared/components/card/card.component';
     NgxMaskDirective,
     HeaderComponent,
     MenuComponent,
-    CardComponent
+    CardComponent,
   ],
   providers: [],
 })

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
@@ -15,11 +16,9 @@ import { CustomerService } from 'src/app/shared/services/customer/customer.servi
 export class CustomerComponent implements OnInit {
   getList: Array<any> = [];
   customerList: Array<any> = [];
-
   user = this.authService.getUser();
 
-  @ViewChild('searchBox')
-  searchBox!: ElementRef<HTMLInputElement>;
+  @ViewChild('searchBox') searchBox!: ElementRef<HTMLInputElement>;
 
   search = '';
 
@@ -27,6 +26,7 @@ export class CustomerComponent implements OnInit {
     private customerService: CustomerService,
     private authService: AuthService,
     public dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -70,5 +70,9 @@ export class CustomerComponent implements OnInit {
     }
 
     return false;
+  }
+
+  navigateToCustomerDetails(customer: any) {
+    this.router.navigate([`clientes/ficha/${customer.id}`]);
   }
 }

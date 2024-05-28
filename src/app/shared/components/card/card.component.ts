@@ -16,6 +16,7 @@ import { ContactInfoComponent } from './components/contact-info/contact-info.com
 })
 export class CardComponent implements OnInit {
   @Output() edit = new EventEmitter();
+  @Output() click = new EventEmitter();
 
   @Input() cardData!: CardInfo;
 
@@ -23,5 +24,9 @@ export class CardComponent implements OnInit {
 
   openDialog() {
     this.edit.emit(this.cardData)
+  }
+
+  onClick() {
+    this.click.emit()
   }
 }

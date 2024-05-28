@@ -1,5 +1,5 @@
 <app-header [isPrivate]="true">
-  <div class="flex justify-between w-full">
+  <div class="flex justify-between w-full items-center">
     <button *ngIf="!edit" mat-button routerLink="/clientes">
       <mat-icon>arrow_back</mat-icon>
     </button>
@@ -29,61 +29,36 @@
 
 </app-header>
 
+<mat-sidenav-container class="h-body-height">
+  <mat-sidenav-content>
+    <div *ngIf="!loading">
+      <mat-list *ngIf="!edit" @enter>
+        <app-card [cardData]="cardData"></app-card>
+      </mat-list>
 
-<div *ngIf="!loading" class="list">
-  <mat-list *ngIf="!edit" @enter>
-    <mat-list-item>
-      <div class="flex w-full">
-        <div mat-list-icon [style]="data?.nome || '' | iconColor" class="icon flex items-center justify-center">
-          <span class="flex items-center justify-center">
-            {{ data?.nome || '' | iconCustomer }}
-          </span>
-        </div>
-        <div class="flex flex-col ml-4">
-          <div mat-line>
-            {{ data?.nome }}
+      <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected"
+        (selectedIndexChange)="selectedIndexChange($event)">
+        <mat-tab label="Dados">
+          <div (swipe)="onSwipe($event)">
+            <app-customer-complete-registration [data]="data" [edit]="edit" [events]="eventsSubject.asObservable()" />
           </div>
-          <div mat-line>
-            {{ data?.telefone1 || '' | formatPhone }}
+        </mat-tab>
+
+        <mat-tab label="Histórico" *ngIf="!edit">
+          <div (swipe)="onSwipe($event)" class="tab-container">
+            <app-record-list *ngIf="records?.length" [data]="records"></app-record-list>
           </div>
-        </div>
-      </div>
+        </mat-tab>
 
-      <a href="tel:{{ data?.telefone1 }}" target="_blank">
-        <button mat-icon-button aria-label="Telefone">
-          <mat-icon style="color: black">phone</mat-icon>
-        </button>
-      </a>
-
-      <a href="https://api.whatsapp.com/send?phone=55{{
-            data?.telefone1
-          }}text=Ol%C3%A1" target="_blank">
-        <app-whatsapp-icon></app-whatsapp-icon>
-      </a>
-    </mat-list-item>
-  </mat-list>
-
-  <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected"
-    (selectedIndexChange)="selectedIndexChange($event)">
-    <mat-tab label="Dados">
-      <div (swipe)="onSwipe($event)">
-        <app-customer-complete-registration [data]="data" [edit]="edit" [events]="eventsSubject.asObservable()" />
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Histórico" *ngIf="!edit">
-      <div (swipe)="onSwipe($event)" class="tab-container">
-        <app-record-list *ngIf="records?.length" [data]="records"></app-record-list>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Documentos" *ngIf="!edit">
-      <div (swipe)="onSwipe($event)" class="tab-container">
-        <div *ngIf="!photos?.length" style="text-align: center">
-          Cadastre a primeira foto do cliente
-        </div>
-        <img *ngFor="let photo of photos" height="100px" src="{{ photo.url }}" />
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+        <mat-tab label="Documentos" *ngIf="!edit">
+          <div (swipe)="onSwipe($event)" class="tab-container">
+            <div *ngIf="!photos?.length" style="text-align: center">
+              Cadastre a primeira foto do cliente
+            </div>
+            <img *ngFor="let photo of photos" height="100px" src="{{ photo.url }}" />
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -14,6 +14,7 @@ import { CustomerRepository } from 'src/app/repository/services/customer/custome
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 
 @Component({
   selector: 'app-customer-record',
@@ -53,6 +54,7 @@ import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 export class CustomerRecordComponent implements OnInit {
   id = 0;
   data: CustomerResponse | undefined;
+  cardData!: CardInfo
   loading = false;
 
   tabSelected = 0;
@@ -97,6 +99,13 @@ export class CustomerRecordComponent implements OnInit {
       (response) => {
         this.data = response;
         this.photos = response.documentsUrl;
+
+        this.cardData = {
+          id: response?.id || 0,
+          login_usuario: response?.login_usuario || '',
+          nome: response?.nome || '',
+          telefone: response?.telefone1 || ''
+        }
       },
       (error) => {
         this.router.navigate(['/clientes']);

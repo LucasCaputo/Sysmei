@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
   ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormControl,
   Validators,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
@@ -19,7 +21,7 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   templateUrl: './customer-complete-registration.component.html',
   styleUrls: ['./customer-complete-registration.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatListModule, MatIconModule, ReactiveFormsModule]
+  imports: [CommonModule, MatFormFieldModule, MatListModule, MatIconModule, ReactiveFormsModule, MatInputModule],
 })
 export class CustomerCompleteRegistrationComponent implements OnInit {
   eventsSubscription: Subscription | undefined;
@@ -30,14 +32,14 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
   profileForm: any;
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private auth: AuthService,
     private customerRepository: CustomerRepository,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.profileForm = this.fb.group({
+    this.profileForm = this.formBuilder.group({
       id: [this.data?.id || undefined],
 
       nome: [this.data?.nome || undefined, this.checkName],
@@ -102,7 +104,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
     this.eventsSubscription?.unsubscribe();
   }
 
-  checkName(input: UntypedFormControl) {
+  checkName(input: FormControl) {
     const hasNumber = /[0-9]/.test(input.value);
 
     if (hasNumber) return { hasNumber: true };
