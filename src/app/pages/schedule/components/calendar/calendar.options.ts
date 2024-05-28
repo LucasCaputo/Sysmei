@@ -1,4 +1,7 @@
 import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 export const calendarSelectedOptions: CalendarOptions = {
@@ -10,7 +13,7 @@ export const calendarSelectedOptions: CalendarOptions = {
   noEventsText: 'Nenhum agendamento cadastrado',
   allDaySlot: false,
   titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
-  plugins: [timeGridPlugin],
+  plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin, listPlugin],
   slotMinTime: '05:00:00',
   slotMaxTime: '22:00:00',
   initialView: 'timeGridWeek',
