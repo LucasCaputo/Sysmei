@@ -11,44 +11,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { WhatsappIconComponent } from './components/whatsapp-icon/whatsapp-icon.component';
+import { ArrayFiltroPipe } from './pipes/array-filtro.pipe';
+import { FormatPhonePipe } from './pipes/format-phone.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
+import { IconColorPipe } from './pipes/icon-color.pipe';
+import { IconCustomerPipe } from './pipes/icon-customer.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    RouterModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    HttpClientModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-  ],
-
   declarations: [
-    ConfirmDialogComponent,
-    WhatsappIconComponent,
+    ArrayFiltroPipe,
+    FormatPhonePipe,
+    IconColorPipe,
+    IconCustomerPipe,
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    ConfirmDialogComponent,
-    WhatsappIconComponent,
-    RouterModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    HttpClientModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
+    ArrayFiltroPipe,
+    FormatPhonePipe,
+    IconColorPipe,
+    IconCustomerPipe,
   ],
 })
-export class SharedModule { }
+export class SharedPipesModule { }

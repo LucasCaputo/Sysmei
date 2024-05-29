@@ -12,10 +12,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { ScheduleDialogComponent } from './schedule-dialog.component';
 import { NgxMaskDirective } from 'ngx-mask';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [ScheduleDialogComponent],
   imports: [
+    CommonModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
@@ -28,4 +30,4 @@ import { NgxMaskDirective } from 'ngx-mask';
   ],
   exports: [ScheduleDialogComponent],
 })
-export class ScheduleDialogModule {}
+export class ScheduleDialogModule { }

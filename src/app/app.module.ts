@@ -68,4 +68,4 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

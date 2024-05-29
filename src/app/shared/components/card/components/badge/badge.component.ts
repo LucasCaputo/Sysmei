@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -6,13 +8,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.scss'],
   standalone: true,
-  imports: [ SharedModule]
+  imports: [CommonModule, SharedPipesModule]
 
 })
 export class BadgeComponent implements OnInit {
   @Input() name: string = '';
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

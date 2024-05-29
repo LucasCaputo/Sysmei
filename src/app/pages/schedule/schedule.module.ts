@@ -25,6 +25,7 @@ import { ScheduleHeaderComponent } from './components/schedule-header/schedule-h
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     CalendarNaviagtionComponent,
   ],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     ScheduleRoutingModule,
     FullCalendarModule,

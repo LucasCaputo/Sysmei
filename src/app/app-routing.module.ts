@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateRoutesGuard } from './shared/guards/private-routes/private-routes.guard';
 import { PublicRoutesGuard } from './shared/guards/public-routes/public-routes.guard';
-import { Erro404Component } from './shared/pages/erro404/erro404.component';
+import { Erro404Component } from './pages/erro404/erro404.component';
 import { NewUserComponent } from './pages/new-user/new-user.component';
 import { LoginComponent } from './pages/login/login.component';
+import { CustomerComponent } from './pages/customer/customer.component';
+import { CustomerRecordComponent } from './pages/customer-record/customer-record.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
 
 const routes: Routes = [
   {
@@ -16,13 +19,8 @@ const routes: Routes = [
         redirectTo: '/login',
         pathMatch: 'full',
       },
-      {
-        path: 'clientes',
-        loadChildren: () =>
-          import('./pages/customer/customer.module').then(
-            (m) => m.CustomerModule,
-          ),
-      },
+      { path: 'clientes', component: CustomerComponent, pathMatch: 'full', },
+      { path: 'clientes/ficha/:id', component: CustomerRecordComponent },
       {
         path: 'agenda',
         loadChildren: () =>
@@ -32,10 +30,7 @@ const routes: Routes = [
       },
       {
         path: 'prestador',
-        loadChildren: () =>
-          import('./pages/employee/employee.module').then(
-            (m) => m.EmployeeModule,
-          ),
+        component: EmployeeComponent,
       },
     ],
   },
@@ -63,4 +58,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

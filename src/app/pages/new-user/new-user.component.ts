@@ -20,8 +20,6 @@ import { MessageTipComponent } from 'src/app/shared/components/message-tip/messa
 import { NgxMaskDirective } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-new-user',
@@ -68,7 +66,7 @@ export class NewUserComponent {
     private router: Router,
     private snackbarService: SnackbarService,
     private fb: UntypedFormBuilder,
-  ) {}
+  ) { }
 
   checkName(input: UntypedFormControl) {
     const hasNumber = /[0-9]/.test(input.value);

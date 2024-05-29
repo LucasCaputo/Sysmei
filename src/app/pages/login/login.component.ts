@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
@@ -12,8 +11,6 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { LoginRequest } from 'src/app/shared/interfaces/user';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -41,7 +38,7 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-  ) {}
+  ) { }
 
   onSubmit(event: LoginRequest) {
     if (event) {

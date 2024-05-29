@@ -12,14 +12,37 @@ import { Subject } from 'rxjs';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { SchedulingFormComponent } from '../../../schedule/components/scheduling-form/scheduling-form.component';
+import { SchedulingFormComponent } from '../schedule/components/scheduling-form/scheduling-form.component';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CustomerCompleteRegistrationComponent } from './customer-complete-registration/customer-complete-registration.component';
+import { RecordListComponent } from './record-list/record-list.component';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-customer-record',
   templateUrl: './customer-record.component.html',
   styleUrls: ['./customer-record.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    HeaderComponent,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTabsModule,
+    CustomerCompleteRegistrationComponent,
+    RecordListComponent,
+    CardComponent,
+    MatInputModule,
+  ],
   animations: [
     trigger('enter', [
       state(

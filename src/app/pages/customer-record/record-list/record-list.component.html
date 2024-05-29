@@ -1,0 +1,11 @@
+<div *ngIf="dataSource">
+  <div style="height: 50px; width: 100%; display: flex; justify-content: space-between;" *ngFor="let item of dataSource"
+    (click)="click(item)">
+    <span style="padding-left: 16px;">{{item.data}}</span>
+    <span>{{item.title}}</span>
+    <span style="padding-right: 16px;">{{item.valor}}</span>
+  </div>
+  <p *ngIf="!dataSource.length" style="text-align: center">
+    Esse cliente não possui histórico
+  </p>
+</div>

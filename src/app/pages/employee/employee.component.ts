@@ -1,14 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { EmployeeDialogComponent } from 'src/app/shared/components/dialogs/employee-dialog/employee-dialog.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
+  standalone: true,
+  imports: [CommonModule, HeaderComponent, MatIconModule, MatSidenavModule, MatListModule, MenuComponent, CardComponent]
 })
 export class EmployeeComponent implements OnInit {
   customerList: Array<EmployeeResponse> = [];

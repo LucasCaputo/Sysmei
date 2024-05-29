@@ -16,7 +16,7 @@ import { map, startWith } from 'rxjs/operators';
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
