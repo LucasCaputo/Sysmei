@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
-import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
+import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
+import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 
 @Injectable({
   providedIn: 'root',

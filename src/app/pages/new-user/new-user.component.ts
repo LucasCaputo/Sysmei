@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -6,20 +6,20 @@ import {
   UntypedFormControl,
   Validators,
 } from '@angular/forms';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
 
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { UserService } from 'src/app/shared/services/user/user.service';
-import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
-import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
-import { NgxMaskDirective } from 'ngx-mask';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { NgxMaskDirective } from 'ngx-mask';
+import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-new-user',

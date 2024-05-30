@@ -8,17 +8,17 @@ import {
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
-import { SchedulingFormComponent } from 'src/app/pages/schedule/components/scheduling-form/scheduling-form.component';
-import { CommonModule } from '@angular/common';
+import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-record-list',
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [SharedModule, SchedulingFormComponent],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),

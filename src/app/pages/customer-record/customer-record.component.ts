@@ -7,24 +7,22 @@ import {
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { SchedulingFormComponent } from '../schedule/components/scheduling-form/scheduling-form.component';
-import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
-import { CommonModule } from '@angular/common';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatTabsModule } from '@angular/material/tabs';
+import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
 import { CustomerCompleteRegistrationComponent } from './customer-complete-registration/customer-complete-registration.component';
 import { RecordListComponent } from './record-list/record-list.component';
-import { CardComponent } from 'src/app/shared/components/card/card.component';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-customer-record',
@@ -32,16 +30,15 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./customer-record.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
+    SharedModule,
     HeaderComponent,
-    MatIconModule,
     MatSidenavModule,
     MatListModule,
     MatTabsModule,
     CustomerCompleteRegistrationComponent,
     RecordListComponent,
     CardComponent,
-    MatInputModule,
+    SchedulingFormComponent
   ],
   animations: [
     trigger('enter', [
@@ -211,31 +208,5 @@ export class CustomerRecordComponent implements OnInit {
         }, 8000);
       }
     });
-  }
-
-  /**
-   * Verifica o movimento do usuário para esquerda ou direita e emite evento
-   * @param event dados do evento de arrastar
-   */
-  public onSwipe(event: any) {
-    const x =
-      Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'Right' : 'Left') : '';
-    console.log(x, 'entrou');
-
-    if (x === 'Right') {
-      if (this.tabSelected < 2) {
-        this.tabSelected++;
-        console.log(this.tabSelected);
-
-        this.selectedIndexChange(this.tabSelected);
-      }
-    } else if (x === 'Left') {
-      if (this.tabSelected > 0) {
-        this.tabSelected--;
-        console.log(this.tabSelected);
-
-        this.selectedIndexChange(this.tabSelected);
-      }
-    }
   }
 }

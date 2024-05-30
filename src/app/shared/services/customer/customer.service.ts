@@ -6,7 +6,7 @@ import { CustomerRepository } from 'src/app/repository/services/customer/custome
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
-import { CustomerData } from '../../components/dialogs/schedule-dialog/interfaces/customer-data';
+import { CustomerData } from '../../components/dialogs/scheduling-form/interfaces/customer-data';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class CustomerService {
     private authService: AuthService,
     private customerRepository: CustomerRepository,
     private utilService: UtilsService,
-  ) {}
+  ) { }
 
   /** Busca lista de usuários e salva na variável customers */
   public searchCustomerList(): void {

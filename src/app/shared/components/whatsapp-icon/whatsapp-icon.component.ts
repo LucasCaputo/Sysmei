@@ -1,11 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-whatsapp-icon',
   templateUrl: './whatsapp-icon.component.html',
   styleUrls: ['./whatsapp-icon.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatIconModule, MatButtonModule]
+
 })
 export class WhatsappIconComponent implements OnInit {
   THUMBUP_ICON = `<svg width="637" height="641" viewBox="0 0 637 641" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,5 +29,5 @@ export class WhatsappIconComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

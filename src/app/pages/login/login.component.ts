@@ -1,16 +1,16 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
 
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { LoginRequest } from 'src/app/shared/interfaces/user';
-import { UserService } from 'src/app/shared/services/user/user.service';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { LoginRequest } from 'src/app/shared/interfaces/user';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
+import { LoginFormComponent } from './login-form/login-form.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

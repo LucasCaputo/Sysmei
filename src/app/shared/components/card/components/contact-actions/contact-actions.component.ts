@@ -1,13 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { WhatsappIconComponent } from '../../../whatsapp-icon/whatsapp-icon.component';
 import { CardInfo } from '../../interfaces/card-info';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-contact-actions',
   templateUrl: './contact-actions.component.html',
   styleUrls: ['./contact-actions.component.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [CommonModule, MatIconModule, WhatsappIconComponent]
 })
 export class ContactActionsComponent implements OnInit {
   @Output() edit = new EventEmitter();

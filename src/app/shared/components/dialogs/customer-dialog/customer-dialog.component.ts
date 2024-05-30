@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -9,14 +8,12 @@ import {
 import {
   UntypedFormBuilder,
   UntypedFormControl,
-  Validators,
+  Validators
 } from '@angular/forms';
 import {
-  MatDialog,
   MAT_DIALOG_DATA,
+  MatDialog,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgxMaskDirective } from 'ngx-mask';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -28,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './customer-dialog.component.html',
   styleUrls: ['./customer-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, SharedModule, NgxMaskDirective]
+  imports: [SharedModule]
 })
 export class CustomerDialogComponent implements OnInit {
   form = this.fb.group({

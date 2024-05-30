@@ -1,10 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { CalendarViewOptions } from './calendar.navigation.options';
 
 @Component({
   selector: 'app-calendar-naviagtion',
   templateUrl: './calendar-naviagtion.component.html',
   styleUrls: ['./calendar-naviagtion.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatIconModule]
 })
 export class CalendarNaviagtionComponent {
   @Input() title = '';
@@ -24,20 +28,5 @@ export class CalendarNaviagtionComponent {
       this.actionIcon = action;
     }
     this.action.emit(action);
-  }
-
-  /**
-   * Verifica o movimento do usuário para esquerda ou direita e emite evento
-   * @param event dados do evento de arrastar
-   */
-  public onSwipe(event: any) {
-    const x =
-      Math.abs(event.deltaX) > 40 ? (event.deltaX > 0 ? 'Right' : 'Left') : '';
-
-    if (x === 'Right') {
-      this.change('next');
-    } else if (x === 'Left') {
-      this.change('prev');
-    }
   }
 }

@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { CustomerRecordComponent } from './pages/customer-record/customer-record.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -23,10 +24,7 @@ const routes: Routes = [
       { path: 'clientes/ficha/:id', component: CustomerRecordComponent },
       {
         path: 'agenda',
-        loadChildren: () =>
-          import('./pages/schedule/schedule.module').then(
-            (m) => m.ScheduleModule,
-          ),
+        component: CalendarComponent,
       },
       {
         path: 'prestador',

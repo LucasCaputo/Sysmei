@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CardInfo } from '../../interfaces/card-info';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
+import { CardInfo } from '../../interfaces/card-info';
 
 @Component({
   selector: 'app-contact-info',

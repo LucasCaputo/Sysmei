@@ -1,9 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
@@ -12,13 +9,14 @@ import { EmployeeDialogComponent } from 'src/app/shared/components/dialogs/emplo
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
   standalone: true,
-  imports: [CommonModule, HeaderComponent, MatIconModule, MatSidenavModule, MatListModule, MenuComponent, CardComponent]
+  imports: [HeaderComponent, MatSidenavModule, MatListModule, MenuComponent, CardComponent, SharedModule]
 })
 export class EmployeeComponent implements OnInit {
   customerList: Array<EmployeeResponse> = [];
@@ -45,6 +43,7 @@ export class EmployeeComponent implements OnInit {
     const dialogRef = this.dialog.open(EmployeeDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
+      height: '300px',
       data: dataInfo,
       position: {
         top: '70px'

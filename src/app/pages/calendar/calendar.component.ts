@@ -1,18 +1,9 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-// import {
-//   CalendarOptions,
-//   DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, FullCalendarComponent, ViewApi
-// } from '@fullcalendar/angular';
-import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
-import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
-import { calendarSelectedOptions } from './calendar.options';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import {
   CalendarOptions,
   DateSelectArg,
@@ -22,14 +13,26 @@ import {
   EventInput,
   ViewApi,
 } from '@fullcalendar/core';
+import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
+import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
+import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
-import { FullCalendarComponent } from '@fullcalendar/angular';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CalendarNaviagtionComponent } from '../../shared/components/calendar-naviagtion/calendar-naviagtion.component';
+import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { ScheduleHeaderComponent } from '../../shared/components/header/components/schedule-header/schedule-header.component';
+import { calendarSelectedOptions } from './calendar.options';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  standalone: true,
+  imports: [FullCalendarModule, ScheduleHeaderComponent, MatSidenavModule, MenuComponent, CalendarNaviagtionComponent, SchedulingFormComponent, SharedModule]
 })
 export class CalendarComponent implements AfterViewInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ import { LoaderService } from './loader.service';
   providedIn: 'root',
 })
 export class InterceptorService implements HttpInterceptor {
-  constructor(public loaderService: LoaderService) {}
+  constructor(public loaderService: LoaderService) { }
 
   intercept(
     req: HttpRequest<any>,
@@ -24,7 +24,9 @@ export class InterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       finalize(() => {
-        this.loaderService.isLoading.next(false);
+        setTimeout(() => {
+          this.loaderService.isLoading.next(false);
+        }, 3000);
       }),
     );
   }

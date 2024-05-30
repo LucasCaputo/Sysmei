@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -8,11 +7,9 @@ import {
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import {
-  MatDialog,
   MAT_DIALOG_DATA,
+  MatDialog,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgxMaskDirective } from 'ngx-mask';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -25,7 +22,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './employee-dialog.component.html',
   styleUrls: ['./employee-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, SharedModule, NgxMaskDirective]
+  imports: [SharedModule]
 })
 export class EmployeeDialogComponent implements OnInit {
   form = this.fb.group({

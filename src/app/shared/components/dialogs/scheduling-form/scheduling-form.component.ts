@@ -6,11 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
-  MatDialog,
   MAT_DIALOG_DATA,
+  MatDialog
 } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
@@ -18,18 +21,20 @@ import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-re
 import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { AutocompleteOptions } from './interfaces/autocomplete-options';
-import { CustomerData } from './interfaces/customer-data';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AutocompleteOptions } from './interfaces/autocomplete-options';
+import { CustomerData } from './interfaces/customer-data';
 
 @Component({
   selector: 'app-scheduling',
   templateUrl: './scheduling-form.component.html',
   styleUrls: ['./scheduling-form.component.scss'],
+  standalone: true,
+  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule]
 })
 export class SchedulingFormComponent implements OnInit {
   user = this.authService.getUser();
@@ -48,7 +53,6 @@ export class SchedulingFormComponent implements OnInit {
 
   constructor(
     private scheduleService: ScheduleService,
-    private utilsService: UtilsService,
     private customerService: CustomerService,
     private scheduleRepository: ScheduleRepository,
     private employeeService: EmployeeService,
@@ -58,7 +62,6 @@ export class SchedulingFormComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
   ) {
     setTimeout(() => {
       this.filteredOptions = this.form.controls.customer.valueChanges.pipe(

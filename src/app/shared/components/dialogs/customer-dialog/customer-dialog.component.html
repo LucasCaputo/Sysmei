@@ -1,4 +1,4 @@
-<div fxLayoutAlign="space-between center">
+<div class="flex items-center justify-between">
   <button mat-dialog-close mat-icon-button color="accent" style="margin: 0 0 20px">
     <mat-icon>highlight_off</mat-icon>
   </button>
@@ -11,7 +11,7 @@
   </button>
 </div>
 <div mat-dialog-content style="height: 220px">
-  <form [formGroup]="form" fxLayout="column">
+  <form [formGroup]="form" class="flex flex-col">
     <mat-form-field>
       <mat-label>Nome</mat-label>
       <input #myInput matInput type="text" formControlName="nome" required />
@@ -62,7 +62,7 @@
     </mat-form-field>
   </form>
 
-  <div fxLayoutAlign="end center">
+  <div class="flex justify-end">
     <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">
       <mat-icon>delete</mat-icon>
     </button>

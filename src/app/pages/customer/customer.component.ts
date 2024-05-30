@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -23,7 +23,7 @@ import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, CardComponent, MatListModule, SharedPipesModule, MatIconModule, HeaderComponent, MatFormFieldModule, MenuComponent, MatInputModule]
+  imports: [CommonModule, MatSidenavModule, CardComponent, MatListModule, SharedPipesModule, MatIconModule, HeaderComponent, MatFormFieldModule, MenuComponent, MatInputModule, MatDialogModule]
 
 })
 export class CustomerComponent implements OnInit {

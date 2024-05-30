@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-badge',
