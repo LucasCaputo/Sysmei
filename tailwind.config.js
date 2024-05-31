@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        'body-height': 'calc(100vh - 70px)'
+        'body-height': 'calc(100vh - 70px)',
       }
     },
   },

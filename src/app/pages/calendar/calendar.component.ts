@@ -15,14 +15,16 @@ import {
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
+import { CalendarNaviagtionComponent } from 'src/app/shared/components/calendar-naviagtion/calendar-naviagtion.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
+import { CalendarSidenavDesktopComponent } from 'src/app/shared/components/navigation/calendar-sidenav-desktop/calendar-sidenav-desktop.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CalendarNaviagtionComponent } from '../../shared/components/calendar-naviagtion/calendar-naviagtion.component';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
 import { ScheduleHeaderComponent } from '../../shared/components/header/components/schedule-header/schedule-header.component';
 import { calendarSelectedOptions } from './calendar.options';
@@ -32,7 +34,11 @@ import { calendarSelectedOptions } from './calendar.options';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   standalone: true,
-  imports: [FullCalendarModule, ScheduleHeaderComponent, MatSidenavModule, MenuComponent, CalendarNaviagtionComponent, SchedulingFormComponent, SharedModule]
+  imports: [FullCalendarModule,
+    ScheduleHeaderComponent, MatSidenavModule, MenuComponent,
+    CalendarNaviagtionComponent, SchedulingFormComponent, SharedModule,
+    CalendarNavigationDesktopComponent, CalendarSidenavDesktopComponent
+  ]
 })
 export class CalendarComponent implements AfterViewInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;

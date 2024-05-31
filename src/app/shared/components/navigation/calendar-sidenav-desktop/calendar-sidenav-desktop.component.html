@@ -1,0 +1,6 @@
+<full-calendar class="w-60 calendar-sidenav m-4" #calendar [options]="calendarOptions"></full-calendar>
+
+<h3 class="!m-4">Meus Calendários</h3>
+<div *ngFor="let item of customerList | async" class="grid m-4">
+    <mat-checkbox>{{ item.nome }}</mat-checkbox>
+</div>

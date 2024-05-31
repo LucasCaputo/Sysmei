@@ -1,0 +1,40 @@
+// mobile
+@media (max-width: 599px) {
+    .navigation-desktop {
+     display: none;
+    }
+
+    .sidenav-desktop {
+        display: none;
+    }
+  }
+
+//   tablet
+@media (max-width: 1000px) {
+    .sidenav-desktop {
+        display: none;
+    }
+  }
+
+
+//   desktop
+@media (min-width: 600px) {
+    .navigation {
+     display: none;
+    }
+
+    .calendar-container {
+        display: flex;
+    }
+
+    .full-calendar {
+        width: 100%;
+        height: calc(100vh - 160px);
+        padding-right: 8px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+  }
+
+
+  
