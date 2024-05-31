@@ -1,0 +1,17 @@
+.navigation {
+    position: fixed; 
+    width:100%; 
+    bottom: 0; 
+    z-index: 99; 
+    background-color: white;
+
+    .icon {
+        padding: 16px;
+    }
+    .text {
+        margin: 0; 
+        width: 100%; 
+        text-align: center; 
+        color: #673ab7;
+    }
+}

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { NewUser } from '../../../views/public/new-user/new-user.interface';
+import { User } from 'src/app/features/public/shared/interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private user: NewUser | undefined;
+  public user: User | undefined;
 
   private token: string | undefined;
 

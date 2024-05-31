@@ -1,0 +1,170 @@
+<div>
+  <div fxLayoutAlign="space-between center">
+    <button
+      mat-dialog-close
+      mat-icon-button
+      color="accent"
+      class="action-buttons"
+    >
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+    <span mat-dialog-title>{{
+      data?.Title ? "Editar Agendamento" : "Novo Agendamento" 
+    }}</span>
+    <button
+      mat-icon-button
+      color="primary"
+      class="action-buttons"
+      [disabled]="form.invalid || !form.dirty"
+      (click)="saveScheduleData()"
+      [mat-dialog-close]="form.value"
+      >
+      <mat-icon>done_outline</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content class="form">
+    <form fxLayout="column" [formGroup]="form">
+      <mat-form-field  appearance="fill" *ngIf="hiddenEmployee">
+        <mat-label>Atendente</mat-label>
+        <mat-select formControlName="employee" required>
+          <mat-option *ngFor="let employee of employeeData" [value]="employee">
+            {{employee.nome}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field fxFlex>
+        <mat-label>Nome do Serviço</mat-label>
+        <input
+          matInput
+          placeholder="Nome do Serviço"
+          autocomplete="off"
+          type="text"
+          formControlName="title"
+          name="title"
+          #myInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%">
+        <mat-label>Cliente</mat-label>
+        <input
+          type="text"
+          placeholder="Pesquise um Cliente"
+          aria-label="Pesquisa de Cliente"
+          matInput
+          formControlName="customer"
+          [matAutocomplete]="auto"
+          required
+        />
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          [displayWith]="displayCustomer"
+          >
+          <mat-option
+            *ngFor="let option of filteredOptions | async"
+            [value]="option"
+          >
+            {{ option.text }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-form-field fxFlex="30">
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="allDay"
+            required
+            readonly
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30">
+          <mat-label>Início</mat-label>
+          <input
+            matInput
+            type="time"
+            formControlName="start"
+            name="timeStart"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30">
+          <mat-label>Fim</mat-label>
+          <input 
+            matInput 
+            type="time" 
+            formControlName="end" 
+            name="timeEnd"
+            required
+          />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex fxLayoutAlign="space-between">
+        <mat-form-field fxFlex="45">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            placeholder="Valor"
+            formControlName="valor"
+            name="valor"
+            type="text"
+            mask="separator"
+            prefix="R$ "
+            thousandSeparator="."
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45">
+          <mat-select
+            formControlName="pagamento"
+            name="pagamento"
+            placeholder="Forma de Pagamento"
+          >
+            <mat-option value="Dinheiro">Dinheiro</mat-option>
+            <mat-option value="Cartão de Débito">Cartão de Débito</mat-option>
+            <mat-option value="Cartão Crédito">Cartão Crédito</mat-option>
+            <mat-option value="Pix">Pix</mat-option>
+            <mat-option value="Cheque">Cheque</mat-option>
+            <mat-option value="Fiado">Fiado</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="100%">
+        <mat-label>Detalhes</mat-label>
+        <textarea
+          matInput
+          placeholder="Detalhes"
+          formControlName="detalhes"
+          name="detalhes"
+        ></textarea>
+      </mat-form-field>
+    </form>
+  </div>
+  <div fxLayoutAlign="end center">
+    <button
+      *ngIf="data?.Title != undefined"
+      color="warn"
+      mat-icon-button
+      aria-label="Excluir"
+      (click)="onDelete(data)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

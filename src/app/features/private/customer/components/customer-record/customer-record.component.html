@@ -1,0 +1,133 @@
+<mat-toolbar
+  color="primary"
+  fxFlex="100vw"
+  class="toolbar"
+>
+  <div fxFlex="100" fxLayoutAlign="space-between center">
+    
+    <button *ngIf="!edit" mat-button routerLink="/clientes">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <button *ngIf="edit" mat-button (click)="edit = !edit">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <button *ngIf="tabSelected == 0"
+      mat-icon-button
+      (click)="!edit ? (edit = !edit) : emitEventToChild()"
+      class="icon-right"
+      aria-label="Ediar cliente"
+    >
+      <mat-icon *ngIf="!edit">edit</mat-icon>
+      <mat-icon *ngIf="edit">check</mat-icon>
+    </button>
+
+    <button *ngIf="tabSelected == 1"
+      mat-icon-button
+      (click)="addSchedule()"
+      class="icon-right"
+      aria-label="Adicionar agendamento"
+    >
+      <mat-icon>add_box</mat-icon>
+    </button>
+
+    <div *ngIf="tabSelected == 2">
+      <button mat-button>
+        <mat-icon>photo_camera</mat-icon>
+      </button>
+      <input
+        type="file"
+        (change)="inputFileChange($event)"
+        class="input-photo"
+      />
+    </div>
+
+  </div>
+</mat-toolbar>
+
+<div *ngIf="!loading" class="list">
+  <mat-list *ngIf="!edit" @enter>
+
+    <mat-list-item>
+      <div fxFlex fxLayoutAlign="center center" fxFlex="77">
+        <div
+          mat-list-icon
+          fxLayoutAlign="center center"
+          [style]="data?.nome || '' | iconColor"
+          class="icon"
+        >
+          <span fxLayoutAlign="center center">
+            {{ data?.nome || "" | iconCustomer }}
+          </span>
+        </div>
+        <div fxFlex style="margin-left: 16px" fxFlex="80">
+          <div mat-line>
+            {{ data?.nome }}
+          </div>
+          <div mat-line>
+            {{ data?.telefone1 || "" | formatPhone }}
+          </div>
+          <div mat-line>
+            {{ data?.email }}
+          </div>
+        </div>
+      </div>
+
+      <a href="tel:{{ data?.telefone1 }}" target="_blank">
+        <button mat-icon-button aria-label="Telefone">
+          <mat-icon style="color: black">phone</mat-icon>
+        </button>
+      </a>
+
+      <a
+      *ngIf="data?.telefone1?.length === 11"
+        href="https://api.whatsapp.com/send?phone=55{{
+          data?.telefone1
+        }}text=Ol%C3%A1"
+        target="_blank"
+      >
+        <app-whatsapp-icon></app-whatsapp-icon>
+      </a>
+
+      <a
+      *ngIf="data?.telefone1?.length === 13"
+        href="https://api.whatsapp.com/send?phone={{
+          data?.telefone1
+        }}text=Ol%C3%A1"
+        target="_blank"
+      >
+        <app-whatsapp-icon></app-whatsapp-icon>
+      </a>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected" (selectedIndexChange)="selectedIndexChange($event)">
+    <mat-tab label="Dados">
+        <app-customer-complete-registration
+          [data]="data"
+          [edit]="edit"
+          [events]="eventsSubject.asObservable()"
+        >
+        </app-customer-complete-registration>
+    </mat-tab>
+
+    <mat-tab label="Histórico" *ngIf="!edit">
+        <app-record-list *ngIf="records?.length" [data]="records"></app-record-list>
+    </mat-tab>
+
+    <mat-tab label="Documentos" *ngIf="!edit">
+        <div *ngIf="!photos?.length" style="text-align: center">
+          Cadastre a primeira foto do cliente
+        </div>
+        <mat-grid-list cols="2" rowHeight="1:1" style="margin-top: 16px">
+          <mat-grid-tile
+            *ngFor="let photo of photos"
+            style="background-color: #fafafa"
+            (click)="onOpenPhoto(photo.url)"
+            ><img style="max-width: 100%" src="{{ photo.url }}"
+          /></mat-grid-tile>
+        </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

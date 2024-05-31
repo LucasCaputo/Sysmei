@@ -1,0 +1,161 @@
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" class="login">
+  <div fxFlex fxLayoutAlign="center center" @enter>
+    <mat-card class="card">
+      <mat-card-title style="margin-bottom: 16px">Criar Conta</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+          <mat-form-field>
+            <mat-label>Telefone Celular</mat-label>
+            <input
+              matInput
+              type="tel"
+              formControlName="telefone"
+              mask="(00) 0 0000-0000"
+              minlength="11"
+              required
+            />
+            <mat-error
+              *ngIf="
+                profileForm.controls.telefone.hasError('minlength') &&
+                !profileForm.controls.telefone.hasError('required')
+              "
+            >
+              Por favor insira um telefone <strong>celular</strong> válido
+            </mat-error>
+            <mat-error
+              *ngIf="profileForm.controls.telefone.hasError('required')"
+            >
+              Telefone é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input type="email" matInput formControlName="login" required />
+            <mat-error
+              *ngIf="
+                profileForm.controls.login.hasError('email') &&
+                !profileForm.controls.login.hasError('required')
+              "
+            >
+              Por favor insira um endereço de e-mail válido
+            </mat-error>
+            <mat-error *ngIf="profileForm.controls.login.hasError('required')">
+              E-mail é <strong>obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nome completo</mat-label>
+            <input matInput type="text" formControlName="nome" required />
+            <mat-error *ngIf="profileForm.controls.nome.hasError('required')">
+              Nome é <strong>obrigatório</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                !profileForm.controls.nome.hasError('required') &&
+                profileForm.controls.nome.hasError('hasNumber')
+              "
+            >
+              Insira seu nome completo, <strong>somente letras</strong>
+            </mat-error>
+
+            <mat-error
+              *ngIf="
+                !profileForm.controls.nome.hasError('required') &&
+                profileForm.controls.nome.hasError('isNameComplete')
+              "
+            >
+              Informe seu nome <strong>completo</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              [type]="type"
+              formControlName="senha"
+              minlength="6"
+              required
+            />
+            <mat-error *ngIf="profileForm.controls.senha.hasError('required')">
+              A senha é <strong>obrigatório</strong>
+            </mat-error>
+            <mat-error *ngIf="profileForm.controls.senha.hasError('minlength')">
+              A senha deve ter <strong>no mínimo 6 caracteres</strong>
+            </mat-error>
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'text'"
+              (click)="type = 'password'"
+              >remove_red_eye</mat-icon
+            >
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'password'"
+              (click)="type = 'text'"
+              >visibility_off</mat-icon
+            >
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Confirmar senha</mat-label>
+            <input
+              matInput
+              [type]="type"
+              formControlName="confirmarSenha"
+              (keyup)="confirmPassword()"
+              minlength="6"
+              required
+            />
+            <mat-error
+              *ngIf="profileForm.controls.confirmarSenha.hasError('required')"
+            >
+              Confirmar a senha é <strong>obrigatório</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="profileForm.controls.confirmarSenha.hasError('minlength')"
+            >
+              A senha deve ter <strong>no mínimo 6 caracteres</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                profileForm.controls.confirmarSenha.hasError('passwordNotEqual')
+              "
+            >
+              A senha não confere
+            </mat-error>
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'text'"
+              (click)="type = 'password'"
+              >remove_red_eye</mat-icon
+            >
+            <mat-icon
+              style="cursor: pointer"
+              matSuffix
+              *ngIf="type == 'password'"
+              (click)="type = 'text'"
+              >visibility_off</mat-icon
+            >
+          </mat-form-field>
+
+          <p style="margin: 16px 0">
+            Já tem uma conta?
+            <span routerLink="/login" class="create-account">
+              Faça Login!
+            </span>
+          </p>
+          <mat-card-actions fxLayoutAlign="end center">
+            <button mat-raised-button color="primary" type="submit">
+              Cadastrar
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

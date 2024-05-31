@@ -1,0 +1,44 @@
+<div>
+  <mat-toolbar color="primary" fxLayoutAlign="space-between center">
+    <button mat-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <div fxFlex="60" class="title">
+      <p class="text">
+        {{calendarDateTitle}}
+      </p>
+    </div>
+
+    <button
+      mat-icon-button
+      aria-label="Adicionar Agendamento"
+      (click)="insertSchedule()"
+    >
+      <mat-icon class="icon" style="font-size: 30px; 
+      color: white"
+        >add_circle_outline</mat-icon
+      >
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #snav>
+      <app-menu></app-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content">
+      
+      <full-calendar
+      #calendar
+      [options]="calendarOptions"
+      ></full-calendar>
+
+      <app-calendar-naviagtion 
+        [todayIcon]="todayIcon" 
+        [title]="calendarDateTitle" 
+        (action)="calendarNavigate($event)">
+      </app-calendar-naviagtion>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

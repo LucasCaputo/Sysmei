@@ -1,0 +1,117 @@
+<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+  <button mat-button (click)="snav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <form>
+    <mat-form-field>
+      <input matInput #searchBox name="search" />
+    </mat-form-field>
+    <button
+      mat-icon-button
+      aria-label="Pesquisar clientes"
+      [disabled]="!search"
+    >
+      <mat-icon *ngIf="!search" style="color: white">search</mat-icon>
+      <mat-icon *ngIf="search" (click)="searchBox.value = ''; search = ''"
+        >close</mat-icon
+      >
+    </button>
+  </form>
+  <button
+    mat-icon-button
+    aria-label="Adicionar clientes"
+    (click)="
+      openDialog({
+        nome: '',
+        telefones: [{ id: 0, numero: '' }],
+        email: ''
+      })
+    "
+  >
+    <mat-icon style="font-size: 30px; color: white"
+      >add_circle_outline</mat-icon
+    >
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #snav>
+    <app-menu></app-menu>
+  </mat-sidenav>
+
+  <mat-sidenav-content style="height: calc(100vh - 70px)">
+
+    <div *ngIf="(customerList | arrayFiltro: search)?.length" style="width: 98vw" >
+      <ng-container *ngFor="let customer of customerList | arrayFiltro: search" >
+        <div mat-subheader *ngIf="customer.isFirstLetter && !search">
+          {{ customer.inicial }}
+        </div>
+        <mat-list>
+          <mat-list-item>
+            <div
+              fxFlex
+              fxLayoutAlign="center center"
+              fxFlex="66"
+              routerLink="ficha/{{ customer.id }}"
+              style="cursor: pointer"
+            >
+              <div
+                mat-list-icon
+                fxLayoutAlign="center center"
+                [style]="customer.nome | iconColor"
+                class="icon"
+              >
+                <span fxLayoutAlign="center center">
+                  {{ customer.nome | iconCustomer }}
+                </span>
+              </div>
+              <div fxFlex style="margin-left: 16px" fxFlex="80">
+                <div mat-line>
+                  {{ customer.nome }}
+                </div>
+                <div mat-line>
+                  {{ customer.telefone1 | formatPhone }}
+                </div>
+                <div mat-line>
+                  {{ customer.email }}
+                </div>
+              </div>
+            </div>
+
+            <a href="tel:{{ customer.telefone1 }}" target="_blank">
+              <button mat-icon-button aria-label="Telefone">
+                <mat-icon style="color: black">phone</mat-icon>
+              </button>
+            </a>
+
+            <button
+              mat-icon-button
+              aria-label="Ediar cliente"
+              (click)="openDialog(customer)"
+            >
+              <mat-icon style="color: black">edit</mat-icon>
+            </button>
+
+            <a
+              href="https://api.whatsapp.com/send?phone=55{{
+                customer.telefone1
+              }}text=Ol%C3%A1"
+              target="_blank"
+            >
+              <app-whatsapp-icon></app-whatsapp-icon>
+            </a>
+
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+    </div>
+
+    <div fxFlex fxLayoutAlign="center center" *ngIf="!(customerList | arrayFiltro: search)?.length && search">
+       <div>
+        <h1>Não encontramos o cliente</h1>
+        <h1>{{ search }}</h1>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

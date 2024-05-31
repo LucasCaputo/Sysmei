@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseURL: 'https://sysmei.herokuapp.com',
+  baseURL: 'https://api2.sysmei.com',
 };

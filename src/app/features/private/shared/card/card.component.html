@@ -1,0 +1,22 @@
+
+  <mat-list-item class="card">
+    <div
+      fxFlex
+      fxLayoutAlign="center center"
+      fxFlex="66"
+      class="badge"
+    >
+      <app-badge [name]="cardData.nome"></app-badge>
+
+      <div fxFlex fxFlex="80" style="margin-left: 16px;">
+        <app-contact-info
+          [info]="cardData"
+        ></app-contact-info>
+      </div>
+    </div>
+
+    <app-contact-actions [customer]="cardData"></app-contact-actions>
+
+    <mat-divider></mat-divider>
+  </mat-list-item>
+

@@ -1,0 +1,11 @@
+.line {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  &:first-child {
+    font-size: 16px;
+  }
+}

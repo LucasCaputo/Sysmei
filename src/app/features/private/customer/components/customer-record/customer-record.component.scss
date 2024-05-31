@@ -1,0 +1,43 @@
+.toolbar {
+  position: absolute; 
+  padding: 0; 
+  z-index: 9;
+
+  .icon-right {
+    margin-right: 8px;
+  }
+
+  .input-photo {
+    opacity: 0;
+    width: 32px;
+    height: 24px;
+    position: absolute;
+    right: 16px;
+  }
+}
+
+.icon {
+  width: 40px !important;
+  height: 40px !important;
+  color: #fff !important;
+}
+
+
+// Gallery
+
+mat-grid-tile {
+  background: lightblue;
+}
+
+.list {
+  margin-top: 56px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .list {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 70px;
+  }
+}
