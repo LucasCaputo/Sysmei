@@ -19,6 +19,12 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { LoaderComponent } from './shared/components/loader/loader/loader.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+// Registre a localidade para 'pt'
+registerLocaleData(localePt, 'pt');
+
 @Injectable()
 @NgModule({
   declarations: [AppComponent],

@@ -5,23 +5,26 @@
     </button>
 </div>
 <div class="flex w-full text-end p-2 justify-end">
-    <mat-icon class="!m-0 !mr-4" (click)="onEdit()">edit</mat-icon>
-    <mat-icon class="!m-0 !mr-4">delete</mat-icon>
-    <mat-icon class="!m-0 !mr-4">more_vert</mat-icon>
+    <mat-icon class="!m-0 !mr-4 cursor-pointer" (click)="onEdit()">edit</mat-icon>
+    <mat-icon class="!m-0 !mr-4 cursor-pointer" (click)="onDelete()">delete</mat-icon>
+    <mat-icon class="!m-0 !mr-4 cursor-pointer">more_vert</mat-icon>
 </div>
 <div class="flex items-center justify-start p-4 pb-2">
     <app-badge [name]="'Lucas Reis Caputo'" class="mr-4"></app-badge>
 
     <app-contact-info [info]="{
-        id: 1,
-        login_usuario: 'lccaptuo@hotmail.com',
-        nome: 'Lucas Reis Caputo',
-        telefone: '31982239489',
-    }" class="w-full"></app-contact-info>
+        id: data.customer?.id || 0,
+        login_usuario: data.customer?.login_usuario || '',
+        nome: data.customer?.nome || '',
+        telefone: data.customer?.telefone1 || ''
+    }"></app-contact-info>
+    <app-whatsapp-icon [phone]="data.customer?.telefone1 || ''"></app-whatsapp-icon>
+
 </div>
-<p class="text-center text-sm">
-    {{ '11 Maio de 2024 - 11:00 às 12:00' }}
+<p class="text-center text-sm !m-3">
+    {{ data.start | date: 'fullDate' }} - {{ data.start | date: 'HH:mm' }} às {{ data.end | date: 'HH:mm' }}
 </p>
+
 <mat-form-field class="px-4 py-2 w-full">
     <mat-select name="Status" placeholder="Status do atendimento">
         <mat-option value="Dinheiro">Confirmar</mat-option>
@@ -35,11 +38,11 @@
 <div class="grid">
     <div class="flex items-center ml-4">
         <mat-icon class="mr-3">person</mat-icon>
-        <p class="!m-0">Dayane Mendes</p>
+        <p class="!m-0">{{ data.employee?.nome}}</p>
     </div>
     <div class="flex items-center mb-2 ml-4">
         <mat-icon class="mr-3">call</mat-icon>
-        <p class="!m-0">31 9 9836-5142</p>
-        <app-whatsapp-icon></app-whatsapp-icon>
+        <p class="!m-0">{{ data.employee?.telefone || '' | formatPhone}}</p>
+        <app-whatsapp-icon [phone]="data.employee?.telefone || ''"></app-whatsapp-icon>
     </div>
 </div>

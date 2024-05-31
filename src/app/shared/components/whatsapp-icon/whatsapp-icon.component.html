@@ -1,7 +1,9 @@
-<button mat-icon-button aria-label="Whatsapp">
-  <mat-icon
-    svgIcon="thumbs-up"
-    aria-hidden="false"
-    aria-label="Whatsapp"
-  ></mat-icon>
+<button *ngIf="!phone" mat-icon-button aria-label="Whatsapp">
+  <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Whatsapp"></mat-icon>
 </button>
+
+<a *ngIf="phone" href="https://api.whatsapp.com/send?phone=55{{
+  phone
+}}text=Ol%C3%A1" target="_blank">
+  <app-whatsapp-icon></app-whatsapp-icon>
+</a>

@@ -8,7 +8,8 @@
 
   <mat-sidenav-content class="!h-body-height">
 
-    <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)" />
+    <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)"
+      (addNewSchedule)="insertSchedule()" />
 
     <div class="calendar-container">
 

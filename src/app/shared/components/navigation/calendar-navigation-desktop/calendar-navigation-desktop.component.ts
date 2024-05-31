@@ -12,6 +12,7 @@ import { CalendarViewOptions } from '../calendar-naviagtion/calendar.navigation.
 })
 export class CalendarNavigationDesktopComponent {
   @Output() action = new EventEmitter<string>();
+  @Output() addNewSchedule = new EventEmitter();
 
   calendarViewOptions = CalendarViewOptions;
   actionIcon = 'timeGridWeek';
@@ -23,5 +24,12 @@ export class CalendarNavigationDesktopComponent {
   public change(action: string) {
     this.actionIcon = action;
     this.action.emit(action);
+  }
+
+  /**
+* Emite evento de clique com ação selecionada
+*/
+  public onAddNewSchedule() {
+    this.addNewSchedule.emit()
   }
 }
