@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -72,6 +72,8 @@ import { RecordListComponent } from './record-list/record-list.component';
   ],
 })
 export class CustomerRecordComponent implements OnInit {
+  @Input() hasHeader!: boolean | null;
+
   id = 0;
   data: CustomerResponse | undefined;
   cardData!: CardInfo
@@ -109,12 +111,11 @@ export class CustomerRecordComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
-    console.log(this.route.snapshot.params['id']);
   }
 
   populate() {
     this.loading = true;
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot?.params['id'] || 283;
     this.customerRepository.getCustomerId(this.id).subscribe(
       (response) => {
         this.data = response;

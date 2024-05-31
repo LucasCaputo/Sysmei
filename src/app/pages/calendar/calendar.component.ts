@@ -15,8 +15,8 @@ import {
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
-import { CalendarNaviagtionComponent } from 'src/app/shared/components/calendar-naviagtion/calendar-naviagtion.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigation/calendar-naviagtion/calendar-naviagtion.component';
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
 import { CalendarSidenavDesktopComponent } from 'src/app/shared/components/navigation/calendar-sidenav-desktop/calendar-sidenav-desktop.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';

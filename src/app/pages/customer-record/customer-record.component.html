@@ -1,4 +1,4 @@
-<app-header [isPrivate]="true">
+<app-header *ngIf="hasHeader" [isPrivate]="true">
   <div class="flex justify-between w-full items-center">
     <button *ngIf="!edit" mat-button routerLink="/clientes">
       <mat-icon>arrow_back</mat-icon>

@@ -1,9 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -17,13 +13,18 @@ import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CustomerRecordComponent } from '../customer-record/customer-record.component';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, CardComponent, MatListModule, SharedPipesModule, MatIconModule, HeaderComponent, MatFormFieldModule, MenuComponent, MatInputModule, MatDialogModule]
+  imports: [SharedModule, MatSidenavModule,
+    CardComponent, MatListModule, SharedPipesModule,
+    HeaderComponent,
+    MenuComponent, CustomerRecordComponent]
 
 })
 export class CustomerComponent implements OnInit {
