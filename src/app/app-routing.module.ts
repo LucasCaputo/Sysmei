@@ -2,13 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateRoutesGuard } from './shared/guards/private-routes/private-routes.guard';
 import { PublicRoutesGuard } from './shared/guards/public-routes/public-routes.guard';
-import { Erro404Component } from './pages/erro404/erro404.component';
-import { NewUserComponent } from './pages/new-user/new-user.component';
-import { LoginComponent } from './pages/login/login.component';
-import { CustomerComponent } from './pages/customer/customer.component';
-import { CustomerRecordComponent } from './pages/customer-record/customer-record.component';
-import { EmployeeComponent } from './pages/employee/employee.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -20,15 +13,21 @@ const routes: Routes = [
         redirectTo: '/login',
         pathMatch: 'full',
       },
-      { path: 'clientes', component: CustomerComponent, pathMatch: 'full', },
-      { path: 'clientes/ficha/:id', component: CustomerRecordComponent },
+      {
+        path: 'clientes',
+        loadComponent: () => import('./pages/customer/customer.component').then(m => m.CustomerComponent)
+      },
+      {
+        path: 'clientes/ficha/:id',
+        loadComponent: () => import('./pages/customer-record/customer-record.component').then(m => m.CustomerRecordComponent)
+      },
       {
         path: 'agenda',
-        component: CalendarComponent,
+        loadComponent: () => import('./pages/calendar/calendar.component').then(m => m.CalendarComponent)
       },
       {
         path: 'prestador',
-        component: EmployeeComponent,
+        loadComponent: () => import('./pages/employee/employee.component').then(m => m.EmployeeComponent)
       },
     ],
   },
@@ -38,17 +37,17 @@ const routes: Routes = [
     children: [
       {
         path: 'cadastro',
-        component: NewUserComponent,
+        loadComponent: () => import('./pages/new-user/new-user.component').then(m => m.NewUserComponent)
       },
       {
         path: 'login',
-        component: LoginComponent,
+        loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
       },
     ],
   },
   {
     path: '**',
-    component: Erro404Component,
+    loadComponent: () => import('./pages/erro404/erro404.component').then(m => m.Erro404Component)
   },
 ];
 
