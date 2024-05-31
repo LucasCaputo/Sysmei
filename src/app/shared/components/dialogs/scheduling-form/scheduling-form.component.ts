@@ -72,6 +72,7 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data)
     let end = '';
     let start = '';
 

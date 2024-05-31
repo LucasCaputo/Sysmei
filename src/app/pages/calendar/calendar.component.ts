@@ -15,6 +15,7 @@ import {
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
+import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigation/calendar-naviagtion/calendar-naviagtion.component';
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
@@ -151,7 +152,7 @@ export class CalendarComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '100vw',
-      data: dateClick,
+      data: { ...dateClick, hasDelete: false },
       position: {
         top: '70px'
       },
@@ -172,7 +173,7 @@ export class CalendarComponent implements AfterViewInit {
 
   /** Edita um agendamento */
   private editSchedule(clickInfo: EventClickArg) {
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+    const dialogRef = this.dialog.open(AgendaStatusComponent, {
       width: '500px',
       maxWidth: '100vw',
       data: {
@@ -190,11 +191,11 @@ export class CalendarComponent implements AfterViewInit {
         return;
       }
 
-      clickInfo.event.remove();
+      // clickInfo.event.remove();
 
-      this.calendarApi.view.calendar.addEvent(
-        this.formatScheduleToCalendar(result),
-      );
+      // this.calendarApi.view.calendar.addEvent(
+      //   this.formatScheduleToCalendar(result),
+      // );
     });
   }
 

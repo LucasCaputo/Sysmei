@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       height: {
         'body-height': 'calc(100vh - 70px)',
+      },
+      backgroundColor: {
+        'primary': '#673ab7'
       }
     },
   },

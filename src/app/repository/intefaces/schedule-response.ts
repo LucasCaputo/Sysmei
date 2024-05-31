@@ -28,4 +28,5 @@ export interface ScheduleFormatResponse {
   title: string;
   Title: string;
   valor: number;
+  hasDelete?: boolean
 }

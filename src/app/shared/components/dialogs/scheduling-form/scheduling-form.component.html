@@ -11,7 +11,7 @@
       <mat-icon>done_outline</mat-icon>
     </button>
   </div>
-  <div mat-dialog-content class="form">
+  <div mat-dialog-content>
     <form class="flex flex-col" [formGroup]="form">
       <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
         <mat-label>Atendente</mat-label>
@@ -84,7 +84,8 @@
     </form>
   </div>
   <div class="flex justify-end items-center">
-    <button *ngIf="data != null" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">
+    <button *ngIf="(data.hasDelete && data != null)" color="warn" mat-icon-button aria-label="Excluir"
+      (click)="onDelete(data)">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

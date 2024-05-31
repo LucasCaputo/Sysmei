@@ -1,0 +1,45 @@
+<div class="flex items-center justify-center w-full p-2 bg-primary text-white">
+    <h3 class="!m-0 flex-1 !ml-4">Detalhes do agendamento</h3>
+    <button mat-button [mat-dialog-close]="true" color="white">
+        <mat-icon class="!m-0">close</mat-icon>
+    </button>
+</div>
+<div class="flex w-full text-end p-2 justify-end">
+    <mat-icon class="!m-0 !mr-4" (click)="onEdit()">edit</mat-icon>
+    <mat-icon class="!m-0 !mr-4">delete</mat-icon>
+    <mat-icon class="!m-0 !mr-4">more_vert</mat-icon>
+</div>
+<div class="flex items-center justify-start p-4 pb-2">
+    <app-badge [name]="'Lucas Reis Caputo'" class="mr-4"></app-badge>
+
+    <app-contact-info [info]="{
+        id: 1,
+        login_usuario: 'lccaptuo@hotmail.com',
+        nome: 'Lucas Reis Caputo',
+        telefone: '31982239489',
+    }" class="w-full"></app-contact-info>
+</div>
+<p class="text-center text-sm">
+    {{ '11 Maio de 2024 - 11:00 às 12:00' }}
+</p>
+<mat-form-field class="px-4 py-2 w-full">
+    <mat-select name="Status" placeholder="Status do atendimento">
+        <mat-option value="Dinheiro">Confirmar</mat-option>
+        <mat-option value="Cartão de Débito">Confirmado</mat-option>
+        <mat-option value="Cartão Crédito">Desmarcou</mat-option>
+        <mat-option value="Pix">Atendido</mat-option>
+        <mat-option value="Cheque">Faltou</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div class="grid">
+    <div class="flex items-center ml-4">
+        <mat-icon class="mr-3">person</mat-icon>
+        <p class="!m-0">Dayane Mendes</p>
+    </div>
+    <div class="flex items-center mb-2 ml-4">
+        <mat-icon class="mr-3">call</mat-icon>
+        <p class="!m-0">31 9 9836-5142</p>
+        <app-whatsapp-icon></app-whatsapp-icon>
+    </div>
+</div>
