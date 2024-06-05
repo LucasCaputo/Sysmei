@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { getCurrentDate, getDate30DaysAgo, getEmployee } from 'src/app/shared/services/utils/utils.service';
+import { getCurrentDate, getDate30DaysAgo } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class ScheduleRepository {
   /** Busca lista de todos os agendamentos */
   public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=${getEmployee()}`,
+      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
       {
         headers: {
           Authorization: this.authService.getToken()!,
@@ -55,6 +55,14 @@ export class ScheduleRepository {
         Authorization: this.authService.getToken()!,
         PacienteID: `${body.paciente_id}`,
         PrestadorID: `${body.prestador_id}`
+      },
+    });
+  }
+
+  patchStatus(body: {status: number}, id: number) {
+    return this.httpClient.patch(environment.baseURL + '/agenda/' + id + '/status', body, {
+      headers: {
+        Authorization: this.authService.getToken()!,
       },
     });
   }

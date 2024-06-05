@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
@@ -21,6 +22,10 @@ import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.comp
   styleUrls: ['./agenda-status.component.scss']
 })
 export class AgendaStatusComponent {
+  public statusForm = this.formBuilder.group({
+    status: [this.data.status || ''],
+  });
+
   public constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: ScheduleFormatResponse,
@@ -28,9 +33,8 @@ export class AgendaStatusComponent {
     private scheduleRepository: ScheduleRepository,
     private scheduleService: ScheduleService,
     private snackbarService: SnackbarService,
-  ) {
-    console.log(data)
-  }
+    private formBuilder: FormBuilder
+  ) { }
 
   /** Edita um agendamento */
   public onEdit() {
@@ -96,4 +100,24 @@ export class AgendaStatusComponent {
     });
   }
 
+  updateStatus(status: number) {
+    this.scheduleRepository.patchStatus({ status }, this.data.schedule_id!).subscribe(
+      (e) => {
+        this.scheduleService.searchScheduleList();
+        this.snackbarService.openSnackBar(
+          `Status alterado com sucesso`,
+          'X',
+          false,
+        );
+      }, 
+      (error) => {
+        console.log(error);
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro para alterar o status, tente novamente`,
+          'X',
+          true,
+        );
+      }
+    )
+  }
 }

@@ -9,8 +9,8 @@ import { ScheduleRepository } from 'src/app/repository/services/schedule/schedul
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
-import { EmployeeService } from '../employee/employee.service';
 import { CustomerService } from '../customer/customer.service';
+import { EmployeeService } from '../employee/employee.service';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +74,7 @@ export class ScheduleService {
         start: this.setDate(element.start),
         Title: element.title,
         valor: element.valor,
+        status: element.status
       };
 
       formatedSchedule.push(scheduleFormat);

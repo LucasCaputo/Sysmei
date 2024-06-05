@@ -25,15 +25,18 @@
     {{ data.start | date: 'fullDate' }} - {{ data.start | date: 'HH:mm' }} às {{ data.end | date: 'HH:mm' }}
 </p>
 
-<mat-form-field class="px-4 py-2 w-full">
-    <mat-select name="Status" placeholder="Status do atendimento">
-        <mat-option value="Dinheiro">Confirmar</mat-option>
-        <mat-option value="Cartão de Débito">Confirmado</mat-option>
-        <mat-option value="Cartão Crédito">Desmarcou</mat-option>
-        <mat-option value="Pix">Atendido</mat-option>
-        <mat-option value="Cheque">Faltou</mat-option>
-    </mat-select>
-</mat-form-field>
+<form [formGroup]="statusForm">
+    <mat-form-field class="px-4 py-2 w-full">
+        <mat-select formControlName="status" (valueChange)="updateStatus($event)" name="Status" placeholder="Status do atendimento">
+            <mat-option [value]="0">Confirmar</mat-option>
+            <mat-option [value]="1">Confirmado</mat-option>
+            <mat-option [value]="2">Desmarcou</mat-option>
+            <mat-option [value]="3">Atendido</mat-option>
+            <mat-option [value]="4">Faltou</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>
+
 
 <div class="grid">
     <div class="flex items-center ml-4">
