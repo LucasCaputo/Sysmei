@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { calendarSelectedOptions } from 'src/app/pages/calendar/calendar.options';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -14,13 +16,58 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./calendar-sidenav-desktop.component.scss']
 })
 export class CalendarSidenavDesktopComponent {
+  @Output() public changeUser = new EventEmitter();
+
   calendarOptions: CalendarOptions = {
     ...calendarSelectedOptions,
     initialView: 'dayGridMonth',
   }
 
-  customerList = this.employeeService.$employee
+  allChecked = true;
+  employeeList = this.employeeService.$employee.pipe(
+    map((employees) => employees.map(employee => ({ ...employee, checked: true }))),
+  ) as Observable<any>
 
-  constructor(private employeeService: EmployeeService) { }
+  employeeListFormated = signal([{id: 0}])
 
+  constructor(private employeeService: EmployeeService) { 
+    this.employeeList.forEach((e) => {
+      this.employeeListFormated.set(e);
+      console.log(e)
+    })
+  }
+
+  emitSelectedEmployeeList(event: any): void {
+    this.changeUser.emit(event)
+  }
+
+  toggleAll(event: any) {
+    const checked = event.checked
+    this.allChecked = checked;
+
+    const formatedObject = this.employeeListFormated().map((employee: any) => ({ ...employee, checked }))
+
+    this.employeeList.forEach((elements: any) => {
+      this.employeeList = of(elements.map((employee: any) => ({ ...employee, checked })))
+    });
+
+    this.employeeListFormated.set(formatedObject)
+
+    this.emitSelectedEmployeeList(formatedObject);
+  }
+
+  checkAllSelected(newObject: any) {
+
+    const oldObjectIndex = this.employeeListFormated().findIndex((element) => element.id === newObject.id)
+
+    const formatedObject = this.employeeListFormated();
+
+    formatedObject[oldObjectIndex] = newObject;
+
+    this.employeeListFormated.set(formatedObject)
+
+    console.log(formatedObject)
+
+    this.emitSelectedEmployeeList(formatedObject);
+  }
 }

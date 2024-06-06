@@ -1,7 +1,7 @@
 <full-calendar class="w-60 calendar-sidenav m-4" #calendar [options]="calendarOptions"></full-calendar>
 
 <h3 class="!m-4">Meus Calendários</h3>
-<mat-checkbox color="primary" class="ml-4">Marcar todos</mat-checkbox>
-<div *ngFor="let item of customerList | async" class="grid ml-7">
-    <mat-checkbox>{{ item.nome }}</mat-checkbox>
+<mat-checkbox color="primary" class="ml-4" [checked]="allChecked" (change)="toggleAll($event)">Marcar todos</mat-checkbox>
+<div *ngFor="let item of employeeList | async" class="grid ml-7">
+    <mat-checkbox [(ngModel)]="item.checked" (change)="checkAllSelected(item)">{{ item.nome }}</mat-checkbox>
 </div>

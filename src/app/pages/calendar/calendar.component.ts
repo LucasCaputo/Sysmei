@@ -270,7 +270,17 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   private handleEvents(events: EventApi[]) {
-    // console.log(events);
     this.currentEvents = events;
+  }
+
+  public changeEmployee(event: any): void {
+    const hasCheckedFalse = event.map((element: any) => element.checked) as boolean[]
+    const selectedEmployee = event.filter((element: any) => element.checked).map((element: any) => element.id) as number[]
+    const filteredSchedule = this.scheduling.filter((element)=> selectedEmployee.includes(element.employee.id));
+    this.calendarApi.removeAllEvents();
+
+    filteredSchedule.forEach((element: any) => {
+      this.calendarApi.view.calendar.addEvent(element);
+    });
   }
 }

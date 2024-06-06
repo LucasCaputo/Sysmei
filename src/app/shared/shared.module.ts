@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ import { NgxMaskDirective } from 'ngx-mask';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatInputModule,
     RouterModule,
     MatDialogModule,
@@ -27,6 +28,7 @@ import { NgxMaskDirective } from 'ngx-mask';
   exports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MatInputModule,
     RouterModule,
     MatDialogModule,
