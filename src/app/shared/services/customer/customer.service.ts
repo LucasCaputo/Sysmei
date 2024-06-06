@@ -29,9 +29,13 @@ export class CustomerService {
     this.customerRepository
       .getCustomer(this.authService.getUser()?.login)
       .subscribe((customerList) => {
-        this.customers = customerList;
-        this.$customers.next(this.formatCustomerList(this.customers));
+        this.setSearchCustomerList(customerList)
       });
+  }
+
+  public setSearchCustomerList(customerList: any): void {
+    this.customers = customerList;
+    this.$customers.next(this.formatCustomerList(this.customers));
   }
 
   /** Formata dados do customer para atender a interface do autocomplete no html */

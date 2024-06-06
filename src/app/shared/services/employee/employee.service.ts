@@ -17,10 +17,14 @@ export class EmployeeService {
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {
     this.employeeRepository.getEmployee().subscribe((employeeList) => {
-      this.employee = employeeList;
-      this.$employee.next(employeeList);
-      localStorage.setItem('employee', JSON.stringify(employeeList));
+      this.setSearchEmployeeList(employeeList)
     });
+  }
+
+  public setSearchEmployeeList(employeeList: any) {
+    this.employee = employeeList;
+    this.$employee.next(employeeList);
+    localStorage.setItem('employee', JSON.stringify(employeeList));
   }
 
   /** Cadastra novo prestador */

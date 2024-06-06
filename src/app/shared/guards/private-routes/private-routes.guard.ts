@@ -19,7 +19,7 @@ export class PrivateRoutesGuard {
     const isLoged = this.authService.isLoged();
 
     if (isLoged) {
-      this.InitializeService.initialize(this.user?.login);
+      this.InitializeService.initialize();
       return true;
     }
 

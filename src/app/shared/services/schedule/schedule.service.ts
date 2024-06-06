@@ -37,11 +37,15 @@ export class ScheduleService {
   public searchScheduleList(): void {
     this.ScheduleRepository.getSchedule().subscribe(
       (scheduleList: Array<ScheduleResponse>) => {
-        this.schedule = scheduleList;
-        this.$schedule.next(scheduleList);
-        this.$formatedSchedule.next(this.formatScheduleResponse(scheduleList));
+       this.setSearchScheduledList(scheduleList);
       },
     );
+  }
+
+  public setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
+    this.schedule = scheduleList;
+    this.$schedule.next(scheduleList);
+    this.$formatedSchedule.next(this.formatScheduleResponse(scheduleList));
   }
 
   /** Formata retorno do back para formato que front espera receber */

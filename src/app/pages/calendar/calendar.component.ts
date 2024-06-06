@@ -16,6 +16,7 @@ import {
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
 import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
+import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigation/calendar-naviagtion/calendar-naviagtion.component';
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
@@ -71,6 +72,7 @@ export class CalendarComponent implements AfterViewInit {
     private router: Router,
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
+    public loaderService: LoaderService
   ) { }
 
   ngAfterViewInit() {
