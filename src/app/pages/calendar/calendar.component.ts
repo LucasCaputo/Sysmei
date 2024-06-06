@@ -91,9 +91,9 @@ export class CalendarComponent implements AfterViewInit {
         if (scheduleFormatResponse.length) {
           this.calendarApi.removeAllEvents();
 
-          scheduleFormatResponse.forEach((element: any) => {
-            this.scheduling.push(element);
-            this.calendarApi.view.calendar.addEvent(element);
+          scheduleFormatResponse.forEach((element: ScheduleFormatResponse) => {
+            this.scheduling.push({...element, color: 'purple'});
+            this.calendarApi.view.calendar.addEvent({...element, color: this.cardColor(element.status)});
           });
         }
       },
@@ -280,7 +280,43 @@ export class CalendarComponent implements AfterViewInit {
     this.calendarApi.removeAllEvents();
 
     filteredSchedule.forEach((element: any) => {
-      this.calendarApi.view.calendar.addEvent(element);
+      this.calendarApi.view.calendar.addEvent({...element, color: this.cardColor(element.status)});
     });
+  }
+
+  public cardColor(status: number | undefined): string {
+    let color = ''
+    switch (status) {
+      case 0:
+        color = 'purple'
+        break;
+
+      case 1:
+        color = 'green'
+        break;
+
+      
+      case 2:
+        color = 'burlywood'
+        break;
+
+      case 3:
+        color = 'blue'
+        break;
+
+      case 4:
+        color = 'gray'
+        break;
+
+      
+      case 5:
+        color = 'burlywood'
+        break;
+  
+      default:
+        break;
+    }
+
+    return color
   }
 }
