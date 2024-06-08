@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg } from '@fullcalendar/core';
-import { DateClickArg } from '@fullcalendar/interaction';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { calendarSelectedOptions } from 'src/app/pages/calendar/calendar.options';
@@ -18,11 +17,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class CalendarSidenavDesktopComponent {
   @Output() public changeUser = new EventEmitter();
+  @Output() public changeDate = new EventEmitter();
 
   calendarOptions: CalendarOptions = {
     ...calendarSelectedOptions,
     initialView: 'dayGridMonth',
-    dateClick: this.handleDateClick.bind(this),
     select: this.handleSelect.bind(this),
   }
 
@@ -36,7 +35,7 @@ export class CalendarSidenavDesktopComponent {
   constructor(private employeeService: EmployeeService) {
     this.employeeList.forEach((e) => {
       this.employeeListFormated.set(e);
-      console.log(e)
+      // console.log(e)
     })
   }
 
@@ -74,11 +73,9 @@ export class CalendarSidenavDesktopComponent {
     this.emitSelectedEmployeeList(formatedObject);
   }
 
-  handleDateClick(arg: DateClickArg) {
-    console.log(arg);
-  }
 
   handleSelect(arg: DateSelectArg) {
-    console.log(arg);
+    // console.log(arg);
+    this.changeDate.emit(arg)
   }
 }

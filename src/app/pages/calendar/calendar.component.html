@@ -1,4 +1,4 @@
-<div [class]="{'invisible': loaderService.firstload()}" >
+<div [class]="{'invisible': loaderService.firstload()}">
   <app-schedule-header [calendarDateTitle]="calendarDateTitle" (menuButtonClick)="snav.toggle()"
     (addButtonClick)="insertSchedule()" />
 
@@ -14,7 +14,8 @@
 
       <div class="calendar-container">
 
-        <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)" />
+        <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)"
+          (changeDate)="changeDate($event)" />
 
         <full-calendar class="full-calendar" #calendar [options]="calendarOptions"></full-calendar>
       </div>

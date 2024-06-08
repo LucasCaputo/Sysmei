@@ -319,4 +319,15 @@ export class CalendarComponent implements AfterViewInit {
 
     return color
   }
+
+  public changeDate(event: any): void {
+    this.calendarApi.gotoDate(event.startStr);
+
+    this.calendarApi.setOption('visibleRange', {
+      start: event.startStr,
+      end: event.endStr
+    });
+  }
 }
+
+

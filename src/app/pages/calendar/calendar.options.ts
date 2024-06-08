@@ -16,7 +16,16 @@ export const calendarSelectedOptions: CalendarOptions = {
   plugins: [timeGridPlugin, dayGridPlugin, interactionPlugin, listPlugin],
   slotMinTime: '05:00:00',
   slotMaxTime: '22:00:00',
-  initialView: 'timeGridWeek',
+  initialView: 'timeGrid',
+  visibleRange: function(currentDate) {
+     let startDate = new Date(currentDate.valueOf());
+     startDate.setDate(startDate.getDate() - startDate.getDay());
+     
+     let endDate = new Date(currentDate.valueOf());
+     endDate.setDate(startDate.getDate() + 6);
+ 
+     return { start: startDate, end: endDate };
+  },
   initialEvents: [],
   weekends: true,
   editable: true,
