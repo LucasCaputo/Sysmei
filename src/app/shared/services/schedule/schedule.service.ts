@@ -31,13 +31,13 @@ export class ScheduleService {
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
-  ) {}
+  ) { }
 
   /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(): void {
     this.ScheduleRepository.getSchedule().subscribe(
       (scheduleList: Array<ScheduleResponse>) => {
-       this.setSearchScheduledList(scheduleList);
+        this.setSearchScheduledList(scheduleList);
       },
     );
   }
@@ -101,6 +101,7 @@ export class ScheduleService {
       detalhes: result.detalhes,
       pagamento: result.pagamento,
       prestador_id: result.employee?.id,
+      status: result.status,
     };
 
     return schedule;
@@ -148,7 +149,7 @@ export class ScheduleService {
     const payload = {
       ...body,
       login_usuario: this.authService.getUser()?.login,
-      status: 0,
+      status: body.status,
       allDay: body.start.split(' ')[0],
     };
 

@@ -93,6 +93,7 @@ export class SchedulingFormComponent implements OnInit {
       start,
       title: this.data?.Title || '',
       valor: this.data?.valor || '',
+      status: this.data?.status || '',
     });
 
     if (this.employeeData?.length > 1) {

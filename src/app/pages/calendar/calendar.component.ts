@@ -92,8 +92,8 @@ export class CalendarComponent implements AfterViewInit {
           this.calendarApi.removeAllEvents();
 
           scheduleFormatResponse.forEach((element: ScheduleFormatResponse) => {
-            this.scheduling.push({...element, color: 'purple'});
-            this.calendarApi.view.calendar.addEvent({...element, color: this.cardColor(element.status)});
+            this.scheduling.push({ ...element, color: 'purple' });
+            this.calendarApi.view.calendar.addEvent({ ...element, color: this.cardColor(element.status) });
           });
         }
       },
@@ -113,6 +113,7 @@ export class CalendarComponent implements AfterViewInit {
       end,
       paciente_id: data.event._def?.extendedProps?.customer.id,
       prestador_id: data.event._def?.extendedProps?.employee.id,
+      status: data.event._def?.extendedProps?.status
     };
 
     this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
@@ -274,13 +275,12 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   public changeEmployee(event: any): void {
-    const hasCheckedFalse = event.map((element: any) => element.checked) as boolean[]
     const selectedEmployee = event.filter((element: any) => element.checked).map((element: any) => element.id) as number[]
-    const filteredSchedule = this.scheduling.filter((element)=> selectedEmployee.includes(element.employee.id));
+    const filteredSchedule = this.scheduling.filter((element) => selectedEmployee.includes(element.employee.id));
     this.calendarApi.removeAllEvents();
 
     filteredSchedule.forEach((element: any) => {
-      this.calendarApi.view.calendar.addEvent({...element, color: this.cardColor(element.status)});
+      this.calendarApi.view.calendar.addEvent({ ...element, color: this.cardColor(element.status) });
     });
   }
 
@@ -295,7 +295,7 @@ export class CalendarComponent implements AfterViewInit {
         color = 'green'
         break;
 
-      
+
       case 2:
         color = 'burlywood'
         break;
@@ -308,11 +308,11 @@ export class CalendarComponent implements AfterViewInit {
         color = 'gray'
         break;
 
-      
+
       case 5:
         color = 'burlywood'
         break;
-  
+
       default:
         break;
     }
