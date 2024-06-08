@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CalendarViewOptions } from '../calendar-naviagtion/calendar.navigation.options';
@@ -14,15 +14,15 @@ export class CalendarNavigationDesktopComponent {
   @Output() action = new EventEmitter<string>();
   @Output() addNewSchedule = new EventEmitter();
 
+  @Input() actionIcon = ''
+
   calendarViewOptions = CalendarViewOptions;
-  actionIcon = 'timeGridWeek';
 
   /**
  * Emite evento de clique com ação selecionada
  * @param action nome da ação
  */
   public change(action: string) {
-    this.actionIcon = action;
     this.action.emit(action);
   }
 

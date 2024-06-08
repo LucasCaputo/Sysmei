@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -59,7 +59,8 @@ export class CalendarComponent implements AfterViewInit {
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
-  calendarDateTitle = '...';
+  calendarDateTitle = signal('...');
+  actionIcon = signal('timeGridWeek');
   todayIcon = 'primary';
   timeElapsed = Date.now();
   calendarApi: any;
@@ -218,7 +219,7 @@ export class CalendarComponent implements AfterViewInit {
     if (this.calendarApi?.view?.type === 'dayGridMonth') {
       this.calendarApi.changeView('timeGridDay');
       this.calendarApi.view.calendar.gotoDate(clickInfo.date);
-      this.calendarDateTitle = this.calendarApi?.view?.title;
+      this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
   }
 
@@ -241,13 +242,14 @@ export class CalendarComponent implements AfterViewInit {
           break;
 
         default:
+          this.actionIcon.set(action)
           this.calendarApi.changeView(action);
           break;
       }
     }
 
     if (this.calendarApi?.view?.title) {
-      this.calendarDateTitle = this.calendarApi?.view?.title;
+      this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
 
     this.setColorIconToday();
@@ -329,6 +331,18 @@ export class CalendarComponent implements AfterViewInit {
       start: event.startStr,
       end: event.endStr
     });
+
+    if (this.calendarApi?.view?.title) {
+      this.calendarDateTitle.set(this.calendarApi?.view?.title);
+    }
+
+    this.actionIcon.set('timeGridDay')
+    
+    
+    if(this.calendarApi?.view?.title.split('').includes('–')) {
+      this.actionIcon.set('timeGridWeek')
+    }
+
   }
 }
 

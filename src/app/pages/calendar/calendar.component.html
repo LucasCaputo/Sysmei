@@ -1,6 +1,9 @@
 <div [class]="{'invisible': loaderService.firstload()}">
-  <app-schedule-header [calendarDateTitle]="calendarDateTitle" (menuButtonClick)="snav.toggle()"
-    (addButtonClick)="insertSchedule()" />
+  <app-schedule-header 
+    [calendarDateTitle]="calendarDateTitle()" 
+    (menuButtonClick)="snav.toggle()"
+    (addButtonClick)="insertSchedule()"
+    />
 
   <mat-sidenav-container>
     <mat-sidenav #snav>
@@ -9,20 +12,30 @@
 
     <mat-sidenav-content class="!h-body-height">
 
-      <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)"
-        (addNewSchedule)="insertSchedule()" />
+      <app-calendar-navigation-desktop 
+        class="navigation-desktop" 
+        (action)="calendarNavigate($event)"
+        (addNewSchedule)="insertSchedule()"
+        [actionIcon]="actionIcon()"
+      />
 
       <div class="calendar-container">
 
-        <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)"
-          (changeDate)="changeDate($event)" />
+        <app-calendar-sidenav-desktop 
+          class="sidenav-desktop" 
+          (changeUser)="changeEmployee($event)"
+          (changeDate)="changeDate($event)"
+        />
 
         <full-calendar class="full-calendar" #calendar [options]="calendarOptions"></full-calendar>
       </div>
 
 
-      <app-calendar-naviagtion class="navigation" [todayIcon]="todayIcon" [title]="calendarDateTitle"
-        (action)="calendarNavigate($event)" />
+      <app-calendar-naviagtion 
+      class="navigation" 
+      [todayIcon]="todayIcon" 
+      [title]="calendarDateTitle()"
+      (action)="calendarNavigate($event)" />
 
     </mat-sidenav-content>
   </mat-sidenav-container>
