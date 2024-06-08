@@ -72,3 +72,22 @@ full-calendar {
     border-color: #9c27b0 !important;
   }
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+  /* Cor de fundo da barra de rolagem */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbcbcb;
+  border-radius: 5px;
+  /* Arredonda as bordas do controle de rolagem */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
