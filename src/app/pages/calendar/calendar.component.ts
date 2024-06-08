@@ -323,6 +323,8 @@ export class CalendarComponent implements AfterViewInit {
   public changeDate(event: any): void {
     this.calendarApi.gotoDate(event.startStr);
 
+    this.calendarApi.changeView('timeGrid')
+
     this.calendarApi.setOption('visibleRange', {
       start: event.startStr,
       end: event.endStr

@@ -4,8 +4,9 @@
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="title">
-      <p class="text text-sm">
+    <div class="flex title">
+      <app-schedule-header-desktop *ngIf="(screenSize$ | async) !== 'mobile'"/>
+      <p class="text !m-0">
         {{ calendarDateTitle }}
       </p>
     </div>
