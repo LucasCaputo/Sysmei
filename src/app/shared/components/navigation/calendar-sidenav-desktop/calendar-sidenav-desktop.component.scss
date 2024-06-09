@@ -1,3 +1,15 @@
-    .calendar-sidenav {
-        height: 250px;
+.calendar-sidenav {
+    height: 250px;
+}
+
+::ng-deep {
+    .fc .fc-highlight {
+        background: #fdff0052;
     }
+
+
+    .fc .fc-bg-event {
+        opacity: 0.5;
+    }
+
+}

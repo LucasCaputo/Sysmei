@@ -11,7 +11,7 @@ import {
   EventClickArg,
   EventDropArg,
   EventInput,
-  ViewApi,
+  ViewApi
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
@@ -61,6 +61,15 @@ export class CalendarComponent implements AfterViewInit {
   viewApi!: ViewApi;
   calendarDateTitle = signal('...');
   actionIcon = signal('timeGridWeek');
+
+  calendarState = {
+    calendarDateTitle: signal('...'),
+    activetedIcon: signal('timeGridWeek'),
+    date: signal({
+      startStr: new Date(),
+      endStr: new Date()
+    })
+  }
   todayIcon = 'primary';
   timeElapsed = Date.now();
   calendarApi: any;
@@ -227,6 +236,10 @@ export class CalendarComponent implements AfterViewInit {
    * @param action nome da ação seleciona
    */
   public calendarNavigate(action?: string) {
+    this.calendarApi.setOption('visibleRange', {
+      start: null,
+      end: null
+    });
     if (action) {
       switch (action) {
         case 'next':
@@ -247,6 +260,11 @@ export class CalendarComponent implements AfterViewInit {
           break;
       }
     }
+
+    this.calendarState.date.set({
+      startStr: this.calendarApi.view.activeStart,
+      endStr: this.calendarApi.view.activeEnd
+    })
 
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
@@ -335,6 +353,16 @@ export class CalendarComponent implements AfterViewInit {
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
+
+
+    if (this.actionIcon() === 'listWeek') {
+      // listDay , listWeek , listMonth
+      this.calendarApi.changeView('listWeek')
+      this.actionIcon.set('listWeek')
+
+      return
+    }
+
 
     this.actionIcon.set('timeGridDay')
 

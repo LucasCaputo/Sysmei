@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions, DateSelectArg } from '@fullcalendar/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,8 +16,33 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./calendar-sidenav-desktop.component.scss']
 })
 export class CalendarSidenavDesktopComponent {
+  @ViewChild('calendar') calendar!: FullCalendarComponent;
+
   @Output() public changeUser = new EventEmitter();
   @Output() public changeDate = new EventEmitter();
+
+  @Input() public actionIcon = ''
+
+  private _date!: { startStr: Date, endStr: Date }
+
+  @Input()
+  set date(value: { startStr: Date, endStr: Date }) {
+    this._date = value;
+
+    this.calendarOptions.events = [
+      {
+        start: value.startStr.toISOString().split('T')[0],
+        end: value.endStr.toISOString().split('T')[0],
+        display: 'background',
+        backgroundColor: '#fdff0052'
+      }
+    ];
+  }
+
+  get startDate(): { startStr: Date, endStr: Date } {
+    return this._date;
+  }
+
 
   calendarOptions: CalendarOptions = {
     ...calendarSelectedOptions,
@@ -75,7 +100,50 @@ export class CalendarSidenavDesktopComponent {
 
 
   handleSelect(arg: DateSelectArg) {
-    // console.log(arg);
-    this.changeDate.emit(arg)
+    if (this.actionIcon === 'listWeek') {
+      this.updateHighlight(arg.startStr)
+      const { start, saturday } = this.getWeekRange(new Date(arg.startStr));
+
+      this.calendar.getApi().unselect()
+
+      this.changeDate.emit({ startStr: start, endStr: saturday })
+    } else {
+
+      this.calendarOptions.events = [
+        {
+          start: arg.startStr,
+          end: arg.endStr,
+          display: 'background',
+          backgroundColor: '#fdff0052'
+        }
+      ];
+      this.changeDate.emit(arg)
+    }
+  }
+
+  updateHighlight(startDate: string) {
+    const { sunday, saturday } = this.getWeekRange(new Date(startDate));
+
+    this.calendarOptions.events = [
+      {
+        start: sunday.toISOString().split('T')[0],
+        end: saturday.toISOString().split('T')[0],
+        display: 'background',
+        backgroundColor: '#fdff0052'
+      }
+    ];
+  }
+
+  getWeekRange(date: Date): { sunday: Date, saturday: Date, start: Date } {
+    const day = date.getDay();
+    const sunday = new Date(date);
+    const start = new Date(date);
+    const saturday = new Date(date);
+
+    sunday.setDate(date.getDate() - (day + 1));
+    start.setDate(date.getDate() - day);
+    saturday.setDate(date.getDate() + (6 - day));
+
+    return { start, sunday, saturday };
   }
 }
