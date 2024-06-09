@@ -1,3 +1,19 @@
+<div class="flex items-center justify-between mx-4">
+    <span class="text text-purple-800 text-lg mr-6"> {{ month }}</span>
+
+    <div>
+        <button mat-button color="primary" (click)="change('prev')">
+            <mat-icon class="icon !m-0 mr-4" aria-hidden="false" aria-label="volta">
+                arrow_back_ios</mat-icon>
+        </button>
+
+        <button mat-button color="primary" (click)="change('next')">
+            <mat-icon class="icon !m-0" aria-hidden="false" aria-label="volta">
+                arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+</div>
+
 <full-calendar class="w-60 calendar-sidenav m-4 cursor-pointer" #calendar [options]="calendarOptions"></full-calendar>
 
 <h3 class="!m-4">Meus Calendários</h3>

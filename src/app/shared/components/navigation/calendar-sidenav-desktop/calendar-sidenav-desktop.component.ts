@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg } from '@fullcalendar/core';
+import { CalendarApi, CalendarOptions, DateSelectArg } from '@fullcalendar/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { calendarSelectedOptions } from 'src/app/pages/calendar/calendar.options';
@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './calendar-sidenav-desktop.component.html',
   styleUrls: ['./calendar-sidenav-desktop.component.scss']
 })
-export class CalendarSidenavDesktopComponent {
+export class CalendarSidenavDesktopComponent implements AfterViewInit {
   @ViewChild('calendar') calendar!: FullCalendarComponent;
 
   @Output() public changeUser = new EventEmitter();
@@ -43,6 +43,14 @@ export class CalendarSidenavDesktopComponent {
     return this._date;
   }
 
+  monthNamesPT = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ];
+
+  month = this.monthNamesPT[new Date().getMonth()]
+
+  calendarApi!: CalendarApi
 
   calendarOptions: CalendarOptions = {
     ...calendarSelectedOptions,
@@ -63,9 +71,23 @@ export class CalendarSidenavDesktopComponent {
       // console.log(e)
     })
   }
+  ngAfterViewInit(): void {
+    this.calendarApi = this.calendar.getApi();
+  }
 
   emitSelectedEmployeeList(event: any): void {
     this.changeUser.emit(event)
+  }
+
+  change(event: string) {
+    if (event === 'prev') {
+      this.calendarApi.prev();
+    }
+    if (event === 'next') {
+      this.calendarApi.next();
+    }
+    this.month = this.monthNamesPT[this.calendarApi.getDate().getMonth()]
+
   }
 
   toggleAll(event: any) {
