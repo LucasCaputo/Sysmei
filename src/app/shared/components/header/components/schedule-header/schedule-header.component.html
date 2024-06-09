@@ -1,11 +1,12 @@
 <app-header [isPrivate]="true" class="w-full">
-  <div class="flex justify-between items-center w-full">
+  <div class="flex items-center w-full">
     <button mat-button (click)="onMenuButtonClick()">
       <mat-icon>menu</mat-icon>
     </button>
 
     <div class="flex title">
-      <app-schedule-header-desktop *ngIf="(screenSize$ | async) !== 'mobile'"/>
+      <app-schedule-header-desktop *ngIf="(screenSize$ | async) !== 'mobile'"
+        (action)="onNavigateButtonClick($event)" />
       <p class="text !m-0">
         {{ calendarDateTitle }}
       </p>

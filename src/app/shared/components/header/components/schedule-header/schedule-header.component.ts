@@ -15,7 +15,7 @@ import { ScheduleHeaderDesktopComponent } from './components/schedule-header-des
 export class ScheduleHeaderComponent {
   @Output() private addButtonClick = new EventEmitter();
   @Output() private menuButtonClick = new EventEmitter();
-  @Output() private todayButtonClick = new EventEmitter();
+  @Output() private navigateButtonClick = new EventEmitter<string>();
 
   @Input({ required: true }) public calendarDateTitle!: string;
 
@@ -31,7 +31,7 @@ export class ScheduleHeaderComponent {
     this.menuButtonClick.emit();
   }
 
-  public onTodayButtonClick() {
-    this.todayButtonClick.emit();
+  public onNavigateButtonClick(event: string) {
+    this.navigateButtonClick.emit(event);
   }
 }

@@ -337,9 +337,9 @@ export class CalendarComponent implements AfterViewInit {
     }
 
     this.actionIcon.set('timeGridDay')
-    
-    
-    if(this.calendarApi?.view?.title.split('').includes('–')) {
+
+
+    if (this.calendarApi?.view?.title.split('').includes('–')) {
       this.actionIcon.set('timeGridWeek')
     }
 

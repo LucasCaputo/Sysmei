@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -9,5 +9,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./schedule-header-desktop.component.scss']
 })
 export class ScheduleHeaderDesktopComponent {
+  @Output() action = new EventEmitter<string>();
+
+  /**
+ * Emite evento de clique com ação selecionada
+ * @param action nome da ação
+ */
+  public change(action: string) {
+    this.action.emit(action);
+  }
 
 }
