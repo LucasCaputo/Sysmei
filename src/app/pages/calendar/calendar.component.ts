@@ -236,6 +236,10 @@ export class CalendarComponent implements AfterViewInit {
    * @param action nome da ação seleciona
    */
   public calendarNavigate(action?: string) {
+    // const actualView = this.calendarApi.view.type;
+    // this.calendarApi.changeView(actualView)
+    
+
     this.calendarApi.setOption('visibleRange', {
       start: null,
       end: null

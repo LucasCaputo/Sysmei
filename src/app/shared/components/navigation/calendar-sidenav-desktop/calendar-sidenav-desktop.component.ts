@@ -37,6 +37,11 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
         backgroundColor: '#fdff0052'
       }
     ];
+
+    if(this.calendarApi && value.endStr) {
+      this.calendarApi.gotoDate(value.endStr.toISOString().split('T')[0],)
+      this.month = this.monthNamesPT[this.calendarApi.getDate().getMonth()]
+    }
   }
 
   get startDate(): { startStr: Date, endStr: Date } {
@@ -85,9 +90,8 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     }
     if (event === 'next') {
       this.calendarApi.next();
-    }
+      }
     this.month = this.monthNamesPT[this.calendarApi.getDate().getMonth()]
-
   }
 
   toggleAll(event: any) {
