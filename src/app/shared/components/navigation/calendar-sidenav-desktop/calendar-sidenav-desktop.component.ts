@@ -39,9 +39,19 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     ];
 
     if(this.calendarApi && value.endStr) {
-      this.calendarApi.gotoDate(value.endStr.toISOString().split('T')[0],)
-      this.month = this.monthNamesPT[this.calendarApi.getDate().getMonth()]
-    }
+      const newDate = value.startStr.setDate(value.startStr.getDate() + 15)
+
+      const date = new Date(newDate)
+
+      if(this.actionIcon !== 'dayGridMonth') {
+        this.calendarApi.gotoDate(value.endStr.toISOString().split('T')[0])
+      } else {
+        this.calendarApi.gotoDate(date.toISOString().split('T')[0])
+      }
+      this.month = this.monthNamesPT[+date.toISOString().split('T')[0].split('-')[1] - 1]
+    } 
+    
+
   }
 
   get startDate(): { startStr: Date, endStr: Date } {

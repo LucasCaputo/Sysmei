@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { CalendarViewOptions } from './calendar.navigation.options';
+import { CalendarViewOptions } from '../../../contants/calendar.navigation.options';
 
 @Component({
   selector: 'app-calendar-naviagtion',

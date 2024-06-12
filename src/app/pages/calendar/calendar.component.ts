@@ -244,6 +244,11 @@ export class CalendarComponent implements AfterViewInit {
       start: null,
       end: null
     });
+
+    if(this.actionIcon() === 'timeGridWeek') {
+      this.calendarApi.changeView('timeGridWeek')
+    }
+
     if (action) {
       switch (action) {
         case 'next':
