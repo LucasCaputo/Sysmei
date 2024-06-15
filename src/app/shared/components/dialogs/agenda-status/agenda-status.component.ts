@@ -23,7 +23,7 @@ import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.comp
 })
 export class AgendaStatusComponent {
   public statusForm = this.formBuilder.group({
-    status: [this.data.status || ''],
+    status: [this.data.status || 0],
   });
 
   public constructor(

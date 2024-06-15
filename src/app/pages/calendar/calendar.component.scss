@@ -7,6 +7,19 @@
     .sidenav-desktop {
         display: none;
     }
+
+    .full-calendar {
+        height: calc(100vh - 120px);
+    }
+    .navigation {
+        position: fixed;
+        bottom: 0;
+        padding: 8px 0;
+        width: 100%;
+        background-color: white;
+        z-index: 9999;
+        height: 60px;
+    }
   }
 
 //   tablet

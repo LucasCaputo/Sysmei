@@ -7,7 +7,7 @@
       <app-menu (click)="snav.toggle()"></app-menu>
     </mat-sidenav>
 
-    <mat-sidenav-content class="!h-body-height">
+    <mat-sidenav-content [class]="(screenSize$ | async) == 'mobile' ? '!h-body-height-mobile': '!h-body-height'">
 
       <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)"
         (addNewSchedule)="insertSchedule()" [actionIcon]="actionIcon()" />

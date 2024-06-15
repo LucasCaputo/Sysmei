@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
 
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -26,6 +28,7 @@ import { CustomerService } from 'src/app/shared/services/customer/customer.servi
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
 import { ScheduleHeaderComponent } from '../../shared/components/header/components/schedule-header/schedule-header.component';
@@ -39,7 +42,8 @@ import { calendarSelectedOptions } from './calendar.options';
   imports: [FullCalendarModule,
     ScheduleHeaderComponent, MatSidenavModule, MenuComponent,
     CalendarNaviagtionComponent, SchedulingFormComponent, SharedModule,
-    CalendarNavigationDesktopComponent, CalendarSidenavDesktopComponent
+    CalendarNavigationDesktopComponent, CalendarSidenavDesktopComponent,
+    MatDatepickerModule, MatNativeDateModule
   ]
 })
 export class CalendarComponent implements AfterViewInit {
@@ -74,6 +78,8 @@ export class CalendarComponent implements AfterViewInit {
   timeElapsed = Date.now();
   calendarApi: any;
 
+  screenSize$ = this.viewportService.screenSize$;
+
   constructor(
     private dialog: MatDialog,
     private scheduleService: ScheduleService,
@@ -82,7 +88,9 @@ export class CalendarComponent implements AfterViewInit {
     private router: Router,
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    public viewportService: ViewportService
+    
   ) { }
 
   ngAfterViewInit() {

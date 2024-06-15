@@ -127,7 +127,6 @@ export class ScheduleService {
     const payload = {
       ...body,
       login_usuario: this.authService.getUser()?.login,
-      status: 0,
       allDay: body.start.split(' ')[0],
     };
 
