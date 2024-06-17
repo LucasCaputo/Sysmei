@@ -72,7 +72,17 @@ import { RecordListComponent } from './record-list/record-list.component';
   ],
 })
 export class CustomerRecordComponent implements OnInit {
-  @Input() hasHeader!: boolean | null;
+  @Input() hasHeader: boolean  = true;
+
+  _customerId: undefined | number
+
+  @Input()
+  set customerId(value: number) {
+    if(value) {
+      this._customerId = value
+      this.populate();
+    }
+  }
 
   id = 0;
   data: CustomerResponse | undefined;
@@ -115,7 +125,7 @@ export class CustomerRecordComponent implements OnInit {
 
   populate() {
     this.loading = true;
-    this.id = this.route.snapshot?.params['id'] || 283;
+    this.id = this.route.snapshot?.params['id'] || this._customerId;
     this.customerRepository.getCustomerId(this.id).subscribe(
       (response) => {
         this.data = response;

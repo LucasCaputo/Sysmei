@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, first } from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
@@ -12,6 +12,7 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
+import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerRecordComponent } from '../customer-record/customer-record.component';
@@ -36,11 +37,14 @@ export class CustomerComponent implements OnInit {
 
   search = '';
 
+  selectedCustomerId = signal(0)
+
   constructor(
     private customerService: CustomerService,
     private authService: AuthService,
     public dialog: MatDialog,
     private router: Router,
+    public viewPortService: ViewportService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +65,10 @@ export class CustomerComponent implements OnInit {
     this.customerService.$customers.subscribe(
       (result: Array<CustomerResponse>) => {
         this.customerList = result;
+        console.log(result)
+        if(result.length) {
+          this.selectedCustomerId.set(result[0].id)
+        }
       },
     );
   }
@@ -87,6 +95,12 @@ export class CustomerComponent implements OnInit {
   }
 
   navigateToCustomerDetails(customer: any) {
-    this.router.navigate([`clientes/ficha/${customer.id}`]);
+    this.viewPortService.screenSize$.pipe(first()).subscribe((e)=> {
+      if(e === 'mobile') {
+        this.router.navigate([`clientes/ficha/${customer.id}`]);
+      } else {
+        this.selectedCustomerId.set(customer.id)
+      }
+    })
   }
 }

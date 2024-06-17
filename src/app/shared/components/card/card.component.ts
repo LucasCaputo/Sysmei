@@ -26,6 +26,6 @@ export class CardComponent implements OnInit {
   }
 
   onClick() {
-    this.click.emit()
+    this.click.emit(this.cardData)
   }
 }
