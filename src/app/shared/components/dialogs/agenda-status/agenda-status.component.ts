@@ -17,9 +17,16 @@ import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.comp
 @Component({
   selector: 'app-agenda-status',
   standalone: true,
-  imports: [SharedModule, BadgeComponent, ContactInfoComponent, MatSelectModule, WhatsappIconComponent, SharedPipesModule],
+  imports: [
+    SharedModule,
+    BadgeComponent,
+    ContactInfoComponent,
+    MatSelectModule,
+    WhatsappIconComponent,
+    SharedPipesModule,
+  ],
   templateUrl: './agenda-status.component.html',
-  styleUrls: ['./agenda-status.component.scss']
+  styleUrls: ['./agenda-status.component.scss'],
 })
 export class AgendaStatusComponent {
   public statusForm = this.formBuilder.group({
@@ -33,8 +40,8 @@ export class AgendaStatusComponent {
     private scheduleRepository: ScheduleRepository,
     private scheduleService: ScheduleService,
     private snackbarService: SnackbarService,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+  ) {}
 
   /** Edita um agendamento */
   public onEdit() {
@@ -46,7 +53,7 @@ export class AgendaStatusComponent {
         hasDelete: false,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
@@ -68,12 +75,12 @@ export class AgendaStatusComponent {
         confirmed: false,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(this.data)
+      console.log(this.data);
       if (result?.confirmed && this.data?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository
@@ -101,23 +108,25 @@ export class AgendaStatusComponent {
   }
 
   updateStatus(status: number) {
-    this.scheduleRepository.patchStatus({ status }, this.data.schedule_id!).subscribe(
-      (e) => {
-        this.scheduleService.searchScheduleList();
-        this.snackbarService.openSnackBar(
-          `Status alterado com sucesso`,
-          'X',
-          false,
-        );
-      }, 
-      (error) => {
-        console.log(error);
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para alterar o status, tente novamente`,
-          'X',
-          true,
-        );
-      }
-    )
+    this.scheduleRepository
+      .patchStatus({ status }, this.data.schedule_id!)
+      .subscribe(
+        (e) => {
+          this.scheduleService.searchScheduleList();
+          this.snackbarService.openSnackBar(
+            `Status alterado com sucesso`,
+            'X',
+            false,
+          );
+        },
+        (error) => {
+          console.log(error);
+          this.snackbarService.openSnackBar(
+            `Tivemos um erro para alterar o status, tente novamente`,
+            'X',
+            true,
+          );
+        },
+      );
   }
 }

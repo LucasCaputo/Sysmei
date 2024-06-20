@@ -7,18 +7,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
   standalone: true,
   imports: [SharedModule],
   templateUrl: './dialog-action-buttons.component.html',
-  styleUrls: ['./dialog-action-buttons.component.scss']
+  styleUrls: ['./dialog-action-buttons.component.scss'],
 })
 export class DialogActionButtonsComponent {
-
   @Output() closeButton = new EventEmitter();
 
   @Output() confirmButton = new EventEmitter();
 
-  @Input({required: true}) title!: string;
+  @Input({ required: true }) title!: string;
 
-  @Input({required: true}) disableConfirmButton!: boolean;
+  @Input({ required: true }) disableConfirmButton!: boolean;
 
   constructor(public viewportService: ViewportService) {}
- 
 }

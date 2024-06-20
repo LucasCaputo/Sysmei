@@ -8,7 +8,7 @@ describe('CalendarNavigationDesktopComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CalendarNavigationDesktopComponent]
+      imports: [CalendarNavigationDesktopComponent],
     });
     fixture = TestBed.createComponent(CalendarNavigationDesktopComponent);
     component = fixture.componentInstance;

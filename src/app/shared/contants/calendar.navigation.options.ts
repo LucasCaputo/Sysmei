@@ -3,24 +3,24 @@ export const CalendarViewOptions: any = [
     calendarView: 'dayGridMonth',
     redirectTo: 'timeGridDay',
     icon: 'calendar_month',
-    label: 'Mês'
+    label: 'Mês',
   },
   {
     calendarView: 'timeGridDay',
     redirectTo: 'timeGridWeek',
     icon: 'today',
-    label: 'Dia'
+    label: 'Dia',
   },
   {
     calendarView: 'timeGridWeek',
     redirectTo: 'listWeek',
     icon: 'date_range',
-    label: 'Semana'
+    label: 'Semana',
   },
   {
     calendarView: 'listWeek',
     redirectTo: 'dayGridMonth',
     icon: 'event_note',
-    label: 'Lista'
+    label: 'Lista',
   },
 ];

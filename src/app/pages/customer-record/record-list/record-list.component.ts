@@ -44,7 +44,7 @@ export class RecordListComponent implements OnInit {
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
     private customerRepository: CustomerRepository,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.formatData();
@@ -74,7 +74,7 @@ export class RecordListComponent implements OnInit {
       maxWidth: '100vw',
       data: this.scheduleService.formatScheduleResponse([el])[0],
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 

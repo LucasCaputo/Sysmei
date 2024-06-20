@@ -21,20 +21,20 @@ export class InitializeService {
     private scheduleRepository: ScheduleRepository,
     private employeeRepository: EmployeeRepository,
     private auth: AuthService,
-    private loaderService: LoaderService
-  ) { }
+    private loaderService: LoaderService,
+  ) {}
 
   /** Método de inicialização */
   public initialize() {
     forkJoin([
       this.customerRepository.getCustomer(this.auth.getUser()?.login),
       this.scheduleRepository.getSchedule(),
-      this.employeeRepository.getEmployee()
-    ]).subscribe(([customerList, scheduleList, employeeList])=>{
-      this.employeeService.setSearchEmployeeList(employeeList)
+      this.employeeRepository.getEmployee(),
+    ]).subscribe(([customerList, scheduleList, employeeList]) => {
+      this.employeeService.setSearchEmployeeList(employeeList);
       this.customerService.setSearchCustomerList(customerList);
       this.scheduleService.setSearchScheduledList(scheduleList);
-      this.loaderService.setFirstLoad(false)
-    })
+      this.loaderService.setFirstLoad(false);
+    });
   }
 }

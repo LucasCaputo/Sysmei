@@ -5,7 +5,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import {
+  FullCalendarComponent,
+  FullCalendarModule,
+} from '@fullcalendar/angular';
 import {
   CalendarOptions,
   DateSelectArg,
@@ -13,7 +16,7 @@ import {
   EventClickArg,
   EventDropArg,
   EventInput,
-  ViewApi
+  ViewApi,
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
@@ -39,12 +42,19 @@ import { calendarSelectedOptions } from './calendar.options';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   standalone: true,
-  imports: [FullCalendarModule,
-    ScheduleHeaderComponent, MatSidenavModule, MenuComponent,
-    CalendarNaviagtionComponent, SchedulingFormComponent, SharedModule,
-    CalendarNavigationDesktopComponent, CalendarSidenavDesktopComponent,
-    MatDatepickerModule, MatNativeDateModule
-  ]
+  imports: [
+    FullCalendarModule,
+    ScheduleHeaderComponent,
+    MatSidenavModule,
+    MenuComponent,
+    CalendarNaviagtionComponent,
+    SchedulingFormComponent,
+    SharedModule,
+    CalendarNavigationDesktopComponent,
+    CalendarSidenavDesktopComponent,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
 })
 export class CalendarComponent implements AfterViewInit {
   @ViewChild('calendar') calendarComponent!: FullCalendarComponent;
@@ -71,9 +81,9 @@ export class CalendarComponent implements AfterViewInit {
     activetedIcon: signal('timeGridWeek'),
     date: signal({
       startStr: new Date(),
-      endStr: new Date()
-    })
-  }
+      endStr: new Date(),
+    }),
+  };
   todayIcon = 'primary';
   timeElapsed = Date.now();
   calendarApi: any;
@@ -89,9 +99,8 @@ export class CalendarComponent implements AfterViewInit {
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
     public loaderService: LoaderService,
-    public viewportService: ViewportService
-    
-  ) { }
+    public viewportService: ViewportService,
+  ) {}
 
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
@@ -111,7 +120,10 @@ export class CalendarComponent implements AfterViewInit {
 
           scheduleFormatResponse.forEach((element: ScheduleFormatResponse) => {
             this.scheduling.push({ ...element, color: 'purple' });
-            this.calendarApi.view.calendar.addEvent({ ...element, color: this.cardColor(element.status) });
+            this.calendarApi.view.calendar.addEvent({
+              ...element,
+              color: this.cardColor(element.status),
+            });
           });
         }
       },
@@ -131,7 +143,7 @@ export class CalendarComponent implements AfterViewInit {
       end,
       paciente_id: data.event._def?.extendedProps?.customer.id,
       prestador_id: data.event._def?.extendedProps?.employee.id,
-      status: data.event._def?.extendedProps?.status
+      status: data.event._def?.extendedProps?.status,
     };
 
     this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
@@ -175,7 +187,7 @@ export class CalendarComponent implements AfterViewInit {
       maxWidth: '100vw',
       data: { ...dateClick, hasDelete: false },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
@@ -203,7 +215,7 @@ export class CalendarComponent implements AfterViewInit {
         end: clickInfo?.event?.end,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
@@ -246,15 +258,14 @@ export class CalendarComponent implements AfterViewInit {
   public calendarNavigate(action?: string) {
     // const actualView = this.calendarApi.view.type;
     // this.calendarApi.changeView(actualView)
-    
 
     this.calendarApi.setOption('visibleRange', {
       start: null,
-      end: null
+      end: null,
     });
 
-    if(this.actionIcon() === 'timeGridWeek') {
-      this.calendarApi.changeView('timeGridWeek')
+    if (this.actionIcon() === 'timeGridWeek') {
+      this.calendarApi.changeView('timeGridWeek');
     }
 
     if (action) {
@@ -272,7 +283,7 @@ export class CalendarComponent implements AfterViewInit {
           break;
 
         default:
-          this.actionIcon.set(action)
+          this.actionIcon.set(action);
           this.calendarApi.changeView(action);
           break;
       }
@@ -280,8 +291,8 @@ export class CalendarComponent implements AfterViewInit {
 
     this.calendarState.date.set({
       startStr: this.calendarApi.view.activeStart,
-      endStr: this.calendarApi.view.activeEnd
-    })
+      endStr: this.calendarApi.view.activeEnd,
+    });
 
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
@@ -312,83 +323,82 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   public changeEmployee(event: any): void {
-    const selectedEmployee = event.filter((element: any) => element.checked).map((element: any) => element.id) as number[]
-    const filteredSchedule = this.scheduling.filter((element) => selectedEmployee.includes(element.employee.id));
+    const selectedEmployee = event
+      .filter((element: any) => element.checked)
+      .map((element: any) => element.id) as number[];
+    const filteredSchedule = this.scheduling.filter((element) =>
+      selectedEmployee.includes(element.employee.id),
+    );
     this.calendarApi.removeAllEvents();
 
     filteredSchedule.forEach((element: any) => {
-      this.calendarApi.view.calendar.addEvent({ ...element, color: this.cardColor(element.status) });
+      this.calendarApi.view.calendar.addEvent({
+        ...element,
+        color: this.cardColor(element.status),
+      });
     });
   }
 
   public cardColor(status: number | undefined): string {
-    let color = ''
+    let color = '';
     switch (status) {
       case 0:
-        color = 'purple'
+        color = 'purple';
         break;
 
       case 1:
-        color = 'green'
+        color = 'green';
         break;
 
-
       case 2:
-        color = 'burlywood'
+        color = 'burlywood';
         break;
 
       case 3:
-        color = 'blue'
+        color = 'blue';
         break;
 
       case 4:
-        color = 'gray'
+        color = 'gray';
         break;
 
-
       case 5:
-        color = 'burlywood'
+        color = 'burlywood';
         break;
 
       default:
         break;
     }
 
-    return color
+    return color;
   }
 
   public changeDate(event: any): void {
     this.calendarApi.gotoDate(event.startStr);
 
-    this.calendarApi.changeView('timeGrid')
+    this.calendarApi.changeView('timeGrid');
 
     this.calendarApi.setOption('visibleRange', {
       start: event.startStr,
-      end: event.endStr
+      end: event.endStr,
     });
 
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
 
-
     if (this.actionIcon() === 'listWeek') {
       // listDay , listWeek , listMonth
-      this.calendarApi.changeView('listWeek')
-      this.actionIcon.set('listWeek')
+      this.calendarApi.changeView('listWeek');
+      this.actionIcon.set('listWeek');
 
-      return
+      return;
     }
 
-
-    this.actionIcon.set('timeGridDay')
-
+    this.actionIcon.set('timeGridDay');
 
     if (this.calendarApi?.view?.title.split('').includes('–')) {
-      this.actionIcon.set('timeGridWeek')
+      this.actionIcon.set('timeGridWeek');
     }
-
   }
 }
-
-

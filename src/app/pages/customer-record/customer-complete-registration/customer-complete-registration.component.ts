@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { Observable, Subscription } from 'rxjs';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
@@ -31,7 +27,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
     private snackbarService: SnackbarService,
     private auth: AuthService,
     private customerRepository: CustomerRepository,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({

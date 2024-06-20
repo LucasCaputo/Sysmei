@@ -31,7 +31,7 @@ export class ScheduleService {
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
-  ) { }
+  ) {}
 
   /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(): void {
@@ -78,7 +78,7 @@ export class ScheduleService {
         start: this.setDate(element.start),
         Title: element.title,
         valor: element.valor,
-        status: element.status
+        status: element.status,
       };
 
       formatedSchedule.push(scheduleFormat);

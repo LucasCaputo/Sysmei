@@ -1,21 +1,19 @@
 :host {
-    height: calc(100vh - 150px);
-    overflow: auto;
-    min-width: 280px;
+  height: calc(100vh - 150px);
+  overflow: auto;
+  min-width: 280px;
 }
 
 .calendar-sidenav {
-    height: 250px;
+  height: 250px;
 }
 
 ::ng-deep {
-    .fc .fc-highlight {
-        background: #fdff0052;
-    }
+  .fc .fc-highlight {
+    background: #fdff0052;
+  }
 
-
-    .fc .fc-bg-event {
-        opacity: 0.5;
-    }
-
+  .fc .fc-bg-event {
+    opacity: 0.5;
+  }
 }

@@ -22,14 +22,14 @@ export class CustomerService {
     private authService: AuthService,
     private customerRepository: CustomerRepository,
     private utilService: UtilsService,
-  ) { }
+  ) {}
 
   /** Busca lista de usuários e salva na variável customers */
   public searchCustomerList(): void {
     this.customerRepository
       .getCustomer(this.authService.getUser()?.login)
       .subscribe((customerList) => {
-        this.setSearchCustomerList(customerList)
+        this.setSearchCustomerList(customerList);
       });
   }
 

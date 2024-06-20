@@ -14,7 +14,13 @@ import {
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatDialogModule, ReactiveFormsModule, MatCheckboxModule, MatButtonModule]
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatButtonModule,
+  ],
 })
 export class ConfirmDialogComponent implements OnInit {
   FormConfirm = this.fb.group({
@@ -25,7 +31,7 @@ export class ConfirmDialogComponent implements OnInit {
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: { confirmed: boolean },
     private fb: UntypedFormBuilder,
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

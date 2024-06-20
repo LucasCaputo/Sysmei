@@ -8,7 +8,7 @@ describe('UserDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [UserDialogComponent]
+      imports: [UserDialogComponent],
     });
     fixture = TestBed.createComponent(UserDialogComponent);
     component = fixture.componentInstance;

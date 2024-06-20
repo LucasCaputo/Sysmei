@@ -23,7 +23,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     MatIconModule,
     HttpClientModule,
     MatFormFieldModule,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   exports: [
     CommonModule,
@@ -39,4 +39,4 @@ import { NgxMaskDirective } from 'ngx-mask';
     NgxMaskDirective,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

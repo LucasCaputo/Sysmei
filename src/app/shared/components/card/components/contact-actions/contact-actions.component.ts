@@ -9,18 +9,18 @@ import { CardInfo } from '../../interfaces/card-info';
   templateUrl: './contact-actions.component.html',
   styleUrls: ['./contact-actions.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, WhatsappIconComponent]
+  imports: [CommonModule, MatIconModule, WhatsappIconComponent],
 })
 export class ContactActionsComponent implements OnInit {
   @Output() edit = new EventEmitter();
 
   @Input() customer!: CardInfo;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   openDialog() {
-    this.edit.emit()
+    this.edit.emit();
   }
 }

@@ -38,7 +38,7 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router,
     private snackbarService: SnackbarService,
-  ) { }
+  ) {}
 
   onSubmit(event: LoginRequest) {
     if (event) {

@@ -8,7 +8,7 @@ import { CalendarViewOptions } from '../../../contants/calendar.navigation.optio
   templateUrl: './calendar-naviagtion.component.html',
   styleUrls: ['./calendar-naviagtion.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule]
+  imports: [CommonModule, MatIconModule],
 })
 export class CalendarNaviagtionComponent {
   @Input() title = '';

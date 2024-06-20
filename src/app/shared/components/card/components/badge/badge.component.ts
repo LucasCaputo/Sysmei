@@ -7,13 +7,12 @@ import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedPipesModule]
-
+  imports: [CommonModule, SharedPipesModule],
 })
 export class BadgeComponent implements OnInit {
   @Input() name: string = '';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

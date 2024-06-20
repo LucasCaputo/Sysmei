@@ -8,28 +8,28 @@ import { CalendarViewOptions } from '../../../contants/calendar.navigation.optio
   standalone: true,
   imports: [SharedModule, MatCardModule],
   templateUrl: './calendar-navigation-desktop.component.html',
-  styleUrls: ['./calendar-navigation-desktop.component.scss']
+  styleUrls: ['./calendar-navigation-desktop.component.scss'],
 })
 export class CalendarNavigationDesktopComponent {
   @Output() action = new EventEmitter<string>();
   @Output() addNewSchedule = new EventEmitter();
 
-  @Input() actionIcon = ''
+  @Input() actionIcon = '';
 
   calendarViewOptions = CalendarViewOptions;
 
   /**
- * Emite evento de clique com ação selecionada
- * @param action nome da ação
- */
+   * Emite evento de clique com ação selecionada
+   * @param action nome da ação
+   */
   public change(action: string) {
     this.action.emit(action);
   }
 
   /**
-* Emite evento de clique com ação selecionada
-*/
+   * Emite evento de clique com ação selecionada
+   */
   public onAddNewSchedule() {
-    this.addNewSchedule.emit()
+    this.addNewSchedule.emit();
   }
 }

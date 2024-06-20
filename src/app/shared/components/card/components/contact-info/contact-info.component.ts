@@ -8,12 +8,12 @@ import { CardInfo } from '../../interfaces/card-info';
   templateUrl: './contact-info.component.html',
   styleUrls: ['./contact-info.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedPipesModule]
+  imports: [CommonModule, SharedPipesModule],
 })
 export class ContactInfoComponent implements OnInit {
   @Input() info: CardInfo | undefined;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

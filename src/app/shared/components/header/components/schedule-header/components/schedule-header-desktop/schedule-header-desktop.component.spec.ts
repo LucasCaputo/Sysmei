@@ -8,7 +8,7 @@ describe('ScheduleHeaderDesktopComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ScheduleHeaderDesktopComponent]
+      imports: [ScheduleHeaderDesktopComponent],
     });
     fixture = TestBed.createComponent(ScheduleHeaderDesktopComponent);
     component = fixture.componentInstance;

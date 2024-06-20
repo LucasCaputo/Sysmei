@@ -39,18 +39,23 @@ export class UserService {
       .pipe(
         tap((response: any) => {
           this.authService.setUser(response);
-          const token = localStorage.getItem('token')?.replace('"', '').replace("Bearer", "").trim().replace('"', '')
-          console.log(token)
-          if(token) {
-            this.getUser(token).subscribe((e) => console.log(e))
+          const token = localStorage
+            .getItem('token')
+            ?.replace('"', '')
+            .replace('Bearer', '')
+            .trim()
+            .replace('"', '');
+          console.log(token);
+          if (token) {
+            this.getUser(token).subscribe((e) => console.log(e));
           }
         }),
       );
   }
 
-
   public getUser(code: string): Observable<any> {
-    return this.httpClient
-      .get(environment.baseURL + '/user/token?code=' + code)
+    return this.httpClient.get(
+      environment.baseURL + '/user/token?code=' + code,
+    );
   }
 }

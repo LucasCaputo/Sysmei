@@ -38,7 +38,7 @@ import { RecordListComponent } from './record-list/record-list.component';
     CustomerCompleteRegistrationComponent,
     RecordListComponent,
     CardComponent,
-    SchedulingFormComponent
+    SchedulingFormComponent,
   ],
   animations: [
     trigger('enter', [
@@ -72,21 +72,21 @@ import { RecordListComponent } from './record-list/record-list.component';
   ],
 })
 export class CustomerRecordComponent implements OnInit {
-  @Input() hasHeader: boolean  = true;
+  @Input() hasHeader: boolean = true;
 
-  _customerId: undefined | number
+  _customerId: undefined | number;
 
   @Input()
   set customerId(value: number) {
-    if(value) {
-      this._customerId = value
+    if (value) {
+      this._customerId = value;
       this.populate();
     }
   }
 
   id = 0;
   data: CustomerResponse | undefined;
-  cardData!: CardInfo
+  cardData!: CardInfo;
   loading = false;
 
   tabSelected = 0;
@@ -105,7 +105,7 @@ export class CustomerRecordComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     public dialog: MatDialog,
-  ) { }
+  ) {}
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -135,8 +135,8 @@ export class CustomerRecordComponent implements OnInit {
           id: response?.id || 0,
           login_usuario: response?.login_usuario || '',
           nome: response?.nome || '',
-          telefone: response?.telefone1 || ''
-        }
+          telefone: response?.telefone1 || '',
+        };
       },
       (error) => {
         this.router.navigate(['/clientes']);
@@ -173,7 +173,7 @@ export class CustomerRecordComponent implements OnInit {
             this.photos = result.documentsUrl;
           });
         },
-        (error) => { },
+        (error) => {},
       );
     }
   }
@@ -194,7 +194,7 @@ export class CustomerRecordComponent implements OnInit {
       maxWidth: '100vw',
       data: { customer: { id: parseInt(this.route.snapshot.params['id']) } },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 

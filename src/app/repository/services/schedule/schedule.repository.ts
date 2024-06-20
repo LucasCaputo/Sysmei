@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { getCurrentDate, getDate30DaysAgo } from 'src/app/shared/services/utils/utils.service';
+import {
+  getCurrentDate,
+  getDate30DaysAgo,
+} from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,8 +14,8 @@ import { environment } from 'src/environments/environment';
 export class ScheduleRepository {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
     return this.httpClient.post<any>(
@@ -22,7 +25,7 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -34,7 +37,7 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -45,7 +48,7 @@ export class ScheduleRepository {
         headers: {
           Authorization: this.authService.getToken()!,
         },
-      }
+      },
     );
   }
 
@@ -54,16 +57,20 @@ export class ScheduleRepository {
       headers: {
         Authorization: this.authService.getToken()!,
         PacienteID: `${body.paciente_id}`,
-        PrestadorID: `${body.prestador_id}`
+        PrestadorID: `${body.prestador_id}`,
       },
     });
   }
 
-  patchStatus(body: {status: number}, id: number) {
-    return this.httpClient.patch(environment.baseURL + '/agenda/' + id + '/status', body, {
-      headers: {
-        Authorization: this.authService.getToken()!,
+  patchStatus(body: { status: number }, id: number) {
+    return this.httpClient.patch(
+      environment.baseURL + '/agenda/' + id + '/status',
+      body,
+      {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        },
       },
-    });
+    );
   }
 }

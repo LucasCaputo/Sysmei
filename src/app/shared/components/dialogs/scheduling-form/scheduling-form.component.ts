@@ -9,10 +9,7 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -35,7 +32,14 @@ import { CustomerData } from './interfaces/customer-data';
   templateUrl: './scheduling-form.component.html',
   styleUrls: ['./scheduling-form.component.scss'],
   standalone: true,
-  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, DialogActionButtonsComponent]
+  imports: [
+    SharedModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DialogActionButtonsComponent,
+  ],
 })
 export class SchedulingFormComponent implements OnInit {
   user = this.authService.getUser();
@@ -73,7 +77,7 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data);
     let end = '';
     let start = '';
 
@@ -183,12 +187,12 @@ export class SchedulingFormComponent implements OnInit {
         confirmed: false,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(customer)
+      console.log(customer);
       if (result?.confirmed && customer?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository

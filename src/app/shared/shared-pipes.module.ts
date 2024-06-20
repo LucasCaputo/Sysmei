@@ -12,11 +12,6 @@ import { IconCustomerPipe } from './pipes/icon-customer.pipe';
     IconColorPipe,
     IconCustomerPipe,
   ],
-  exports: [
-    ArrayFiltroPipe,
-    FormatPhonePipe,
-    IconColorPipe,
-    IconCustomerPipe,
-  ],
+  exports: [ArrayFiltroPipe, FormatPhonePipe, IconColorPipe, IconCustomerPipe],
 })
-export class SharedPipesModule { }
+export class SharedPipesModule {}

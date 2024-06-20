@@ -6,10 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -23,7 +20,7 @@ import { DialogActionButtonsComponent } from '../components/dialog-action-button
   templateUrl: './employee-dialog.component.html',
   styleUrls: ['./employee-dialog.component.scss'],
   standalone: true,
-  imports: [SharedModule, DialogActionButtonsComponent]
+  imports: [SharedModule, DialogActionButtonsComponent],
 })
 export class EmployeeDialogComponent implements OnInit {
   form = this.fb.group({
@@ -50,9 +47,9 @@ export class EmployeeDialogComponent implements OnInit {
     private employeeService: EmployeeService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -108,7 +105,7 @@ export class EmployeeDialogComponent implements OnInit {
         confirmed: false,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 

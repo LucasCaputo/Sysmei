@@ -8,7 +8,7 @@ describe('AgendaStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AgendaStatusComponent]
+      imports: [AgendaStatusComponent],
     });
     fixture = TestBed.createComponent(AgendaStatusComponent);
     component = fixture.componentInstance;

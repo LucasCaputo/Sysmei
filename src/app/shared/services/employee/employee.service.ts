@@ -12,12 +12,12 @@ export class EmployeeService {
   public $employee: BehaviorSubject<Array<EmployeeResponse>> =
     new BehaviorSubject<Array<EmployeeResponse>>([]);
 
-  constructor(private employeeRepository: EmployeeRepository) { }
+  constructor(private employeeRepository: EmployeeRepository) {}
 
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {
     this.employeeRepository.getEmployee().subscribe((employeeList) => {
-      this.setSearchEmployeeList(employeeList)
+      this.setSearchEmployeeList(employeeList);
     });
   }
 

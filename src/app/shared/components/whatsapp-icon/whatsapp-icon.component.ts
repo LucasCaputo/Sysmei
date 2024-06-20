@@ -9,8 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './whatsapp-icon.component.html',
   styleUrls: ['./whatsapp-icon.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule]
-
+  imports: [CommonModule, MatIconModule, MatButtonModule],
 })
 export class WhatsappIconComponent {
   THUMBUP_ICON = `<svg width="637" height="641" viewBox="0 0 637 641" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +17,7 @@ export class WhatsappIconComponent {
   </svg>
   `;
 
-  @Input() phone: string | number = ''
+  @Input() phone: string | number = '';
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(

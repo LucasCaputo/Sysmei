@@ -11,7 +11,13 @@ import { CardInfo } from './interfaces/card-info';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatListModule, BadgeComponent, ContactActionsComponent, ContactInfoComponent]
+  imports: [
+    CommonModule,
+    MatListModule,
+    BadgeComponent,
+    ContactActionsComponent,
+    ContactInfoComponent,
+  ],
 })
 export class CardComponent implements OnInit {
   @Output() edit = new EventEmitter();
@@ -19,13 +25,13 @@ export class CardComponent implements OnInit {
 
   @Input() cardData!: CardInfo;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   openDialog() {
-    this.edit.emit(this.cardData)
+    this.edit.emit(this.cardData);
   }
 
   onClick() {
-    this.click.emit(this.cardData)
+    this.click.emit(this.cardData);
   }
 }

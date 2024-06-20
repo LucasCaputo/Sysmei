@@ -9,30 +9,30 @@ import { DialogActionButtonsComponent } from '../components/dialog-action-button
   standalone: true,
   imports: [SharedModule, DialogActionButtonsComponent],
   templateUrl: './user-dialog.component.html',
-  styleUrls: ['./user-dialog.component.scss']
+  styleUrls: ['./user-dialog.component.scss'],
 })
 export class UserDialogComponent {
-  private user = this.authService.getUser()
+  private user = this.authService.getUser();
 
   public userForm = this.formBuilder.group({
     name: this.user?.nome || '',
     phone: this.user?.telefone || '',
-    login: this.user?.login || ''
-  })
+    login: this.user?.login || '',
+  });
 
   public passwordForm = this.formBuilder.group({
     oldPassword: '',
     password: '',
-    repetPassword: ''
-  })
+    repetPassword: '',
+  });
 
   public removeAccountForm = this.formBuilder.group({
     enabled: true,
     status: true,
-  })
+  });
 
-  public constructor(private authService: AuthService, private formBuilder: FormBuilder){
-    
-  }
-
+  public constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+  ) {}
 }

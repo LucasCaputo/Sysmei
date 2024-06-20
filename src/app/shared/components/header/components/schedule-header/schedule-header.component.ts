@@ -8,7 +8,12 @@ import { ScheduleHeaderDesktopComponent } from './components/schedule-header-des
 @Component({
   selector: 'app-schedule-header',
   standalone: true,
-  imports: [SharedModule, MatToolbarModule, HeaderComponent, ScheduleHeaderDesktopComponent],
+  imports: [
+    SharedModule,
+    MatToolbarModule,
+    HeaderComponent,
+    ScheduleHeaderDesktopComponent,
+  ],
   templateUrl: './schedule-header.component.html',
   styleUrls: ['./schedule-header.component.scss'],
 })
@@ -21,7 +26,7 @@ export class ScheduleHeaderComponent {
 
   screenSize$ = this.viewportService.screenSize$;
 
-  constructor(private viewportService: ViewportService) { }
+  constructor(private viewportService: ViewportService) {}
 
   public onAddButtonClick() {
     this.addButtonClick.emit();

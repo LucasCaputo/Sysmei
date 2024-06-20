@@ -8,7 +8,7 @@ describe('DialogActionButtonsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DialogActionButtonsComponent]
+      imports: [DialogActionButtonsComponent],
     });
     fixture = TestBed.createComponent(DialogActionButtonsComponent);
     component = fixture.componentInstance;

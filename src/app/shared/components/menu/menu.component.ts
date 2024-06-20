@@ -15,32 +15,41 @@ import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.componen
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatDividerModule, MatSidenavModule, MatButtonModule]
-
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatButtonModule,
+  ],
 })
 export class MenuComponent {
-
   user = this.auth.getUser();
 
   menuData = [
     {
       redirect: 'agenda',
       label: 'Agenda',
-      icon: 'date_range'
+      icon: 'date_range',
     },
     {
       redirect: 'clientes',
       label: 'Clientes',
-      icon: 'account_circle'
+      icon: 'account_circle',
     },
     {
       redirect: 'prestador',
       label: 'Prestador',
-      icon: 'badge'
-    }
-  ]
+      icon: 'badge',
+    },
+  ];
 
-  constructor(public auth: AuthService, public router: Router, private customerService: CustomerService, private dialog: MatDialog) { }
+  constructor(
+    public auth: AuthService,
+    public router: Router,
+    private customerService: CustomerService,
+    private dialog: MatDialog,
+  ) {}
 
   /** Faz logout do sistema */
   public logout(): void {
@@ -62,7 +71,7 @@ export class MenuComponent {
       width: '500px',
       maxWidth: '100vw',
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 
@@ -70,8 +79,6 @@ export class MenuComponent {
       if (!result) {
         return;
       }
-
-      
     });
   }
 }

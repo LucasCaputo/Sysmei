@@ -13,7 +13,7 @@ export class PrivateRoutesGuard {
     private authService: AuthService,
     private router: Router,
     private InitializeService: InitializeService,
-  ) { }
+  ) {}
 
   canActivate(): boolean {
     const isLoged = this.authService.isLoged();

@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor() { }
+  constructor() {}
 
   formatPhone(phone: string) {
     return `(${phone.slice(0, 2)}) ${phone.slice(2, 3)} ${phone.slice(
       3,
-      7
+      7,
     )}-${phone.slice(7, 11)}`;
   }
 
@@ -24,20 +24,18 @@ export class UtilsService {
   }
 
   formatDateRequestPayload(result: any) {
+    let month = `0${1 + result?.allDay?.getMonth()}`.slice(-2);
+    let day = `0${result?.allDay?.getDate()}`.slice(-2);
 
-    let month = (`0${1 + result?.allDay?.getMonth()}`).slice(-2)
-    let day = (`0${result?.allDay?.getDate()}`).slice(-2)
-
-    const date = `${result?.allDay?.getFullYear()}-${month}-${day}`
+    const date = `${result?.allDay?.getFullYear()}-${month}-${day}`;
 
     let dateRequestPayload = {
       allDay: `${date}`,
       start: `${date} ${result?.start}`,
-      end: `${date} ${result?.end}`
-    }
+      end: `${date} ${result?.end}`,
+    };
 
-    return dateRequestPayload
-
+    return dateRequestPayload;
   }
 }
 
@@ -65,9 +63,11 @@ export function getCurrentDate(): string {
 
 export function getEmployee(): number {
   let employeeLocalStorage = localStorage.getItem('employee');
-  let employee: Array<{ id: number }> = [{ id: 0 }]
+  let employee: Array<{ id: number }> = [{ id: 0 }];
 
-  if (employeeLocalStorage) { employee = JSON.parse(employeeLocalStorage) }
+  if (employeeLocalStorage) {
+    employee = JSON.parse(employeeLocalStorage);
+  }
 
-  return employee[0].id
+  return employee[0].id;
 }

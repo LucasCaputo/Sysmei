@@ -66,7 +66,7 @@ export class NewUserComponent {
     private router: Router,
     private snackbarService: SnackbarService,
     private fb: UntypedFormBuilder,
-  ) { }
+  ) {}
 
   checkName(input: UntypedFormControl) {
     const hasNumber = /[0-9]/.test(input.value);

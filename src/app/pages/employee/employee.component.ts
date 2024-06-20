@@ -16,7 +16,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
   standalone: true,
-  imports: [HeaderComponent, MatSidenavModule, MatListModule, MenuComponent, CardComponent, SharedModule]
+  imports: [
+    HeaderComponent,
+    MatSidenavModule,
+    MatListModule,
+    MenuComponent,
+    CardComponent,
+    SharedModule,
+  ],
 })
 export class EmployeeComponent implements OnInit {
   customerList: Array<EmployeeResponse> = [];
@@ -24,7 +31,7 @@ export class EmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.searchEmployeeList();
@@ -46,7 +53,7 @@ export class EmployeeComponent implements OnInit {
       height: '300px',
       data: dataInfo,
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
   }

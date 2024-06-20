@@ -8,12 +8,9 @@ import {
 import {
   UntypedFormBuilder,
   UntypedFormControl,
-  Validators
+  Validators,
 } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -26,7 +23,7 @@ import { DialogActionButtonsComponent } from '../components/dialog-action-button
   templateUrl: './customer-dialog.component.html',
   styleUrls: ['./customer-dialog.component.scss'],
   standalone: true,
-  imports: [SharedModule, DialogActionButtonsComponent]
+  imports: [SharedModule, DialogActionButtonsComponent],
 })
 export class CustomerDialogComponent implements OnInit {
   form = this.fb.group({
@@ -54,9 +51,9 @@ export class CustomerDialogComponent implements OnInit {
     private customerService: CustomerService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -89,7 +86,7 @@ export class CustomerDialogComponent implements OnInit {
         confirmed: false,
       },
       position: {
-        top: '70px'
+        top: '70px',
       },
     });
 

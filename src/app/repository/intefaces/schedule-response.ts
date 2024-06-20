@@ -30,6 +30,6 @@ export interface ScheduleFormatResponse {
   title: string;
   Title: string;
   valor: number;
-  hasDelete?: boolean
+  hasDelete?: boolean;
   status?: number;
 }
