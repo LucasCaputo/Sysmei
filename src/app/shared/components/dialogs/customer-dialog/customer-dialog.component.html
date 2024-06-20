@@ -1,15 +1,10 @@
-<div class="flex items-center justify-between">
-  <button mat-dialog-close mat-icon-button color="accent" style="margin: 0 0 20px">
-    <mat-icon>highlight_off</mat-icon>
-  </button>
-  <span mat-dialog-title>{{
-    !data.id ? 'Cadastrar cliente' : 'Editar cliente'
-    }}</span>
-  <button mat-icon-button color="primary" style="margin: 0 0 20px" (click)="saveCustomer()" mat-dialog-close
-    [disabled]="form.invalid || !form.dirty">
-    <mat-icon>done_outline</mat-icon>
-  </button>
-</div>
+<app-dialog-action-buttons 
+[title]="!data.id ? 'Cadastrar cliente' : 'Editar cliente'" 
+[disableConfirmButton]="form.invalid || !form.dirty"
+(closeButton)="dialog.closeAll()"
+(confirmButton)="saveCustomer(); dialog.closeAll()"
+/>
+
 <div mat-dialog-content>
   <form [formGroup]="form" class="flex flex-col">
     <mat-form-field>

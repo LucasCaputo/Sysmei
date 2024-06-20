@@ -1,15 +1,10 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="flex justify-between items-center mt-4">
-    <button mat-dialog-close="close" mat-icon-button color="accent">
-      <mat-icon>highlight_off</mat-icon>
-    </button>
-    <span class="text-xl">{{
-      !data.id ? 'Cadastrar prestador' : 'Editar prestador'
-      }}</span>
-    <button mat-icon-button color="primary" type="submit" mat-dialog-close>
-      <mat-icon>done_outline</mat-icon>
-    </button>
-  </div>
+<form [formGroup]="form">
+  <app-dialog-action-buttons 
+  [title]="!data.id ? 'Cadastrar prestador' : 'Editar prestador'" 
+  [disableConfirmButton]="form.invalid || !form.dirty"
+  (closeButton)="dialog.closeAll()"
+  (confirmButton)="onSubmit(); dialog.closeAll()"
+/>
 
   <div mat-dialog-content class="dialog-content">
     <mat-form-field class="w-full">

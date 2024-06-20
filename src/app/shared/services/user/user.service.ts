@@ -1,10 +1,10 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { LoginRequest, LoginResponse, User } from '../../interfaces/user';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,18 @@ export class UserService {
       .pipe(
         tap((response: any) => {
           this.authService.setUser(response);
+          const token = localStorage.getItem('token')?.replace('"', '').replace("Bearer", "").trim().replace('"', '')
+          console.log(token)
+          if(token) {
+            this.getUser(token).subscribe((e) => console.log(e))
+          }
         }),
       );
+  }
+
+
+  public getUser(code: string): Observable<any> {
+    return this.httpClient
+      .get(environment.baseURL + '/user/token?code=' + code)
   }
 }

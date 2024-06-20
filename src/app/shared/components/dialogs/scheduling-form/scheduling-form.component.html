@@ -1,16 +1,10 @@
-<div>
-  <div class="flex items-center justify-center">
-    <button mat-dialog-close mat-icon-button color="accent" class="action-buttons">
-      <mat-icon>highlight_off</mat-icon>
-    </button>
-    <span mat-dialog-title>{{
-      data ? 'Editar Agendamento' : 'Novo Agendamento'
-      }}</span>
-    <button mat-icon-button color="primary" class="action-buttons" [disabled]="form.invalid || !form.dirty"
-      (click)="saveScheduleData()" [mat-dialog-close]="form.value">
-      <mat-icon>done_outline</mat-icon>
-    </button>
-  </div>
+
+  <app-dialog-action-buttons 
+    [title]="data ? 'Editar Agendamento' : 'Novo Agendamento'" 
+    [disableConfirmButton]="form.invalid || !form.dirty"
+    (closeButton)="dialog.closeAll()"
+    (confirmButton)="saveScheduleData(); dialog.closeAll()"
+  />
   <div mat-dialog-content>
     <form class="flex flex-col" [formGroup]="form">
       <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
@@ -89,4 +83,3 @@
       <mat-icon>delete</mat-icon>
     </button>
   </div>
-</div>

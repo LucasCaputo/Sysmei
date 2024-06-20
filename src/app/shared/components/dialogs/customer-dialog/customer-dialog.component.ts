@@ -19,13 +19,14 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DialogActionButtonsComponent } from '../components/dialog-action-buttons/dialog-action-buttons.component';
 
 @Component({
   selector: 'app-customer-dialog',
   templateUrl: './customer-dialog.component.html',
   styleUrls: ['./customer-dialog.component.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule, DialogActionButtonsComponent]
 })
 export class CustomerDialogComponent implements OnInit {
   form = this.fb.group({

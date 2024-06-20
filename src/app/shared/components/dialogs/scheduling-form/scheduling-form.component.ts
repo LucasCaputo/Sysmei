@@ -26,6 +26,7 @@ import { EmployeeService } from 'src/app/shared/services/employee/employee.servi
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DialogActionButtonsComponent } from '../components/dialog-action-buttons/dialog-action-buttons.component';
 import { AutocompleteOptions } from './interfaces/autocomplete-options';
 import { CustomerData } from './interfaces/customer-data';
 
@@ -34,7 +35,7 @@ import { CustomerData } from './interfaces/customer-data';
   templateUrl: './scheduling-form.component.html',
   styleUrls: ['./scheduling-form.component.scss'],
   standalone: true,
-  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule]
+  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, DialogActionButtonsComponent]
 })
 export class SchedulingFormComponent implements OnInit {
   user = this.authService.getUser();

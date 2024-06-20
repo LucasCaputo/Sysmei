@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { DialogActionButtonsComponent } from '../components/dialog-action-buttons/dialog-action-buttons.component';
 
 @Component({
   selector: 'app-user-dialog',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, DialogActionButtonsComponent],
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss']
 })
