@@ -19,7 +19,7 @@ export class AuthService {
     localStorage.setItem('token', JSON.stringify(this.token));
   }
 
-  getUser() {
+  getUser(): User | undefined {
     if (this.user) {
       return this.user;
     }

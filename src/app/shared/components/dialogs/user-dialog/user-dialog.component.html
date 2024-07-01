@@ -1,4 +1,10 @@
-<app-dialog-action-buttons 
-[title]="'Atualizar dados da conta'" 
-[disableConfirmButton]="true"
+<app-dialog-action-buttons
+  [title]="'Atualizar dados da conta'"
+  [disableConfirmButton]="true"
 />
+
+<div mat-dialog-content>
+  <form [formGroup]="userForm">
+    <app-name [name]="userForm.controls.name" />
+  </form>
+</div>
