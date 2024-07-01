@@ -67,7 +67,7 @@
           matInput
           type="tel"
           formControlName="telefone1"
-          mask="(00) 0 0000-0000"
+          mask="{{ profileForm.value.telefone1.length === 11 ? '(00) 0 0000-0000': '00 (00) 0 0000-0000' }}"
           minlength="11"
           [readonly]="!edit"
           required
