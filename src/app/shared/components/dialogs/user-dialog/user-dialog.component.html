@@ -5,11 +5,15 @@
 
 <div mat-dialog-content>
   <form [formGroup]="userForm">
-    <app-name [name]="userForm.controls.name" />
+    <app-name [name]="userForm.controls.name"></app-name>
     <app-phone [phone]="userForm.controls.phone" [label]="'Telefone'"></app-phone>
     <app-email [email]="userForm.controls.login"></app-email>
   </form>
   <form [formGroup]="passwordForm">
-    
+    <app-password [password]="passwordForm.controls.oldPassword" [label]="'Senha Antiga'" [required]="false"></app-password>
+    <app-password [password]="passwordForm.controls.password" [label]="'Senha Nova'"></app-password>
+    <app-password [password]="passwordForm.controls.repetPassword" [label]="'Repita a senha'"></app-password>
+  </form>
+  <form [formGroup]="removeAccountForm">
   </form>
 </div>
