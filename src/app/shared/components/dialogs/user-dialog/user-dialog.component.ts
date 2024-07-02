@@ -3,13 +3,13 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { checkName } from 'src/app/shared/services/utils/check-name';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NameComponent } from '../../inputs/name/name.component';
 import { DialogActionButtonsComponent } from '../components/dialog-action-buttons/dialog-action-buttons.component';
+import { SharedInputModule } from '../../inputs/shared-input.module';
 
 @Component({
   selector: 'app-user-dialog',
   standalone: true,
-  imports: [SharedModule, DialogActionButtonsComponent, NameComponent],
+  imports: [SharedModule, DialogActionButtonsComponent, SharedInputModule],
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss'],
 })
@@ -17,12 +17,12 @@ export class UserDialogComponent {
   public user = this.authService.getUser();
 
   public userForm = this.formBuilder.group({
-    name: new FormControl(this.user?.nome || '', [
+    name: [this.user?.nome || '', [
       Validators.required,
       this.validateName,
-    ]),
+    ]],
     phone: this.user?.telefone || '',
-    login: this.user?.login || '',
+    login: [this.user?.login || '', [Validators.email]],
   });
 
   public passwordForm = this.formBuilder.group({
