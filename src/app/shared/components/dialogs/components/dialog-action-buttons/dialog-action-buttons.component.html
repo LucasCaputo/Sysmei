@@ -1,10 +1,10 @@
 <div class="flex items-center justify-around pt-4">
-    <button mat-icon-button color="accent" (click)="closeButton.emit()">
-      <mat-icon>highlight_off</mat-icon>
-    </button>
-    <span class="text-xl">{{ title }}</span>
-    <button mat-icon-button color="primary" (click)="confirmButton.emit()" 
-      [disabled]="disableConfirmButton">
-      <mat-icon>done_outline</mat-icon>
-    </button>
+  <button *ngIf="(viewportService.screenSize$ | async) === 'mobile'" mat-icon-button color="accent" (click)="closeButton.emit()">
+    <mat-icon>highlight_off</mat-icon>
+  </button>
+  <span class="text-xl" [class]="{'flex w-full text-center': !((viewportService.screenSize$ | async) === 'mobile') }">{{ title }}</span>
+  <button *ngIf="(viewportService.screenSize$ | async) === 'mobile'" mat-icon-button color="primary" (click)="confirmButton.emit()"
+    [disabled]="disableConfirmButton">
+    <mat-icon>done_outline</mat-icon>
+  </button>
 </div>
