@@ -13,14 +13,14 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DialogActionButtonsComponent } from '../components/dialog-action-buttons/dialog-action-buttons.component';
+import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';
 
 @Component({
   selector: 'app-employee-dialog',
   templateUrl: './employee-dialog.component.html',
   styleUrls: ['./employee-dialog.component.scss'],
   standalone: true,
-  imports: [SharedModule, DialogActionButtonsComponent],
+  imports: [SharedModule, MobileActionButtonsComponent],
 })
 export class EmployeeDialogComponent implements OnInit {
   form = this.fb.group({

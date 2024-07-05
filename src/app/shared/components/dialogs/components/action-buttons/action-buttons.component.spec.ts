@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MobileActionButtonsComponent } from './mobile-action-buttons.component';
+import { ActionButtonsComponent } from './action-buttons.component';
 
 describe('MobileActionButtonsComponent', () => {
-  let component: MobileActionButtonsComponent;
-  let fixture: ComponentFixture<MobileActionButtonsComponent>;
+  let component: ActionButtonsComponent;
+  let fixture: ComponentFixture<ActionButtonsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MobileActionButtonsComponent],
+      imports: [ActionButtonsComponent]
     });
-    fixture = TestBed.createComponent(MobileActionButtonsComponent);
+    fixture = TestBed.createComponent(ActionButtonsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
