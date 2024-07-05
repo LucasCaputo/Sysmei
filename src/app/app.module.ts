@@ -4,6 +4,7 @@ import {
   Injectable,
   LOCALE_ID,
   NgModule,
+  isDevMode,
 } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,8 @@ import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.ser
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { InstallPwaComponentComponent } from './shared/components/install-pwa/install-pwa.component';
 
 // Registre a localidade para 'pt'
 registerLocaleData(localePt, 'pt');
@@ -36,6 +39,13 @@ registerLocaleData(localePt, 'pt');
     LoaderComponent,
     HttpClientModule,
     MatSnackBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    InstallPwaComponentComponent,
   ],
   providers: [
     {
