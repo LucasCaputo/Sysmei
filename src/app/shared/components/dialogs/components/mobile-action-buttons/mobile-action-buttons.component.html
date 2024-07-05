@@ -1,0 +1,9 @@
+<div *ngIf="(viewportService.screenSize$ | async) !== 'mobile'" class="flex w-full justify-end gap-4">
+    <button mat-raised-button (click)="closeButton.emit()">
+        Fechar
+    </button>
+
+    <button mat-raised-button (click)="confirmButton.emit()" [disabled]="disableConfirmButton">
+        Salvar
+    </button>
+</div>
