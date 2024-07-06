@@ -1,1 +1,28 @@
-<p>help-dialog works!</p>
+<div class="p-4">
+    <app-mobile-action-buttons [title]="'Deixe sua mensagem'"
+        [disableConfirmButton]="(userForm.invalid || !userForm.dirty)" (closeButton)="dialog.closeAll()"
+        (confirmButton)="saveFeedback(); dialog.closeAll()" />
+
+    <h3 class="text-center !mt-4">Basta enviar sua mensagem que responderemos em breve</h3>
+
+    <form [formGroup]="userForm">
+        <div class="flex flex-col gap-4 md:flex-row">
+            <app-name [name]="userForm.controls.name"></app-name>
+            <app-phone [phone]="userForm.controls.phone" [label]="'Telefone'"></app-phone>
+        </div>
+        <div class="flex flex-col gap-4 md:flex-row">
+            <app-email [email]="userForm.controls.login"></app-email>
+            <mat-checkbox [formControl]="userForm.controls.allowWhatsApp">Deseja ser contatado pelo
+                WhatsApp?</mat-checkbox>
+        </div>
+
+        <mat-form-field class="w-full">
+            <mat-label>Descreva sua questão</mat-label>
+            <textarea matInput [formControl]="userForm.controls.feedback"></textarea>
+        </mat-form-field>
+
+
+        <app-action-buttons [disableConfirmButton]="userForm.invalid || !userForm.dirty"
+            (closeButton)="dialog.closeAll()" (confirmButton)="saveFeedback(); dialog.closeAll()"></app-action-buttons>
+    </form>
+</div>

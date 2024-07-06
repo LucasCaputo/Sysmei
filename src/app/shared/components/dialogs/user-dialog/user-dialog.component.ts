@@ -7,17 +7,13 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedInputModule } from '../../inputs/shared-input.module';
-import { ActionButtonsComponent } from '../components/action-buttons/action-buttons.component';
-import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';
 
 @Component({
   selector: 'app-user-dialog',
   standalone: true,
   imports: [
     SharedModule,
-    MobileActionButtonsComponent,
     SharedInputModule,
-    ActionButtonsComponent,
     MatTabsModule
   ],
   templateUrl: './user-dialog.component.html',
