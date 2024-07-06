@@ -11,4 +11,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class NameComponent {
   @Input({ required: true }) name!: FormControl<string | null>;
+
+  validateName(event: Event) {
+    console.log(event)
+    // console.log(checkName(this.name.value || \))
+  }
 }

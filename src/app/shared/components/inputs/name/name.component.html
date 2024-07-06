@@ -1,13 +1,11 @@
-<mat-form-field>
+<mat-form-field class="w-full">
   <mat-label>Nome</mat-label>
-  <input matInput type="text" [formControl]="name" />
+  <input matInput type="text" [formControl]="name" (change)="validateName($event)" />
   <mat-error *ngIf="name.hasError('required')">
     Nome é <strong>obrigatório</strong>
   </mat-error>
 
-  <mat-error
-    *ngIf="!name.hasError('required') && name.hasError('isNameComplete')"
-  >
+  <mat-error *ngIf="!name.hasError('required') && name.hasError('isNameComplete')">
     Informe seu nome <strong>completo</strong>
   </mat-error>
 </mat-form-field>
