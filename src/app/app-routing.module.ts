@@ -21,6 +21,13 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/landing-page/landing-page.component').then(
+            (m) => m.LandingPageComponent,
+          ),
+      },
+      {
         path: 'clientes',
         loadComponent: () =>
           import('./pages/customer/customer.component').then(
