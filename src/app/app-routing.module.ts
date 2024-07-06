@@ -5,6 +5,13 @@ import { PublicRoutesGuard } from './shared/guards/public-routes/public-routes.g
 
 const routes: Routes = [
   {
+    path: 'user/token',
+    loadComponent: () =>
+      import('./pages/email-confirmation/email-confirmation.component').then(
+        (m) => m.EmailConfirmationComponent,
+      ),
+  },
+  {
     path: '',
     canActivate: [PrivateRoutesGuard],
     children: [
