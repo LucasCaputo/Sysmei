@@ -103,7 +103,6 @@ export class CalendarComponent implements AfterViewInit {
     public viewportService: ViewportService,
   ) {
 
-    this.openUserSettingsModal();
   }
 
   ngAfterViewInit() {

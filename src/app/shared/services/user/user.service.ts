@@ -58,4 +58,12 @@ export class UserService {
       environment.baseURL + '/user/token?code=' + code,
     );
   }
+
+  public updateUser(body: Partial<User>): Observable<any> {
+    return this.httpClient.put(environment.baseURL + '/user', body, {
+      headers: {
+        Authorization: this.authService.getToken()!,
+      },
+    });
+  }
 }
