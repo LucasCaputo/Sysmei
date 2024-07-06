@@ -8,6 +8,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from '../../services/customer/customer.service';
+import { HelpDialogComponent } from '../dialogs/help-dialog/help-dialog.component';
+import { PaymentsDialogComponent } from '../dialogs/payments-dialog/payments-dialog.component';
 import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.component';
 
 @Component({
@@ -26,7 +28,7 @@ import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.componen
 export class MenuComponent {
   user = this.auth.getUser();
 
-  menuData = [
+  public menuData = [
     {
       redirect: 'agenda',
       label: 'Agenda',
@@ -41,6 +43,27 @@ export class MenuComponent {
       redirect: 'prestador',
       label: 'Prestador',
       icon: 'badge',
+    },
+  ];
+
+  public menuConfig = [
+    {
+      redirect: '',
+      label: 'Ajuda',
+      icon: 'help',
+      key: 'help',
+    },
+    {
+      redirect: '',
+      label: 'Configurações',
+      icon: 'settings',
+      key: 'settings',
+    },
+    {
+      redirect: '',
+      label: 'Pagamentos',
+      icon: 'payments',
+      key: 'payments',
     },
   ];
 
@@ -66,8 +89,60 @@ export class MenuComponent {
     this.router.navigate([router]);
   }
 
+  public openModal(modal: string) {
+    switch (modal) {
+      case 'help':
+        this.openHelpModal();
+        break;
+
+      case 'settings':
+        this.openUserSettingsModal();
+        break;
+
+    
+      case 'payments':
+        this.openPaymentsModal();
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  public openHelpModal(): void {
+    const dialogRef = this.dialog.open(HelpDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      position: {
+        top: '70px',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+    });
+  }
+
   public openUserSettingsModal(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
+      width: '500px',
+      maxWidth: '100vw',
+      position: {
+        top: '70px',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        return;
+      }
+    });
+  }
+
+  public openPaymentsModal(): void {
+    const dialogRef = this.dialog.open(PaymentsDialogComponent, {
       width: '500px',
       maxWidth: '100vw',
       position: {
