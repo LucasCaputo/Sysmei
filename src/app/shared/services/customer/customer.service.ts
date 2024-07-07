@@ -23,7 +23,6 @@ export class CustomerService {
     private utilService: UtilsService,
   ) { }
 
-  /** Busca lista de usuários e salva na variável customers */
   public searchCustomerList(): void {
     this.customerRepository
       .getCustomer(this.authService.getUser()?.login)

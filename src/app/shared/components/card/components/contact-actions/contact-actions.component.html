@@ -1,12 +1,11 @@
-<div>
-  <a href="tel:{{ customer.telefone }}" target="_blank">
-    <button mat-icon-button aria-label="Telefone">
-      <mat-icon class="mr-2" style="color: black">phone</mat-icon>
-    </button>
+<div class="flex items-end">
+  <a href="tel:{{ customer.telefone }}" target="_blank" class="hover:rounded-full hover:bg-gray-200 ">
+    <mat-icon class="m-2" style="color: black">phone</mat-icon>
   </a>
 
-  <button mat-icon-button aria-label="Ediar cliente" (click)="openDialog()">
-    <mat-icon style="color: black" class="mr-1">edit</mat-icon>
+  <button mat-icon-button aria-label="Ediar cliente" (click)="openDialog()"
+    class="hover:rounded-full hover:bg-gray-200 ">
+    <mat-icon style="color: black" class="m-2">edit</mat-icon>
   </button>
 
   <a href="https://api.whatsapp.com/send?phone=55{{
