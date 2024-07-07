@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedInputModule } from '../../inputs/shared-input.module';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-help-dialog',
   standalone: true,
   imports: [SharedModule, MatCheckboxModule, SharedInputModule],

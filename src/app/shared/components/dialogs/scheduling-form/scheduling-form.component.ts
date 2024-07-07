@@ -1,9 +1,9 @@
 import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
+    Component,
+    ElementRef,
+    Inject,
+    OnInit,
+    ViewChild,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -182,12 +182,12 @@ export class SchedulingFormComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       height: '280px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: {
         confirmed: false,
       },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 

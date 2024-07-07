@@ -41,4 +41,27 @@ export class EmployeeRepository {
       },
     );
   }
+
+    updateEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+      return this.httpClient.put<EmployeeResponse>(
+        environment.baseURL + '/prestador/'+ employee.id,
+        employee,
+        {
+          headers: {
+            Authorization: this.authService.getToken()!,
+          },
+        },
+      );
+    }
+
+    deleteEmployee(employee: any): Observable<any> {
+      return this.httpClient.delete<any>(
+        `${environment.baseURL}/prestador/${employee.id}`,
+        {
+          headers: {
+            Authorization: this.authService.getToken()!,
+          },
+        },
+      );
+    }
 }

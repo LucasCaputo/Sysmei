@@ -1,68 +1,18 @@
 <form [formGroup]="form">
-  <app-mobile-action-buttons
-    [title]="!data.id ? 'Cadastrar prestador' : 'Editar prestador'"
-    [disableConfirmButton]="form.invalid || !form.dirty"
-    (closeButton)="dialog.closeAll()"
-    (confirmButton)="onSubmit(); dialog.closeAll()"
-  />
+  <app-mobile-action-buttons [title]="!data.id ? 'Cadastrar prestador' : 'Editar prestador'"
+    [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
+    (confirmButton)="saveEmployee(); dialog.closeAll()" />
 
   <div mat-dialog-content class="dialog-content">
-    <mat-form-field class="w-full">
-      <mat-label>Nome</mat-label>
-      <input #myInput matInput type="text" formControlName="nome" required />
-      <mat-error *ngIf="form.controls.nome.hasError('required')">
-        Nome é <strong>obrigatório</strong>
-      </mat-error>
-      <mat-error
-        *ngIf="
-          !form.controls.nome.hasError('required') &&
-          form.controls.nome.hasError('hasNumber')
-        "
-      >
-        Insira seu nome completo, <strong>somente letras</strong>
-      </mat-error>
+    <app-name [name]="form.controls.nome" />
 
-      <mat-error
-        *ngIf="
-          !form.controls.nome.hasError('required') &&
-          form.controls.nome.hasError('isNameComplete')
-        "
-      >
-        Informe seu nome <strong>completo</strong>
-      </mat-error>
-    </mat-form-field>
+    <app-phone [phone]="form.controls.telefone" [label]="'Telefone'" />
 
-    <mat-form-field class="w-full">
-      <mat-label>Telefone</mat-label>
-      <input
-        matInput
-        type="tel"
-        mask="(00) 0 0000-0000"
-        formControlName="telefone"
-        minlength="11"
-        required
-      />
-      <mat-error
-        *ngIf="
-          form.controls.telefone.hasError('minlength') &&
-          !form.controls.telefone.hasError('required')
-        "
-      >
-        Por favor insira um telefone <strong>celular</strong> válido
-      </mat-error>
-      <mat-error *ngIf="form.controls.telefone.hasError('required')">
-        Telefone é <strong>obrigatório</strong>
-      </mat-error>
-    </mat-form-field>
+    <app-action-buttons [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
+      (confirmButton)="saveEmployee(); dialog.closeAll()"></app-action-buttons>
 
     <div class="flex justify-end items-center">
-      <button
-        *ngIf="data.nome"
-        color="warn"
-        mat-icon-button
-        aria-label="Excluir"
-        (click)="onDelete(data)"
-      >
+      <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

@@ -47,13 +47,13 @@ export class AgendaStatusComponent {
   public onEdit() {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: {
         ...this.data,
         hasDelete: false,
       },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -70,12 +70,12 @@ export class AgendaStatusComponent {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       height: '280px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: {
         confirmed: false,
       },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 

@@ -1,9 +1,9 @@
 import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  signal,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild,
+    signal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
@@ -87,9 +87,9 @@ export class CustomerComponent implements OnInit {
   openDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       position: {
-        top: '70px',
+        top: '90px',
       },
       data: dataInfo,
     });

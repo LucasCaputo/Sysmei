@@ -34,4 +34,19 @@ export class EmployeeService {
   ): Observable<EmployeeResponse> {
     return this.employeeRepository.postEmployee(employee);
   }
+
+    /** Cadastra novo prestador */
+    public editEmployee(
+      employee: EmployeeResponse,
+    ): Observable<EmployeeResponse> {
+      return this.employeeRepository.updateEmployee(employee);
+    }
+
+    public deleteEmployee(
+      employee: EmployeeResponse,
+    ): Observable<EmployeeResponse> {
+      return this.employeeRepository.deleteEmployee(employee);
+    }
+
+    
 }

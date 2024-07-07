@@ -49,11 +49,10 @@ export class EmployeeComponent implements OnInit {
   openDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(EmployeeDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
-      height: '300px',
+      maxWidth: '90vw',
       data: dataInfo,
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
   }

@@ -191,10 +191,10 @@ export class CustomerRecordComponent implements OnInit {
   addSchedule() {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: { customer: { id: parseInt(this.route.snapshot.params['id']) } },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 

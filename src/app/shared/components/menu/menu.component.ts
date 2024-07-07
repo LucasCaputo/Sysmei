@@ -112,9 +112,9 @@ export class MenuComponent {
   public openHelpModal(): void {
     const dialogRef = this.dialog.open(HelpDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -128,9 +128,9 @@ export class MenuComponent {
   public openUserSettingsModal(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -144,9 +144,9 @@ export class MenuComponent {
   public openPaymentsModal(): void {
     const dialogRef = this.dialog.open(PaymentsDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 

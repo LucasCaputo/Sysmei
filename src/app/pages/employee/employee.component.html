@@ -24,7 +24,7 @@
   <mat-sidenav-content>
     <mat-list>
       <ng-container *ngFor="let customer of customerList">
-        <app-card [cardData]="customer"></app-card>
+        <app-card [cardData]="customer" (edit)="openDialog(customer)" (click)="openDialog(customer)"></app-card>
       </ng-container>
     </mat-list>
   </mat-sidenav-content>

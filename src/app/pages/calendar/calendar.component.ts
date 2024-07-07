@@ -187,10 +187,10 @@ export class CalendarComponent implements AfterViewInit {
 
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: { ...dateClick, hasDelete: false },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -211,14 +211,14 @@ export class CalendarComponent implements AfterViewInit {
   private editSchedule(clickInfo: EventClickArg) {
     const dialogRef = this.dialog.open(AgendaStatusComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: {
         ...clickInfo?.event?._def?.extendedProps,
         start: clickInfo?.event?.start,
         end: clickInfo?.event?.end,
       },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -408,9 +408,9 @@ export class CalendarComponent implements AfterViewInit {
   public openUserSettingsModal(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 

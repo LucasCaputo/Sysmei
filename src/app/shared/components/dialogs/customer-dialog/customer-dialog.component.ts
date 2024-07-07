@@ -47,15 +47,67 @@ export class CustomerDialogComponent {
     private snackbarService: SnackbarService,
   ) {}
 
+  saveCustomer(): void {
+    if (this.form.value?.id) {
+      this.updateCustomer(this.form.value);
+      return;
+    }
+    if (this.form.value) {
+      this.addCustomer();
+    }
+  }
+
+  updateCustomer(form: any) {
+    this.customerService
+    .updateCustomer(this.form.value, form.value.id)
+    .subscribe(
+      (response) => {
+        this.customerService.searchCustomerList();
+        this.snackbarService.openSnackBar(
+          `Parabéns! usuário atualizado com sucesso`,
+          'X',
+          false,
+        );
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro na atualização, tente novamente`,
+          'X',
+          true,
+        );
+      },
+    );
+  }
+
+  addCustomer() {
+    this.customerService.postCustomer(this.form.value).subscribe(
+      (response) => {
+        this.customerService.searchCustomerList();
+        this.snackbarService.openSnackBar(
+          `Parabéns! cliente cadastrado com sucesso`,
+          'X',
+          false,
+        );
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro no cadastro, tente novamente`,
+          'X',
+          true,
+        );
+      },
+    );
+  }
+
   onDelete(customer: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: {
         confirmed: false,
       },
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
@@ -84,50 +136,5 @@ export class CustomerDialogComponent {
         );
       }
     });
-  }
-
-  /**Adiciona e edita dados do Customer */
-  saveCustomer(): void {
-    if (this.form.value?.id) {
-      this.customerService
-        .updateCustomer(this.form.value, this.form.value.id)
-        .subscribe(
-          (response) => {
-            this.customerService.searchCustomerList();
-            this.snackbarService.openSnackBar(
-              `Parabéns! usuário atualizado com sucesso`,
-              'X',
-              false,
-            );
-          },
-          (error) => {
-            this.snackbarService.openSnackBar(
-              `Tivemos um erro na atualização, tente novamente`,
-              'X',
-              true,
-            );
-          },
-        );
-      return;
-    }
-    if (this.form.value) {
-      this.customerService.postCustomer(this.form.value).subscribe(
-        (response) => {
-          this.customerService.searchCustomerList();
-          this.snackbarService.openSnackBar(
-            `Parabéns! cliente cadastrado com sucesso`,
-            'X',
-            false,
-          );
-        },
-        (error) => {
-          this.snackbarService.openSnackBar(
-            `Tivemos um erro no cadastro, tente novamente`,
-            'X',
-            true,
-          );
-        },
-      );
-    }
   }
 }

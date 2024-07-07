@@ -1,9 +1,9 @@
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -71,10 +71,10 @@ export class RecordListComponent implements OnInit {
   click(el: any) {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
-      maxWidth: '100vw',
+      maxWidth: '90vw',
       data: this.scheduleService.formatScheduleResponse([el])[0],
       position: {
-        top: '70px',
+        top: '90px',
       },
     });
 
