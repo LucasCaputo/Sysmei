@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedInputModule } from '../../inputs/shared-input.module';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-dialog',
   standalone: true,
   imports: [

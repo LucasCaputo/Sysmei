@@ -1,14 +1,10 @@
 import {
   Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
+  Inject
 } from '@angular/core';
 import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
@@ -16,31 +12,29 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';
+import { SharedInputModule } from '../../inputs/shared-input.module';
 
 @Component({
   selector: 'app-customer-dialog',
   templateUrl: './customer-dialog.component.html',
   styleUrls: ['./customer-dialog.component.scss'],
   standalone: true,
-  imports: [SharedModule, MobileActionButtonsComponent],
+  imports: [SharedModule, SharedInputModule],
 })
-export class CustomerDialogComponent implements OnInit {
-  form = this.fb.group({
+export class CustomerDialogComponent {
+  form = this.formBuilder.group({
     id: [this.data.id || null],
-    nome: [this.data.nome || '', this.checkName],
-    telefone1: [this.data.telefone1 || ''],
+    nome: [this.data.nome || '', [Validators.required]],
+    telefone1: [this.data.telefone1 || '', [Validators.required]],
     email: [this.data.email || '', [Validators.email]],
     login_usuario: [this.authService.getUser()?.login],
   });
 
   user = this.authService.getUser();
 
-  @ViewChild('myInput') myInput: ElementRef | undefined;
-
   constructor(
     private authService: AuthService,
-    private fb: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       id: number;
@@ -52,31 +46,6 @@ export class CustomerDialogComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
   ) {}
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.myInput?.nativeElement.focus();
-    }, 300);
-  }
-
-  checkName(input: UntypedFormControl) {
-    const hasNumber = /[0-9]/.test(input.value);
-
-    if (hasNumber) return { hasNumber: true };
-    else {
-      const name = input.value.split(' ');
-
-      const filtrado = name.filter((x: string) => {
-        if (x != '' && x.length > 1) return { isNameComplete: true };
-
-        return null;
-      });
-
-      return filtrado.length < 2 ? { isNameComplete: true } : null;
-    }
-  }
 
   onDelete(customer: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -126,7 +95,7 @@ export class CustomerDialogComponent implements OnInit {
           (response) => {
             this.customerService.searchCustomerList();
             this.snackbarService.openSnackBar(
-              `Parabéns! usuário ${this.form.value.nome.toUpperCase()} atualizado com sucesso`,
+              `Parabéns! usuário ${'this.form.value.nome.toUpperCase()'} atualizado com sucesso`,
               'X',
               false,
             );
@@ -146,7 +115,7 @@ export class CustomerDialogComponent implements OnInit {
         (response) => {
           this.customerService.searchCustomerList();
           this.snackbarService.openSnackBar(
-            `Parabéns! usuário ${this.form.value.nome.toUpperCase()} cadastrado com sucesso`,
+            `Parabéns! usuário ${'this.form.value.nome.toUpperCase()'} cadastrado com sucesso`,
             'X',
             false,
           );

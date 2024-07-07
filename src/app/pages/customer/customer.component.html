@@ -32,28 +32,43 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div *ngIf="(customerList | arrayFiltro: search)?.length" class="flex h-body-height justify-between">
-      <div class="max-w-md h-body-height overflow-auto">
-        <ng-container *ngFor="let customer of customerList | arrayFiltro: search">
-          <div mat-subheader *ngIf="customer.isFirstLetter && !search">
-            {{ customer.inicial }}
-          </div>
-          <mat-list>
-            <app-card [cardData]="customer" (edit)="openDialog($event)" (click)="navigateToCustomerDetails($event)"></app-card>
-          </mat-list>
-        </ng-container>
+    <ng-container *ngIf="{customerList: (customerList | arrayFiltro: search)} as model">
+      <div *ngIf="model.customerList.length" class="flex h-body-height justify-between">
+        <div class="max-w-md h-body-height overflow-auto">
+          <ng-container *ngFor="let customer of customerList | arrayFiltro: search">
+            <div mat-subheader *ngIf="customer.isFirstLetter && !search">
+              {{ customer.inicial }}
+            </div>
+            <mat-list>
+              <app-card [cardData]="customer" (edit)="openDialog($event)"
+                (click)="navigateToCustomerDetails($event)"></app-card>
+            </mat-list>
+          </ng-container>
+        </div>
+        <div *ngIf="(viewPortService.screenSize$| async) !== 'mobile'" class="w-2/4 m-0 mx-auto max-xl">
+          <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()"></app-customer-record>
+        </div>
       </div>
-      <div  *ngIf="(viewPortService.screenSize$| async) !== 'mobile'" class="w-2/4 m-0 mx-auto max-xl">
-        <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()"></app-customer-record>
-      </div>
-    </div>
 
-    <div style="align-items: center; justify-content: center"
-      *ngIf="!(customerList | arrayFiltro: search)?.length && search">
-      <div class="h-body-height flex items-center justify-center text-base flex-col">
-        <h1>Não encontramos o cliente</h1>
-        <h1>{{ search }}</h1>
+      <div style="align-items: center; justify-content: center" *ngIf="!model.customerList.length && search">
+        <div class="h-body-height flex items-center justify-center text-base flex-col">
+          <h1>Não encontramos o cliente</h1>
+          <h1>{{ search }}</h1>
+        </div>
       </div>
-    </div>
+
+      <div style="align-items: center; justify-content: center" *ngIf="customerList.length === 0 && !search">
+        <div class="h-body-height flex items-center justify-center text-base flex-col">
+          <h1>Adicione seu primeiro cliente</h1>
+          <button mat-raised-button color="primary" (click)="
+          openDialog({
+            nome: '',
+            telefones: [{ id: 0, numero: '' }],
+            email: ''
+          })
+        ">Cadastrar</button>
+        </div>
+      </div>
+    </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>

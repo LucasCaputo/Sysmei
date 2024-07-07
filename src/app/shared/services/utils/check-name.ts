@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 
-export function checkName(input: FormControl) {
+export function CheckName(input: FormControl) {
   console.log(input.value);
   const value = input.value?.trim();
 
