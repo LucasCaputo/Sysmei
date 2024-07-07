@@ -1,5 +1,15 @@
-<app-header [isPrivate]="false"></app-header>
+<app-header [isPrivate]="false" />
 
 <app-card-container [title]="'Entrar'">
-  <app-login-form (action)="onSubmit($event)" />
+  <form class="flex flex-col" [formGroup]="loginForm">
+    <app-email [email]="loginForm.controls.email" />
+
+    <app-password [label]="'Senha'" [password]="loginForm.controls.password" />
+
+    <app-message-tip [title]="'Não tem uma conta?'" [linkText]="'Crie uma!'" [linkUrl]="'/cadastro'" />
+
+    <mat-card-actions class="flex justify-end">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Entrar</button>
+    </mat-card-actions>
+  </form>
 </app-card-container>

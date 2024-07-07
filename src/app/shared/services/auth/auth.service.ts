@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { User } from '../../interfaces/user';
+import { UserInterface } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public user: User | undefined;
+  public user: UserInterface | undefined;
 
   private token: string | undefined;
 
@@ -19,7 +19,7 @@ export class AuthService {
     localStorage.setItem('token', JSON.stringify(this.token));
   }
 
-  getUser(): User | undefined {
+  getUser(): UserInterface | undefined {
     if (this.user) {
       return this.user;
     }

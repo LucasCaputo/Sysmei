@@ -1,4 +1,4 @@
-export interface User {
+export interface UserInterface {
   enabled: boolean;
   login: string;
   nome: string;
@@ -9,7 +9,7 @@ export interface User {
 }
 
 export interface LoginRequest {
-  nome: string;
+  usuario: string;
   senha: string;
 }
 
@@ -17,5 +17,5 @@ export interface LoginResponse {
   dataFim: Date;
   dataInicio: Date;
   token: string;
-  usuario: User;
+  usuario: UserInterface;
 }

@@ -1,48 +1,49 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
-import { LoginRequest } from 'src/app/shared/interfaces/user';
+import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input.module';
+import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { FormatLoginPayload } from 'src/app/shared/services/utils/format-payload';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', '../../app.component.scss'],
-  animations: [
-    trigger('enter', [
-      transition(':enter', [
-        style({ opacity: 0.5 }),
-        animate('400ms', style({ opacity: 1 })),
-      ]),
-    ]),
-  ],
+  styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    HttpClientModule,
+    SharedModule,
+    SharedInputModule,
     MatCardModule,
     HeaderComponent,
-    LoginFormComponent,
     CardContainerComponent,
+    MessageTipComponent
   ],
 })
 export class LoginComponent {
+  loginForm = this.formBuilder.group({
+    email: ['', [Validators.email, Validators.required]],
+    password: ['', [Validators.required]],
+  });
+
   constructor(
-    private userService: UserService,
-    private router: Router,
-    private snackbarService: SnackbarService,
+    private readonly userService: UserService,
+    private readonly router: Router,
+    private readonly snackbarService: SnackbarService,
+    private readonly formBuilder: FormBuilder
   ) {}
 
-  onSubmit(event: LoginRequest) {
-    if (event) {
-      this.userService.postLogin(event).subscribe(
+  onSubmit() {
+    if (this.loginForm.value.email && this.loginForm.value.password && this.loginForm.valid) {
+      const payload = FormatLoginPayload(this.loginForm.value)
+      
+      this.userService.postLogin(payload).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
             `Bem-vindo ${response.usuario.nome}`,

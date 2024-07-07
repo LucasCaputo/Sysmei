@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
-import { User } from 'src/app/shared/interfaces/user';
+import { UserInterface } from 'src/app/shared/interfaces/user';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -47,7 +47,7 @@ export class UserDialogComponent {
   ) {}
 
   saveSettings() {
-    let body: Partial<User>
+    let body: Partial<UserInterface>
 
     if(this.userForm.value.name && this.userForm.value.phone && this.userForm.value.login) {
      body = {
