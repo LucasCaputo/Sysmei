@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { IsNameCompleted } from 'src/app/shared/services/utils/check-name';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -12,8 +13,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 export class NameComponent {
   @Input({ required: true }) name!: FormControl<string | null>;
 
-  validateName(event: Event) {
-    console.log(event)
-    // console.log(checkName(this.name.value || \))
+  public isNameCompleted = signal(false)
+
+  validateName() {
+    this.isNameCompleted.set(IsNameCompleted(this.name))
   }
 }

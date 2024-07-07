@@ -1,17 +1,14 @@
 import { FormControl } from '@angular/forms';
 
-export function CheckName(input: FormControl) {
-  console.log(input.value);
+export function IsNameCompleted(input: FormControl): boolean {
   const value = input.value?.trim();
 
   if (!value) {
-    console.log(value);
-    return { required: true };
+    return false;
   }
 
   const nameParts = value
     .split(' ')
-    .filter((part: string | any[]) => part.length > 1);
 
-  return nameParts.length < 2 ? { isNameComplete: true } : null;
+  return nameParts.length <= 1;
 }
