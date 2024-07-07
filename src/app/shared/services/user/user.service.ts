@@ -15,7 +15,7 @@ export class UserService {
     private authService: AuthService,
   ) {}
 
-  public postUser(newUser: UserInterface): Observable<UserInterface> {
+  public postUser(newUser: Partial<UserInterface>): Observable<UserInterface> {
     return this.httpClient.post<UserInterface>(
       environment.baseURL + '/user',
       newUser,
