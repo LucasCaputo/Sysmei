@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
-import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
+import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { ScheduleRepository } from 'src/app/shared/services/service-api/schedule.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -41,7 +41,7 @@ export class AgendaStatusComponent {
     private scheduleService: ScheduleService,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
-  ) {}
+  ) { }
 
   /** Edita um agendamento */
   public onEdit() {

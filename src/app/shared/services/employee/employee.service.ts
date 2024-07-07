@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
-import { EmployeeRepository } from 'src/app/repository/services/employee/employee.repository';
+import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
+import { EmployeeRepository } from '../service-api/employee.repository';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class EmployeeService {
   public $employee: BehaviorSubject<Array<EmployeeResponse>> =
     new BehaviorSubject<Array<EmployeeResponse>>([]);
 
-  constructor(private employeeRepository: EmployeeRepository) {}
+  constructor(private employeeRepository: EmployeeRepository) { }
 
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {

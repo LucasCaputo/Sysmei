@@ -19,7 +19,6 @@ import {
   ViewApi,
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
-import { ScheduleFormatResponse } from 'src/app/repository/intefaces/schedule-response';
 import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
 import { UserDialogComponent } from 'src/app/shared/components/dialogs/user-dialog/user-dialog.component';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
@@ -27,6 +26,7 @@ import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigation/calendar-naviagtion/calendar-naviagtion.component';
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
 import { CalendarSidenavDesktopComponent } from 'src/app/shared/components/navigation/calendar-sidenav-desktop/calendar-sidenav-desktop.component';
+import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';

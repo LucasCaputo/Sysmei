@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
+import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';

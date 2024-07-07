@@ -4,9 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ScheduleFormatResponse,
   ScheduleResponse,
-} from 'src/app/repository/intefaces/schedule-response';
-import { ScheduleRepository } from 'src/app/repository/services/schedule/schedule.repository';
+} from 'src/app/shared/interfaces/schedule-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { ScheduleRepository } from 'src/app/shared/services/service-api/schedule.repository';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { CustomerService } from '../customer/customer.service';
@@ -31,7 +31,7 @@ export class ScheduleService {
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
-  ) {}
+  ) { }
 
   /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(): void {

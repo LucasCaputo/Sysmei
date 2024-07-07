@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { CustomerResponse } from '../../intefaces/customer-response';
+import { environment } from 'src/environments/environment';
+import { CustomerResponse } from '../../interfaces/customer-response';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class CustomerRepository {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   postCustomer(customer: any): Observable<CustomerResponse> {
     return this.httpClient.post<any>(

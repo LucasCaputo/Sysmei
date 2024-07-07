@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
+import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { CustomerData } from '../../components/dialogs/scheduling-form/interfaces/customer-data';
+import { CustomerRepository } from '../service-api/customer.repository';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class CustomerService {
     private authService: AuthService,
     private customerRepository: CustomerRepository,
     private utilService: UtilsService,
-  ) {}
+  ) { }
 
   /** Busca lista de usuários e salva na variável customers */
   public searchCustomerList(): void {

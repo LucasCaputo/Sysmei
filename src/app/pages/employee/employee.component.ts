@@ -3,11 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { EmployeeResponse } from 'src/app/repository/intefaces/employee-response';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { EmployeeDialogComponent } from 'src/app/shared/components/dialogs/employee-dialog/employee-dialog.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -31,7 +31,7 @@ export class EmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.searchEmployeeList();

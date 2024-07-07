@@ -12,12 +12,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
-import { CustomerRepository } from 'src/app/repository/services/customer/customer.repository';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
@@ -105,7 +105,7 @@ export class CustomerRecordComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     public dialog: MatDialog,
-  ) {}
+  ) { }
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -173,7 +173,7 @@ export class CustomerRecordComponent implements OnInit {
             this.photos = result.documentsUrl;
           });
         },
-        (error) => {},
+        (error) => { },
       );
     }
   }

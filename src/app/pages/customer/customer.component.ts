@@ -11,11 +11,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
-import { CustomerResponse } from 'src/app/repository/intefaces/customer-response';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
@@ -56,7 +56,7 @@ export class CustomerComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     public viewPortService: ViewportService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCustomers();
