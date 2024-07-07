@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMaskDirective } from 'ngx-mask';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     HttpClientModule,
     MatFormFieldModule,
     NgxMaskDirective,
+    SpinnerComponent
   ],
   exports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { NgxMaskDirective } from 'ngx-mask';
     HttpClientModule,
     MatFormFieldModule,
     NgxMaskDirective,
+    SpinnerComponent
   ],
 })
 export class SharedModule {}

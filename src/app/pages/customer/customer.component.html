@@ -50,24 +50,22 @@
         </div>
       </div>
 
-      <div style="align-items: center; justify-content: center" *ngIf="!model.customerList.length && search">
-        <div class="h-body-height flex items-center justify-center text-base flex-col">
-          <h1>Não encontramos o cliente</h1>
-          <h1>{{ search }}</h1>
-        </div>
+      <div *ngIf="!model.customerList.length && search"
+        class="h-body-height flex items-center justify-center text-base flex-col">
+        <h1>Não encontramos o cliente</h1>
+        <h1>{{ search }}</h1>
       </div>
 
-      <div style="align-items: center; justify-content: center" *ngIf="customerList.length === 0 && !search">
-        <div class="h-body-height flex items-center justify-center text-base flex-col">
-          <h1>Adicione seu primeiro cliente</h1>
-          <button mat-raised-button color="primary" (click)="
+      <div *ngIf="customerList.length === 0 && !search"
+        class="h-body-height flex items-center justify-center text-base flex-col">
+        <h1>Adicione seu primeiro cliente</h1>
+        <button mat-raised-button color="primary" (click)="
           openDialog({
             nome: '',
             telefones: [{ id: 0, numero: '' }],
             email: ''
           })
         ">Cadastrar</button>
-        </div>
       </div>
     </ng-container>
   </mat-sidenav-content>
