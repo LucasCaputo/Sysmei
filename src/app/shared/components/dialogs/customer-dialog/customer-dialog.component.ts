@@ -48,8 +48,8 @@ export class CustomerDialogComponent {
   ) {}
 
   saveCustomer(): void {
-    if (this.form.value?.id) {
-      this.updateCustomer(this.form.value);
+    if (this.form.value && this.form.value.id) {
+      this.updateCustomer(this.form.value.id);
       return;
     }
     if (this.form.value) {
@@ -57,9 +57,9 @@ export class CustomerDialogComponent {
     }
   }
 
-  updateCustomer(form: any) {
+  updateCustomer(id: number) {
     this.customerService
-    .updateCustomer(this.form.value, form.value.id)
+    .updateCustomer(this.form.value, id)
     .subscribe(
       (response) => {
         this.customerService.searchCustomerList();

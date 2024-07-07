@@ -5,6 +5,7 @@ import { EmailComponent } from './email/email.component';
 import { NameComponent } from './name/name.component';
 import { PasswordComponent } from './password/password.component';
 import { PhoneComponent } from './phone/phone.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { PhoneComponent } from './phone/phone.component';
     EmailComponent,
     PasswordComponent,
     MobileActionButtonsComponent,
-    ActionButtonsComponent
+    ActionButtonsComponent,
+    SearchComponent
   ],
   exports: [
     NameComponent,
@@ -21,7 +23,8 @@ import { PhoneComponent } from './phone/phone.component';
     EmailComponent,
     PasswordComponent,
     MobileActionButtonsComponent,
-    ActionButtonsComponent
+    ActionButtonsComponent,
+    SearchComponent
   ]
 })
 export class SharedInputModule { }
