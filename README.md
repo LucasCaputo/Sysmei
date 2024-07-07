@@ -1,7 +1,7 @@
 # Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
-This project use Node 14
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.
+This project use Node 18
 
 ## Development server
 

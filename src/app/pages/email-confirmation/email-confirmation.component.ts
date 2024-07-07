@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-email-confirmation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SharedModule],
   templateUrl: './email-confirmation.component.html',
   styleUrls: ['./email-confirmation.component.scss']
 })

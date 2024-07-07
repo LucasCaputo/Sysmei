@@ -66,6 +66,11 @@ const routes: Routes = [
         loadComponent: () =>
           import('./pages/login/login.component').then((m) => m.LoginComponent),
       },
+      {
+        path: 'recuperar-conta',
+        loadComponent: () =>
+          import('./pages/email-confirmation/email-confirmation.component').then((m) => m.EmailConfirmationComponent),
+      },
     ],
   },
   {
