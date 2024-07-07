@@ -21,21 +21,16 @@ import { SharedInputModule } from '../../inputs/shared-input.module';
 })
 export class EmployeeDialogComponent {
   form = this.formBuilder.group({
-    login_usuario: '',
     nome: [this.data.nome || '', [Validators.required]],
     telefone: [this.data.telefone || '', [Validators.required]],
+    login_usuario: '',
   });
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
-    public data: {
-      id: number;
-      login_usuario: string;
-      nome: string;
-      telefone: string;
-    },
+    public data: EmployeeResponse,
     private employeeService: EmployeeService,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,

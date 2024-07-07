@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -25,29 +25,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
   ],
 })
-export class EmployeeComponent implements OnInit {
-  customerList: Array<EmployeeResponse> = [];
+export class EmployeeComponent {
+  customerList = this.employeeService.$employee;
 
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
   ) { }
 
-  ngOnInit(): void {
-    this.searchEmployeeList();
-  }
-
-  /**Busca lista de prestadores e salva na variável */
-  private searchEmployeeList() {
-    this.employeeService.$employee.subscribe((result) => {
-      if (result.length) {
-        this.customerList = result;
-      }
-    });
-  }
-
-  openDialog(dataInfo: any) {
-    const dialogRef = this.dialog.open(EmployeeDialogComponent, {
+  openDialog(dataInfo: EmployeeResponse) {
+    this.dialog.open(EmployeeDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: dataInfo,

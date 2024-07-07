@@ -1,21 +1,19 @@
 import {
-    Component,
-    ElementRef,
-    OnInit,
-    ViewChild,
-    signal,
+  Component,
+  ElementRef,
+  ViewChild,
+  signal
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
-import { debounceTime, first } from 'rxjs/operators';
+import { debounceTime, first, tap } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
-import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
@@ -39,9 +37,15 @@ import { CustomerRecordComponent } from '../customer-record/customer-record.comp
     CustomerRecordComponent,
   ],
 })
-export class CustomerComponent implements OnInit {
+export class CustomerComponent {
   getList: Array<any> = [];
-  customerList: Array<any> = [];
+  customerList$ = this.customerService.$customers.pipe(
+    tap((result)=> {
+      if (result.length) {
+        this.selectedCustomerId.set(result[0].id);
+      }
+    })
+  )
   user = this.authService.getUser();
 
   @ViewChild('searchBox') searchBox!: ElementRef<HTMLInputElement>;
@@ -56,11 +60,8 @@ export class CustomerComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     public viewPortService: ViewportService,
-  ) { }
-
-  ngOnInit(): void {
-    this.getCustomers();
-  }
+  ) {
+   }
 
   ngAfterViewInit() {
     fromEvent(this.searchBox?.nativeElement, 'keyup')
@@ -71,18 +72,6 @@ export class CustomerComponent implements OnInit {
       });
   }
 
-  /** Observable da lista de clientes */
-  private getCustomers(): void {
-    this.customerService.$customers.subscribe(
-      (result: Array<CustomerResponse>) => {
-        this.customerList = result;
-        console.log(result);
-        if (result.length) {
-          this.selectedCustomerId.set(result[0].id);
-        }
-      },
-    );
-  }
 
   openDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {

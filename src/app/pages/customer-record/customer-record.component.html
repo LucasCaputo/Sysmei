@@ -1,6 +1,6 @@
 <app-header *ngIf="hasHeader" [isPrivate]="true">
   <div class="flex justify-between w-full items-center">
-    <button *ngIf="!edit" mat-button routerLink="/clientes">
+    <button *ngIf="!edit" mat-button routerLink="/clientes" (click)="getCustomerList()">
       <mat-icon>arrow_back</mat-icon>
     </button>
 
@@ -54,5 +54,6 @@
         </mat-tab>
       </mat-tab-group>
     </div>
+    <app-spinner *ngIf="loading" />
   </mat-sidenav-content>
 </mat-sidenav-container>

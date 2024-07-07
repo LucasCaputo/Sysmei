@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
@@ -13,8 +13,7 @@ import { CustomerRepository } from '../service-api/customer.repository';
 })
 export class CustomerService {
   public customers!: Array<CustomerResponse>;
-  public $customers: BehaviorSubject<Array<CustomerResponse>> =
-    new BehaviorSubject<Array<CustomerResponse>>([]);
+  public $customers: Subject<Array<CustomerResponse>> = new Subject<Array<CustomerResponse>>();
   public formattedCustomerList!: Array<CustomerData>;
 
   constructor(

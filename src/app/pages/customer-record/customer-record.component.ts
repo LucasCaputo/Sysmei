@@ -17,6 +17,7 @@ import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -105,6 +106,7 @@ export class CustomerRecordComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     public dialog: MatDialog,
+    private customerService: CustomerService,
   ) { }
 
   emitEventToChild() {
@@ -121,6 +123,10 @@ export class CustomerRecordComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
+  }
+
+  getCustomerList() {
+    this.customerService.searchCustomerList()
   }
 
   populate() {

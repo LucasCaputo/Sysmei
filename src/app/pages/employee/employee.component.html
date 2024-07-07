@@ -6,9 +6,10 @@
   <div class="flex w-full justify-end">
     <button mat-icon-button aria-label="Adicionar Prestador" (click)="
         openDialog({
+          id: 0,
           nome: '',
-          telefones: [{ id: 0, numero: '' }],
-          email: ''
+          telefone: '',
+          login_usuario: ''
         })
       ">
       <mat-icon style="color: white">add_circle_outline</mat-icon>
@@ -23,8 +24,8 @@
 
   <mat-sidenav-content>
     <mat-list>
-      <ng-container *ngFor="let customer of customerList">
-        <app-card [cardData]="customer" (edit)="openDialog(customer)" (click)="openDialog(customer)"></app-card>
+      <ng-container *ngFor="let customer of customerList | async">
+        <app-card [cardData]="customer" (edit)="openDialog(customer)"></app-card>
       </ng-container>
     </mat-list>
   </mat-sidenav-content>
