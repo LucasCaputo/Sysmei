@@ -10,16 +10,17 @@ import { EmployeeResponse } from '../../../shared/interfaces/employee-response';
   providedIn: 'root',
 })
 export class EmployeeRepository {
+  user = '';
+
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
   ) { }
 
   /** Busca lista de prestadores */
-  getEmployee(): Observable<Array<EmployeeResponse>> {
+  getEmployee(user?: string): Observable<Array<EmployeeResponse>> {
     return this.httpClient.get<Array<EmployeeResponse>>(
-      `${environment.baseURL}/prestador?login=${this.authService.getUser()?.login
-      }`,
+      `${environment.baseURL}/prestador?login=${user || this.user}`,
       {
         headers: {
           Authorization: this.authService.getToken()!,

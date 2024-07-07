@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userSubject: BehaviorSubject<UserInterface | undefined> = new BehaviorSubject<UserInterface | undefined>(undefined);
+
   public user: UserInterface | undefined;
 
   private token: string | undefined;
@@ -12,11 +15,12 @@ export class AuthService {
   constructor() {}
 
   setUser(user: any) {
-    this.user = user.usuario;
-    this.token = user.token;
+    this.user = user;
+    this.userSubject.next(user)
+  }
 
-    localStorage.setItem('user', JSON.stringify(this.user));
-    localStorage.setItem('token', JSON.stringify(this.token));
+  getUserObservable() {
+    return this.userSubject.asObservable();
   }
 
   getUser(): UserInterface | undefined {
@@ -24,14 +28,12 @@ export class AuthService {
       return this.user;
     }
 
-    const logedUser = localStorage.getItem('user');
-
-    if (logedUser) {
-      this.user = JSON.parse(logedUser);
-      return this.user;
-    }
-
     return undefined;
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', JSON.stringify(token));
+    this.token = token
   }
 
   getToken() {
@@ -56,9 +58,6 @@ export class AuthService {
   }
 
   isLoged() {
-    if (this.getUser() && this.getToken()) {
-      return true;
-    }
-    return false;
+    return !!this.getToken()
   }
 }

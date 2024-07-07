@@ -30,14 +30,17 @@ export class UserService {
       )
       .pipe(
         tap((response: any) => {
-          this.authService.setUser(response);
+          this.authService.setToken(response.token)
         }),
       );
   }
 
-  public getUser(code: string): Observable<any> {
+  public getUser(): Observable<any> {
     return this.httpClient.get(
-      environment.baseURL + '/user/token?code=' + code,
+      environment.baseURL + '/user', {
+        headers: {
+          Authorization: this.authService.getToken()!,
+        }}
     );
   }
 

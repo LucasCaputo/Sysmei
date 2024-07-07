@@ -12,6 +12,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ScheduleRepository {
+
+  user = ''
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
@@ -30,9 +32,9 @@ export class ScheduleRepository {
   }
 
   /** Busca lista de todos os agendamentos */
-  public getSchedule(): Observable<any> {
+  public getSchedule(user: string): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
+      `${environment.baseURL}/agenda/prestador?login=${user}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
       {
         headers: {
           Authorization: this.authService.getToken()!,

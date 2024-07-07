@@ -8,6 +8,7 @@ import { ScheduleService } from 'src/app/shared/services/schedule/schedule.servi
 import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { EmployeeRepository } from 'src/app/shared/services/service-api/employee.repository';
 import { ScheduleRepository } from 'src/app/shared/services/service-api/schedule.repository';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,21 +21,27 @@ export class InitializeService {
     private customerRepository: CustomerRepository,
     private scheduleRepository: ScheduleRepository,
     private employeeRepository: EmployeeRepository,
-    private auth: AuthService,
+    private authService: AuthService,
     private loaderService: LoaderService,
+    private user: UserService
   ) { }
 
   /** Método de inicialização */
   public initialize() {
-    forkJoin([
-      this.customerRepository.getCustomer(this.auth.getUser()?.login),
-      this.scheduleRepository.getSchedule(),
-      this.employeeRepository.getEmployee(),
-    ]).subscribe(([customerList, scheduleList, employeeList]) => {
-      this.employeeService.setSearchEmployeeList(employeeList);
-      this.customerService.setSearchCustomerList(customerList);
-      this.scheduleService.setSearchScheduledList(scheduleList);
-      this.loaderService.setFirstLoad(false);
-    });
+    this.user.getUser().subscribe((user)=> {
+      this.employeeRepository.user = user.login
+      this.scheduleRepository.user = user.login
+      this.authService.setUser(user)
+      forkJoin([
+        this.customerRepository.getCustomer(user.login),
+        this.scheduleRepository.getSchedule(user.login),
+        this.employeeRepository.getEmployee(user.login),
+      ]).subscribe(([customerList, scheduleList, employeeList]) => {
+        this.employeeService.setSearchEmployeeList(employeeList);
+        this.customerService.setSearchCustomerList(customerList);
+        this.scheduleService.setSearchScheduledList(scheduleList);
+        this.loaderService.setFirstLoad(false);
+      });
+    })
   }
 }

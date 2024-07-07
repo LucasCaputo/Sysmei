@@ -35,7 +35,7 @@ export class ScheduleService {
 
   /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(): void {
-    this.ScheduleRepository.getSchedule().subscribe(
+    this.ScheduleRepository.getSchedule(this.ScheduleRepository.user).subscribe(
       (scheduleList: Array<ScheduleResponse>) => {
         this.setSearchScheduledList(scheduleList);
       },

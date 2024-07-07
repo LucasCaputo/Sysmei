@@ -95,7 +95,7 @@ export class CustomerDialogComponent {
           (response) => {
             this.customerService.searchCustomerList();
             this.snackbarService.openSnackBar(
-              `Parabéns! usuário ${'this.form.value.nome.toUpperCase()'} atualizado com sucesso`,
+              `Parabéns! usuário atualizado com sucesso`,
               'X',
               false,
             );
@@ -115,7 +115,7 @@ export class CustomerDialogComponent {
         (response) => {
           this.customerService.searchCustomerList();
           this.snackbarService.openSnackBar(
-            `Parabéns! usuário ${'this.form.value.nome.toUpperCase()'} cadastrado com sucesso`,
+            `Parabéns! cliente cadastrado com sucesso`,
             'X',
             false,
           );

@@ -3,8 +3,8 @@
     <div class="flex items-center justify-around mb-5 mr-10">
       <span class="w-10 h-10 bg-violet-600 border rounded-[50%] mr-5">
       </span>
-      <div class="flex flex-col">
-        <span>{{ user?.nome }}</span>
+      <div *ngIf="user$ | async as user" class="flex flex-col">
+        <span>{{ user.nome }}</span>
         <span>{{ user?.login }}</span>
       </div>
     </div>

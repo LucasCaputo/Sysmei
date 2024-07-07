@@ -16,7 +16,8 @@ export class EmployeeService {
 
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {
-    this.employeeRepository.getEmployee().subscribe((employeeList) => {
+    console.log(this.employeeRepository.user)
+    this.employeeRepository.getEmployee(this.employeeRepository.user).subscribe((employeeList) => {
       this.setSearchEmployeeList(employeeList);
     });
   }

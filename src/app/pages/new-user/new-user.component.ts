@@ -45,7 +45,8 @@ export class NewUserComponent {
     private router: Router,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
-  ) {}
+  ) {
+  }
 
   onSubmit() {
     if (

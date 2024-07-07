@@ -37,7 +37,8 @@ export class LoginComponent {
     private readonly router: Router,
     private readonly snackbarService: SnackbarService,
     private readonly formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   onSubmit() {
     if (this.loginForm.value.email && this.loginForm.value.password && this.loginForm.valid) {

@@ -26,7 +26,7 @@ import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.componen
   ],
 })
 export class MenuComponent {
-  user = this.auth.getUser();
+  user$ = this.auth.getUserObservable();
 
   public menuData = [
     {
