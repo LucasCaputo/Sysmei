@@ -21,9 +21,9 @@ export class InstallPwaComponentComponent {
     this.promptEvent.prompt();
     this.promptEvent.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
+        console.warn('User accepted the A2HS prompt');
       } else {
-        console.log('User dismissed the A2HS prompt');
+        console.warn('User dismissed the A2HS prompt');
       }
       this.promptEvent = null;
     });

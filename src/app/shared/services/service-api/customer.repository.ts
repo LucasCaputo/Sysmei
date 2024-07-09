@@ -12,17 +12,13 @@ export class CustomerRepository {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-  ) { }
+  ) {}
 
   postCustomer(customer: any): Observable<CustomerResponse> {
     return this.httpClient.post<any>(
       environment.baseURL + '/paciente',
       customer,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
@@ -30,63 +26,43 @@ export class CustomerRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/paciente/picture/' + customerId,
       file,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
-  getCustomer(customer: any): Observable<any> {
+  getCustomer(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/paciente?login=${customer}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      `${environment.baseURL}/paciente?login=${this.authService.getUser()?.login}`,
+      this.authService.getHeader(),
     );
   }
 
   getCustomerId(customerId: number): Observable<CustomerResponse> {
     return this.httpClient.get<CustomerResponse>(
       `${environment.baseURL}/paciente/${customerId}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
   getCustomerRecord(customerId: number): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/agenda/` + customerId,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
   deleteCustomer(customer: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/paciente/${customer.id}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
   updateCustomer(body: any, id: number) {
-    return this.httpClient.put(environment.baseURL + '/paciente/' + id, body, {
-      headers: {
-        Authorization: this.authService.getToken()!,
-      },
-    });
+    return this.httpClient.put(
+      environment.baseURL + '/paciente/' + id,
+      body,
+      this.authService.getHeader(),
+    );
   }
 }

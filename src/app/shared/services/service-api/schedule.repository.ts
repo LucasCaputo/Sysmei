@@ -12,8 +12,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ScheduleRepository {
-
-  user = ''
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
@@ -23,34 +21,22 @@ export class ScheduleRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/agenda',
       scheduling,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
   /** Busca lista de todos os agendamentos */
-  public getSchedule(user: string): Observable<any> {
+  public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/prestador?login=${user}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
+      this.authService.getHeader(),
     );
   }
 
   deleteScheduling(customerId: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/agenda/${customerId}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
@@ -68,11 +54,7 @@ export class ScheduleRepository {
     return this.httpClient.patch(
       environment.baseURL + '/agenda/' + id + '/status',
       body,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 }

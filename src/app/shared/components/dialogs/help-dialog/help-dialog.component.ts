@@ -11,7 +11,7 @@ import { SharedInputModule } from '../../inputs/shared-input.module';
   standalone: true,
   imports: [SharedModule, MatCheckboxModule, SharedInputModule],
   templateUrl: './help-dialog.component.html',
-  styleUrls: ['./help-dialog.component.scss']
+  styleUrls: ['./help-dialog.component.scss'],
 })
 export class HelpDialogComponent {
   public userForm = this.formBuilder.group({
@@ -19,14 +19,15 @@ export class HelpDialogComponent {
     phone: '',
     login: '',
     allowWhatsApp: '',
-    feedback: ''
+    feedback: '',
   });
 
-  public constructor(private readonly formBuilder: FormBuilder, public dialog: MatDialog) {
-    
-  }
+  public constructor(
+    private readonly formBuilder: FormBuilder,
+    public dialog: MatDialog,
+  ) {}
 
   public saveFeedback(): void {
-    console.log(this.userForm.value)
+    console.warn(this.userForm.value);
   }
 }

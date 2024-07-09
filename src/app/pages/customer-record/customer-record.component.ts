@@ -85,7 +85,6 @@ export class CustomerRecordComponent implements OnInit {
     }
   }
 
-  id = 0;
   data: CustomerResponse | undefined;
   cardData!: CardInfo;
   loading = false;
@@ -107,7 +106,7 @@ export class CustomerRecordComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private customerService: CustomerService,
-  ) { }
+  ) {}
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -122,17 +121,19 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.populate();
+    if (!this._customerId) {
+      this.populate();
+    }
   }
 
-  getCustomerList() {
-    this.customerService.searchCustomerList()
+  getCustomerId() {
+    return this.route.snapshot?.params['id'] || this._customerId;
   }
 
   populate() {
     this.loading = true;
-    this.id = this.route.snapshot?.params['id'] || this._customerId;
-    this.customerRepository.getCustomerId(this.id).subscribe(
+    const id = this.getCustomerId();
+    this.customerRepository.getCustomerId(id).subscribe(
       (response) => {
         this.data = response;
         this.photos = response.documentsUrl;
@@ -153,14 +154,12 @@ export class CustomerRecordComponent implements OnInit {
       },
     );
 
-    this.customerRepository.getCustomerRecord(this.id).subscribe(
+    this.customerRepository.getCustomerRecord(id).subscribe(
       (response) => {
-        console.log(response);
-
         this.records = response;
       },
       (erro) => {
-        console.log(erro);
+        console.error(erro);
       },
     );
   }
@@ -172,15 +171,18 @@ export class CustomerRecordComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', foto);
 
-      this.customerRepository.postFile(this.id, formData).subscribe(
-        (result) => {
-          this.customerRepository.getCustomerId(this.id).subscribe((result) => {
-            console.log(result);
-            this.photos = result.documentsUrl;
-          });
-        },
-        (error) => { },
-      );
+      this.customerRepository
+        .postFile(this.getCustomerId(), formData)
+        .subscribe(
+          (result) => {
+            this.customerRepository
+              .getCustomerId(this.getCustomerId())
+              .subscribe((result) => {
+                this.photos = result.documentsUrl;
+              });
+          },
+          (error) => {},
+        );
     }
   }
 
@@ -190,7 +192,7 @@ export class CustomerRecordComponent implements OnInit {
   //   });
 
   //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     console.log(result);
+  //     console.warn(result);
   //   });
   // }
 
@@ -205,23 +207,22 @@ export class CustomerRecordComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-
       if (result == 'close') return;
 
       if (result.title) {
         this.records = [];
 
         setTimeout(() => {
-          this.customerRepository.getCustomerRecord(this.id).subscribe(
-            (response) => {
-              this.records = response;
-              console.log(response);
-            },
-            (erro) => {
-              console.log(erro);
-            },
-          );
+          this.customerRepository
+            .getCustomerRecord(this.getCustomerId())
+            .subscribe(
+              (response) => {
+                this.records = response;
+              },
+              (erro) => {
+                console.error(erro);
+              },
+            );
         }, 8000);
       }
     });

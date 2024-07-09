@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +10,10 @@ import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input
 import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { FormatLoginPayload, FormatNewUserPayload } from 'src/app/shared/services/utils/format-payload';
+import {
+  FormatLoginPayload,
+  FormatNewUserPayload,
+} from 'src/app/shared/services/utils/format-payload';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -45,8 +45,7 @@ export class NewUserComponent {
     private router: Router,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
-  ) {
-  }
+  ) {}
 
   onSubmit() {
     if (
@@ -56,11 +55,11 @@ export class NewUserComponent {
         passwordNotEqual: true,
       });
 
-      return
+      return;
     }
 
     if (this.profileForm.valid) {
-      const payload = FormatNewUserPayload(this.profileForm.value)
+      const payload = FormatNewUserPayload(this.profileForm.value);
       this.userService.postUser(payload).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
@@ -68,10 +67,10 @@ export class NewUserComponent {
             'X',
             false,
           );
-          const loginPayload = FormatLoginPayload(this.profileForm.value)
-          this.userService.postLogin(loginPayload).subscribe(()=> {
+          const loginPayload = FormatLoginPayload(this.profileForm.value);
+          this.userService.postLogin(loginPayload).subscribe(() => {
             this.router.navigate(['/agenda']);
-          })
+          });
         },
         (error) => {
           this.snackbarService.openSnackBar(
@@ -79,7 +78,7 @@ export class NewUserComponent {
             'X',
             true,
           );
-          console.log(error);
+          console.error(error);
         },
       );
     }

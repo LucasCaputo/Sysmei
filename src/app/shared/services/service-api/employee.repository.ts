@@ -10,22 +10,15 @@ import { EmployeeResponse } from '../../../shared/interfaces/employee-response';
   providedIn: 'root',
 })
 export class EmployeeRepository {
-  user = '';
-
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-  ) { }
+  ) {}
 
-  /** Busca lista de prestadores */
-  getEmployee(user?: string): Observable<Array<EmployeeResponse>> {
+  getEmployee(): Observable<Array<EmployeeResponse>> {
     return this.httpClient.get<Array<EmployeeResponse>>(
-      `${environment.baseURL}/prestador?login=${user || this.user}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      `${environment.baseURL}/prestador?login=${this.authService.getUser()?.login}`,
+      this.authService.getHeader(),
     );
   }
 
@@ -34,34 +27,22 @@ export class EmployeeRepository {
     return this.httpClient.post<EmployeeResponse>(
       environment.baseURL + '/prestador',
       employee,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+      this.authService.getHeader(),
     );
   }
 
-    updateEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
-      return this.httpClient.put<EmployeeResponse>(
-        environment.baseURL + '/prestador/'+ employee.id,
-        employee,
-        {
-          headers: {
-            Authorization: this.authService.getToken()!,
-          },
-        },
-      );
-    }
+  updateEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+    return this.httpClient.put<EmployeeResponse>(
+      environment.baseURL + '/prestador/' + employee.id,
+      employee,
+      this.authService.getHeader(),
+    );
+  }
 
-    deleteEmployee(employee: any): Observable<any> {
-      return this.httpClient.delete<any>(
-        `${environment.baseURL}/prestador/${employee.id}`,
-        {
-          headers: {
-            Authorization: this.authService.getToken()!,
-          },
-        },
-      );
-    }
+  deleteEmployee(employee: any): Observable<any> {
+    return this.httpClient.delete<any>(
+      `${environment.baseURL}/prestador/${employee.id}`,
+      this.authService.getHeader(),
+    );
+  }
 }

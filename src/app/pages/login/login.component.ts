@@ -23,7 +23,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatCardModule,
     HeaderComponent,
     CardContainerComponent,
-    MessageTipComponent
+    MessageTipComponent,
   ],
 })
 export class LoginComponent {
@@ -36,14 +36,17 @@ export class LoginComponent {
     private readonly userService: UserService,
     private readonly router: Router,
     private readonly snackbarService: SnackbarService,
-    private readonly formBuilder: FormBuilder
-  ) {
-  }
+    private readonly formBuilder: FormBuilder,
+  ) {}
 
   onSubmit() {
-    if (this.loginForm.value.email && this.loginForm.value.password && this.loginForm.valid) {
-      const payload = FormatLoginPayload(this.loginForm.value)
-      
+    if (
+      this.loginForm.value.email &&
+      this.loginForm.value.password &&
+      this.loginForm.valid
+    ) {
+      const payload = FormatLoginPayload(this.loginForm.value);
+
       this.userService.postLogin(payload).subscribe(
         (response) => {
           this.snackbarService.openSnackBar(
@@ -51,6 +54,7 @@ export class LoginComponent {
             'X',
             false,
           );
+
           this.router.navigate(['/agenda']);
         },
         (error) => {
@@ -59,7 +63,7 @@ export class LoginComponent {
             'X',
             true,
           );
-          console.log(error);
+          console.error(error);
         },
       );
     }

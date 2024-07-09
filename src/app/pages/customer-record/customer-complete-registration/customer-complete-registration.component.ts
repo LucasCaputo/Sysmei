@@ -77,7 +77,6 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
               'X',
               false,
             );
-            console.log(response);
           },
           (error: any) => {
             this.snackbarService.openSnackBar(
@@ -85,7 +84,7 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
               'X',
               true,
             );
-            console.log(error);
+            console.error(error);
           },
         );
     }

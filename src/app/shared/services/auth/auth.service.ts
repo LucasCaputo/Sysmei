@@ -6,7 +6,8 @@ import { UserInterface } from '../../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<UserInterface | undefined> = new BehaviorSubject<UserInterface | undefined>(undefined);
+  private userSubject: BehaviorSubject<UserInterface | undefined> =
+    new BehaviorSubject<UserInterface | undefined>(undefined);
 
   public user: UserInterface | undefined;
 
@@ -16,7 +17,7 @@ export class AuthService {
 
   setUser(user: any) {
     this.user = user;
-    this.userSubject.next(user)
+    this.userSubject.next(user);
   }
 
   getUserObservable() {
@@ -33,14 +34,10 @@ export class AuthService {
 
   setToken(token: string) {
     localStorage.setItem('token', JSON.stringify(token));
-    this.token = token
+    this.token = token;
   }
 
   getToken() {
-    if (this.token) {
-      return this.token;
-    }
-
     const logedToken = localStorage.getItem('token');
 
     if (logedToken) {
@@ -51,6 +48,14 @@ export class AuthService {
     return undefined;
   }
 
+  getHeader() {
+    return {
+      headers: {
+        Authorization: this.getToken()!,
+      },
+    };
+  }
+
   logout() {
     delete this.user;
     delete this.token;
@@ -58,6 +63,6 @@ export class AuthService {
   }
 
   isLoged() {
-    return !!this.getToken()
+    return !!this.getToken();
   }
 }

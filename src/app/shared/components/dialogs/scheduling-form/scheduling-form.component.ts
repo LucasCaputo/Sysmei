@@ -1,11 +1,5 @@
-import {
-    Component,
-    ElementRef,
-    Inject,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -16,7 +10,6 @@ import { map, startWith } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
@@ -42,9 +35,7 @@ import { CustomerData } from './interfaces/customer-data';
   ],
 })
 export class SchedulingFormComponent implements OnInit {
-  user = this.authService.getUser();
-
-  form!: UntypedFormGroup;
+  form!: FormGroup;
 
   customerData: Array<CustomerData> =
     this.customerService.formattedCustomerList;
@@ -54,14 +45,11 @@ export class SchedulingFormComponent implements OnInit {
 
   filteredOptions!: Observable<Array<AutocompleteOptions>>;
 
-  @ViewChild('myInput') myInput: ElementRef | undefined;
-
   constructor(
     private scheduleService: ScheduleService,
     private customerService: CustomerService,
     private scheduleRepository: ScheduleRepository,
     private employeeService: EmployeeService,
-    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA)
     public data: ScheduleFormatResponse,
     public dialog: MatDialog,
@@ -77,7 +65,6 @@ export class SchedulingFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
     let end = '';
     let start = '';
 
@@ -106,15 +93,6 @@ export class SchedulingFormComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    if (this.data?.schedule_id) {
-      return;
-    }
-    setTimeout(() => {
-      this.myInput?.nativeElement.focus();
-    }, 300);
-  }
-
   private _filter(value: any): Array<AutocompleteOptions> {
     let filterValue = '';
     if (value?.text) {
@@ -139,40 +117,26 @@ export class SchedulingFormComponent implements OnInit {
       this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
         (resultUpdate) => {
           this.scheduleService.searchScheduleList();
-          this.snackbarService.openSnackBar(
+          this.snackbarService.openSuccessSnackBar(
             `Agendamento atualizado com sucesso`,
-            'X',
-            false,
           );
         },
         (error) => {
-          console.log(error, 'update');
           this.scheduleService.searchScheduleList();
-          this.snackbarService.openSnackBar(
-            `Tivemos um erro para atualizar, tente novamente`,
-            'X',
-            true,
-          );
+          this.snackbarService.openErrorSnackBar('atualizar');
         },
       );
     } else {
       this.scheduleService.postScheduling(schedule).subscribe(
         (response) => {
           this.scheduleService.searchScheduleList();
-          this.snackbarService.openSnackBar(
+          this.snackbarService.openSuccessSnackBar(
             `Agendamento adicionado com sucesso`,
-            'X',
-            false,
           );
         },
         (error) => {
-          console.log(error);
           this.scheduleService.searchScheduleList();
-          this.snackbarService.openSnackBar(
-            `Tivemos um erro para inserir, tente novamente`,
-            'X',
-            true,
-          );
+          this.snackbarService.openErrorSnackBar('inserir');
         },
       );
     }
@@ -192,7 +156,6 @@ export class SchedulingFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(customer);
       if (result?.confirmed && customer?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository
@@ -200,19 +163,13 @@ export class SchedulingFormComponent implements OnInit {
           .subscribe(
             (response) => {
               this.scheduleService.searchScheduleList();
-              this.snackbarService.openSnackBar(
-                `Agendamento deletado com sucesso`,
-                'X',
-                false,
+              this.snackbarService.openSuccessSnackBar(
+                'Agendamento deletado com sucesso',
               );
             },
             (error) => {
-              console.log(error);
-              this.snackbarService.openSnackBar(
-                `Tivemos um erro para deletar, tente novamente`,
-                'X',
-                true,
-              );
+              console.error(error);
+              this.snackbarService.openErrorSnackBar('deletar');
             },
           );
       }

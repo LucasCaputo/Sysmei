@@ -1,12 +1,10 @@
-import {
-  Component,
-  signal
-} from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
@@ -37,13 +35,15 @@ import { CustomerRecordComponent } from '../customer-record/customer-record.comp
   ],
 })
 export class CustomerComponent {
-  customerList$ = this.customerService.$customers.pipe(
-    tap((result)=> {
-      if (result.length) {
-        this.selectedCustomerId.set(result[0].id);
-      }
-    })
-  )
+  customerList$ = this.customerService.customers$.pipe(
+    tap((result) => {
+      this.viewPortService.screenSize$.subscribe((size) => {
+        if (result.length && size !== 'mobile') {
+          this.selectedCustomerId.set(result[0].id);
+        }
+      });
+    }),
+  );
 
   searchform = this.formBuilder.group({
     search: '',
@@ -52,13 +52,17 @@ export class CustomerComponent {
   selectedCustomerId = signal(0);
 
   constructor(
-    private customerService: CustomerService,
-    public dialog: MatDialog,
-    private router: Router,
-    public viewPortService: ViewportService,
-    private readonly formBuilder: FormBuilder
+    public readonly dialog: MatDialog,
+    public readonly viewPortService: ViewportService,
+    private readonly customerService: CustomerService,
+    private readonly router: Router,
+    private readonly formBuilder: FormBuilder,
   ) {
-   }
+    if (this.customerService.formattedCustomerList) {
+      this.customerList$ = of(this.customerService.formattedCustomerList);
+      this.selectedCustomerId.set(this.customerService.customers[0].id);
+    }
+  }
 
   openDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
@@ -73,8 +77,7 @@ export class CustomerComponent {
 
   navigateToCustomerDetails(customer: any) {
     this.viewPortService.screenSize$.pipe(first()).subscribe((size) => {
-
-      if(customer.id) {
+      if (customer.id) {
         if (size === 'mobile') {
           this.router.navigate([`clientes/ficha/${customer.id}`]);
         } else {

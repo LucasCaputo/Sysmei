@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
@@ -38,9 +35,11 @@ export class EmployeeDialogComponent {
 
   saveEmployee() {
     if (this.form.valid && this.form.value.nome && this.form.value.telefone) {
-      this.form.controls.login_usuario.setValue(this.authService.getUser()!.login)
-      const payload = this.form.value as EmployeeResponse
-      if(!this.data.id) {
+      this.form.controls.login_usuario.setValue(
+        this.authService.getUser()!.login,
+      );
+      const payload = this.form.value as EmployeeResponse;
+      if (!this.data.id) {
         this.employeeService.postEmployee(payload).subscribe(
           (response) => {
             this.snackbarService.openSnackBar(
@@ -56,28 +55,30 @@ export class EmployeeDialogComponent {
               'X',
               true,
             );
-            console.log(error);
+            console.error(error);
           },
         );
       } else {
-        this.employeeService.editEmployee({...payload, id: this.data.id}).subscribe(
-          (response) => {
-            this.snackbarService.openSnackBar(
-              `Parabéns! Prestador ${this.form.value.nome} atualizado com sucesso!`,
-              'X',
-              false,
-            );
-            this.employeeService.searchEmployeeList();
-          },
-          (error) => {
-            this.snackbarService.openSnackBar(
-              `Tente novamente ( ${error.error}) `,
-              'X',
-              true,
-            );
-            console.log(error);
-          },
-        )
+        this.employeeService
+          .editEmployee({ ...payload, id: this.data.id })
+          .subscribe(
+            (response) => {
+              this.snackbarService.openSnackBar(
+                `Parabéns! Prestador ${this.form.value.nome} atualizado com sucesso!`,
+                'X',
+                false,
+              );
+              this.employeeService.searchEmployeeList();
+            },
+            (error) => {
+              this.snackbarService.openSnackBar(
+                `Tente novamente ( ${error.error}) `,
+                'X',
+                true,
+              );
+              console.error(error);
+            },
+          );
       }
     }
   }
@@ -108,7 +109,7 @@ export class EmployeeDialogComponent {
             this.dialog.closeAll();
           },
           (error) => {
-            console.log(error);
+            console.error(error);
             this.snackbarService.openSnackBar(
               `Tivemos um erro, tente novamente`,
               'X',

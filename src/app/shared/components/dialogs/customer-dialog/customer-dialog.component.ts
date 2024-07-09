@@ -1,11 +1,5 @@
-import {
-  Component,
-  Inject
-} from '@angular/core';
-import {
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -58,9 +52,7 @@ export class CustomerDialogComponent {
   }
 
   updateCustomer(id: number) {
-    this.customerService
-    .updateCustomer(this.form.value, id)
-    .subscribe(
+    this.customerService.updateCustomer(this.form.value, id).subscribe(
       (response) => {
         this.customerService.searchCustomerList();
         this.snackbarService.openSnackBar(
@@ -126,7 +118,7 @@ export class CustomerDialogComponent {
             this.dialog.closeAll();
           },
           (error) => {
-            console.log(error);
+            console.error(error);
             this.snackbarService.openSnackBar(
               `Tivemos um erro no cadastro, tente novamente`,
               'X',

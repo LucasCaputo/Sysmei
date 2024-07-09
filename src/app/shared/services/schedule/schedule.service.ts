@@ -31,18 +31,18 @@ export class ScheduleService {
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
-  ) { }
+  ) {}
 
   /** Busca lista de agendamentos e salva na variável schedule */
   public searchScheduleList(): void {
-    this.ScheduleRepository.getSchedule(this.ScheduleRepository.user).subscribe(
+    this.ScheduleRepository.getSchedule().subscribe(
       (scheduleList: Array<ScheduleResponse>) => {
         this.setSearchScheduledList(scheduleList);
       },
     );
   }
 
-  public setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
+  private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
     this.schedule = scheduleList;
     this.$schedule.next(scheduleList);
     this.$formatedSchedule.next(this.formatScheduleResponse(scheduleList));

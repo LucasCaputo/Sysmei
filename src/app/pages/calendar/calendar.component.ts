@@ -101,9 +101,7 @@ export class CalendarComponent implements AfterViewInit {
     private snackbarService: SnackbarService,
     public loaderService: LoaderService,
     public viewportService: ViewportService,
-  ) {
-
-  }
+  ) {}
 
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
@@ -159,7 +157,6 @@ export class CalendarComponent implements AfterViewInit {
         );
       },
       (error) => {
-        console.log(error, 'update');
         this.snackbarService.openSnackBar(
           `Tivemos um erro para atualizar, tente novamente`,
           'X',

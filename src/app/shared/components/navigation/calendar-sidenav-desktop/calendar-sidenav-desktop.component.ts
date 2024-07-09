@@ -109,7 +109,6 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
   constructor(private employeeService: EmployeeService) {
     this.employeeList.forEach((e) => {
       this.employeeListFormated.set(e);
-      // console.log(e)
     });
   }
   ngAfterViewInit(): void {
@@ -160,8 +159,6 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     formatedObject[oldObjectIndex] = newObject;
 
     this.employeeListFormated.set(formatedObject);
-
-    console.log(formatedObject);
 
     this.emitSelectedEmployeeList(formatedObject);
   }

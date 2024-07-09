@@ -6,13 +6,17 @@
 
     <app-search [search]="searchform.controls.search" />
 
-    <button mat-icon-button aria-label="Adicionar clientes" (click)="
+    <button
+      mat-icon-button
+      aria-label="Adicionar clientes"
+      (click)="
         openDialog({
           nome: '',
           telefones: [{ id: 0, numero: '' }],
           email: ''
         })
-      ">
+      "
+    >
       <mat-icon style="color: white">add_circle_outline</mat-icon>
     </button>
   </div>
@@ -24,44 +28,78 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-container *ngIf="{customerList: (customerList$ | async)} as model">
+    <ng-container *ngIf="{ customerList: (customerList$ | async) } as model">
       <ng-container *ngIf="model.customerList">
-        <div *ngIf="(model.customerList | arrayFiltro: searchform.value.search!).length > 0"
-          class="flex h-body-height justify-between">
+        <div
+          *ngIf="
+            (model.customerList | arrayFiltro: searchform.value.search!)
+              .length > 0
+          "
+          class="flex h-body-height justify-between"
+        >
           <div class="max-w-md h-body-height overflow-auto">
-            <ng-container *ngFor="let customer of model.customerList | arrayFiltro: searchform.value.search!">
-              <div mat-subheader *ngIf="customer.isFirstLetter && !searchform.value.search!">
+            <ng-container
+              *ngFor="
+                let customer of model.customerList
+                  | arrayFiltro: searchform.value.search!
+              "
+            >
+              <div
+                mat-subheader
+                *ngIf="customer.isFirstLetter && !searchform.value.search!"
+              >
                 {{ customer.inicial }}
               </div>
               <mat-list>
-                <app-card [cardData]="customer" (edit)="openDialog($event)"
-                  (click)="navigateToCustomerDetails($event)"></app-card>
+                <app-card
+                  [cardData]="customer"
+                  (edit)="openDialog($event)"
+                  (click)="navigateToCustomerDetails($event)"
+                ></app-card>
               </mat-list>
             </ng-container>
           </div>
 
-          <div *ngIf="((viewPortService.screenSize$| async) !== 'mobile')" class="w-2/4 m-0 mx-auto max-xl">
-            <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()"></app-customer-record>
+          <div
+            *ngIf="(viewPortService.screenSize$ | async) !== 'mobile'"
+            class="w-2/4 m-0 mx-auto max-xl"
+          >
+            <app-customer-record
+              [hasHeader]="false"
+              [customerId]="selectedCustomerId()"
+            ></app-customer-record>
           </div>
         </div>
 
         <div
-          *ngIf=" (model.customerList | arrayFiltro: searchform.value.search!).length === 0 && searchform.value.search!"
-          class="h-body-height flex items-center justify-center text-base flex-col">
+          *ngIf="
+            (model.customerList | arrayFiltro: searchform.value.search!)
+              .length === 0 && searchform.value.search!
+          "
+          class="h-body-height flex items-center justify-center text-base flex-col"
+        >
           <h1>Não encontramos o cliente</h1>
           <h1>{{ searchform.value.search! }}</h1>
         </div>
 
-        <div *ngIf="model.customerList?.length === 0 && !searchform.value.search"
-          class="h-body-height flex items-center justify-center text-base flex-col">
+        <div
+          *ngIf="model.customerList?.length === 0 && !searchform.value.search"
+          class="h-body-height flex items-center justify-center text-base flex-col"
+        >
           <h1>Adicione seu primeiro cliente</h1>
-          <button mat-raised-button color="primary" (click)="
-            openDialog({
-              nome: '',
-              telefones: [{ id: 0, numero: '' }],
-              email: ''
-            })
-          ">Cadastrar</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="
+              openDialog({
+                nome: '',
+                telefones: [{ id: 0, numero: '' }],
+                email: ''
+              })
+            "
+          >
+            Cadastrar
+          </button>
         </div>
       </ng-container>
 

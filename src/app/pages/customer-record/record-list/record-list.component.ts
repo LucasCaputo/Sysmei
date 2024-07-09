@@ -1,9 +1,9 @@
 import {
-    animate,
-    state,
-    style,
-    transition,
-    trigger,
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
 } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -79,24 +79,19 @@ export class RecordListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-
       if (result == 'close') return;
 
       if (result.title) {
-        console.log(this.customerId);
-
         this.customerId = this.route.snapshot.params['id'];
 
         setTimeout(() => {
           this.customerRepository.getCustomerRecord(this.customerId).subscribe(
             (response) => {
               this.data = response;
-              console.log(response);
               this.formatData();
             },
             (erro) => {
-              console.log(erro);
+              console.error(erro);
             },
           );
         }, 8000);

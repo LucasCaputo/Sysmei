@@ -12,20 +12,18 @@ export class EmployeeService {
   public $employee: BehaviorSubject<Array<EmployeeResponse>> =
     new BehaviorSubject<Array<EmployeeResponse>>([]);
 
-  constructor(private employeeRepository: EmployeeRepository) { }
+  constructor(private employeeRepository: EmployeeRepository) {}
 
   /** Busca lista de usuários e salva na variável employee */
   public searchEmployeeList(): void {
-    console.log(this.employeeRepository.user)
-    this.employeeRepository.getEmployee(this.employeeRepository.user).subscribe((employeeList) => {
+    this.employeeRepository.getEmployee().subscribe((employeeList) => {
       this.setSearchEmployeeList(employeeList);
     });
   }
 
-  public setSearchEmployeeList(employeeList: any) {
+  private setSearchEmployeeList(employeeList: any) {
     this.employee = employeeList;
     this.$employee.next(employeeList);
-    localStorage.setItem('employee', JSON.stringify(employeeList));
   }
 
   /** Cadastra novo prestador */
@@ -35,18 +33,16 @@ export class EmployeeService {
     return this.employeeRepository.postEmployee(employee);
   }
 
-    /** Cadastra novo prestador */
-    public editEmployee(
-      employee: EmployeeResponse,
-    ): Observable<EmployeeResponse> {
-      return this.employeeRepository.updateEmployee(employee);
-    }
+  /** Cadastra novo prestador */
+  public editEmployee(
+    employee: EmployeeResponse,
+  ): Observable<EmployeeResponse> {
+    return this.employeeRepository.updateEmployee(employee);
+  }
 
-    public deleteEmployee(
-      employee: EmployeeResponse,
-    ): Observable<EmployeeResponse> {
-      return this.employeeRepository.deleteEmployee(employee);
-    }
-
-    
+  public deleteEmployee(
+    employee: EmployeeResponse,
+  ): Observable<EmployeeResponse> {
+    return this.employeeRepository.deleteEmployee(employee);
+  }
 }

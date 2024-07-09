@@ -21,6 +21,7 @@ export class PrivateRoutesGuard {
       return true;
     }
 
+    this.authService.logout();
     this.router.navigate(['login']);
 
     return false;

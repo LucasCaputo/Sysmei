@@ -9,10 +9,32 @@ export class SnackbarService {
 
   openSnackBar(message: string, confirmation: string, isError: boolean) {
     this._snackBar.open(message, confirmation, {
-      duration: 6000,
+      duration: 4000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
       panelClass: [`${isError ? 'bg-error' : 'bg-success'}`],
     });
+  }
+
+  openSuccessSnackBar(message: string) {
+    this._snackBar.open(message, 'X', {
+      duration: 4000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      panelClass: ['bg-success'],
+    });
+  }
+
+  openErrorSnackBar(message?: string) {
+    this._snackBar.open(
+      `Tivemos um erro ${'para ' + message}, tente novamente`,
+      'X',
+      {
+        duration: 4000,
+        horizontalPosition: 'end',
+        verticalPosition: 'top',
+        panelClass: ['bg-error'],
+      },
+    );
   }
 }

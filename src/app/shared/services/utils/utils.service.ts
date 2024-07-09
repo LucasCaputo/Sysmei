@@ -60,14 +60,3 @@ export function getCurrentDate(): string {
 
   return `${year}-${month}-${day}`;
 }
-
-export function getEmployee(): number {
-  let employeeLocalStorage = localStorage.getItem('employee');
-  let employee: Array<{ id: number }> = [{ id: 0 }];
-
-  if (employeeLocalStorage) {
-    employee = JSON.parse(employeeLocalStorage);
-  }
-
-  return employee[0].id;
-}

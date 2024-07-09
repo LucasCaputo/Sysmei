@@ -41,7 +41,7 @@ export class AgendaStatusComponent {
     private scheduleService: ScheduleService,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder,
-  ) { }
+  ) {}
 
   /** Edita um agendamento */
   public onEdit() {
@@ -80,7 +80,6 @@ export class AgendaStatusComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(this.data);
       if (result?.confirmed && this.data?.schedule_id) {
         this.dialog.closeAll();
         this.scheduleRepository
@@ -95,7 +94,7 @@ export class AgendaStatusComponent {
               );
             },
             (error) => {
-              console.log(error);
+              console.error(error);
               this.snackbarService.openSnackBar(
                 `Tivemos um erro para deletar, tente novamente`,
                 'X',
@@ -120,7 +119,7 @@ export class AgendaStatusComponent {
           );
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           this.snackbarService.openSnackBar(
             `Tivemos um erro para alterar o status, tente novamente`,
             'X',

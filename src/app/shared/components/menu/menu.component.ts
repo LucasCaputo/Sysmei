@@ -77,7 +77,7 @@ export class MenuComponent {
   /** Faz logout do sistema */
   public logout(): void {
     this.customerService.customers = [];
-    this.customerService.$customers.next([]);
+    this.customerService.customers$.next([]);
     this.customerService.formattedCustomerList = [];
 
     this.auth.logout();
@@ -99,11 +99,10 @@ export class MenuComponent {
         this.openUserSettingsModal();
         break;
 
-    
       case 'payments':
         this.openPaymentsModal();
         break;
-    
+
       default:
         break;
     }
