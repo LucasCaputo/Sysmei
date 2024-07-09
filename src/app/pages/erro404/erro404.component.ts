@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-erro404',
   templateUrl: './erro404.component.html',
-  styleUrls: ['./erro404.component.scss']
+  styleUrls: ['./erro404.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class Erro404Component implements OnInit {
   stars1: any[] = [];
