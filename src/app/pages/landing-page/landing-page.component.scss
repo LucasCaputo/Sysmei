@@ -1,4 +1,12 @@
-.example-spacer {
+section {
+  padding: 0 2rem;
+}
+
+mat-toolbar {
+  box-shadow: 2px 2px 4px 0 rgba($color: #000000, $alpha: 0.3);
+}
+
+.spacer {
   flex: 1 1 auto;
 }
 
@@ -8,8 +16,71 @@
 
 .hero-container {
   text-align: center;
-  padding: 100px 20px;
-  // background: url('./assets/img/agenda.png') no-repeat center center;
+  padding: 80px 20px;
   background-size: cover;
-  color: black;
+  background-position: 0 -200px;
+  background-image: url('../../../assets/images-landing-page/bg-agenda.jpg');
+  color: white;
+}
+
+.logo {
+  width: 120px;
+}
+
+.produto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.produto .text-produto h1 {
+  max-width: 400px;
+  text-align: end;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.produto img {
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px 0 rgba($color: #000000, $alpha: 0.3);
+}
+
+// .produto .bg-shape {
+//   width: 420px;
+//   height: 420px;
+//   background-color: rebeccapurple;
+//   border-radius: 57% 43% 50% 50% / 57% 34% 66% 43%;
+// }
+
+.images-produto {
+  position: relative;
+  width: 400px;
+  height: 600px;
+}
+
+.images-produto img {
+  width: 400px;
+  // height: 300px;
+}
+
+.images-produto img:nth-child(1) {
+  position: absolute;
+  z-index: 4;
+  top: calc(0px + 100px);
+  left: 25px;
+}
+
+.images-produto img:nth-child(2) {
+  position: absolute;
+  z-index: 4;
+  top: calc(50px + 100px);
+  left: 50px;
+}
+.images-produto img:nth-child(3) {
+  position: absolute;
+  z-index: 4;
+  top: calc(100px + 100px);
+  left: 75px;
 }
