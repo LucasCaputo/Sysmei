@@ -1,9 +1,7 @@
-<div class="container container-star">
-    <div *ngFor="let star of stars1" class="star-1" [ngClass]="'star-' + star.id"></div>
-    <div *ngFor="let star of stars2" class="star-2" [ngClass]="'star-' + star.id"></div>
+<div class="container-404 container-star">
   </div>
   
-  <div class="container container-bird">
+  <div class="container-404 container-bird">
     <div *ngFor="let bird of birds" class="bird bird-anim" [ngClass]="'bird-' + bird.id">
       <div class="bird-container">
         <div class="wing wing-left">
@@ -19,19 +17,10 @@
   <div class="container-title">
     <div class="title">
       <span class="number">4</span>
-      <div class="moon">
-        <div class="face">
-          <div class="mouth"></div>
-          <div class="eyes">
-            <div class="eye-left"></div>
-            <div class="eye-right"></div>
-          </div>
-        </div>
-      </div>
+      <span class="number">0</span>
       <span class="number">4</span>
     </div>
     <div class="subtitle">Oops. Parece que você pegou o caminho errado.</div>
-    <button (click)="goToLogin()" mat-raised-button color="primary">Entrar</button>
-    <mat-icon style="color: white">add_circle_outline</mat-icon>
+    <button (click)="goToLogin()" mat-raised-button color="primary" class="mt-8">Fazer Login</button>
   </div>
   
