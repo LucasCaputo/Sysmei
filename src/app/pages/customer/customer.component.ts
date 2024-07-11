@@ -60,7 +60,9 @@ export class CustomerComponent {
   ) {
     if (this.customerService.formattedCustomerList) {
       this.customerList$ = of(this.customerService.formattedCustomerList);
-      this.selectedCustomerId.set(this.customerService.customers[0].id);
+      if(this.customerService.customers[0]){
+        this.selectedCustomerId.set(this.customerService.customers[0].id);
+      }
     }
   }
 

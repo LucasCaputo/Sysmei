@@ -33,6 +33,13 @@ export class ScheduleRepository {
     );
   }
 
+  public getScheduleByDate(startDate: string, endDate: string): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`,
+      this.authService.getHeader(),
+    );
+  }
+
   deleteScheduling(customerId: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/agenda/${customerId}`,

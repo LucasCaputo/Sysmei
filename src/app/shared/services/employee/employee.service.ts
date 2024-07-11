@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { EmployeeRepository } from '../service-api/employee.repository';
@@ -9,8 +9,7 @@ import { EmployeeRepository } from '../service-api/employee.repository';
 })
 export class EmployeeService {
   public employee!: Array<EmployeeResponse>;
-  public employee$: BehaviorSubject<Array<EmployeeResponse>> =
-    new BehaviorSubject<Array<EmployeeResponse>>([]);
+  public employee$ = new Subject<Array<EmployeeResponse>>();
 
   constructor(private employeeRepository: EmployeeRepository) {}
 
