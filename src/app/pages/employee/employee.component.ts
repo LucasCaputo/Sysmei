@@ -26,7 +26,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
 })
 export class EmployeeComponent {
-  customerList = this.employeeService.$employee;
+  customerList = this.employeeService.employee$;
 
   constructor(
     private employeeService: EmployeeService,

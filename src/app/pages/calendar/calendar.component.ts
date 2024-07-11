@@ -114,7 +114,7 @@ export class CalendarComponent implements AfterViewInit {
 
   /** Recebe os dados de todos os agendamentos e popula a lista */
   private populateSchedule() {
-    this.scheduleService.$formatedSchedule.subscribe(
+    this.scheduleService.formatedSchedule$.subscribe(
       (scheduleFormatResponse: Array<ScheduleFormatResponse>) => {
         if (scheduleFormatResponse.length) {
           this.calendarApi.removeAllEvents();

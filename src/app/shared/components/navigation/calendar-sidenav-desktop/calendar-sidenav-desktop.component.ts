@@ -98,7 +98,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
   };
 
   allChecked = true;
-  employeeList = this.employeeService.$employee.pipe(
+  employeeList = this.employeeService.employee$.pipe(
     map((employees) =>
       employees.map((employee) => ({ ...employee, checked: true })),
     ),

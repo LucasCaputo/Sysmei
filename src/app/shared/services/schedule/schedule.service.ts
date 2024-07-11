@@ -21,7 +21,7 @@ export class ScheduleService {
   public $schedule: BehaviorSubject<Array<ScheduleResponse>> =
     new BehaviorSubject<Array<ScheduleResponse>>([]);
 
-  public $formatedSchedule: BehaviorSubject<Array<ScheduleFormatResponse>> =
+  public formatedSchedule$: BehaviorSubject<Array<ScheduleFormatResponse>> =
     new BehaviorSubject<Array<ScheduleFormatResponse>>([]);
 
   constructor(
@@ -45,13 +45,14 @@ export class ScheduleService {
   private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
     this.schedule = scheduleList;
     this.$schedule.next(scheduleList);
-    this.$formatedSchedule.next(this.formatScheduleResponse(scheduleList));
+    this.formatedSchedule$.next(this.formatScheduleResponse(scheduleList));
   }
 
   /** Formata retorno do back para formato que front espera receber */
   public formatScheduleResponse(
     scheduleList: Array<ScheduleResponse>,
   ): Array<ScheduleFormatResponse> {
+    console.log(scheduleList)
     let formatedSchedule: Array<ScheduleFormatResponse> = [];
 
     scheduleList.map((element: ScheduleResponse) => {

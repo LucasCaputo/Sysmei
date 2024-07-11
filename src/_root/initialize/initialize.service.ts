@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -36,9 +37,15 @@ export class InitializeService {
   }
 
   private populate() {
-    this.employeeService.searchEmployeeList();
-    this.customerService.searchCustomerList();
-    this.scheduleService.searchScheduleList();
-    this.loaderService.setFirstLoad(false);
+    this.scheduleService.formatedSchedule$.pipe(first()).subscribe(() => {
+      this.loaderService.setFirstLoad(false)
+    })
+
+    this.employeeService.searchEmployeeList()
+    this.customerService.searchCustomerList()
+
+    setTimeout(() => {
+      this.scheduleService.searchScheduleList()
+    }, 0);
   }
 }

@@ -9,7 +9,7 @@ import { EmployeeRepository } from '../service-api/employee.repository';
 })
 export class EmployeeService {
   public employee!: Array<EmployeeResponse>;
-  public $employee: BehaviorSubject<Array<EmployeeResponse>> =
+  public employee$: BehaviorSubject<Array<EmployeeResponse>> =
     new BehaviorSubject<Array<EmployeeResponse>>([]);
 
   constructor(private employeeRepository: EmployeeRepository) {}
@@ -23,7 +23,7 @@ export class EmployeeService {
 
   private setSearchEmployeeList(employeeList: any) {
     this.employee = employeeList;
-    this.$employee.next(employeeList);
+    this.employee$.next(employeeList);
   }
 
   /** Cadastra novo prestador */
