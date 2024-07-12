@@ -31,7 +31,9 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import {
+  UtilsService,
+} from 'src/app/shared/services/utils/utils.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';

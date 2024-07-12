@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   ScheduleFormatResponse,
   ScheduleResponse,
@@ -11,6 +11,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { CustomerService } from '../customer/customer.service';
 import { EmployeeService } from '../employee/employee.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +19,9 @@ import { EmployeeService } from '../employee/employee.service';
 export class ScheduleService {
   schedule!: Array<ScheduleResponse>;
 
-  public $schedule: BehaviorSubject<Array<ScheduleResponse>> =
-    new BehaviorSubject<Array<ScheduleResponse>>([]);
+  public schedule$ = new Subject<Array<ScheduleResponse>>();
 
-  public formatedSchedule$: BehaviorSubject<Array<ScheduleFormatResponse>> =
-    new BehaviorSubject<Array<ScheduleFormatResponse>>([]);
+  public formatedSchedule$ = new Subject<Array<ScheduleFormatResponse>>();
 
   constructor(
     private httpClient: HttpClient,
@@ -42,9 +41,16 @@ export class ScheduleService {
     );
   }
 
+  public searchScheduleListObservable(startDate: string, endDate: string): Observable<any> {
+    return this.ScheduleRepository.getScheduleByDate(startDate, endDate).pipe(
+      tap((scheduleList) => this.setSearchScheduledList(scheduleList))
+    )
+  }
+
+
   private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
     this.schedule = scheduleList;
-    this.$schedule.next(scheduleList);
+    this.schedule$.next(scheduleList);
     this.formatedSchedule$.next(this.formatScheduleResponse(scheduleList));
   }
 
