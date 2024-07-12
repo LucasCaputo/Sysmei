@@ -7,6 +7,7 @@ import {
   getDate30DaysAgo,
 } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
+import { ScheduleResponse } from '../../interfaces/schedule-response';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,10 @@ export class ScheduleRepository {
     );
   }
 
-  public getScheduleByDate(startDate: string, endDate: string): Observable<any> {
+  public getScheduleByDate(
+    startDate: string,
+    endDate: string,
+  ): Observable<ScheduleResponse[]> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`,
       this.authService.getHeader(),

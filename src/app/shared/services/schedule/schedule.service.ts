@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import {
   ScheduleFormatResponse,
   ScheduleResponse,
@@ -11,7 +12,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { CustomerService } from '../customer/customer.service';
 import { EmployeeService } from '../employee/employee.service';
-import { tap } from 'rxjs/operators';
+import { SnackbarService } from '../snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,7 @@ export class ScheduleService {
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
+    private snackbarService: SnackbarService,
   ) {}
 
   /** Busca lista de agendamentos e salva na variável schedule */
@@ -41,12 +43,18 @@ export class ScheduleService {
     );
   }
 
-  public searchScheduleListObservable(startDate: string, endDate: string): Observable<any> {
-    return this.ScheduleRepository.getScheduleByDate(startDate, endDate).pipe(
-      tap((scheduleList) => this.setSearchScheduledList(scheduleList))
-    )
+  public searchScheduleListObservable(date: {
+    startDate: string;
+    endDate: string;
+  }): Observable<any> {
+    return this.ScheduleRepository.getScheduleByDate(
+      date.startDate,
+      date.endDate,
+    ).pipe(
+      tap((scheduleList) => this.setSearchScheduledList(scheduleList)),
+      map((schedudle) => this.formatScheduleResponse(schedudle)),
+    );
   }
-
 
   private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
     this.schedule = scheduleList;
@@ -58,7 +66,6 @@ export class ScheduleService {
   public formatScheduleResponse(
     scheduleList: Array<ScheduleResponse>,
   ): Array<ScheduleFormatResponse> {
-    console.log(scheduleList)
     let formatedSchedule: Array<ScheduleFormatResponse> = [];
 
     scheduleList.map((element: ScheduleResponse) => {
@@ -159,6 +166,23 @@ export class ScheduleService {
       allDay: body.start.split(' ')[0],
     };
 
-    return this.ScheduleRepository.updateScheduling(payload, id);
+    return this.ScheduleRepository.updateScheduling(payload, id).pipe(
+      tap(() => {
+        this.searchScheduleList();
+        this.snackbarService.openSnackBar(
+          `Agendamento atualizado com sucesso`,
+          'X',
+          false,
+        );
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro para atualizar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
+    );
   }
 }

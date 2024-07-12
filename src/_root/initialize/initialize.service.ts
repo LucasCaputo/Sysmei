@@ -38,14 +38,10 @@ export class InitializeService {
 
   private populate() {
     this.scheduleService.formatedSchedule$.pipe(first()).subscribe(() => {
-      this.loaderService.setFirstLoad(false)
-    })
+      this.loaderService.setFirstLoad(false);
+    });
 
-    this.employeeService.searchEmployeeList()
-    this.customerService.searchCustomerList()
-
-    setTimeout(() => {
-      this.scheduleService.searchScheduleList()
-    }, 0);
+    this.employeeService.searchEmployeeList();
+    this.customerService.searchCustomerList();
   }
 }

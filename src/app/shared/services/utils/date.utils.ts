@@ -17,16 +17,19 @@ export function checkName(input: UntypedFormControl) {
   }
 }
 
-export function getStartAndEndOfWeek(date: Date): { startOfWeek: string, endOfWeek: string } {
+export function getStartAndEndOfWeek(date: Date): {
+  startDate: string;
+  endDate: string;
+} {
   // Criar uma nova data baseada na data fornecida
   const current = new Date(date);
-  
+
   // Encontrar o dia da semana atual (0 - Domingo, 1 - Segunda, etc.)
   const dayOfWeek = current.getDay();
 
   // Calcular a diferença em dias até o início da semana (Domingo)
   const startDiff = current.getDate() - dayOfWeek;
-  
+
   // Calcular a diferença em dias até o final da semana (Sábado)
   const endDiff = current.getDate() + (6 - dayOfWeek);
 
@@ -36,15 +39,15 @@ export function getStartAndEndOfWeek(date: Date): { startOfWeek: string, endOfWe
 
   // Retornar o início e o fim da semana formatados
   return {
-      startOfWeek: formatDate(startOfWeek),
-      endOfWeek: formatDate(endOfWeek)
+    startDate: formatDate(startOfWeek),
+    endDate: formatDate(endOfWeek),
   };
 }
 
 // Função auxiliar para formatar a data como YYYY-MM-DD
 export const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};

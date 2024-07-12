@@ -17,7 +17,8 @@
         <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)"
           (changeDate)="changeDate($event)" [actionIcon]="actionIcon()" [date]="calendarState.date()" />
 
-        <full-calendar class="full-calendar" #calendar [options]="calendarOptions"></full-calendar>
+        <full-calendar class="full-calendar" #calendar [options]="calendarOptions"
+          [events]="calendarEvents | async"></full-calendar>
       </div>
 
 

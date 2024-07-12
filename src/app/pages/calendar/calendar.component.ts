@@ -19,6 +19,8 @@ import {
   ViewApi,
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
+import { Observable, timer } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
 import { UserDialogComponent } from 'src/app/shared/components/dialogs/user-dialog/user-dialog.component';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
@@ -31,9 +33,8 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import {
-  UtilsService,
-} from 'src/app/shared/services/utils/utils.service';
+import { getStartAndEndOfWeek } from 'src/app/shared/services/utils/date.utils';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
@@ -72,6 +73,22 @@ export class CalendarComponent implements AfterViewInit {
     dateClick: this.redirectMonthToDay.bind(this),
   };
 
+  calendarEvents: Observable<EventInput> = timer(2000).pipe(
+    switchMap(() =>
+      this.scheduleService
+        .searchScheduleListObservable(getStartAndEndOfWeek(new Date()))
+        .pipe(
+          map((elements: ScheduleFormatResponse[]) =>
+            elements.map((element: ScheduleFormatResponse) => ({
+              ...element,
+              color: this.cardColor(element.status),
+            })),
+          ),
+          tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
+        ),
+    ),
+  );
+
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
@@ -107,30 +124,10 @@ export class CalendarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
-    this.populateSchedule();
 
     setTimeout(() => {
       this.calendarNavigate();
     }, 0);
-  }
-
-  /** Recebe os dados de todos os agendamentos e popula a lista */
-  private populateSchedule() {
-    this.scheduleService.formatedSchedule$.subscribe(
-      (scheduleFormatResponse: Array<ScheduleFormatResponse>) => {
-        if (scheduleFormatResponse.length) {
-          this.calendarApi.removeAllEvents();
-
-          scheduleFormatResponse.forEach((element: ScheduleFormatResponse) => {
-            this.scheduling.push({ ...element, color: 'purple' });
-            this.calendarApi.view.calendar.addEvent({
-              ...element,
-              color: this.cardColor(element.status),
-            });
-          });
-        }
-      },
-    );
   }
 
   /** Atualiza agendamento por drag and drop
@@ -149,23 +146,7 @@ export class CalendarComponent implements AfterViewInit {
       status: data.event._def?.extendedProps?.status,
     };
 
-    this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
-      (result) => {
-        this.scheduleService.searchScheduleList();
-        this.snackbarService.openSnackBar(
-          `Agendamento atualizado com sucesso`,
-          'X',
-          false,
-        );
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para atualizar, tente novamente`,
-          'X',
-          true,
-        );
-      },
-    );
+    this.scheduleService.updateScheduling(schedule, schedule.id).subscribe();
   }
 
   /** Adiciona um novo agendamento*/
