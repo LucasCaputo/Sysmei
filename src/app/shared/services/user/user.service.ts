@@ -32,6 +32,7 @@ export class UserService {
       .pipe(
         tap((response: any) => {
           this.authService.setToken(response.token);
+          this.authService.setUser(response);
         }),
       );
   }

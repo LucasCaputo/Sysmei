@@ -40,45 +40,11 @@ export class EmployeeDialogComponent {
       );
       const payload = this.form.value as EmployeeResponse;
       if (!this.data.id) {
-        this.employeeService.postEmployee(payload).subscribe(
-          (response) => {
-            this.snackbarService.openSnackBar(
-              `Parabéns! Prestador ${this.form.value.nome} cadastrado com sucesso!`,
-              'X',
-              false,
-            );
-            this.employeeService.searchEmployeeList();
-          },
-          (error) => {
-            this.snackbarService.openSnackBar(
-              `Tente novamente ( ${error.error}) `,
-              'X',
-              true,
-            );
-            console.error(error);
-          },
-        );
+        this.employeeService.postEmployee(payload).subscribe();
       } else {
         this.employeeService
           .editEmployee({ ...payload, id: this.data.id })
-          .subscribe(
-            (response) => {
-              this.snackbarService.openSnackBar(
-                `Parabéns! Prestador ${this.form.value.nome} atualizado com sucesso!`,
-                'X',
-                false,
-              );
-              this.employeeService.searchEmployeeList();
-            },
-            (error) => {
-              this.snackbarService.openSnackBar(
-                `Tente novamente ( ${error.error}) `,
-                'X',
-                true,
-              );
-              console.error(error);
-            },
-          );
+          .subscribe();
       }
     }
   }
@@ -97,26 +63,7 @@ export class EmployeeDialogComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        this.employeeService.deleteEmployee(employee).subscribe(
-          (response) => {
-            this.snackbarService.openSnackBar(
-              `Prestador deletado com sucesso`,
-              'X',
-              false,
-            );
-
-            this.employeeService.searchEmployeeList();
-            this.dialog.closeAll();
-          },
-          (error) => {
-            console.error(error);
-            this.snackbarService.openSnackBar(
-              `Tivemos um erro, tente novamente`,
-              'X',
-              true,
-            );
-          },
-        );
+        this.employeeService.deleteEmployee(employee).subscribe();
       }
     });
   }

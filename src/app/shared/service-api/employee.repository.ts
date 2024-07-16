@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
-import { EmployeeResponse } from '../../../shared/interfaces/employee-response';
+import { EmployeeResponse } from '../interfaces/employee-response';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +15,16 @@ export class EmployeeRepository {
     private authService: AuthService,
   ) {}
 
-  getEmployee(): Observable<Array<EmployeeResponse>> {
+  public getEmployee(): Observable<Array<EmployeeResponse>> {
     return this.httpClient.get<Array<EmployeeResponse>>(
       `${environment.baseURL}/prestador?login=${this.authService.getUser()?.login}`,
       this.authService.getHeader(),
     );
   }
 
-  /** Cadastra novo prestador */
-  postEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+  public postEmployee(
+    employee: EmployeeResponse,
+  ): Observable<EmployeeResponse> {
     return this.httpClient.post<EmployeeResponse>(
       environment.baseURL + '/prestador',
       employee,
@@ -31,7 +32,9 @@ export class EmployeeRepository {
     );
   }
 
-  updateEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+  public updateEmployee(
+    employee: EmployeeResponse,
+  ): Observable<EmployeeResponse> {
     return this.httpClient.put<EmployeeResponse>(
       environment.baseURL + '/prestador/' + employee.id,
       employee,
@@ -39,7 +42,7 @@ export class EmployeeRepository {
     );
   }
 
-  deleteEmployee(employee: any): Observable<any> {
+  public deleteEmployee(employee: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/prestador/${employee.id}`,
       this.authService.getHeader(),

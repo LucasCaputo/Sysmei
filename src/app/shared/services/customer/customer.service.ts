@@ -1,38 +1,48 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
+import {
+  catchError,
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { environment } from 'src/environments/environment';
-import { CustomerRepository } from '../service-api/customer.repository';
+import { CustomerRepository } from '../../service-api/customer.repository';
+import { SnackbarService } from '../snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
   public customers!: Array<CustomerResponse>;
-  public customers$: Subject<Array<CustomerResponse>> = new Subject<
-    Array<CustomerResponse>
-  >();
   public formattedCustomerList!: Array<CustomerResponse>;
 
+  public reloadCustomerListSubject = new Subject<Date>();
+
+  public searchCustomer$ = this.reloadCustomerListSubject.pipe(
+    startWith(void 0),
+    switchMap(() => this.searchCustomerList()),
+    shareReplay(1),
+  );
+
   constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
     private customerRepository: CustomerRepository,
     private utilService: UtilsService,
+    private snackbarService: SnackbarService,
   ) {}
 
-  public searchCustomerList(): void {
-    this.customerRepository.getCustomer().subscribe((customerList) => {
-      this.setSearchCustomerList(customerList);
-    });
+  public searchCustomerList(): Observable<any[]> {
+    return this.customerRepository.getCustomer().pipe(
+      tap((customerList) => this.setSearchCustomerList(customerList)),
+      map((customerList) => this.formatCustomerList(customerList)),
+    );
   }
 
   private setSearchCustomerList(customerList: any): void {
     this.customers = customerList;
-    this.customers$.next(this.formatCustomerList(this.customers));
   }
 
   /** Formata dados do customer para atender a interface do autocomplete no html */
@@ -82,54 +92,81 @@ export class CustomerService {
   }
 
   postCustomer(customer: any): Observable<CustomerResponse> {
-    return this.httpClient.post<any>(
-      environment.baseURL + '/paciente',
-      customer,
-      this.authService.getHeader(),
+    return this.customerRepository.postCustomer(customer).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! Cliente adicionado com sucesso!`,
+          'X',
+          false,
+        );
+        this.searchCustomerList();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao adicionar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no insert');
+      }),
     );
   }
 
   postFile(customerId: number, file: any): Observable<CustomerResponse> {
-    return this.httpClient.post<any>(
-      environment.baseURL + '/paciente/picture/' + customerId,
-      file,
-      this.authService.getHeader(),
-    );
+    return this.customerRepository.postFile(customerId, file);
   }
 
-  getCustomer(customer: any): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/paciente?login=${customer.login}`,
-      this.authService.getHeader(),
-    );
+  getCustomer(): Observable<any> {
+    return this.customerRepository.getCustomer();
   }
 
   getCustomerId(customerId: number): Observable<CustomerResponse> {
-    return this.httpClient.get<CustomerResponse>(
-      `${environment.baseURL}/paciente/${customerId}`,
-      this.authService.getHeader(),
-    );
+    return this.customerRepository.getCustomerId(customerId);
   }
 
   getCustomerRecord(customerId: number): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/?id=${customerId}`,
-      this.authService.getHeader(),
-    );
+    return this.customerRepository.getCustomerRecord(customerId);
   }
 
   deleteCustomer(customer: any): Observable<any> {
-    return this.httpClient.delete<any>(
-      `${environment.baseURL}/paciente/${customer.id}`,
-      this.authService.getHeader(),
+    return this.customerRepository.deleteCustomer(customer).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Cliente deletado com sucesso!`,
+          'X',
+          false,
+        );
+        this.searchCustomerList();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao deletar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no delete');
+      }),
     );
   }
 
   updateCustomer(body: any, id: number) {
-    return this.httpClient.put(
-      environment.baseURL + '/paciente/' + id,
-      body,
-      this.authService.getHeader(),
+    return this.customerRepository.updateCustomer(body, id).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! Cliente atualizado com sucesso!`,
+          'X',
+          false,
+        );
+        this.searchCustomerList();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao atualizar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
     );
   }
 }

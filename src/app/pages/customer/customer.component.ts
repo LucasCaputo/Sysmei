@@ -35,7 +35,7 @@ import { CustomerRecordComponent } from '../customer-record/customer-record.comp
   ],
 })
 export class CustomerComponent {
-  customerList$ = this.customerService.customers$.pipe(
+  customerList$ = this.customerService.searchCustomer$.pipe(
     tap((result) => {
       this.viewPortService.screenSize$.subscribe((size) => {
         if (result.length && size !== 'mobile') {
@@ -60,7 +60,7 @@ export class CustomerComponent {
   ) {
     if (this.customerService.formattedCustomerList) {
       this.customerList$ = of(this.customerService.formattedCustomerList);
-      if(this.customerService.customers[0]){
+      if (this.customerService.customers[0]) {
         this.selectedCustomerId.set(this.customerService.customers[0].id);
       }
     }

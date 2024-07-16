@@ -1,18 +1,25 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import {
   ScheduleFormatResponse,
   ScheduleResponse,
 } from 'src/app/shared/interfaces/schedule-response';
+import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { ScheduleRepository } from 'src/app/shared/services/service-api/schedule.repository';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
-import { environment } from 'src/environments/environment';
 import { CustomerService } from '../customer/customer.service';
 import { EmployeeService } from '../employee/employee.service';
 import { SnackbarService } from '../snackbar.service';
+import { getStartAndEndOfWeek } from '../utils/date.utils';
+import { FormatCalendarDate } from '../utils/format-calendar-payload';
 
 @Injectable({
   providedIn: 'root',
@@ -24,36 +31,37 @@ export class ScheduleService {
 
   public formatedSchedule$ = new Subject<Array<ScheduleFormatResponse>>();
 
+  public reloadScheduleSubject = new Subject<Date>();
+
+  public searchSchedule$ = this.reloadScheduleSubject.pipe(
+    startWith(new Date()),
+    switchMap((date) => this.searchScheduleList(getStartAndEndOfWeek(date))),
+    shareReplay(1),
+  );
+
   constructor(
-    private httpClient: HttpClient,
     private authService: AuthService,
-    private ScheduleRepository: ScheduleRepository,
+    private scheduleRepository: ScheduleRepository,
     private customerService: CustomerService,
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
   ) {}
 
-  /** Busca lista de agendamentos e salva na variável schedule */
-  public searchScheduleList(): void {
-    this.ScheduleRepository.getSchedule().subscribe(
-      (scheduleList: Array<ScheduleResponse>) => {
-        this.setSearchScheduledList(scheduleList);
-      },
-    );
+  public reloadSchedule(date: Date): void {
+    this.reloadScheduleSubject.next(date);
   }
 
-  public searchScheduleListObservable(date: {
+  public searchScheduleList(date: {
     startDate: string;
     endDate: string;
   }): Observable<any> {
-    return this.ScheduleRepository.getScheduleByDate(
-      date.startDate,
-      date.endDate,
-    ).pipe(
-      tap((scheduleList) => this.setSearchScheduledList(scheduleList)),
-      map((schedudle) => this.formatScheduleResponse(schedudle)),
-    );
+    return this.scheduleRepository
+      .getScheduleByDate(date.startDate, date.endDate)
+      .pipe(
+        tap((scheduleList) => this.setSearchScheduledList(scheduleList)),
+        map((schedudle) => this.formatScheduleResponse(schedudle)),
+      );
   }
 
   private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
@@ -121,20 +129,8 @@ export class ScheduleService {
     return schedule;
   }
 
-  /**Formata data */
   public setDate(_date: string): Date {
-    const allDayArray: Array<string> = _date?.split(' ')[0]?.split('-');
-    const time: Array<string> = _date?.split(' ')[1]?.split(':');
-
-    const date = new Date(
-      parseInt(allDayArray[0]),
-      parseInt(allDayArray[1]) - 1,
-      parseInt(allDayArray[2]),
-      parseInt(time[0]),
-      parseInt(time[1]),
-    );
-
-    return date;
+    return FormatCalendarDate(_date);
   }
 
   public postScheduling(body: any): Observable<any> {
@@ -144,17 +140,27 @@ export class ScheduleService {
       allDay: body.start.split(' ')[0],
     };
 
-    return this.ScheduleRepository.postScheduling(payload);
+    return this.scheduleRepository.postScheduling(payload);
   }
 
-  deleteScheduling(customerId: any): Observable<any> {
-    return this.httpClient.delete<any>(
-      `${environment.baseURL}/agenda/${customerId}`,
-      {
-        headers: {
-          Authorization: this.authService.getToken()!,
-        },
-      },
+  public deleteScheduling(customerId: any): Observable<any> {
+    return this.scheduleRepository.deleteScheduling(customerId).pipe(
+      tap(() => {
+        this.reloadSchedule(new Date());
+        this.snackbarService.openSnackBar(
+          `Agendamento deletado com sucesso`,
+          'X',
+          false,
+        );
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro para deletar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
     );
   }
 
@@ -166,9 +172,9 @@ export class ScheduleService {
       allDay: body.start.split(' ')[0],
     };
 
-    return this.ScheduleRepository.updateScheduling(payload, id).pipe(
+    return this.scheduleRepository.updateScheduling(payload, id).pipe(
       tap(() => {
-        this.searchScheduleList();
+        this.reloadSchedule(new Date());
         this.snackbarService.openSnackBar(
           `Agendamento atualizado com sucesso`,
           'X',
@@ -178,6 +184,28 @@ export class ScheduleService {
       catchError(() => {
         this.snackbarService.openSnackBar(
           `Tivemos um erro para atualizar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
+    );
+  }
+
+  public patchStatus(body: { status: number }, id: number) {
+    return this.scheduleRepository.patchStatus(body, id).pipe(
+      tap(() => {
+        this.reloadSchedule(new Date());
+        this.snackbarService.openSnackBar(
+          `Status alterado com sucesso`,
+
+          'X',
+          false,
+        );
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro para alterar o status, tente novamente`,
           'X',
           true,
         );

@@ -19,7 +19,7 @@ import {
   ViewApi,
 } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
-import { Observable, timer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
 import { UserDialogComponent } from 'src/app/shared/components/dialogs/user-dialog/user-dialog.component';
@@ -32,8 +32,7 @@ import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-respo
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
-import { getStartAndEndOfWeek } from 'src/app/shared/services/utils/date.utils';
+import { CardColor } from 'src/app/shared/services/utils/schedule-card-color';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -73,11 +72,10 @@ export class CalendarComponent implements AfterViewInit {
     dateClick: this.redirectMonthToDay.bind(this),
   };
 
-  calendarEvents: Observable<EventInput> = timer(2000).pipe(
-    switchMap(() =>
-      this.scheduleService
-        .searchScheduleListObservable(getStartAndEndOfWeek(new Date()))
-        .pipe(
+  calendarEvents: Observable<EventInput> =
+    this.customerService.searchCustomer$.pipe(
+      switchMap(() =>
+        this.scheduleService.searchSchedule$.pipe(
           map((elements: ScheduleFormatResponse[]) =>
             elements.map((element: ScheduleFormatResponse) => ({
               ...element,
@@ -85,9 +83,10 @@ export class CalendarComponent implements AfterViewInit {
             })),
           ),
           tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
+          tap((e) => console.log(e)),
         ),
-    ),
-  );
+      ),
+    );
 
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
@@ -117,7 +116,6 @@ export class CalendarComponent implements AfterViewInit {
     private auth: AuthService,
     private router: Router,
     private utilsService: UtilsService,
-    private snackbarService: SnackbarService,
     public loaderService: LoaderService,
     public viewportService: ViewportService,
   ) {}
@@ -206,12 +204,6 @@ export class CalendarComponent implements AfterViewInit {
       if (!result) {
         return;
       }
-
-      // clickInfo.event.remove();
-
-      // this.calendarApi.view.calendar.addEvent(
-      //   this.formatScheduleToCalendar(result),
-      // );
     });
   }
 
@@ -239,9 +231,6 @@ export class CalendarComponent implements AfterViewInit {
    * @param action nome da ação seleciona
    */
   public calendarNavigate(action?: string) {
-    // const actualView = this.calendarApi.view.type;
-    // this.calendarApi.changeView(actualView)
-
     this.calendarApi.setOption('visibleRange', {
       start: null,
       end: null,
@@ -284,9 +273,6 @@ export class CalendarComponent implements AfterViewInit {
     this.setColorIconToday();
   }
 
-  /** Seta cor do ícone de dia atual
-   * @param calendarApi
-   */
   private setColorIconToday() {
     const today = new Date(this.timeElapsed);
 
@@ -323,37 +309,7 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   public cardColor(status: number | undefined): string {
-    let color = '';
-    switch (status) {
-      case 0:
-        color = 'purple';
-        break;
-
-      case 1:
-        color = 'green';
-        break;
-
-      case 2:
-        color = 'burlywood';
-        break;
-
-      case 3:
-        color = 'blue';
-        break;
-
-      case 4:
-        color = 'gray';
-        break;
-
-      case 5:
-        color = 'burlywood';
-        break;
-
-      default:
-        break;
-    }
-
-    return color;
+    return CardColor(status);
   }
 
   public changeDate(event: any): void {

@@ -10,10 +10,10 @@ import { map, startWith } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
+import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
-import { ScheduleRepository } from 'src/app/shared/services/service-api/schedule.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';
@@ -116,26 +116,26 @@ export class SchedulingFormComponent implements OnInit {
     if (schedule.id) {
       this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
         (resultUpdate) => {
-          this.scheduleService.searchScheduleList();
+          this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openSuccessSnackBar(
             `Agendamento atualizado com sucesso`,
           );
         },
         (error) => {
-          this.scheduleService.searchScheduleList();
+          this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openErrorSnackBar('atualizar');
         },
       );
     } else {
       this.scheduleService.postScheduling(schedule).subscribe(
         (response) => {
-          this.scheduleService.searchScheduleList();
+          this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openSuccessSnackBar(
             `Agendamento adicionado com sucesso`,
           );
         },
         (error) => {
-          this.scheduleService.searchScheduleList();
+          this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openErrorSnackBar('inserir');
         },
       );
@@ -162,7 +162,7 @@ export class SchedulingFormComponent implements OnInit {
           .deleteScheduling(customer.schedule_id)
           .subscribe(
             (response) => {
-              this.scheduleService.searchScheduleList();
+              this.scheduleService.reloadSchedule(new Date());
               this.snackbarService.openSuccessSnackBar(
                 'Agendamento deletado com sucesso',
               );

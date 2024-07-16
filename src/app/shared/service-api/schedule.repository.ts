@@ -7,7 +7,7 @@ import {
   getDate30DaysAgo,
 } from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
-import { ScheduleResponse } from '../../interfaces/schedule-response';
+import { ScheduleResponse } from '../interfaces/schedule-response';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,6 @@ export class ScheduleRepository {
     );
   }
 
-  /** Busca lista de todos os agendamentos */
   public getSchedule(): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
@@ -44,14 +43,14 @@ export class ScheduleRepository {
     );
   }
 
-  deleteScheduling(customerId: any): Observable<any> {
+  public deleteScheduling(customerId: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/agenda/${customerId}`,
       this.authService.getHeader(),
     );
   }
 
-  updateScheduling(body: any, id: number) {
+  public updateScheduling(body: any, id: number) {
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
@@ -61,7 +60,7 @@ export class ScheduleRepository {
     });
   }
 
-  patchStatus(body: { status: number }, id: number) {
+  public patchStatus(body: { status: number }, id: number) {
     return this.httpClient.patch(
       environment.baseURL + '/agenda/' + id + '/status',
       body,

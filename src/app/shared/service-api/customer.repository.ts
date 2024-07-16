@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
-import { CustomerResponse } from '../../interfaces/customer-response';
+import { CustomerResponse } from '../interfaces/customer-response';
 
 @Injectable({
   providedIn: 'root',

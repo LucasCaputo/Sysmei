@@ -9,8 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { CustomerRepository } from 'src/app/shared/service-api/customer.repository';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
-import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SharedModule } from '../../../shared/shared.module';
 
 @Component({

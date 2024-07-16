@@ -1,30 +1,28 @@
-<div [class]="{'invisible': loaderService.firstload()}">
-  <app-schedule-header [calendarDateTitle]="calendarDateTitle()" (menuButtonClick)="snav.toggle()"
-    (addButtonClick)="insertSchedule()" (navigateButtonClick)="calendarNavigate($event)" />
+<app-schedule-header [calendarDateTitle]="calendarDateTitle()" (menuButtonClick)="snav.toggle()"
+  (addButtonClick)="insertSchedule()" (navigateButtonClick)="calendarNavigate($event)" />
 
-  <mat-sidenav-container>
-    <mat-sidenav #snav>
-      <app-menu (click)="snav.toggle()"></app-menu>
-    </mat-sidenav>
+<mat-sidenav-container>
+  <mat-sidenav #snav>
+    <app-menu (click)="snav.toggle()"></app-menu>
+  </mat-sidenav>
 
-    <mat-sidenav-content [class]="(screenSize$ | async) == 'mobile' ? '!h-body-height-mobile': '!h-body-height'">
+  <mat-sidenav-content [class]="(screenSize$ | async) == 'mobile' ? '!h-body-height-mobile': '!h-body-height'">
 
-      <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)"
-        (addNewSchedule)="insertSchedule()" [actionIcon]="actionIcon()" />
+    <app-calendar-navigation-desktop class="navigation-desktop" (action)="calendarNavigate($event)"
+      (addNewSchedule)="insertSchedule()" [actionIcon]="actionIcon()" />
 
-      <div class="calendar-container">
+    <div class="calendar-container">
 
-        <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)"
-          (changeDate)="changeDate($event)" [actionIcon]="actionIcon()" [date]="calendarState.date()" />
+      <app-calendar-sidenav-desktop class="sidenav-desktop" (changeUser)="changeEmployee($event)"
+        (changeDate)="changeDate($event)" [actionIcon]="actionIcon()" [date]="calendarState.date()" />
 
-        <full-calendar class="full-calendar" #calendar [options]="calendarOptions"
-          [events]="calendarEvents | async"></full-calendar>
-      </div>
+      <full-calendar class="full-calendar" #calendar [options]="calendarOptions"
+        [events]="calendarEvents | async"></full-calendar>
+    </div>
 
 
-      <app-calendar-naviagtion class="navigation" [todayIcon]="todayIcon" [title]="calendarDateTitle()"
-        (action)="calendarNavigate($event)" />
+    <app-calendar-naviagtion class="navigation" [todayIcon]="todayIcon" [title]="calendarDateTitle()"
+      (action)="calendarNavigate($event)" />
 
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

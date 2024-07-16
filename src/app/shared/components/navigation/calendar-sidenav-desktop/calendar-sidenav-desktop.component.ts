@@ -98,11 +98,11 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
   };
 
   allChecked = true;
-  employeeList: Observable<any> = this.employeeService.employee$.pipe(
+  employeeList: Observable<any> = this.employeeService.searchEmployee$.pipe(
     map((employees) =>
       employees.map((employee) => ({ ...employee, checked: true })),
     ),
-  )
+  );
 
   employeeListFormated = signal([{ id: 0 }]);
 

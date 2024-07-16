@@ -18,7 +18,6 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
-import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
@@ -101,7 +100,6 @@ export class CustomerRecordComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private customerRepository: CustomerRepository,
     private snackbarService: SnackbarService,
     private router: Router,
     public dialog: MatDialog,
@@ -133,7 +131,7 @@ export class CustomerRecordComponent implements OnInit {
   populate() {
     this.loading = true;
     const id = this.getCustomerId();
-    this.customerRepository.getCustomerId(id).subscribe(
+    this.customerService.getCustomerId(id).subscribe(
       (response) => {
         this.data = response;
         this.photos = response.documentsUrl;
@@ -154,7 +152,7 @@ export class CustomerRecordComponent implements OnInit {
       },
     );
 
-    this.customerRepository.getCustomerRecord(id).subscribe(
+    this.customerService.getCustomerRecord(id).subscribe(
       (response) => {
         this.records = response;
       },
@@ -171,18 +169,16 @@ export class CustomerRecordComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', foto);
 
-      this.customerRepository
-        .postFile(this.getCustomerId(), formData)
-        .subscribe(
-          (result) => {
-            this.customerRepository
-              .getCustomerId(this.getCustomerId())
-              .subscribe((result) => {
-                this.photos = result.documentsUrl;
-              });
-          },
-          (error) => {},
-        );
+      this.customerService.postFile(this.getCustomerId(), formData).subscribe(
+        (result) => {
+          this.customerService
+            .getCustomerId(this.getCustomerId())
+            .subscribe((result) => {
+              this.photos = result.documentsUrl;
+            });
+        },
+        (error) => {},
+      );
     }
   }
 
@@ -213,7 +209,7 @@ export class CustomerRecordComponent implements OnInit {
         this.records = [];
 
         setTimeout(() => {
-          this.customerRepository
+          this.customerService
             .getCustomerRecord(this.getCustomerId())
             .subscribe(
               (response) => {

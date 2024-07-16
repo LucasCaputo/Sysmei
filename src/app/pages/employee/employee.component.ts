@@ -26,12 +26,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
 })
 export class EmployeeComponent {
-  customerList = this.employeeService.employee$;
+  employeeList = this.employeeService.searchEmployee$;
 
   constructor(
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-  ) { }
+  ) {}
 
   openDialog(dataInfo: EmployeeResponse) {
     this.dialog.open(EmployeeDialogComponent, {

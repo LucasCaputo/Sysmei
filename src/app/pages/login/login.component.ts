@@ -9,7 +9,7 @@ import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input
 import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
-import { FormatLoginPayload } from 'src/app/shared/services/utils/format-payload';
+import { FormatLoginPayload } from 'src/app/shared/services/utils/format-login-payload';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({

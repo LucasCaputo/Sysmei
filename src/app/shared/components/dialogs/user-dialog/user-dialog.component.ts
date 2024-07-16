@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedInputModule } from '../../inputs/shared-input.module';
+import { PaymentsDialogComponent } from '../payments-dialog/payments-dialog.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +16,8 @@ import { SharedInputModule } from '../../inputs/shared-input.module';
   imports: [
     SharedModule,
     SharedInputModule,
-    MatTabsModule
+    MatTabsModule,
+    PaymentsDialogComponent,
   ],
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss'],
@@ -44,26 +46,37 @@ export class UserDialogComponent {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    public userService: UserService
+    public userService: UserService,
   ) {}
 
   saveSettings() {
-    let body: Partial<UserInterface>
+    let body: Partial<UserInterface>;
 
-    if(this.userForm.value.name && this.userForm.value.phone && this.userForm.value.login) {
-     body = {
+    if (
+      this.userForm.value.name &&
+      this.userForm.value.phone &&
+      this.userForm.value.login
+    ) {
+      body = {
         nome: this.userForm.value.name,
         login: this.userForm.value.login,
         telefone: this.userForm.value.phone,
-      }
+      };
 
-      if(this.passwordForm.value.oldPassword && this.passwordForm.value.password && this.passwordForm.value.repetPassword) {
-          body = {...body, ...{
+      if (
+        this.passwordForm.value.oldPassword &&
+        this.passwordForm.value.password &&
+        this.passwordForm.value.repetPassword
+      ) {
+        body = {
+          ...body,
+          ...{
             senha: this.passwordForm.value.password,
-            senhaAntiga: this.passwordForm.value.oldPassword
-          }}
+            senhaAntiga: this.passwordForm.value.oldPassword,
+          },
+        };
       }
-      this.userService.updateUser(body).subscribe()
+      this.userService.updateUser(body).subscribe();
     }
   }
 }

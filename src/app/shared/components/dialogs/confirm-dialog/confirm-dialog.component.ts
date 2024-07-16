@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -22,7 +22,7 @@ import {
     MatButtonModule,
   ],
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent {
   FormConfirm = this.fb.group({
     confirmed: [this.data.confirmed || false],
   });
@@ -32,6 +32,4 @@ export class ConfirmDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { confirmed: boolean },
     private fb: UntypedFormBuilder,
   ) {}
-
-  ngOnInit(): void {}
 }

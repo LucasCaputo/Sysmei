@@ -18,6 +18,7 @@ export class AuthService {
   setUser(user: any) {
     this.user = user;
     this.userSubject.next(user);
+    localStorage.setItem('user', JSON.stringify({ login: user.login }));
   }
 
   getUserObservable() {
@@ -26,6 +27,13 @@ export class AuthService {
 
   getUser(): UserInterface | undefined {
     if (this.user) {
+      return this.user;
+    }
+
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      this.user = JSON.parse(user);
       return this.user;
     }
 

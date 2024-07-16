@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SharedInputModule } from '../../inputs/shared-input.module';
 
@@ -38,7 +37,6 @@ export class CustomerDialogComponent {
     },
     private customerService: CustomerService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService,
   ) {}
 
   saveCustomer(): void {
@@ -52,43 +50,11 @@ export class CustomerDialogComponent {
   }
 
   updateCustomer(id: number) {
-    this.customerService.updateCustomer(this.form.value, id).subscribe(
-      (response) => {
-        this.customerService.searchCustomerList();
-        this.snackbarService.openSnackBar(
-          `Parabéns! usuário atualizado com sucesso`,
-          'X',
-          false,
-        );
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro na atualização, tente novamente`,
-          'X',
-          true,
-        );
-      },
-    );
+    this.customerService.updateCustomer(this.form.value, id).subscribe();
   }
 
   addCustomer() {
-    this.customerService.postCustomer(this.form.value).subscribe(
-      (response) => {
-        this.customerService.searchCustomerList();
-        this.snackbarService.openSnackBar(
-          `Parabéns! cliente cadastrado com sucesso`,
-          'X',
-          false,
-        );
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro no cadastro, tente novamente`,
-          'X',
-          true,
-        );
-      },
-    );
+    this.customerService.postCustomer(this.form.value).subscribe();
   }
 
   onDelete(customer: any) {
@@ -105,27 +71,7 @@ export class CustomerDialogComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        this.customerService.deleteCustomer(customer).subscribe(
-          (response) => {
-            this.snackbarService.openSnackBar(
-              `Usuário deletado com sucesso`,
-              'X',
-              false,
-            );
-
-            this.customerService.searchCustomerList();
-
-            this.dialog.closeAll();
-          },
-          (error) => {
-            console.error(error);
-            this.snackbarService.openSnackBar(
-              `Tivemos um erro no cadastro, tente novamente`,
-              'X',
-              true,
-            );
-          },
-        );
+        this.customerService.deleteCustomer(customer).subscribe();
       }
     });
   }

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from '../../services/customer/customer.service';
 import { HelpDialogComponent } from '../dialogs/help-dialog/help-dialog.component';
-import { PaymentsDialogComponent } from '../dialogs/payments-dialog/payments-dialog.component';
 import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.component';
 
 @Component({
@@ -59,12 +58,6 @@ export class MenuComponent {
       icon: 'settings',
       key: 'settings',
     },
-    {
-      redirect: '',
-      label: 'Pagamentos',
-      icon: 'payments',
-      key: 'payments',
-    },
   ];
 
   constructor(
@@ -77,7 +70,6 @@ export class MenuComponent {
   /** Faz logout do sistema */
   public logout(): void {
     this.customerService.customers = [];
-    this.customerService.customers$.next([]);
     this.customerService.formattedCustomerList = [];
 
     this.auth.logout();
@@ -97,10 +89,6 @@ export class MenuComponent {
 
       case 'settings':
         this.openUserSettingsModal();
-        break;
-
-      case 'payments':
-        this.openPaymentsModal();
         break;
 
       default:
@@ -126,22 +114,6 @@ export class MenuComponent {
 
   public openUserSettingsModal(): void {
     const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-      position: {
-        top: '90px',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
-    });
-  }
-
-  public openPaymentsModal(): void {
-    const dialogRef = this.dialog.open(PaymentsDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       position: {

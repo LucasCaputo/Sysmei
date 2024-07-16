@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { Observable, Subscription } from 'rxjs';
+import { CustomerRepository } from 'src/app/shared/service-api/customer.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { CustomerRepository } from 'src/app/shared/services/service-api/customer.repository';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 

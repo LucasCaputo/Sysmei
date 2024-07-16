@@ -1,47 +1,113 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 
+import {
+  catchError,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
-import { EmployeeRepository } from '../service-api/employee.repository';
+import { EmployeeRepository } from '../../service-api/employee.repository';
+import { SnackbarService } from '../snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
   public employee!: Array<EmployeeResponse>;
-  public employee$ = new Subject<Array<EmployeeResponse>>();
 
-  constructor(private employeeRepository: EmployeeRepository) {}
+  public reloadEmployeeSubject = new Subject<Array<EmployeeResponse>>();
 
-  /** Busca lista de usuários e salva na variável employee */
-  public searchEmployeeList(): void {
-    this.employeeRepository.getEmployee().subscribe((employeeList) => {
-      this.setSearchEmployeeList(employeeList);
-    });
+  public searchEmployee$ = this.reloadEmployeeSubject.pipe(
+    startWith(void 0),
+    switchMap(() => this.searchEmployee()),
+    shareReplay(1),
+  );
+
+  constructor(
+    private employeeRepository: EmployeeRepository,
+    private snackbarService: SnackbarService,
+  ) {}
+
+  public reloadSchedule(): void {
+    this.reloadEmployeeSubject.next();
   }
 
-  private setSearchEmployeeList(employeeList: any) {
-    this.employee = employeeList;
-    this.employee$.next(employeeList);
+  public searchEmployee(): Observable<Array<EmployeeResponse>> {
+    return this.employeeRepository
+      .getEmployee()
+      .pipe(tap((employeeList) => (this.employee = employeeList)));
   }
 
-  /** Cadastra novo prestador */
   public postEmployee(
     employee: EmployeeResponse,
   ): Observable<EmployeeResponse> {
-    return this.employeeRepository.postEmployee(employee);
+    return this.employeeRepository.postEmployee(employee).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! Prestador cadastrado com sucesso!`,
+          'X',
+          false,
+        );
+
+        this.reloadSchedule();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao deletar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
+    );
   }
 
-  /** Cadastra novo prestador */
   public editEmployee(
     employee: EmployeeResponse,
   ): Observable<EmployeeResponse> {
-    return this.employeeRepository.updateEmployee(employee);
+    return this.employeeRepository.updateEmployee(employee).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! Prestador editado com sucesso!`,
+          'X',
+          false,
+        );
+        this.reloadSchedule();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao editar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
+    );
   }
 
   public deleteEmployee(
     employee: EmployeeResponse,
   ): Observable<EmployeeResponse> {
-    return this.employeeRepository.deleteEmployee(employee);
+    return this.employeeRepository.deleteEmployee(employee).pipe(
+      tap(() => {
+        this.snackbarService.openSnackBar(
+          `Parabéns! Prestador deletado com sucesso!`,
+          'X',
+          false,
+        );
+        this.reloadSchedule();
+      }),
+      catchError(() => {
+        this.snackbarService.openSnackBar(
+          `Tivemos um erro ao deletar, tente novamente`,
+          'X',
+          true,
+        );
+        return throwError('Erro no update');
+      }),
+    );
   }
 }
