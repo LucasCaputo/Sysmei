@@ -51,4 +51,12 @@ export class UserService {
       },
     });
   }
+
+  public getTokenValidation(token: string): Observable<any> {
+    return this.httpClient.get(environment.baseURL + '/user/token', {
+      params: {
+        code: token,
+      },
+    });
+  }
 }

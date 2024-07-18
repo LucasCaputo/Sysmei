@@ -1,59 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'src/app/shared/services/user/user.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-email-confirmation',
   standalone: true,
   imports: [SharedModule],
   templateUrl: './email-confirmation.component.html',
-  styleUrls: ['./email-confirmation.component.scss']
+  styleUrls: ['./email-confirmation.component.scss'],
 })
-export class EmailConfirmationComponent {
-
-  code: string | null = null;
-  message: string = '';
-  isError: boolean = false;
+export class EmailConfirmationComponent implements OnInit {
+  isError = signal(false);
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private http: HttpClient
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly userService: UserService,
   ) {}
 
-// localhost:4200/user/token?code=abc123
-
   ngOnInit() {
+    const code = this.route.snapshot.queryParams?.code;
 
-    this.code = this.route.snapshot.paramMap.get('code');
-
-    if (this.code) {
-      this.verifyToken(this.code);
+    if (code) {
+      this.verifyToken(code);
     } else {
-      this.message = 'Token não encontrado na URL.';
-      this.isError = true;
+      this.isError.set(true);
     }
   }
 
   verifyToken(code: string) {
-
-    this.http.get(`/user/token?code=${code}`).subscribe({
-      next: (response: any) => {
-        console.log('Sucesso:', response)
-        this.message = 'E-mail confirmado com sucesso!';
-        this.isError = false;
-      },
-      error: (error: any) => {
-        console.log('Erro na confirmação:', error)
-        this.message = 'Erro na confirmação do e-mail.';
-        this.isError = true;
-      }
+    this.userService.getTokenValidation(code).subscribe((res) => {
+      console.log(res);
     });
   }
 
   goToLogin() {
     this.router.navigate(['/login']);
   }
-
 }
