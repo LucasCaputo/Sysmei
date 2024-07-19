@@ -24,8 +24,8 @@
 
   <mat-sidenav-content>
     <mat-list>
-      <ng-container *ngFor="let customer of employeeList | async">
-        <app-card [cardData]="customer" (edit)="openDialog(customer)"></app-card>
+      <ng-container *ngFor="let employee of employeeList | async">
+        <app-card [cardData]="employee" (edit)="openDialog(employee)"></app-card>
       </ng-container>
     </mat-list>
   </mat-sidenav-content>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,10 +15,21 @@ export class EmployeeRepository {
     private authService: AuthService,
   ) {}
 
-  public getEmployee(): Observable<Array<EmployeeResponse>> {
-    return this.httpClient.get<Array<EmployeeResponse>>(
-      `${environment.baseURL}/prestador?login=${this.authService.getUser()?.login}`,
-      this.authService.getHeader(),
+  public getEmployee(): Observable<EmployeeResponse[]> {
+    const user = this.authService.getUser();
+
+    let params = new HttpParams();
+
+    if (user?.login) {
+      params = params.set('login', user.login);
+    }
+
+    return this.httpClient.get<EmployeeResponse[]>(
+      `${environment.baseURL}/prestador`,
+      {
+        headers: this.authService.getHeader().headers,
+        params: params,
+      },
     );
   }
 

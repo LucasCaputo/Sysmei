@@ -3,6 +3,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import {
   catchError,
   map,
+  retry,
   shareReplay,
   startWith,
   switchMap,
@@ -37,6 +38,7 @@ export class ScheduleService {
     startWith(new Date()),
     switchMap((date) => this.searchScheduleList(getStartAndEndOfWeek(date))),
     shareReplay(1),
+    retry(1),
   );
 
   constructor(

@@ -69,11 +69,8 @@ export class MenuComponent {
 
   /** Faz logout do sistema */
   public logout(): void {
-    this.customerService.customers = [];
-    this.customerService.formattedCustomerList = [];
-
     this.auth.logout();
-    this.router.navigate(['login']);
+    window.location.reload();
   }
 
   /** Redireciona para rota selecionada */

@@ -3,6 +3,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 import {
   catchError,
   map,
+  retry,
   shareReplay,
   startWith,
   switchMap,
@@ -26,6 +27,7 @@ export class CustomerService {
     startWith(void 0),
     switchMap(() => this.searchCustomerList()),
     shareReplay(1),
+    retry(1),
   );
 
   constructor(

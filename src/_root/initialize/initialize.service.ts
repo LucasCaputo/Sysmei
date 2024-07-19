@@ -21,7 +21,6 @@ export class InitializeService {
       },
       () => {
         this.authService.logout();
-        this.router.navigate(['login']);
       },
     );
   }

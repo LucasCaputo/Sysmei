@@ -2,10 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import {
-  getCurrentDate,
-  getDate30DaysAgo,
-} from 'src/app/shared/services/utils/utils.service';
 import { environment } from 'src/environments/environment';
 import { ScheduleResponse } from '../interfaces/schedule-response';
 
@@ -22,13 +18,6 @@ export class ScheduleRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/agenda',
       scheduling,
-      this.authService.getHeader(),
-    );
-  }
-
-  public getSchedule(): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${getDate30DaysAgo()}&dataFim=${getCurrentDate()}&prestadorId=all`,
       this.authService.getHeader(),
     );
   }

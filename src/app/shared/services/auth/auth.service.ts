@@ -6,8 +6,9 @@ import { UserInterface } from '../../interfaces/user';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject: BehaviorSubject<UserInterface | undefined> =
-    new BehaviorSubject<UserInterface | undefined>(undefined);
+  private userSubject = new BehaviorSubject<UserInterface | undefined>(
+    undefined,
+  );
 
   public user: UserInterface | undefined;
 
@@ -16,9 +17,9 @@ export class AuthService {
   constructor() {}
 
   setUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
     this.user = user;
     this.userSubject.next(user);
-    localStorage.setItem('user', JSON.stringify({ login: user.login }));
   }
 
   getUserObservable() {
@@ -33,10 +34,12 @@ export class AuthService {
     const user = localStorage.getItem('user');
 
     if (user) {
-      this.user = JSON.parse(user);
-      return this.user;
+      const userParse = JSON.parse(user);
+      this.user = userParse.usuario;
+      return userParse.usuario;
     }
 
+    console.log(this.user);
     return undefined;
   }
 

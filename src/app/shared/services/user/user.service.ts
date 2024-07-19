@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -17,22 +18,33 @@ export class UserService {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
+    private router: Router,
   ) {}
 
   public postUser(newUser: Partial<UserInterface>): Observable<UserInterface> {
     return this.httpClient.post<UserInterface>(
       environment.baseURL + '/user',
       newUser,
+      {
+        headers: {
+          'Skip-Interceptor': 'true',
+        },
+      },
     );
   }
 
   public postLogin(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.httpClient
-      .post<LoginRequest>(environment.baseURL + '/user/login', loginRequest)
+      .post<LoginRequest>(environment.baseURL + '/user/login', loginRequest, {
+        headers: {
+          'Skip-Interceptor': 'true',
+        },
+      })
       .pipe(
         tap((response: any) => {
-          this.authService.setToken(response.token);
+          console.log(response);
           this.authService.setUser(response);
+          this.authService.setToken(response.token);
         }),
       );
   }

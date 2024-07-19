@@ -39,6 +39,32 @@ export class LoginComponent {
     private readonly formBuilder: FormBuilder,
   ) {}
 
+  checkNotificationPermission() {
+    if ('Notification' in window) {
+      Notification.requestPermission()
+        .then((permission) => {
+          if (permission === 'granted') {
+            console.error('Permissão aceita para notificações.');
+            const notification = new Notification('Hi There', {
+              body: 'Está é uma notificação',
+            });
+
+            notification.onclick = () => {
+              console.log('Notificação clicada!');
+            };
+          }
+        })
+        .catch((error) => {
+          console.error(
+            'Erro ao solicitar permissão para notificações:',
+            error,
+          );
+        });
+    } else {
+      console.error('Este navegador não suporta notificações.');
+    }
+  }
+
   onSubmit() {
     if (
       this.loginForm.value.email &&

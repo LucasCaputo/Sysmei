@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -31,10 +31,18 @@ export class CustomerRepository {
   }
 
   getCustomer(): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/paciente?login=${this.authService.getUser()?.login}`,
-      this.authService.getHeader(),
-    );
+    const user = this.authService.getUser();
+
+    let params = new HttpParams();
+
+    if (user?.login) {
+      params = params.set('login', user.login);
+    }
+
+    return this.httpClient.get<any>(`${environment.baseURL}/paciente`, {
+      headers: this.authService.getHeader().headers,
+      params: params,
+    });
   }
 
   getCustomerId(customerId: number): Observable<CustomerResponse> {
