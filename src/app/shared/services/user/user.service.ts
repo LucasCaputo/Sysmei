@@ -42,26 +42,17 @@ export class UserService {
       })
       .pipe(
         tap((response: any) => {
-          console.log(response);
-          this.authService.setUser(response);
+          this.authService.setUser(response.usuario);
           this.authService.setToken(response.token);
         }),
       );
   }
 
   public getUser(): Observable<any> {
-    return this.httpClient.get(environment.baseURL + '/user', {
-      headers: {
-        Authorization: this.authService.getToken()!,
-      },
-    });
+    return this.httpClient.get(environment.baseURL + '/user');
   }
 
   public updateUser(body: Partial<UserInterface>): Observable<any> {
-    return this.httpClient.put(environment.baseURL + '/user', body, {
-      headers: {
-        Authorization: this.authService.getToken()!,
-      },
-    });
+    return this.httpClient.put(environment.baseURL + '/user', body);
   }
 }

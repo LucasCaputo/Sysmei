@@ -27,19 +27,13 @@ export class AuthService {
   }
 
   getUser(): UserInterface | undefined {
-    if (this.user) {
-      return this.user;
-    }
-
     const user = localStorage.getItem('user');
 
     if (user) {
-      const userParse = JSON.parse(user);
-      this.user = userParse.usuario;
-      return userParse.usuario;
+      this.user = JSON.parse(user);
+      return this.user;
     }
 
-    console.log(this.user);
     return undefined;
   }
 
@@ -57,14 +51,6 @@ export class AuthService {
     }
 
     return undefined;
-  }
-
-  getHeader() {
-    return {
-      headers: {
-        Authorization: this.getToken()!,
-      },
-    };
   }
 
   logout() {

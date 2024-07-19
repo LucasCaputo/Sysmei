@@ -17,6 +17,7 @@ export class EmployeeRepository {
 
   public getEmployee(): Observable<EmployeeResponse[]> {
     const user = this.authService.getUser();
+    console.log(user);
 
     let params = new HttpParams();
 
@@ -27,7 +28,6 @@ export class EmployeeRepository {
     return this.httpClient.get<EmployeeResponse[]>(
       `${environment.baseURL}/prestador`,
       {
-        headers: this.authService.getHeader().headers,
         params: params,
       },
     );
@@ -39,7 +39,6 @@ export class EmployeeRepository {
     return this.httpClient.post<EmployeeResponse>(
       environment.baseURL + '/prestador',
       employee,
-      this.authService.getHeader(),
     );
   }
 
@@ -49,14 +48,12 @@ export class EmployeeRepository {
     return this.httpClient.put<EmployeeResponse>(
       environment.baseURL + '/prestador/' + employee.id,
       employee,
-      this.authService.getHeader(),
     );
   }
 
   public deleteEmployee(employee: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/prestador/${employee.id}`,
-      this.authService.getHeader(),
     );
   }
 }

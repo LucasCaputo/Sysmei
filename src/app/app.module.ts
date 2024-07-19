@@ -1,4 +1,9 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import {
   DEFAULT_CURRENCY_CODE,
   Injectable,
@@ -18,11 +23,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { LoaderComponent } from './shared/components/loader/loader/loader.component';
-import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { authInterceptor } from './interceptors/auth.interceptor';
 import { InstallPwaComponentComponent } from './shared/components/install-pwa/install-pwa.component';
 
 // Registre a localidade para 'pt'
@@ -61,7 +66,8 @@ registerLocaleData(localePt, 'pt');
       useClass: InterceptorService,
       multi: true,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    provideHttpClient(withInterceptors([authInterceptor])),
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent],

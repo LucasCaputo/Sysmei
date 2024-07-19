@@ -1,21 +1,23 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthService } from '../shared/services/auth/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('token');
+  const authService = inject(AuthService);
+  const token = authService.getToken();
 
-  // Verifique se a requisição deve ser ignorada pelo interceptor
   const skipInterceptor = req.headers.has('Skip-Interceptor');
+  console.log(skipInterceptor);
 
   if (token && !skipInterceptor) {
     const clonedRequest = req.clone({
       setHeaders: {
-        Authorization: token, //`Bearer ${token}`
+        Authorization: token,
       },
     });
     return next(clonedRequest);
   }
 
-  // Remove o cabeçalho antes de enviar a requisição
   const cleanedRequest = req.clone({
     headers: req.headers.delete('Skip-Interceptor'),
   });

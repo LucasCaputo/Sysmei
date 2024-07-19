@@ -18,7 +18,6 @@ export class ScheduleRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/agenda',
       scheduling,
-      this.authService.getHeader(),
     );
   }
 
@@ -28,14 +27,12 @@ export class ScheduleRepository {
   ): Observable<ScheduleResponse[]> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`,
-      this.authService.getHeader(),
     );
   }
 
   public deleteScheduling(customerId: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/agenda/${customerId}`,
-      this.authService.getHeader(),
     );
   }
 
@@ -53,7 +50,6 @@ export class ScheduleRepository {
     return this.httpClient.patch(
       environment.baseURL + '/agenda/' + id + '/status',
       body,
-      this.authService.getHeader(),
     );
   }
 }

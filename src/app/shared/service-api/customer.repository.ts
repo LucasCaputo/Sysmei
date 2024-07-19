@@ -18,7 +18,6 @@ export class CustomerRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/paciente',
       customer,
-      this.authService.getHeader(),
     );
   }
 
@@ -26,7 +25,6 @@ export class CustomerRepository {
     return this.httpClient.post<any>(
       environment.baseURL + '/paciente/picture/' + customerId,
       file,
-      this.authService.getHeader(),
     );
   }
 
@@ -40,7 +38,6 @@ export class CustomerRepository {
     }
 
     return this.httpClient.get<any>(`${environment.baseURL}/paciente`, {
-      headers: this.authService.getHeader().headers,
       params: params,
     });
   }
@@ -48,29 +45,22 @@ export class CustomerRepository {
   getCustomerId(customerId: number): Observable<CustomerResponse> {
     return this.httpClient.get<CustomerResponse>(
       `${environment.baseURL}/paciente/${customerId}`,
-      this.authService.getHeader(),
     );
   }
 
   getCustomerRecord(customerId: number): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.baseURL}/agenda/` + customerId,
-      this.authService.getHeader(),
     );
   }
 
   deleteCustomer(customer: any): Observable<any> {
     return this.httpClient.delete<any>(
       `${environment.baseURL}/paciente/${customer.id}`,
-      this.authService.getHeader(),
     );
   }
 
   updateCustomer(body: any, id: number) {
-    return this.httpClient.put(
-      environment.baseURL + '/paciente/' + id,
-      body,
-      this.authService.getHeader(),
-    );
+    return this.httpClient.put(environment.baseURL + '/paciente/' + id, body);
   }
 }
