@@ -83,7 +83,6 @@ export class CalendarComponent implements AfterViewInit {
             })),
           ),
           tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
-          tap((e) => console.log(e)),
         ),
       ),
     );

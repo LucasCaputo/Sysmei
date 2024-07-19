@@ -1,7 +1,5 @@
 <app-header [isPrivate]="false" />
 
-<button mat-raised-button (click)="checkNotificationPermission()">Notification</button>
-
 <app-card-container [title]="'Entrar'">
   <form class="flex flex-col" [formGroup]="loginForm">
     <app-email [email]="loginForm.controls.email" />

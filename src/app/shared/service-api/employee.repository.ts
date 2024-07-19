@@ -17,7 +17,6 @@ export class EmployeeRepository {
 
   public getEmployee(): Observable<EmployeeResponse[]> {
     const user = this.authService.getUser();
-    console.log(user);
 
     let params = new HttpParams();
 

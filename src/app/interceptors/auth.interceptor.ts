@@ -7,7 +7,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token = authService.getToken();
 
   const skipInterceptor = req.headers.has('Skip-Interceptor');
-  console.log(skipInterceptor);
 
   if (token && !skipInterceptor) {
     const clonedRequest = req.clone({

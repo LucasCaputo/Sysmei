@@ -29,6 +29,7 @@ import localePt from '@angular/common/locales/pt';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { InstallPwaComponentComponent } from './shared/components/install-pwa/install-pwa.component';
+import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 
 // Registre a localidade para 'pt'
 registerLocaleData(localePt, 'pt');
@@ -67,7 +68,7 @@ registerLocaleData(localePt, 'pt');
       multi: true,
     },
     provideHttpClient(withInterceptors([authInterceptor])),
-    // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent],
