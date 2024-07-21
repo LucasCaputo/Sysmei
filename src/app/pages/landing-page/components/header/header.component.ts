@@ -5,11 +5,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 
 @Component({
-  selector: 'app-landing-page',
+  selector: 'app-header',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,10 +17,8 @@ import { HeaderComponent } from './components/header/header.component';
     MatCardModule,
     MatGridListModule,
     NgOptimizedImage,
-    HeaderComponent,
-    FooterComponent,
   ],
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.scss'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class LandingPageComponent {}
+export class HeaderComponent {}
