@@ -265,11 +265,17 @@ export class CalendarComponent implements AfterViewInit {
       endStr: this.calendarApi.view.activeEnd,
     });
 
+    this.getSchedule(this.calendarApi.view.activeStart);
+
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
 
     this.setColorIconToday();
+  }
+
+  private getSchedule(date: Date): void {
+    this.scheduleService.reloadSchedule(date);
   }
 
   private setColorIconToday() {

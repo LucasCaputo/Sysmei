@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -50,11 +51,17 @@ export class CustomerDialogComponent {
   }
 
   updateCustomer(id: number) {
-    this.customerService.updateCustomer(this.form.value, id).subscribe();
+    this.customerService
+      .updateCustomer(this.form.value, id)
+      .pipe(map(() => this.getCustomer()))
+      .subscribe();
   }
 
   addCustomer() {
-    this.customerService.postCustomer(this.form.value).subscribe();
+    this.customerService
+      .postCustomer(this.form.value)
+      .pipe(map(() => this.getCustomer()))
+      .subscribe();
   }
 
   onDelete(customer: any) {
@@ -71,8 +78,15 @@ export class CustomerDialogComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        this.customerService.deleteCustomer(customer).subscribe();
+        this.customerService
+          .deleteCustomer(customer)
+          .pipe(map(() => this.getCustomer()))
+          .subscribe();
       }
     });
+  }
+
+  private getCustomer() {
+    this.customerService.reloadCustomerListSubject.next();
   }
 }

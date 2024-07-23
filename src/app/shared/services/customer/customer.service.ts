@@ -21,7 +21,7 @@ export class CustomerService {
   public customers!: Array<CustomerResponse>;
   public formattedCustomerList!: Array<CustomerResponse>;
 
-  public reloadCustomerListSubject = new Subject<Date>();
+  public reloadCustomerListSubject = new Subject<void>();
 
   public searchCustomer$ = this.reloadCustomerListSubject.pipe(
     startWith(void 0),
