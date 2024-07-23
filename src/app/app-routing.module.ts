@@ -12,6 +12,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'home',
+    loadComponent: () =>
+      import('./pages/landing-page/landing-page.component').then(
+        (m) => m.LandingPageComponent,
+      ),
+  },
+  {
     path: '',
     canActivate: [PrivateRoutesGuard],
     children: [
@@ -19,13 +26,6 @@ const routes: Routes = [
         path: '',
         redirectTo: '/login',
         pathMatch: 'full',
-      },
-      {
-        path: 'home',
-        loadComponent: () =>
-          import('./pages/landing-page/landing-page.component').then(
-            (m) => m.LandingPageComponent,
-          ),
       },
       {
         path: 'clientes',
@@ -76,7 +76,9 @@ const routes: Routes = [
       {
         path: 'recuperar-conta',
         loadComponent: () =>
-          import('./pages/email-confirmation/email-confirmation.component').then((m) => m.EmailConfirmationComponent),
+          import(
+            './pages/email-confirmation/email-confirmation.component'
+          ).then((m) => m.EmailConfirmationComponent),
       },
     ],
   },

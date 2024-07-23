@@ -5,8 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FaqComponent } from './components/faq/faq.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PricingComponent } from './components/pricing/pricing.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -21,6 +23,8 @@ import { HeaderComponent } from './components/header/header.component';
     NgOptimizedImage,
     HeaderComponent,
     FooterComponent,
+    FaqComponent,
+    PricingComponent,
   ],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],

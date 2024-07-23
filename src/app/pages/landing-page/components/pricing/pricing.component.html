@@ -1,0 +1,52 @@
+<section class="py-12 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h2 class="text-base font-semibold tracking-wide text-indigo-600 uppercase">Pricing</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Choose the plan that's right for you
+            </p>
+        </div>
+        <div class="mt-10">
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                <div *ngFor="let item of [0,1,2]" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Basic</h3>
+                        <p class="mt-4 text-sm text-gray-500">A basic plan for individuals.</p>
+                        <div class="mt-6">
+                            <span class="text-4xl font-extrabold text-gray-900">$10</span>
+                            <span class="text-base font-medium text-gray-500">/month</span>
+                        </div>
+                        <ul class="mt-6 space-y-4">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <p class="ml-3 text-sm text-gray-700">Feature one</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <p class="ml-3 text-sm text-gray-700">Feature two</p>
+                            </li>
+                        </ul>
+                        <div class="mt-8">
+                            <a href="#"
+                                class="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                                Get started
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
