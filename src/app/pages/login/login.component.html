@@ -7,6 +7,7 @@
     <app-password [label]="'Senha'" [password]="loginForm.controls.password" />
 
     <app-message-tip [title]="'Não tem uma conta?'" [linkText]="'Crie uma!'" [linkUrl]="'/cadastro'" />
+    <app-message-tip [linkText]="'Esqueceu sua senha?'" [linkUrl]="'/recuperar-conta'" />
 
     <mat-card-actions class="flex justify-end">
       <button mat-raised-button color="primary" (click)="onSubmit()">Entrar</button>

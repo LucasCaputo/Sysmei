@@ -12,6 +12,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'user/reset_password',
+    loadComponent: () =>
+      import('./pages/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
+  },
+  {
     path: '',
     canActivate: [PrivateRoutesGuard],
     children: [
@@ -69,7 +76,7 @@ const routes: Routes = [
       {
         path: 'recuperar-conta',
         loadComponent: () =>
-          import('./pages/email-confirmation/email-confirmation.component').then((m) => m.EmailConfirmationComponent),
+          import('./pages/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent),
       },
     ],
   },
