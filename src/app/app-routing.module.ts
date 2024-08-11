@@ -12,7 +12,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'user/reset_password',
+    path: 'user/recuperar-conta',
     loadComponent: () =>
       import('./pages/reset-password/reset-password.component').then(
         (m) => m.ResetPasswordComponent,
