@@ -16,6 +16,7 @@ import { EmployeeService } from 'src/app/shared/services/employee/employee.servi
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ActionButtonsComponent } from '../components/action-buttons/action-buttons.component';
 import { MobileActionButtonsComponent } from '../components/mobile-action-buttons/mobile-action-buttons.component';
 import { AutocompleteOptions } from './interfaces/autocomplete-options';
 import { CustomerData } from './interfaces/customer-data';
@@ -32,6 +33,7 @@ import { CustomerData } from './interfaces/customer-data';
     MatDatepickerModule,
     MatNativeDateModule,
     MobileActionButtonsComponent,
+    ActionButtonsComponent,
   ],
 })
 export class SchedulingFormComponent implements OnInit {
