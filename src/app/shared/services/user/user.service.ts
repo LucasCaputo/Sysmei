@@ -63,4 +63,14 @@ export class UserService {
       },
     });
   }
+
+  public forgotPassword(email: string): Observable<any> {
+    return this.httpClient.post(environment.baseURL + '/user/forgot_password?email=' + email, {
+      params: {}
+    })
+  }
+
+  public resetPassword(token: string, password: string): Observable<any> {
+    return this.httpClient.post(environment.baseURL + '/user/reset_password?token=' + token + '&password=' + password, {} )
+  }
 }
