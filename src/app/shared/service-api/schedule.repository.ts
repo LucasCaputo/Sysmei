@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { ScheduleResponse } from '../interfaces/schedule-response';
+import { CacheService } from './cache';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +14,7 @@ export class ScheduleRepository {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
+    private cacheService: CacheService,
   ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
@@ -25,9 +28,18 @@ export class ScheduleRepository {
     startDate: string,
     endDate: string,
   ): Observable<ScheduleResponse[]> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/prestador?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`,
-    );
+    const endpoint = `${environment.baseURL}/agenda/prestador`;
+    const params = `?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`;
+
+    const cacheKey = this.cacheService.createCacheKey(endpoint, params);
+
+    if (this.cacheService.cache[cacheKey]) {
+      return of(this.cacheService.cache[cacheKey]);
+    }
+
+    return this.httpClient
+      .get<any>(endpoint + params)
+      .pipe(tap((schedule) => (this.cacheService.cache[cacheKey] = schedule)));
   }
 
   public deleteScheduling(customerId: any): Observable<any> {

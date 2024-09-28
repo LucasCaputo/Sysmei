@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserInterface } from '../../interfaces/user';
+import { CacheService } from '../../service-api/cache';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class AuthService {
 
   private token: string | undefined;
 
-  constructor() {}
+  constructor(private cacheService: CacheService) {}
 
   setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
@@ -56,6 +57,7 @@ export class AuthService {
   logout() {
     delete this.user;
     delete this.token;
+    this.cacheService.clearAllCache();
     localStorage.clear();
   }
 

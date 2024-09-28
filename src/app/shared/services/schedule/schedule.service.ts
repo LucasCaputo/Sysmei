@@ -16,6 +16,7 @@ import {
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { CacheService } from '../../service-api/cache';
 import { CustomerService } from '../customer/customer.service';
 import { EmployeeService } from '../employee/employee.service';
 import { SnackbarService } from '../snackbar.service';
@@ -48,6 +49,7 @@ export class ScheduleService {
     private employeeService: EmployeeService,
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
+    private cacheService: CacheService,
   ) {}
 
   public reloadSchedule(date: Date): void {
@@ -173,6 +175,7 @@ export class ScheduleService {
       status: body.status,
       allDay: body.start.split(' ')[0],
     };
+    this.cacheService.clearAllCache();
 
     return this.scheduleRepository.updateScheduling(payload, id).pipe(
       tap(() => {
