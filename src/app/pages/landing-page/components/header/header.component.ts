@@ -10,4 +10,18 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+
+  imageUrl = '/src/assets/images/logo.svg';
+
+  isMenuOpen: boolean = false;
+  activeLink: string | null = null;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  };
+
+  setActiveLink(link: string) {
+    this.activeLink = link;
+  }
+}

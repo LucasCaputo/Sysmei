@@ -30,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { InstallPwaComponentComponent } from './shared/components/install-pwa/install-pwa.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 
 // Registre a localidade para 'pt'
 registerLocaleData(localePt, 'pt');
@@ -46,13 +47,14 @@ registerLocaleData(localePt, 'pt');
     HttpClientModule,
     MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000',
+        enabled: !isDevMode(),
+        // Register the ServiceWorker as soon as the application is stable
+        // or after 30 seconds (whichever comes first).
+        registrationStrategy: 'registerWhenStable:30000',
     }),
     InstallPwaComponentComponent,
-  ],
+    LandingPageComponent
+],
   providers: [
     {
       provide: LOCALE_ID,

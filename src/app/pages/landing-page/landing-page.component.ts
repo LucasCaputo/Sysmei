@@ -9,6 +9,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PricingComponent } from './components/pricing/pricing.component';
+import { HomeComponent } from "./components/home/home.component";
 
 @Component({
   selector: 'app-landing-page',
@@ -25,7 +26,8 @@ import { PricingComponent } from './components/pricing/pricing.component';
     FooterComponent,
     FaqComponent,
     PricingComponent,
-  ],
+    HomeComponent
+],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
 })

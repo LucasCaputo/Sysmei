@@ -8,4 +8,15 @@ import { Component } from '@angular/core';
   templateUrl: './pricing.component.html',
   styleUrl: './pricing.component.scss',
 })
-export class PricingComponent {}
+export class PricingComponent {
+  isAnnual: boolean = true;
+  bannerOpen: boolean = true;
+
+  togglePricing() {
+    this.isAnnual = !this.isAnnual;
+  };
+
+  closeBanner() {
+    this.bannerOpen = !this.bannerOpen;
+  }
+}
