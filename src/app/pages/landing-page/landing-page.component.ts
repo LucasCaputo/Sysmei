@@ -10,6 +10,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PricingComponent } from './components/pricing/pricing.component';
 import { HomeComponent } from "./components/home/home.component";
+import { AboutComponent } from "./components/about/about.component";
+import { PortfolioComponent } from "./components/portfolio/portfolio.component";
+import { TestimonialsComponent } from "./components/testimonials/testimonials.component";
 
 @Component({
   selector: 'app-landing-page',
@@ -26,7 +29,10 @@ import { HomeComponent } from "./components/home/home.component";
     FooterComponent,
     FaqComponent,
     PricingComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent,
+    PortfolioComponent,
+    TestimonialsComponent
 ],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],

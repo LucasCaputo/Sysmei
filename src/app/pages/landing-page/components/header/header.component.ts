@@ -12,8 +12,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class HeaderComponent {
 
-  imageUrl = '/src/assets/images/logo.svg';
-
   isMenuOpen: boolean = false;
   activeLink: string | null = null;
 
