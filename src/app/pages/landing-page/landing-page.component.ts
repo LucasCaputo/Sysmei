@@ -13,6 +13,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
 import { PortfolioComponent } from "./components/portfolio/portfolio.component";
 import { TestimonialsComponent } from "./components/testimonials/testimonials.component";
+import { ContactComponent } from './components/contact/contact.component';
 
 @Component({
   selector: 'app-landing-page',
@@ -32,7 +33,8 @@ import { TestimonialsComponent } from "./components/testimonials/testimonials.co
     HomeComponent,
     AboutComponent,
     PortfolioComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    ContactComponent
 ],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.scss'],
