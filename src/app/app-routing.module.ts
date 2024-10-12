@@ -19,6 +19,41 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'about',
+    loadComponent: () =>
+      import('./pages/landing-page/components/about/about.component').then(
+        (m) => m.AboutComponent),
+    data: { withMenu: 'true' },
+  },
+  {
+    path: 'portfolio',
+    loadComponent: () =>
+      import('./pages/landing-page/components/portfolio/portfolio.component').then(
+        (m) => m.PortfolioComponent),
+    data: { withMenu: 'true' },
+  },
+  {
+    path: 'plans-and-pricing',
+    loadComponent: () =>
+      import('./pages/landing-page/components/pricing/pricing.component').then(
+        (m) => m.PricingComponent),
+    data: { withMenu: 'true' },
+  },
+  {
+    path: 'testimonials',
+    loadComponent: () =>
+      import('./pages/landing-page/components/testimonials/testimonials.component').then(
+        (m) => m.TestimonialsComponent),
+    data: { withMenu: 'true' },
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./pages/landing-page/components/contact/contact.component').then(
+        (m) => m.ContactComponent),
+    data: { withMenu: 'true' },
+  },
+  {
     path: '',
     canActivate: [PrivateRoutesGuard],
     children: [

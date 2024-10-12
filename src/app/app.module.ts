@@ -31,6 +31,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
 import { InstallPwaComponentComponent } from './shared/components/install-pwa/install-pwa.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { HeaderComponent } from "./pages/landing-page/components/header/header.component";
 
 // Registre a localidade para 'pt'
 registerLocaleData(localePt, 'pt');
@@ -53,7 +54,8 @@ registerLocaleData(localePt, 'pt');
         registrationStrategy: 'registerWhenStable:30000',
     }),
     InstallPwaComponentComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    HeaderComponent
 ],
   providers: [
     {
