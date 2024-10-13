@@ -16,7 +16,17 @@ export class PricingComponent {
     this.isAnnual = !this.isAnnual;
   };
 
-  closeBanner() {
-    this.bannerOpen = !this.bannerOpen;
+  selectedPlan(planNAme: string, price: string) {
+    const selectedPlan = {
+      name: planNAme,
+      price: price,
+      billingType: this.isAnnual ? 'Anual' : 'Mensal'
+    };
+
+    const wppNumber = '5591984268089';
+    const message = `Plano selecionado: ${selectedPlan.name} - R$${selectedPlan.price} - ${selectedPlan.billingType}`;
+    const whatsappUrl = `https://wa.me/${wppNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, '_blank');
   }
 }
