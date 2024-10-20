@@ -1,0 +1,23 @@
+<section>
+  <div class="text-center">
+    <h2 class="portfolio-title">Depoimentos</h2>
+    <p class="portfolio-description">O que nossos clientes dizem</p>
+  </div>
+
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let slide of slides">
+        <div class="card">
+          <img [src]="slide.image" alt="Card image" class="card-img">
+          <div class="card-content">
+            <h3 class="card-title">{{ slide.title }}</h3>
+            <img [src]="slide.quoteIcon" class="quote-icon" alt="Quotation icon" />
+            <p class="card-description">{{ slide.description }}</p>
+            <small>{{ slide.author }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>

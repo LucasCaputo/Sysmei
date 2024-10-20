@@ -1,0 +1,75 @@
+<section class="faq py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h2 class="text-base font-semibold tracking-wide text-indigo-600 uppercase">FAQ</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Perguntas Frequentes
+            </p>
+        </div>
+        <div class="mt-10">
+            <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-1 md:gap-x-8 md:gap-y-10">
+              <div class="border border-violet-400 rounded-lg p-2">
+                <dt (click)="toggleQuestion1()" class="text-lg leading-6 font-medium text-gray-900 cursor-pointer flex justify-between items-center">
+                  Qual é a sua política de reembolso?
+                  <svg [attr.class]="isQuestion1Open ? 'h-4 w-4 mr-3 transform rotate-180 transition-transform' : 'h-4 w-4 mr-3 transform transition-transform'" height="128px" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" width="128px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="111" x2="64" y1="40.5" y2="87.499"/>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="64" x2="17" y1="87.499" y2="40.5"/>
+                    </g>
+                  </svg>
+
+                </dt>
+                <dd *ngIf="isQuestion1Open" class="mt-2  text-base text-gray-500">
+                  Oferecemos um reembolso total em até 30 dias após a compra do plano, desde que o serviço não tenha sido utilizado. Após esse período, ou se o serviço já foi usado, faremos uma análise individual do pedido de reembolso.
+                </dd>
+              </div>
+
+              <div class="border border-violet-400 rounded-lg p-2">
+                <dt (click)="toggleQuestion2()" class="text-lg leading-6 font-medium text-gray-900 cursor-pointer flex justify-between items-center">
+                  Posso atualizar meu plano mais tarde?
+                  <svg [attr.class]="isQuestion2Open ? 'h-4 w-4 mr-3 transform rotate-180 transition-transform' : 'h-4 w-4 mr-3 transform transition-transform'" height="128px" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" width="128px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="111" x2="64" y1="40.5" y2="87.499"/>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="64" x2="17" y1="87.499" y2="40.5"/>
+                    </g>
+                  </svg>
+                </dt>
+                <dd *ngIf="isQuestion2Open" class="mt-2 text-base text-gray-500">
+                  Sim, você pode atualizar ou fazer o downgrade do seu plano a qualquer momento nas configurações da sua conta. A mudança será refletida imediatamente, e o valor será ajustado proporcionalmente com base no seu ciclo de faturamento.
+                </dd>
+              </div>
+
+              <div class="border border-violet-400 rounded-lg p-2">
+                <dt (click)="toggleQuestion3()" class="text-lg leading-6 font-medium text-gray-900 cursor-pointer flex justify-between items-center">
+
+                  Quais métodos de pagamento vocês aceitam?
+                  <svg [attr.class]="isQuestion3Open ? 'h-4 w-4 mr-3 transform rotate-180 transition-transform' : 'h-4 w-4 mr-3 transform transition-transform'" height="128px" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" width="128px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="111" x2="64" y1="40.5" y2="87.499"/>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="64" x2="17" y1="87.499" y2="40.5"/>
+                    </g>
+                  </svg>
+                </dt>
+                <dd *ngIf="isQuestion3Open" class="mt-2 text-base text-gray-500">
+                  Aceitamos cartões de crédito, débito, PIX e transferências bancárias. Além disso, oferecemos opções de pagamento recorrente para assinaturas, facilitando a renovação automática do plano.
+                </dd>
+              </div>
+
+              <div class="border border-violet-400 rounded-lg p-2">
+                <dt (click)="toggleQuestion4()" class="text-lg leading-6 font-medium text-gray-900 cursor-pointer flex justify-between items-center">
+                  Posso cancelar ou reagendar um compromisso?
+                  <svg [attr.class]="isQuestion4Open ? 'h-4 w-4 mr-3 transform rotate-180 transition-transform' : 'h-4 w-4 mr-3 transform transition-transform'" height="128px" id="Layer_1" style="enable-background:new 0 0 128 128;" version="1.1" viewBox="0 0 128 128" width="128px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="111" x2="64" y1="40.5" y2="87.499"/>
+                      <line style="fill:none;stroke:#4f46e5;stroke-width:12;stroke-linecap:square;stroke-miterlimit:10;" x1="64" x2="17" y1="87.499" y2="40.5"/>
+                    </g>
+                  </svg>
+                </dt>
+                <dd *ngIf="isQuestion4Open" class="mt-2 text-base text-gray-500">
+                  Sim, você pode cancelar ou reagendar um compromisso diretamente na sua conta, com até 24 horas de antecedência. Se o cancelamento for feito dentro deste prazo, não haverá cobranças. Após esse período, uma taxa poderá ser aplicada.
+                </dd>
+              </div>
+            </dl>
+        </div>
+    </div>
+</section>

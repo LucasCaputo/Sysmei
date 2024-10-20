@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
+  showMenu: boolean = false;
+
   ngOnInit(): void {
     this.checkNotificationPermission();
   }
@@ -33,4 +38,19 @@ export class AppComponent implements OnInit {
       });
     }, interval);
   }
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      const currentRoute = this.activatedRoute.root.firstChild;
+      if (currentRoute && currentRoute.snapshot.data['withMenu']) {
+        this.showMenu = true;
+      } else {
+        this.showMenu = false;
+      }
+    });
+  }
+
+
 }
