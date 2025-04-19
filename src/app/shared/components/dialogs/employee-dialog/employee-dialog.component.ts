@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmployeeResponse } from '../../../interfaces/employee-response';
 import { SharedInputModule } from '../../inputs/shared-input.module';
@@ -30,7 +29,6 @@ export class EmployeeDialogComponent {
     public data: EmployeeResponse,
     private employeeService: EmployeeService,
     public dialog: MatDialog,
-    private snackbarService: SnackbarService,
   ) {}
 
   saveEmployee() {
@@ -63,7 +61,9 @@ export class EmployeeDialogComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
-        this.employeeService.deleteEmployee(employee).subscribe();
+        this.employeeService.deleteEmployee(employee).subscribe(() => {
+          this.dialog.closeAll();
+        });
       }
     });
   }

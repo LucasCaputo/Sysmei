@@ -23,10 +23,18 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-list>
-      <ng-container *ngFor="let employee of employeeList | async">
-        <app-card [cardData]="employee" (edit)="openDialog(employee)"></app-card>
-      </ng-container>
-    </mat-list>
+    <ng-container *ngIf="{ employees : (employeeList$ | async ) } as model ">
+      <mat-list >
+        @if (model.employees) {
+          <ng-container *ngFor="let employee of model.employees">
+            <app-card [cardData]="employee" (edit)="openDialog(employee)"></app-card>
+          </ng-container>
+        } @else {
+          <p class="text-xl p-8">
+            Desculpe tivemos um erro ao buscar a listagem de funcionários, tente recarregar a página, se o erro persistir faça login novamente.
+          </p>
+        }
+      </mat-list>
+    </ng-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
