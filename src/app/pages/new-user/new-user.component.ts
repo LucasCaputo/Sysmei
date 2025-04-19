@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CardContainerComponent } from 'src/app/shared/components/card-container/card-container.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input.module';
+import { InstallPwaComponentComponent } from 'src/app/shared/components/install-pwa/install-pwa.component';
 import { MessageTipComponent } from 'src/app/shared/components/message-tip/message-tip.component';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
@@ -27,6 +28,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HeaderComponent,
     CardContainerComponent,
     MessageTipComponent,
+    InstallPwaComponentComponent
   ],
 })
 export class NewUserComponent {

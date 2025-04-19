@@ -1,15 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, HostListener, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-install-pwa',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgIf, MatButtonModule],
   templateUrl: './install-pwa.component.html',
   styleUrls: ['./install-pwa.component.scss'],
 })
 export class InstallPwaComponentComponent {
   promptEvent: any;
+  public readonly showMessage = signal(true)
+
 
   @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(event: Event) {
@@ -17,7 +20,7 @@ export class InstallPwaComponentComponent {
     this.promptEvent = event;
   }
 
-  installPwa() {
+  public installPwa(): void {
     this.promptEvent.prompt();
     this.promptEvent.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
@@ -27,5 +30,9 @@ export class InstallPwaComponentComponent {
       }
       this.promptEvent = null;
     });
+  }
+
+  public closeMessage(): void {
+    this.showMessage.set(false)
   }
 }

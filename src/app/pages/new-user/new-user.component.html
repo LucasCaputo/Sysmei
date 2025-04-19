@@ -1,6 +1,6 @@
 <app-header [isPrivate]="false"></app-header>
 <app-card-container [title]="'Criar Conta'">
-  <form class="flex flex-col" [formGroup]="profileForm">
+  <form class="flex flex-col pb-8" [formGroup]="profileForm">
     <app-phone [label]="'Telefone Celular'" [phone]="profileForm.controls.phone"></app-phone>
 
     <app-email [email]="profileForm.controls.email"></app-email>
@@ -18,3 +18,4 @@
     </mat-card-actions>
   </form>
 </app-card-container>
+<app-install-pwa></app-install-pwa>
