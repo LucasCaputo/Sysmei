@@ -1,6 +1,9 @@
-<app-mobile-action-buttons [title]="'Configurações'"
+<app-mobile-action-buttons
+  [title]="'Configurações'"
   [disableConfirmButton]="(userForm.invalid || !userForm.dirty) && (passwordForm.invalid || !passwordForm.dirty)"
-  (closeButton)="dialog.closeAll()" (confirmButton)="saveSettings(); dialog.closeAll()" />
+  (closeButton)="dialog.closeAll()"
+  (confirmButton)="saveSettings(); dialog.closeAll()"
+/>
 
 <div mat-dialog-content>
   <mat-tab-group>
@@ -11,24 +14,27 @@
         <app-email [email]="userForm.controls.login"></app-email>
       </form>
 
-      <app-action-buttons [disableConfirmButton]="userForm.invalid || !userForm.dirty" (closeButton)="dialog.closeAll()"
-        (confirmButton)="saveSettings(); dialog.closeAll()"></app-action-buttons>
-
+      <app-action-buttons
+        [disableConfirmButton]="userForm.invalid || !userForm.dirty"
+        (closeButton)="dialog.closeAll()"
+        (confirmButton)="saveSettings(); dialog.closeAll()"
+      ></app-action-buttons>
     </mat-tab>
     <mat-tab label="Senha">
       <form [formGroup]="passwordForm" class="mt-6">
-        <app-password [password]="passwordForm.controls.oldPassword" [label]="'Senha Antiga'"
-          [required]="false"></app-password>
+        <app-password [password]="passwordForm.controls.oldPassword" [label]="'Senha Antiga'" [required]="false"></app-password>
         <app-password [password]="passwordForm.controls.password" [label]="'Senha Nova'"></app-password>
         <app-password [password]="passwordForm.controls.repetPassword" [label]="'Repita a senha'"></app-password>
       </form>
 
-      <app-action-buttons [disableConfirmButton]="passwordForm.invalid || !passwordForm.dirty"
-        (closeButton)="dialog.closeAll()" (confirmButton)="saveSettings(); dialog.closeAll()"></app-action-buttons>
+      <app-action-buttons
+        [disableConfirmButton]="passwordForm.invalid || !passwordForm.dirty"
+        (closeButton)="dialog.closeAll()"
+        (confirmButton)="saveSettings(); dialog.closeAll()"
+      ></app-action-buttons>
     </mat-tab>
     <mat-tab label="Pagamentos">
       <app-payments-dialog />
     </mat-tab>
   </mat-tab-group>
-
 </div>

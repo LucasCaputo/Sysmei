@@ -15,20 +15,14 @@ export class ScheduleRepository {
     private httpClient: HttpClient,
     private authService: AuthService,
     private cacheService: CacheService,
-  ) { }
+  ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
     this.cacheService.clearAllCache();
-    return this.httpClient.post<any>(
-      environment.baseURL + '/agenda',
-      scheduling,
-    );
+    return this.httpClient.post<any>(environment.baseURL + '/agenda', scheduling);
   }
 
-  public getScheduleByDate(
-    startDate: string,
-    endDate: string,
-  ): Observable<ScheduleResponse[]> {
+  public getScheduleByDate(startDate: string, endDate: string): Observable<ScheduleResponse[]> {
     const endpoint = `${environment.baseURL}/agenda/prestador`;
     const params = `?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`;
 
@@ -38,16 +32,12 @@ export class ScheduleRepository {
       return of(this.cacheService.cache[cacheKey]);
     }
 
-    return this.httpClient
-      .get<any>(endpoint + params)
-      .pipe(tap((schedule) => (this.cacheService.cache[cacheKey] = schedule)));
+    return this.httpClient.get<any>(endpoint + params).pipe(tap((schedule) => (this.cacheService.cache[cacheKey] = schedule)));
   }
 
   public deleteScheduling(customerId: any): Observable<any> {
     this.cacheService.clearAllCache();
-    return this.httpClient.delete<any>(
-      `${environment.baseURL}/agenda/${customerId}`,
-    );
+    return this.httpClient.delete<any>(`${environment.baseURL}/agenda/${customerId}`);
   }
 
   public updateScheduling(body: any, id: number) {
@@ -63,9 +53,6 @@ export class ScheduleRepository {
 
   public patchStatus(body: { status: number }, id: number) {
     this.cacheService.clearAllCache();
-    return this.httpClient.patch(
-      environment.baseURL + '/agenda/' + id + '/status',
-      body,
-    );
+    return this.httpClient.patch(environment.baseURL + '/agenda/' + id + '/status', body);
   }
 }

@@ -16,14 +16,7 @@ import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.comp
 @Component({
   selector: 'app-agenda-status',
   standalone: true,
-  imports: [
-    SharedModule,
-    BadgeComponent,
-    ContactInfoComponent,
-    MatSelectModule,
-    WhatsappIconComponent,
-    SharedPipesModule,
-  ],
+  imports: [SharedModule, BadgeComponent, ContactInfoComponent, MatSelectModule, WhatsappIconComponent, SharedPipesModule],
   templateUrl: './agenda-status.component.html',
   styleUrls: ['./agenda-status.component.scss'],
 })
@@ -79,18 +72,12 @@ export class AgendaStatusComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed && this.data?.schedule_id) {
         this.dialog.closeAll();
-        this.scheduleService
-          .deleteScheduling(this.data.schedule_id)
-          .pipe(first())
-          .subscribe();
+        this.scheduleService.deleteScheduling(this.data.schedule_id).pipe(first()).subscribe();
       }
     });
   }
 
   updateStatus(status: number) {
-    this.scheduleService
-      .patchStatus({ status }, this.data.schedule_id!)
-      .pipe(first())
-      .subscribe();
+    this.scheduleService.patchStatus({ status }, this.data.schedule_id!).pipe(first()).subscribe();
   }
 }

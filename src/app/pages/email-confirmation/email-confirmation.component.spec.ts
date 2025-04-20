@@ -8,7 +8,7 @@ describe('EmailConfirmationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [EmailConfirmationComponent]
+      imports: [EmailConfirmationComponent],
     });
     fixture = TestBed.createComponent(EmailConfirmationComponent);
     component = fixture.componentInstance;

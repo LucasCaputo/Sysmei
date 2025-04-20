@@ -8,7 +8,7 @@ describe('PaymentsDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PaymentsDialogComponent]
+      imports: [PaymentsDialogComponent],
     });
     fixture = TestBed.createComponent(PaymentsDialogComponent);
     component = fixture.componentInstance;

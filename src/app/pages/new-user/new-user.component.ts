@@ -28,7 +28,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HeaderComponent,
     CardContainerComponent,
     MessageTipComponent,
-    InstallPwaComponentComponent
+    InstallPwaComponentComponent,
   ],
 })
 export class NewUserComponent {
@@ -48,9 +48,7 @@ export class NewUserComponent {
   ) {}
 
   onSubmit() {
-    if (
-      this.profileForm.value.password !== this.profileForm.value.confirmPassword
-    ) {
+    if (this.profileForm.value.password !== this.profileForm.value.confirmPassword) {
       this.profileForm.controls.confirmPassword.setErrors({
         passwordNotEqual: true,
       });
@@ -62,22 +60,14 @@ export class NewUserComponent {
       const payload = FormatNewUserPayload(this.profileForm.value);
       this.userService.postUser(payload).subscribe(
         (response) => {
-          this.snackbarService.openSnackBar(
-            `Parabéns! usuário ${response.nome} cadastrado, realizando login`,
-            'X',
-            false,
-          );
+          this.snackbarService.openSnackBar(`Parabéns! usuário ${response.nome} cadastrado, realizando login`, 'X', false);
           const loginPayload = FormatLoginPayload(this.profileForm.value);
           this.userService.postLogin(loginPayload).subscribe(() => {
             this.router.navigate(['/agenda']);
           });
         },
         (error) => {
-          this.snackbarService.openSnackBar(
-            `Tente novamente ( ${error.error}) `,
-            'X',
-            true,
-          );
+          this.snackbarService.openSnackBar(`Tente novamente ( ${error.error}) `, 'X', true);
           console.error(error);
         },
       );

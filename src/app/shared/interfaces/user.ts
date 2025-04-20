@@ -3,7 +3,7 @@ export interface UserInterface {
   login: string;
   nome: string;
   senha: string;
-  senhaAntiga: string,
+  senhaAntiga: string;
   status: boolean;
   telefone: string;
 }

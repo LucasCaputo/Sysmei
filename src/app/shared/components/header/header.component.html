@@ -1,17 +1,18 @@
 <header>
   <mat-toolbar class="h-[70px]" color="primary">
-    <img *ngIf="!isPrivate" src="../../../../assets/images/logo.svg" class="logo h-10 cursor-pointer"
-      routerLink="/home" />
+    <img *ngIf="!isPrivate" src="../../../../assets/images/logo.svg" class="logo h-10 cursor-pointer" routerLink="/home" />
 
     <div *ngIf="isPrivate; else public" class="flex w-full justify-between">
       <ng-content></ng-content>
     </div>
 
     <ng-template #public>
-      <app-header-base [headerList]="[
+      <app-header-base
+        [headerList]="[
           { urlLink: '/cadastro', text: 'Cadastro' },
           { urlLink: '/login', text: 'Login' }
-        ]"></app-header-base>
+        ]"
+      ></app-header-base>
     </ng-template>
   </mat-toolbar>
 </header>

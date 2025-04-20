@@ -5,8 +5,7 @@
     </button>
 
     <div class="flex title">
-      <app-schedule-header-desktop *ngIf="(screenSize$ | async) !== 'mobile'"
-        (action)="onNavigateButtonClick($event)" />
+      <app-schedule-header-desktop *ngIf="(screenSize$ | async) !== 'mobile'" (action)="onNavigateButtonClick($event)" />
       <p class="text !m-0">
         {{ calendarDateTitle }}
       </p>

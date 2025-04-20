@@ -1,6 +1,7 @@
 <div mat-dialog-content>
-  <p class="text-xl flex w-full justify-center p-4">{{ !data.id ? 'Cadastrar agendamento' : 'Editar agendamento' }}</p>
-
+  <p class="text-xl flex w-full justify-center p-4">
+    {{ !data.id ? 'Cadastrar agendamento' : 'Editar agendamento' }}
+  </p>
 
   <form class="flex flex-col" [formGroup]="form">
     <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
@@ -14,14 +15,20 @@
 
     <mat-form-field class="flex">
       <mat-label>Nome do Serviço</mat-label>
-      <input matInput placeholder="Nome do Serviço" autocomplete="off" type="text" formControlName="title" name="title"
-        required />
+      <input matInput placeholder="Nome do Serviço" autocomplete="off" type="text" formControlName="title" name="title" required />
     </mat-form-field>
 
     <mat-form-field style="width: 100%">
       <mat-label>Cliente</mat-label>
-      <input type="text" placeholder="Pesquise um Cliente" aria-label="Pesquisa de Cliente" matInput
-        formControlName="customer" [matAutocomplete]="auto" required />
+      <input
+        type="text"
+        placeholder="Pesquise um Cliente"
+        aria-label="Pesquisa de Cliente"
+        matInput
+        formControlName="customer"
+        [matAutocomplete]="auto"
+        required
+      />
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCustomer">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
           {{ option.text }}
@@ -51,8 +58,7 @@
     <div class="flex justify-between">
       <mat-form-field class="w-2/5">
         <mat-label>Valor</mat-label>
-        <input matInput placeholder="Valor" formControlName="valor" name="valor" type="text" mask="separator"
-          prefix="R$ " thousandSeparator="." />
+        <input matInput placeholder="Valor" formControlName="valor" name="valor" type="text" mask="separator" prefix="R$ " thousandSeparator="." />
       </mat-form-field>
 
       <mat-form-field class="w-2/5">
@@ -74,11 +80,14 @@
   </form>
 </div>
 <div class="flex justify-end items-center">
-  <button *ngIf="data.hasDelete && data != null" color="warn" mat-icon-button aria-label="Excluir"
-    (click)="onDelete(data)">
+  <button *ngIf="data.hasDelete && data != null" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">
     <mat-icon>delete</mat-icon>
   </button>
 </div>
 
-<app-action-buttons class="p-2" [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
-  (confirmButton)="saveScheduleData(); dialog.closeAll()"></app-action-buttons>
+<app-action-buttons
+  class="p-2"
+  [disableConfirmButton]="form.invalid || !form.dirty"
+  (closeButton)="dialog.closeAll()"
+  (confirmButton)="saveScheduleData(); dialog.closeAll()"
+></app-action-buttons>

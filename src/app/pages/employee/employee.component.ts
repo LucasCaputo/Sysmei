@@ -16,14 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
   standalone: true,
-  imports: [
-    HeaderComponent,
-    MatSidenavModule,
-    MatListModule,
-    MenuComponent,
-    CardComponent,
-    SharedModule,
-  ],
+  imports: [HeaderComponent, MatSidenavModule, MatListModule, MenuComponent, CardComponent, SharedModule],
 })
 export class EmployeeComponent {
   employeeList$ = this.employeeService.searchEmployee$;

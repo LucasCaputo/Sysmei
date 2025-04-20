@@ -11,13 +11,7 @@ import { CardInfo } from './interfaces/card-info';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatListModule,
-    BadgeComponent,
-    ContactActionsComponent,
-    ContactInfoComponent,
-  ],
+  imports: [CommonModule, MatListModule, BadgeComponent, ContactActionsComponent, ContactInfoComponent],
 })
 export class CardComponent {
   @Output() edit = new EventEmitter();

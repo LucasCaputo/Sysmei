@@ -4,11 +4,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   templateUrl: './portfolio.component.html',
-  styleUrl: './portfolio.component.scss'
+  styleUrl: './portfolio.component.scss',
 })
 export class PortfolioComponent {
   services = [
@@ -41,6 +39,6 @@ export class PortfolioComponent {
       name: 'Design de Sobrancelhas',
       description: 'Modelagem e cuidados especiais para deixar suas sobrancelhas impecáveis.',
       image: 'assets/images-landing-page/design-sobrancelha.jpg',
-    }
+    },
   ];
 }

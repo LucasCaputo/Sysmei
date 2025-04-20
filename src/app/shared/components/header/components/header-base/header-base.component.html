@@ -1,12 +1,5 @@
 <div class="w-full flex justify-end">
-  <button
-    *ngFor="let item of headerList"
-    mat-flat-button
-    color="primary"
-    [routerLink]="item.urlLink"
-    aria-label="Cadastro"
-    routerLinkActive="active"
-  >
+  <button *ngFor="let item of headerList" mat-flat-button color="primary" [routerLink]="item.urlLink" aria-label="Cadastro" routerLinkActive="active">
     {{ item.text }}
   </button>
 </div>

@@ -6,14 +6,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   standalone: true,
   imports: [SharedModule],
   templateUrl: './action-buttons.component.html',
-  styleUrls: ['./action-buttons.component.scss']
+  styleUrls: ['./action-buttons.component.scss'],
 })
 export class ActionButtonsComponent {
-
   @Output() closeButton = new EventEmitter();
 
   @Output() confirmButton = new EventEmitter();
 
   @Input({ required: true }) disableConfirmButton!: boolean;
-
 }

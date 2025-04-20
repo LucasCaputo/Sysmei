@@ -68,25 +68,15 @@ export class CustomerCompleteRegistrationComponent implements OnInit {
 
   OnSave() {
     if (this.profileForm?.value.id) {
-      this.customerRepository
-        .updateCustomer(this.profileForm.value, this.profileForm.value.id)
-        .subscribe(
-          (response: any) => {
-            this.snackbarService.openSnackBar(
-              `Parabéns! usuário ${this.profileForm.value.nome.toUpperCase()} atualizado com sucesso`,
-              'X',
-              false,
-            );
-          },
-          (error: any) => {
-            this.snackbarService.openSnackBar(
-              `Tivemos um erro na atualização, tente novamente`,
-              'X',
-              true,
-            );
-            console.error(error);
-          },
-        );
+      this.customerRepository.updateCustomer(this.profileForm.value, this.profileForm.value.id).subscribe(
+        (response: any) => {
+          this.snackbarService.openSnackBar(`Parabéns! usuário ${this.profileForm.value.nome.toUpperCase()} atualizado com sucesso`, 'X', false);
+        },
+        (error: any) => {
+          this.snackbarService.openSnackBar(`Tivemos um erro na atualização, tente novamente`, 'X', true);
+          console.error(error);
+        },
+      );
     }
   }
 

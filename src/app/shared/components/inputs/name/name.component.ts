@@ -13,9 +13,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 export class NameComponent {
   @Input({ required: true }) name!: FormControl<string | null>;
 
-  public isNameCompleted = signal(false)
+  public isNameCompleted = signal(false);
 
   validateName() {
-    this.isNameCompleted.set(IsNameCompleted(this.name))
+    this.isNameCompleted.set(IsNameCompleted(this.name));
   }
 }

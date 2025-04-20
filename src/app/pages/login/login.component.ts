@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HeaderComponent,
     CardContainerComponent,
     MessageTipComponent,
-    InstallPwaComponentComponent
+    InstallPwaComponentComponent,
   ],
 })
 export class LoginComponent {
@@ -42,29 +42,17 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    if (
-      this.loginForm.value.email &&
-      this.loginForm.value.password &&
-      this.loginForm.valid
-    ) {
+    if (this.loginForm.value.email && this.loginForm.value.password && this.loginForm.valid) {
       const payload = FormatLoginPayload(this.loginForm.value);
 
       this.userService.postLogin(payload).subscribe(
         (response) => {
-          this.snackbarService.openSnackBar(
-            `Bem-vindo ${response.usuario.nome}`,
-            'X',
-            false,
-          );
+          this.snackbarService.openSnackBar(`Bem-vindo ${response.usuario.nome}`, 'X', false);
 
           this.router.navigate(['/agenda']);
         },
         (error) => {
-          this.snackbarService.openSnackBar(
-            `Tente novamente ( ${error.error}) `,
-            'X',
-            true,
-          );
+          this.snackbarService.openSnackBar(`Tente novamente ( ${error.error}) `, 'X', true);
           console.error(error);
         },
       );

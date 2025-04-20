@@ -33,16 +33,12 @@ export class EmployeeDialogComponent {
 
   saveEmployee() {
     if (this.form.valid && this.form.value.nome && this.form.value.telefone) {
-      this.form.controls.login_usuario.setValue(
-        this.authService.getUser()!.login,
-      );
+      this.form.controls.login_usuario.setValue(this.authService.getUser()!.login);
       const payload = this.form.value as EmployeeResponse;
       if (!this.data.id) {
         this.employeeService.postEmployee(payload).subscribe();
       } else {
-        this.employeeService
-          .editEmployee({ ...payload, id: this.data.id })
-          .subscribe();
+        this.employeeService.editEmployee({ ...payload, id: this.data.id }).subscribe();
       }
     }
   }

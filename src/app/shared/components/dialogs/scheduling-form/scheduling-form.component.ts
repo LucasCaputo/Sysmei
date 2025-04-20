@@ -40,8 +40,7 @@ import { CustomerData } from './interfaces/customer-data';
 export class SchedulingFormComponent implements OnInit {
   form!: FormGroup;
 
-  customerData: Array<CustomerData> =
-    this.customerService.formattedCustomerList;
+  customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
   employeeData: Array<EmployeeResponse> = this.employeeService.employee;
 
   hiddenEmployee = false;
@@ -82,8 +81,7 @@ export class SchedulingFormComponent implements OnInit {
       detalhes: this.data?.detalhes || '',
       end,
       id: this.data?.schedule_id,
-      customer:
-        this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
+      customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
       pagamento: this.data?.pagamento || '',
       employee: this.data?.employee || this.employeeData[0],
       start,
@@ -105,9 +103,7 @@ export class SchedulingFormComponent implements OnInit {
       filterValue = value.toLowerCase();
     }
 
-    return this.customerData.filter((option) =>
-      option.text.toLowerCase().includes(filterValue),
-    );
+    return this.customerData.filter((option) => option.text.toLowerCase().includes(filterValue));
   }
 
   displayCustomer(option: any) {
@@ -123,9 +119,7 @@ export class SchedulingFormComponent implements OnInit {
       this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
         (resultUpdate) => {
           this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openSuccessSnackBar(
-            `Agendamento atualizado com sucesso`,
-          );
+          this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
         },
         (error) => {
           this.scheduleService.reloadSchedule(new Date());
@@ -136,9 +130,7 @@ export class SchedulingFormComponent implements OnInit {
       this.scheduleService.postScheduling(schedule).subscribe(
         (response) => {
           this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openSuccessSnackBar(
-            `Agendamento adicionado com sucesso`,
-          );
+          this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
         },
         (error) => {
           this.scheduleService.reloadSchedule(new Date());
@@ -164,20 +156,16 @@ export class SchedulingFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed && customer?.schedule_id) {
         this.dialog.closeAll();
-        this.scheduleRepository
-          .deleteScheduling(customer.schedule_id)
-          .subscribe(
-            (response) => {
-              this.scheduleService.reloadSchedule(new Date());
-              this.snackbarService.openSuccessSnackBar(
-                'Agendamento deletado com sucesso',
-              );
-            },
-            (error) => {
-              console.error(error);
-              this.snackbarService.openErrorSnackBar('deletar');
-            },
-          );
+        this.scheduleRepository.deleteScheduling(customer.schedule_id).subscribe(
+          (response) => {
+            this.scheduleService.reloadSchedule(new Date());
+            this.snackbarService.openSuccessSnackBar('Agendamento deletado com sucesso');
+          },
+          (error) => {
+            console.error(error);
+            this.snackbarService.openErrorSnackBar('deletar');
+          },
+        );
       }
     });
   }

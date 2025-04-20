@@ -1,16 +1,18 @@
 <div class="portfolio-section py-16 mt-16 bg-slate-50">
   <div class="text-center">
     <h2 class="text-base font-semibold tracking-wide text-indigo-600 uppercase">Portfólio</h2>
-    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-      Atendemos os mais diversos setores
-    </p>
+    <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Atendemos os mais diversos setores</p>
   </div>
 
   <div class="service-list grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-8 sm:px-8 lg:px-8 max-w-7xl my-16 mx-auto">
     <div class="service-item bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" *ngFor="let service of services">
       <img [src]="service.image" [alt]="service.name" class="service-image w-full h-48 object-cover rounded-t-md mb-4" />
-      <h3 class="service-name text-2xl font-semibold text-gray-800">{{ service.name }}</h3>
-      <p class="service-description text-gray-600 mt-2">{{ service.description }}</p>
+      <h3 class="service-name text-2xl font-semibold text-gray-800">
+        {{ service.name }}
+      </h3>
+      <p class="service-description text-gray-600 mt-2">
+        {{ service.description }}
+      </p>
     </div>
   </div>
 </div>

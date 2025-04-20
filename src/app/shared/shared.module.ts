@@ -25,7 +25,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     HttpClientModule,
     MatFormFieldModule,
     NgxMaskDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   exports: [
     CommonModule,
@@ -39,7 +39,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     HttpClientModule,
     MatFormFieldModule,
     NgxMaskDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class SharedModule {}

@@ -1,22 +1,23 @@
 <div class="flex items-center justify-around w-full bg-white">
   <ng-container *ngFor="let viewOption of calendarViewOptions">
-    <mat-icon *ngIf="actionIcon === viewOption.calendarView" (click)="change(viewOption.redirectTo)" class="icon"
-      class="flex justify-center" color="primary">
+    <mat-icon
+      *ngIf="actionIcon === viewOption.calendarView"
+      (click)="change(viewOption.redirectTo)"
+      class="icon"
+      class="flex justify-center"
+      color="primary"
+    >
       {{ viewOption.icon }}
     </mat-icon>
   </ng-container>
 
   <div class="flex items-center justify-around w-[60%]">
-    <mat-icon class="icon" (click)="change('prev')" color="primary" aria-hidden="false" aria-label="volta">
-      arrow_back_ios</mat-icon>
+    <mat-icon class="icon" (click)="change('prev')" color="primary" aria-hidden="false" aria-label="volta"> arrow_back_ios</mat-icon>
 
     <p class="text">...</p>
 
-    <mat-icon class="icon" (click)="change('next')" color="primary" aria-hidden="false" aria-label="volta">
-      arrow_forward_ios</mat-icon>
+    <mat-icon class="icon" (click)="change('next')" color="primary" aria-hidden="false" aria-label="volta"> arrow_forward_ios</mat-icon>
   </div>
 
-  <mat-icon class="icon" (click)="change('today')" [color]="todayIcon" aria-hidden="false" aria-label="Hoje">
-    event_repeat
-  </mat-icon>
+  <mat-icon class="icon" (click)="change('today')" [color]="todayIcon" aria-hidden="false" aria-label="Hoje"> event_repeat </mat-icon>
 </div>

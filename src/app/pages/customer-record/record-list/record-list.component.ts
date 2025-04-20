@@ -1,10 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -23,10 +17,7 @@ import { SharedModule } from '../../../shared/shared.module';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
-      ),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -53,10 +44,7 @@ export class RecordListComponent implements OnInit {
   formatData() {
     this.dataSource = [];
     this.data?.forEach((e: any) => {
-      let data = `${e.start.slice(8, 10)}-${e.start.slice(
-        5,
-        7,
-      )}-${e.start.slice(2, 4)}`;
+      let data = `${e.start.slice(8, 10)}-${e.start.slice(5, 7)}-${e.start.slice(2, 4)}`;
 
       this.dataSource.push({
         ...e,

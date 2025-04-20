@@ -7,10 +7,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.scss']
+  styleUrls: ['./spinner.component.scss'],
 })
 export class SpinnerComponent {
-  @Input() diameter = 50
-  @Input() hasBodyHeight = true
-
+  @Input() diameter = 50;
+  @Input() hasBodyHeight = true;
 }

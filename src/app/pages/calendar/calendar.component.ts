@@ -5,19 +5,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import {
-  FullCalendarComponent,
-  FullCalendarModule,
-} from '@fullcalendar/angular';
-import {
-  CalendarOptions,
-  DateSelectArg,
-  EventApi,
-  EventClickArg,
-  EventDropArg,
-  EventInput,
-  ViewApi,
-} from '@fullcalendar/core';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -72,20 +61,19 @@ export class CalendarComponent implements AfterViewInit {
     dateClick: this.redirectMonthToDay.bind(this),
   };
 
-  calendarEvents: Observable<EventInput> =
-    this.customerService.searchCustomer$.pipe(
-      switchMap(() =>
-        this.scheduleService.searchSchedule$.pipe(
-          map((elements: ScheduleFormatResponse[]) =>
-            elements.map((element: ScheduleFormatResponse) => ({
-              ...element,
-              color: this.cardColor(element.status),
-            })),
-          ),
-          tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
+  calendarEvents: Observable<EventInput> = this.customerService.searchCustomer$.pipe(
+    switchMap(() =>
+      this.scheduleService.searchSchedule$.pipe(
+        map((elements: ScheduleFormatResponse[]) =>
+          elements.map((element: ScheduleFormatResponse) => ({
+            ...element,
+            color: this.cardColor(element.status),
+          })),
         ),
+        tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
       ),
-    );
+    ),
+  );
 
   user = this.auth.getUser();
   currentEvents: EventApi[] = [];
@@ -178,9 +166,7 @@ export class CalendarComponent implements AfterViewInit {
 
       this.calendarApi.view.calendar.unselect();
 
-      this.calendarApi.view.calendar.addEvent(
-        this.formatScheduleToCalendar(result),
-      );
+      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result));
     });
   }
 
@@ -210,9 +196,7 @@ export class CalendarComponent implements AfterViewInit {
   private formatScheduleToCalendar(result: any) {
     let resultFormat = this.scheduleService.formatRequestPayload(result);
 
-    resultFormat = this.scheduleService.formatScheduleResponse([
-      { ...resultFormat, id: 'tempID' },
-    ]);
+    resultFormat = this.scheduleService.formatScheduleResponse([{ ...resultFormat, id: 'tempID' }]);
 
     return resultFormat[0];
   }
@@ -281,11 +265,7 @@ export class CalendarComponent implements AfterViewInit {
   private setColorIconToday() {
     const today = new Date(this.timeElapsed);
 
-    if (
-      this.calendarApi?.view &&
-      this.calendarApi.view.activeStart < today &&
-      this.calendarApi.view.activeEnd > today
-    ) {
+    if (this.calendarApi?.view && this.calendarApi.view.activeStart < today && this.calendarApi.view.activeEnd > today) {
       this.todayIcon = 'primary';
     } else {
       this.todayIcon = 'secondary';
@@ -297,12 +277,8 @@ export class CalendarComponent implements AfterViewInit {
   }
 
   public changeEmployee(event: any): void {
-    const selectedEmployee = event
-      .filter((element: any) => element.checked)
-      .map((element: any) => element.id) as number[];
-    const filteredSchedule = this.scheduling.filter((element) =>
-      selectedEmployee.includes(element.employee.id),
-    );
+    const selectedEmployee = event.filter((element: any) => element.checked).map((element: any) => element.id) as number[];
+    const filteredSchedule = this.scheduling.filter((element) => selectedEmployee.includes(element.employee.id));
     this.calendarApi.removeAllEvents();
 
     filteredSchedule.forEach((element: any) => {

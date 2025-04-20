@@ -1,13 +1,18 @@
 <form [formGroup]="form">
-  <p class="text-xl flex w-full justify-center p-4">{{ !data.id ? 'Cadastrar prestador' : 'Editar prestador' }}</p>
+  <p class="text-xl flex w-full justify-center p-4">
+    {{ !data.id ? 'Cadastrar prestador' : 'Editar prestador' }}
+  </p>
 
   <div mat-dialog-content class="dialog-content">
     <app-name [name]="form.controls.nome" />
 
     <app-phone [phone]="form.controls.telefone" [label]="'Telefone'" />
 
-    <app-action-buttons [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
-      (confirmButton)="saveEmployee(); dialog.closeAll()"></app-action-buttons>
+    <app-action-buttons
+      [disableConfirmButton]="form.invalid || !form.dirty"
+      (closeButton)="dialog.closeAll()"
+      (confirmButton)="saveEmployee(); dialog.closeAll()"
+    ></app-action-buttons>
 
     <div class="flex justify-end items-center">
       <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">

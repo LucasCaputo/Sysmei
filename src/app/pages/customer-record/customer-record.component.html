@@ -19,13 +19,7 @@
       <mat-icon *ngIf="edit">check</mat-icon>
     </button>
 
-    <button
-      *ngIf="tabSelected == 1"
-      mat-icon-button
-      (click)="addSchedule()"
-      class="icon-right"
-      aria-label="Adicionar agendamento"
-    >
+    <button *ngIf="tabSelected == 1" mat-icon-button (click)="addSchedule()" class="icon-right" aria-label="Adicionar agendamento">
       <mat-icon>add_box</mat-icon>
     </button>
 
@@ -33,11 +27,7 @@
       <button mat-button>
         <mat-icon>photo_camera</mat-icon>
       </button>
-      <input
-        type="file"
-        (change)="inputFileChange($event)"
-        class="input-photo"
-      />
+      <input type="file" (change)="inputFileChange($event)" class="input-photo" />
     </div>
   </div>
 </app-header>
@@ -49,18 +39,12 @@
         <app-card [cardData]="cardData" (edit)="!edit ? (edit = !edit) : emitEventToChild()"></app-card>
       </mat-list>
 
-      <mat-tab-group
-        mat-align-tabs="center"
-        [selectedIndex]="tabSelected"
-        (selectedIndexChange)="selectedIndexChange($event)"
-      >
-      <mat-tab label="Dados">
+      <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected" (selectedIndexChange)="selectedIndexChange($event)">
+        <mat-tab label="Dados">
           @if (!hasHeader) {
             <div class="flex justify-between">
-              <button *ngIf="edit" mat-button color="secondary" (click)="edit = !edit">
-                Fechar
-              </button>
-          
+              <button *ngIf="edit" mat-button color="secondary" (click)="edit = !edit">Fechar</button>
+
               <button
                 *ngIf="tabSelected == 0 && edit"
                 mat-button
@@ -73,29 +57,16 @@
               </button>
             </div>
           }
-          <app-customer-complete-registration
-            [data]="data"
-            [edit]="edit"
-            [events]="eventsSubject.asObservable()"
-          />
+          <app-customer-complete-registration [data]="data" [edit]="edit" [events]="eventsSubject.asObservable()" />
         </mat-tab>
 
         <mat-tab label="Histórico" *ngIf="!edit">
-          <app-record-list
-            *ngIf="records?.length"
-            [data]="records"
-          ></app-record-list>
+          <app-record-list *ngIf="records?.length" [data]="records"></app-record-list>
         </mat-tab>
 
         <mat-tab label="Documentos" *ngIf="!edit">
-          <div *ngIf="!photos?.length" style="text-align: center">
-            Cadastre a primeira foto do cliente
-          </div>
-          <img
-            *ngFor="let photo of photos"
-            height="100px"
-            src="{{ photo.url }}"
-          />
+          <div *ngIf="!photos?.length" style="text-align: center">Cadastre a primeira foto do cliente</div>
+          <img *ngFor="let photo of photos" height="100px" src="{{ photo.url }}" />
         </mat-tab>
       </mat-tab-group>
     </div>

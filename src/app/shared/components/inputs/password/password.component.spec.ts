@@ -8,7 +8,7 @@ describe('PasswordComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PasswordComponent]
+      imports: [PasswordComponent],
     });
     fixture = TestBed.createComponent(PasswordComponent);
     component = fixture.componentInstance;

@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import {
-  catchError,
-  map,
-  retry,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { catchError, map, retry, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CustomerRepository } from '../../service-api/customer.repository';
@@ -48,9 +40,7 @@ export class CustomerService {
   }
 
   /** Formata dados do customer para atender a interface do autocomplete no html */
-  private formatCustomerList(
-    customerList: Array<CustomerResponse>,
-  ): Array<CustomerResponse> {
+  private formatCustomerList(customerList: Array<CustomerResponse>): Array<CustomerResponse> {
     let list: Array<CustomerResponse> = [];
     let letter = '';
 
@@ -96,19 +86,11 @@ export class CustomerService {
   postCustomer(customer: any): Observable<CustomerResponse> {
     return this.customerRepository.postCustomer(customer).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! Cliente adicionado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Parabéns! Cliente adicionado com sucesso!`, 'X', false);
         this.searchCustomerList();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao adicionar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao adicionar, tente novamente`, 'X', true);
         return throwError('Erro no insert');
       }),
     );
@@ -133,19 +115,11 @@ export class CustomerService {
   deleteCustomer(customer: any): Observable<any> {
     return this.customerRepository.deleteCustomer(customer).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Cliente deletado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Cliente deletado com sucesso!`, 'X', false);
         this.searchCustomerList();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao deletar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao deletar, tente novamente`, 'X', true);
         return throwError('Erro no delete');
       }),
     );
@@ -154,19 +128,11 @@ export class CustomerService {
   updateCustomer(body: any, id: number) {
     return this.customerRepository.updateCustomer(body, id).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! Cliente atualizado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Parabéns! Cliente atualizado com sucesso!`, 'X', false);
         this.searchCustomerList();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao atualizar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao atualizar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );

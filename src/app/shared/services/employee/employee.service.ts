@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 
-import {
-  catchError,
-  retry,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { catchError, retry, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { EmployeeRepository } from '../../service-api/employee.repository';
 import { SnackbarService } from '../snackbar.service';
@@ -38,76 +31,44 @@ export class EmployeeService {
   }
 
   public searchEmployee(): Observable<Array<EmployeeResponse>> {
-    return this.employeeRepository
-      .getEmployee()
-      .pipe(tap((employeeList) => (this.employee = employeeList)));
+    return this.employeeRepository.getEmployee().pipe(tap((employeeList) => (this.employee = employeeList)));
   }
 
-  public postEmployee(
-    employee: EmployeeResponse,
-  ): Observable<EmployeeResponse> {
+  public postEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
     return this.employeeRepository.postEmployee(employee).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! Prestador cadastrado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Parabéns! Prestador cadastrado com sucesso!`, 'X', false);
 
         this.reloadSchedule();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao deletar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao deletar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );
   }
 
-  public editEmployee(
-    employee: EmployeeResponse,
-  ): Observable<EmployeeResponse> {
+  public editEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
     return this.employeeRepository.updateEmployee(employee).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! Prestador editado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Parabéns! Prestador editado com sucesso!`, 'X', false);
         this.reloadSchedule();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao editar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao editar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );
   }
 
-  public deleteEmployee(
-    employee: EmployeeResponse,
-  ): Observable<EmployeeResponse> {
+  public deleteEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
     return this.employeeRepository.deleteEmployee(employee).pipe(
       tap(() => {
-        this.snackbarService.openSnackBar(
-          `Parabéns! Prestador deletado com sucesso!`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Parabéns! Prestador deletado com sucesso!`, 'X', false);
         this.reloadSchedule();
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro ao deletar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro ao deletar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );

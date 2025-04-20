@@ -7,9 +7,7 @@ import { CacheService } from '../../service-api/cache';
   providedIn: 'root',
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<UserInterface | undefined>(
-    undefined,
-  );
+  private userSubject = new BehaviorSubject<UserInterface | undefined>(undefined);
 
   public user: UserInterface | undefined;
 

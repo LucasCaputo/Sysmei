@@ -3,46 +3,28 @@
 
   <div>
     <button mat-button color="primary" (click)="change('prev')">
-      <mat-icon class="icon !m-0 mr-4" aria-hidden="false" aria-label="volta">
-        keyboard_arrow_up</mat-icon
-      >
+      <mat-icon class="icon !m-0 mr-4" aria-hidden="false" aria-label="volta"> keyboard_arrow_up</mat-icon>
     </button>
 
     <button mat-button color="primary" (click)="change('next')">
-      <mat-icon class="icon !m-0" aria-hidden="false" aria-label="volta">
-        keyboard_arrow_down</mat-icon
-      >
+      <mat-icon class="icon !m-0" aria-hidden="false" aria-label="volta"> keyboard_arrow_down</mat-icon>
     </button>
   </div>
 </div>
 
-<full-calendar
-  class="w-60 calendar-sidenav m-4 cursor-pointer"
-  #calendar
-  [options]="calendarOptions"
-></full-calendar>
+<full-calendar class="w-60 calendar-sidenav m-4 cursor-pointer" #calendar [options]="calendarOptions"></full-calendar>
 
 <ng-container *ngIf="employeeList | async as list; else loading">
   <h3 class="!m-4">Meus Calendários</h3>
-  <mat-checkbox
-    color="primary"
-    class="ml-4"
-    [checked]="allChecked"
-    (change)="toggleAll($event)"
-    >Marcar todos</mat-checkbox
-  >
+  <mat-checkbox color="primary" class="ml-4" [checked]="allChecked" (change)="toggleAll($event)">Marcar todos</mat-checkbox>
 
   <div *ngFor="let item of list" class="grid ml-7">
-    <mat-checkbox
-      [(ngModel)]="item.checked"
-      (change)="checkAllSelected(item)"
-      >{{ item.nome }}</mat-checkbox
-    >
+    <mat-checkbox [(ngModel)]="item.checked" (change)="checkAllSelected(item)">{{ item.nome }}</mat-checkbox>
   </div>
 </ng-container>
 
 <ng-template #loading>
-    <div class="flex h-[200px] items-center justify-center">
-        <app-spinner [diameter]="30" [hasBodyHeight]="false" />
-    </div>
+  <div class="flex h-[200px] items-center justify-center">
+    <app-spinner [diameter]="30" [hasBodyHeight]="false" />
+  </div>
 </ng-template>

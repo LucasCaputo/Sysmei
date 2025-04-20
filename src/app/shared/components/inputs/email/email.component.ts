@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   standalone: true,
   imports: [SharedModule],
   templateUrl: './email.component.html',
-  styleUrls: ['./email.component.scss']
+  styleUrls: ['./email.component.scss'],
 })
 export class EmailComponent {
   @Input({ required: true }) email!: FormControl<string | null>;

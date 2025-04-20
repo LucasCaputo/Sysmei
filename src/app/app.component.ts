@@ -8,7 +8,6 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
   showMenu: boolean = false;
 
   ngOnInit(): void {
@@ -39,10 +38,11 @@ export class AppComponent implements OnInit {
     }, interval);
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const currentRoute = this.activatedRoute.root.firstChild;
       if (currentRoute && currentRoute.snapshot.data['withMenu']) {
         this.showMenu = true;
@@ -51,6 +51,4 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
-
 }

@@ -13,23 +13,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [
-    SharedModule,
-    SharedInputModule,
-    MatCardModule,
-    HeaderComponent,
-    CardContainerComponent,
-    MessageTipComponent,
-  ],
+  imports: [SharedModule, SharedInputModule, MatCardModule, HeaderComponent, CardContainerComponent, MessageTipComponent],
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
   isError = signal(false);
 
   forgotPassword = this.formBuilder.group({
-    email: ['', [Validators.email, Validators.required]]
-  })
+    email: ['', [Validators.email, Validators.required]],
+  });
 
   constructor(
     private readonly userService: UserService,
@@ -41,24 +34,14 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if ( this.forgotPassword.value.email ) {
-      this.userService.forgotPassword(this.forgotPassword.value.email).subscribe(
-        (response) => {
-          this.snackbarService.openSnackBar(
-           response,
-            'X',
-            false,
-          );
-        }
-      );
+    if (this.forgotPassword.value.email) {
+      this.userService.forgotPassword(this.forgotPassword.value.email).subscribe((response) => {
+        this.snackbarService.openSnackBar(response, 'X', false);
+      });
     } else {
-      this.snackbarService.openSnackBar(
-        'E-mail não encontrado.',
-        'X',
-        true,
-      );
-    };
-  };
+      this.snackbarService.openSnackBar('E-mail não encontrado.', 'X', true);
+    }
+  }
 
   goToLogin() {
     this.router.navigate(['/login']);

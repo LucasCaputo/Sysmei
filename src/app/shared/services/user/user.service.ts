@@ -4,11 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import {
-  LoginRequest,
-  LoginResponse,
-  UserInterface,
-} from '../../interfaces/user';
+import { LoginRequest, LoginResponse, UserInterface } from '../../interfaces/user';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -22,15 +18,11 @@ export class UserService {
   ) {}
 
   public postUser(newUser: Partial<UserInterface>): Observable<UserInterface> {
-    return this.httpClient.post<UserInterface>(
-      environment.baseURL + '/user',
-      newUser,
-      {
-        headers: {
-          'Skip-Interceptor': 'true',
-        },
+    return this.httpClient.post<UserInterface>(environment.baseURL + '/user', newUser, {
+      headers: {
+        'Skip-Interceptor': 'true',
       },
-    );
+    });
   }
 
   public postLogin(loginRequest: LoginRequest): Observable<LoginResponse> {
@@ -66,11 +58,11 @@ export class UserService {
 
   public forgotPassword(email: string): Observable<any> {
     return this.httpClient.post(environment.baseURL + '/user/forgot_password?email=' + email, {
-      params: {}
-    })
+      params: {},
+    });
   }
 
   public resetPassword(token: string, password: string): Observable<any> {
-    return this.httpClient.post(environment.baseURL + '/user/reset_password?token=' + token + '&password=' + password, {} )
+    return this.httpClient.post(environment.baseURL + '/user/reset_password?token=' + token + '&password=' + password, {});
   }
 }

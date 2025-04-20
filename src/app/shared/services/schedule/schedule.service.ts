@@ -1,18 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import {
-  catchError,
-  map,
-  retry,
-  shareReplay,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
-import {
-  ScheduleFormatResponse,
-  ScheduleResponse,
-} from 'src/app/shared/interfaces/schedule-response';
+import { catchError, map, retry, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { ScheduleFormatResponse, ScheduleResponse } from 'src/app/shared/interfaces/schedule-response';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
@@ -56,16 +45,11 @@ export class ScheduleService {
     this.reloadScheduleSubject.next(date);
   }
 
-  public searchScheduleList(date: {
-    startDate: string;
-    endDate: string;
-  }): Observable<any> {
-    return this.scheduleRepository
-      .getScheduleByDate(date.startDate, date.endDate)
-      .pipe(
-        tap((scheduleList) => this.setSearchScheduledList(scheduleList)),
-        map((schedudle) => this.formatScheduleResponse(schedudle)),
-      );
+  public searchScheduleList(date: { startDate: string; endDate: string }): Observable<any> {
+    return this.scheduleRepository.getScheduleByDate(date.startDate, date.endDate).pipe(
+      tap((scheduleList) => this.setSearchScheduledList(scheduleList)),
+      map((schedudle) => this.formatScheduleResponse(schedudle)),
+    );
   }
 
   private setSearchScheduledList(scheduleList: ScheduleResponse[]): void {
@@ -75,9 +59,7 @@ export class ScheduleService {
   }
 
   /** Formata retorno do back para formato que front espera receber */
-  public formatScheduleResponse(
-    scheduleList: Array<ScheduleResponse>,
-  ): Array<ScheduleFormatResponse> {
+  public formatScheduleResponse(scheduleList: Array<ScheduleResponse>): Array<ScheduleFormatResponse> {
     let formatedSchedule: Array<ScheduleFormatResponse> = [];
 
     scheduleList.map((element: ScheduleResponse) => {
@@ -85,18 +67,10 @@ export class ScheduleService {
         title:
           element.title +
           ' - ' +
-          this.customerService.formattedCustomerList[
-            this.customerService.formattedCustomerList.findIndex(
-              (e) => e.id === element.paciente_id,
-            )
-          ]?.nome,
-        customer: this.customerService.customers.find(
-          (e: any) => e.id === element.paciente_id,
-        ),
+          this.customerService.formattedCustomerList[this.customerService.formattedCustomerList.findIndex((e) => e.id === element.paciente_id)]?.nome,
+        customer: this.customerService.customers.find((e: any) => e.id === element.paciente_id),
         detalhes: element.detalhes,
-        employee: this.employeeService.employee.find(
-          (e: any) => e.id === element.prestador_id,
-        ),
+        employee: this.employeeService.employee.find((e: any) => e.id === element.prestador_id),
         end: this.setDate(element.end),
         id: element.id?.toString(),
         schedule_id: element.id,
@@ -151,18 +125,10 @@ export class ScheduleService {
     return this.scheduleRepository.deleteScheduling(customerId).pipe(
       tap(() => {
         this.reloadSchedule(new Date());
-        this.snackbarService.openSnackBar(
-          `Agendamento deletado com sucesso`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Agendamento deletado com sucesso`, 'X', false);
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para deletar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro para deletar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );
@@ -180,18 +146,10 @@ export class ScheduleService {
     return this.scheduleRepository.updateScheduling(payload, id).pipe(
       tap(() => {
         this.reloadSchedule(new Date());
-        this.snackbarService.openSnackBar(
-          `Agendamento atualizado com sucesso`,
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Agendamento atualizado com sucesso`, 'X', false);
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para atualizar, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro para atualizar, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );
@@ -209,11 +167,7 @@ export class ScheduleService {
         );
       }),
       catchError(() => {
-        this.snackbarService.openSnackBar(
-          `Tivemos um erro para alterar o status, tente novamente`,
-          'X',
-          true,
-        );
+        this.snackbarService.openSnackBar(`Tivemos um erro para alterar o status, tente novamente`, 'X', true);
         return throwError('Erro no update');
       }),
     );

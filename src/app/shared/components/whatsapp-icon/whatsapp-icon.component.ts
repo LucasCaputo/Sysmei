@@ -20,13 +20,7 @@ export class WhatsappIconComponent {
   @Input() phone: string | number = '';
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('icon.svg'),
-    );
-    iconRegistry.addSvgIconLiteral(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustHtml(this.THUMBUP_ICON),
-    );
+    iconRegistry.addSvgIcon('thumbs-up', sanitizer.bypassSecurityTrustResourceUrl('icon.svg'));
+    iconRegistry.addSvgIconLiteral('thumbs-up', sanitizer.bypassSecurityTrustHtml(this.THUMBUP_ICON));
   }
 }

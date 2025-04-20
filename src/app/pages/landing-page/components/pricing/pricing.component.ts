@@ -14,13 +14,13 @@ export class PricingComponent {
 
   togglePricing() {
     this.isAnnual = !this.isAnnual;
-  };
+  }
 
   selectedPlan(planNAme: string, price: string) {
     const selectedPlan = {
       name: planNAme,
       price: price,
-      billingType: this.isAnnual ? 'Anual' : 'Mensal'
+      billingType: this.isAnnual ? 'Anual' : 'Mensal',
     };
 
     const wppNumber = '5591984268089';

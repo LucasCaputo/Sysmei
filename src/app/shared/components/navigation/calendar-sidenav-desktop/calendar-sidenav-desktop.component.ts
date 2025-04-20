@@ -1,22 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  signal,
-} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  FullCalendarComponent,
-  FullCalendarModule,
-} from '@fullcalendar/angular';
-import {
-  CalendarApi,
-  CalendarOptions,
-  DateSelectArg,
-} from '@fullcalendar/core';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarApi, CalendarOptions, DateSelectArg } from '@fullcalendar/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { calendarSelectedOptions } from 'src/app/pages/calendar/calendar.options';
@@ -63,8 +48,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
       } else {
         this.calendarApi.gotoDate(date.toISOString().split('T')[0]);
       }
-      this.month =
-        this.monthNamesPT[+date.toISOString().split('T')[0].split('-')[1] - 1];
+      this.month = this.monthNamesPT[+date.toISOString().split('T')[0].split('-')[1] - 1];
     }
   }
 
@@ -72,20 +56,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     return this._date;
   }
 
-  monthNamesPT = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ];
+  monthNamesPT = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
   month = this.monthNamesPT[new Date().getMonth()];
 
@@ -99,9 +70,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
 
   allChecked = true;
   employeeList: Observable<any> = this.employeeService.searchEmployee$.pipe(
-    map((employees) =>
-      employees.map((employee) => ({ ...employee, checked: true })),
-    ),
+    map((employees) => employees.map((employee) => ({ ...employee, checked: true }))),
   );
 
   employeeListFormated = signal([{ id: 0 }]);
@@ -139,9 +108,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     }));
 
     this.employeeList.forEach((elements: any) => {
-      this.employeeList = of(
-        elements.map((employee: any) => ({ ...employee, checked })),
-      );
+      this.employeeList = of(elements.map((employee: any) => ({ ...employee, checked })));
     });
 
     this.employeeListFormated.set(formatedObject);
@@ -150,9 +117,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
   }
 
   checkAllSelected(newObject: any) {
-    const oldObjectIndex = this.employeeListFormated().findIndex(
-      (element) => element.id === newObject.id,
-    );
+    const oldObjectIndex = this.employeeListFormated().findIndex((element) => element.id === newObject.id);
 
     const formatedObject = this.employeeListFormated();
 

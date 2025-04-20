@@ -1,6 +1,8 @@
 <div mat-dialog-content>
   <form [formGroup]="form" class="flex flex-col">
-    <p class="text-xl flex w-full justify-center">{{ !data.id ? 'Cadastrar cliente' : 'Editar cliente' }}</p>
+    <p class="text-xl flex w-full justify-center">
+      {{ !data.id ? 'Cadastrar cliente' : 'Editar cliente' }}
+    </p>
     <app-name [name]="form.controls.nome" />
 
     <app-phone [phone]="form.controls.telefone1" [label]="'Telefone'" />
@@ -8,8 +10,11 @@
     <app-email [email]="form.controls.email" />
   </form>
 
-  <app-action-buttons [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
-    (confirmButton)="saveCustomer(); dialog.closeAll()"></app-action-buttons>
+  <app-action-buttons
+    [disableConfirmButton]="form.invalid || !form.dirty"
+    (closeButton)="dialog.closeAll()"
+    (confirmButton)="saveCustomer(); dialog.closeAll()"
+  ></app-action-buttons>
 
   <div class="flex justify-end">
     <button *ngIf="data.nome" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">

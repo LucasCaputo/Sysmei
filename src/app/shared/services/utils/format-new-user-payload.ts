@@ -7,9 +7,7 @@ interface NewUser {
   phone: string | null;
 }
 
-export function FormatNewUserPayload(
-  user: Partial<NewUser>,
-): Partial<UserInterface> {
+export function FormatNewUserPayload(user: Partial<NewUser>): Partial<UserInterface> {
   return {
     login: user.email || '',
     nome: user.name || '',

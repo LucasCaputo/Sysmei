@@ -1,8 +1,7 @@
 <mat-drawer-container class="h-full">
   <mat-drawer-content class="h-full m-4">
     <div class="flex items-center justify-around mb-5 mr-10">
-      <span class="w-10 h-10 bg-violet-600 border rounded-[50%] mr-5">
-      </span>
+      <span class="w-10 h-10 bg-violet-600 border rounded-[50%] mr-5"> </span>
       <div *ngIf="user$ | async as user" class="flex flex-col">
         <span>{{ user.nome }}</span>
         <span>{{ user?.login }}</span>
@@ -12,30 +11,24 @@
     <mat-divider></mat-divider>
 
     <div class="my-4">
-      <div *ngFor="let item of menuData" (click)="redirect(item.redirect);"
-        class="flex items-center h-10 text-base cursor-pointer">
-        {{item.label}}
+      <div *ngFor="let item of menuData" (click)="redirect(item.redirect)" class="flex items-center h-10 text-base cursor-pointer">
+        {{ item.label }}
 
-        <mat-icon class=" ml-auto">{{item.icon}}</mat-icon>
+        <mat-icon class="ml-auto">{{ item.icon }}</mat-icon>
       </div>
       <mat-divider></mat-divider>
       <div class="mt-10">
-        <div *ngFor="let item of menuConfig" (click)="openModal(item.key);"
-          class="flex items-center h-10 text-base cursor-pointer">
-          {{item.label}}
+        <div *ngFor="let item of menuConfig" (click)="openModal(item.key)" class="flex items-center h-10 text-base cursor-pointer">
+          {{ item.label }}
 
-          <mat-icon class=" ml-auto">{{item.icon}}</mat-icon>
+          <mat-icon class="ml-auto">{{ item.icon }}</mat-icon>
         </div>
       </div>
       <mat-divider></mat-divider>
-
     </div>
 
     <div class="flex w-full justify-end mb-5 mt-20">
-      <button mat-raised-button (click)="logout()">
-        Sair
-      </button>
+      <button mat-raised-button (click)="logout()">Sair</button>
     </div>
   </mat-drawer-content>
-
 </mat-drawer-container>

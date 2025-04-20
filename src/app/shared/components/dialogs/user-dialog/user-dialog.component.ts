@@ -13,12 +13,7 @@ import { PaymentsDialogComponent } from '../payments-dialog/payments-dialog.comp
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-dialog',
   standalone: true,
-  imports: [
-    SharedModule,
-    SharedInputModule,
-    MatTabsModule,
-    PaymentsDialogComponent,
-  ],
+  imports: [SharedModule, SharedInputModule, MatTabsModule, PaymentsDialogComponent],
   templateUrl: './user-dialog.component.html',
   styleUrls: ['./user-dialog.component.scss'],
 })
@@ -52,22 +47,14 @@ export class UserDialogComponent {
   saveSettings() {
     let body: Partial<UserInterface>;
 
-    if (
-      this.userForm.value.name &&
-      this.userForm.value.phone &&
-      this.userForm.value.login
-    ) {
+    if (this.userForm.value.name && this.userForm.value.phone && this.userForm.value.login) {
       body = {
         nome: this.userForm.value.name,
         login: this.userForm.value.login,
         telefone: this.userForm.value.phone,
       };
 
-      if (
-        this.passwordForm.value.oldPassword &&
-        this.passwordForm.value.password &&
-        this.passwordForm.value.repetPassword
-      ) {
+      if (this.passwordForm.value.oldPassword && this.passwordForm.value.password && this.passwordForm.value.repetPassword) {
         body = {
           ...body,
           ...{

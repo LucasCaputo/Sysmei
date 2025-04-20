@@ -11,14 +11,7 @@ import { HeaderBaseComponent } from './components/header-base/header-base.compon
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    RouterModule,
-    MatIconModule,
-    MatButtonModule,
-    HeaderBaseComponent,
-  ],
+  imports: [CommonModule, MatToolbarModule, RouterModule, MatIconModule, MatButtonModule, HeaderBaseComponent],
 })
 export class HeaderComponent {
   @Input() isPrivate: boolean | undefined;

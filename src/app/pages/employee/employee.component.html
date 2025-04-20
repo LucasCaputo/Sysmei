@@ -4,14 +4,18 @@
   </button>
 
   <div class="flex w-full justify-end">
-    <button mat-icon-button aria-label="Adicionar Prestador" (click)="
+    <button
+      mat-icon-button
+      aria-label="Adicionar Prestador"
+      (click)="
         openDialog({
           id: 0,
           nome: '',
           telefone: '',
           login_usuario: ''
         })
-      ">
+      "
+    >
       <mat-icon style="color: white">add_circle_outline</mat-icon>
     </button>
   </div>
@@ -23,8 +27,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-container *ngIf="{ employees : (employeeList$ | async ) } as model ">
-      <mat-list >
+    <ng-container *ngIf="{ employees: (employeeList$ | async) } as model">
+      <mat-list>
         @if (model.employees) {
           <ng-container *ngFor="let employee of model.employees">
             <app-card [cardData]="employee" (edit)="openDialog(employee)"></app-card>

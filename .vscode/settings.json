@@ -1,24 +1,17 @@
 {
   "git.autofetch": true,
-  "window.zoomLevel": -1,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.fixAll": true
+    "source.organizeImports": "explicit"
+  },
+  "editor.minimap.enabled": false,
+  "git.confirmSync": false,
+  "window.zoomLevel": -1,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "–": true
   },
   "editor.formatOnSave": true,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": false,
-  "editor.trimAutoWhitespace": true,
-  "editor.autoIndent": "advanced",
-  "editor.renderWhitespace": "boundary",
-  "editor.wordWrap": "on",
-  "editor.wordWrapColumn": 100,
-  "editor.defaultFormatter": null,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[typescript]": {
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.autoIndent": "advanced",
-    "editor.formatOnSave": true
-  },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

@@ -9,7 +9,7 @@
     "e2e": "ng e2e",
     "lint": "eslint 'src/**/*.{ts,js}'",
     "lint:fix": "eslint 'src/**/*.{ts,js}' --fix",
-    "format": "prettier --write 'src/**/*.{ts,js,json,css,scss,md}'"
+    "format": "prettier --write 'src/**/*.{ts,js,json,css,scss,md,html}'"
   },
   "private": true,
   "dependencies": {

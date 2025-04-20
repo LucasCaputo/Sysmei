@@ -11,8 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class InstallPwaComponentComponent {
   promptEvent: any;
-  public readonly showMessage = signal(true)
-
+  public readonly showMessage = signal(true);
 
   @HostListener('window:beforeinstallprompt', ['$event'])
   onBeforeInstallPrompt(event: Event) {
@@ -33,6 +32,6 @@ export class InstallPwaComponentComponent {
   }
 
   public closeMessage(): void {
-    this.showMessage.set(false)
+    this.showMessage.set(false);
   }
 }

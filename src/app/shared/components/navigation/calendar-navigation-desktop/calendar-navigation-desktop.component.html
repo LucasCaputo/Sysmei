@@ -1,18 +1,21 @@
 <mat-card class="m-2">
-    <mat-card-content class="!flex !p-1 !mr-2">
-        <button mat-raised-button color="primary" class="mr-4" (click)="onAddNewSchedule()">
-            <mat-icon>edit_calendar</mat-icon>
-            Novo agendamento
-        </button>
-        <button mat-button *ngFor="let viewOption of calendarViewOptions" (click)="change(viewOption.calendarView)"
-            class="flex items-center mr-4" [class]="{'active' : actionIcon === viewOption.calendarView}">
+  <mat-card-content class="!flex !p-1 !mr-2">
+    <button mat-raised-button color="primary" class="mr-4" (click)="onAddNewSchedule()">
+      <mat-icon>edit_calendar</mat-icon>
+      Novo agendamento
+    </button>
+    <button
+      mat-button
+      *ngFor="let viewOption of calendarViewOptions"
+      (click)="change(viewOption.calendarView)"
+      class="flex items-center mr-4"
+      [class]="{ active: actionIcon === viewOption.calendarView }"
+    >
+      <mat-icon class="icon" class="flex justify-center mr-2" color="primary">
+        {{ viewOption.icon }}
+      </mat-icon>
 
-            <mat-icon class="icon" class="flex justify-center mr-2" color="primary">
-                {{ viewOption.icon }}
-            </mat-icon>
-
-            {{ viewOption.label }}
-        </button>
-
-    </mat-card-content>
+      {{ viewOption.label }}
+    </button>
+  </mat-card-content>
 </mat-card>

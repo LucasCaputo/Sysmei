@@ -1,16 +1,5 @@
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
-import {
-  DEFAULT_CURRENCY_CODE,
-  Injectable,
-  LOCALE_ID,
-  NgModule,
-  isDevMode,
-} from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { DEFAULT_CURRENCY_CODE, Injectable, LOCALE_ID, NgModule, isDevMode } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,8 +17,8 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { authInterceptor } from './interceptors/auth.interceptor';
-import { HeaderComponent } from "./pages/landing-page/components/header/header.component";
-import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { HeaderComponent } from './pages/landing-page/components/header/header.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
 
 // Registre a localidade para 'pt'
@@ -47,14 +36,14 @@ registerLocaleData(localePt, 'pt');
     HttpClientModule,
     MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        // Register the ServiceWorker as soon as the application is stable
-        // or after 30 seconds (whichever comes first).
-        registrationStrategy: 'registerWhenStable:30000',
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
     }),
     LandingPageComponent,
-    HeaderComponent
-],
+    HeaderComponent,
+  ],
   providers: [
     {
       provide: LOCALE_ID,

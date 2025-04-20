@@ -8,7 +8,7 @@ describe('HelpDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HelpDialogComponent]
+      imports: [HelpDialogComponent],
     });
     fixture = TestBed.createComponent(HelpDialogComponent);
     component = fixture.componentInstance;

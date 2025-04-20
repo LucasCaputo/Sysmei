@@ -4,14 +4,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   templateUrl: './faq.component.html',
-  styleUrl: './faq.component.scss'
+  styleUrl: './faq.component.scss',
 })
 export class FaqComponent {
-
   isQuestion1Open = false;
   isQuestion2Open = false;
   isQuestion3Open = false;

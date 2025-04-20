@@ -11,13 +11,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-
   isMenuOpen: boolean = false;
   activeLink: string | null = null;
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
-  };
+  }
 
   setActiveLink(link: string) {
     this.activeLink = link;

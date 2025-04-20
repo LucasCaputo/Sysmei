@@ -24,35 +24,20 @@ export class EmployeeRepository {
       params = params.set('login', user.login);
     }
 
-    return this.httpClient.get<EmployeeResponse[]>(
-      `${environment.baseURL}/prestador`,
-      {
-        params: params,
-      },
-    );
+    return this.httpClient.get<EmployeeResponse[]>(`${environment.baseURL}/prestador`, {
+      params: params,
+    });
   }
 
-  public postEmployee(
-    employee: EmployeeResponse,
-  ): Observable<EmployeeResponse> {
-    return this.httpClient.post<EmployeeResponse>(
-      environment.baseURL + '/prestador',
-      employee,
-    );
+  public postEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+    return this.httpClient.post<EmployeeResponse>(environment.baseURL + '/prestador', employee);
   }
 
-  public updateEmployee(
-    employee: EmployeeResponse,
-  ): Observable<EmployeeResponse> {
-    return this.httpClient.put<EmployeeResponse>(
-      environment.baseURL + '/prestador/' + employee.id,
-      employee,
-    );
+  public updateEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
+    return this.httpClient.put<EmployeeResponse>(environment.baseURL + '/prestador/' + employee.id, employee);
   }
 
   public deleteEmployee(employee: any): Observable<any> {
-    return this.httpClient.delete<any>(
-      `${environment.baseURL}/prestador/${employee.id}`,
-    );
+    return this.httpClient.delete<any>(`${environment.baseURL}/prestador/${employee.id}`);
   }
 }

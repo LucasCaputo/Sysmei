@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   standalone: true,
   imports: [SharedModule],
   templateUrl: './phone.component.html',
-  styleUrls: ['./phone.component.scss']
+  styleUrls: ['./phone.component.scss'],
 })
 export class PhoneComponent {
   @Input({ required: true }) phone!: FormControl<string | null>;

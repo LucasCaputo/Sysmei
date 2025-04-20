@@ -1,10 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
@@ -103,7 +97,7 @@ export class CustomerRecordComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private customerService: CustomerService,
-  ) { }
+  ) {}
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -161,7 +155,6 @@ export class CustomerRecordComponent implements OnInit {
         },
       );
     }
-
   }
 
   inputFileChange(event: any) {
@@ -173,13 +166,11 @@ export class CustomerRecordComponent implements OnInit {
 
       this.customerService.postFile(this.getCustomerId(), formData).subscribe(
         (result) => {
-          this.customerService
-            .getCustomerId(this.getCustomerId())
-            .subscribe((result) => {
-              this.photos = result.documentsUrl;
-            });
+          this.customerService.getCustomerId(this.getCustomerId()).subscribe((result) => {
+            this.photos = result.documentsUrl;
+          });
         },
-        (error) => { },
+        (error) => {},
       );
     }
   }
@@ -211,16 +202,14 @@ export class CustomerRecordComponent implements OnInit {
         this.records = [];
 
         setTimeout(() => {
-          this.customerService
-            .getCustomerRecord(this.getCustomerId())
-            .subscribe(
-              (response) => {
-                this.records = response;
-              },
-              (erro) => {
-                console.error(erro);
-              },
-            );
+          this.customerService.getCustomerRecord(this.getCustomerId()).subscribe(
+            (response) => {
+              this.records = response;
+            },
+            (erro) => {
+              console.error(erro);
+            },
+          );
         }, 8000);
       }
     });

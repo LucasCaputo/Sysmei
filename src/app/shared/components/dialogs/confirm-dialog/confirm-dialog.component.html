@@ -1,4 +1,4 @@
-<h1 mat-dialog-title style="margin: 0;">Deseja excluir o usuário?</h1>
+<h1 mat-dialog-title style="margin: 0">Deseja excluir o usuário?</h1>
 
 <div mat-dialog-content>
   <h3 class="m-0">Essa ação é irreversível</h3>
@@ -10,12 +10,15 @@
     </div>
     <div mat-dialog-actions>
       <div class="flex justify-end">
-        <button mat-raised-button color="basic" mat-dialog-close>
-          Cancelar
-        </button>
-        <button mat-raised-button color="warn" [mat-dialog-close]="{
+        <button mat-raised-button color="basic" mat-dialog-close>Cancelar</button>
+        <button
+          mat-raised-button
+          color="warn"
+          [mat-dialog-close]="{
             confirmed: true
-          }" [disabled]="!FormConfirm.valid">
+          }"
+          [disabled]="!FormConfirm.valid"
+        >
           Excluir
         </button>
       </div>

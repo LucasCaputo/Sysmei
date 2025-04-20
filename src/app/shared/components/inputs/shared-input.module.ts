@@ -8,23 +8,7 @@ import { PhoneComponent } from './phone/phone.component';
 import { SearchComponent } from './search/search.component';
 
 @NgModule({
-  imports: [
-    NameComponent,
-    PhoneComponent,
-    EmailComponent,
-    PasswordComponent,
-    MobileActionButtonsComponent,
-    ActionButtonsComponent,
-    SearchComponent
-  ],
-  exports: [
-    NameComponent,
-    PhoneComponent,
-    EmailComponent,
-    PasswordComponent,
-    MobileActionButtonsComponent,
-    ActionButtonsComponent,
-    SearchComponent
-  ]
+  imports: [NameComponent, PhoneComponent, EmailComponent, PasswordComponent, MobileActionButtonsComponent, ActionButtonsComponent, SearchComponent],
+  exports: [NameComponent, PhoneComponent, EmailComponent, PasswordComponent, MobileActionButtonsComponent, ActionButtonsComponent, SearchComponent],
 })
-export class SharedInputModule { }
+export class SharedInputModule {}

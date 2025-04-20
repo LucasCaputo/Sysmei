@@ -16,13 +16,7 @@ import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.componen
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatSidenavModule,
-    MatButtonModule,
-  ],
+  imports: [CommonModule, MatIconModule, MatDividerModule, MatSidenavModule, MatButtonModule],
 })
 export class MenuComponent {
   user$ = this.auth.getUserObservable();

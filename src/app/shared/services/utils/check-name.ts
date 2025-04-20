@@ -7,8 +7,7 @@ export function IsNameCompleted(input: FormControl): boolean {
     return false;
   }
 
-  const nameParts = value
-    .split(' ')
+  const nameParts = value.split(' ');
 
   return nameParts.length <= 1;
 }

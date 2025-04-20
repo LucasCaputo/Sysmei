@@ -26,15 +26,11 @@ export class SnackbarService {
   }
 
   openErrorSnackBar(message?: string) {
-    this._snackBar.open(
-      `Tivemos um erro ${'para ' + message}, tente novamente`,
-      'X',
-      {
-        duration: 4000,
-        horizontalPosition: 'end',
-        verticalPosition: 'top',
-        panelClass: ['bg-error'],
-      },
-    );
+    this._snackBar.open(`Tivemos um erro ${'para ' + message}, tente novamente`, 'X', {
+      duration: 4000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      panelClass: ['bg-error'],
+    });
   }
 }

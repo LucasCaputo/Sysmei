@@ -15,17 +15,11 @@ export class CustomerRepository {
   ) {}
 
   postCustomer(customer: any): Observable<CustomerResponse> {
-    return this.httpClient.post<any>(
-      environment.baseURL + '/paciente',
-      customer,
-    );
+    return this.httpClient.post<any>(environment.baseURL + '/paciente', customer);
   }
 
   postFile(customerId: number, file: any): Observable<CustomerResponse> {
-    return this.httpClient.post<any>(
-      environment.baseURL + '/paciente/picture/' + customerId,
-      file,
-    );
+    return this.httpClient.post<any>(environment.baseURL + '/paciente/picture/' + customerId, file);
   }
 
   getCustomer(): Observable<any> {
@@ -43,21 +37,15 @@ export class CustomerRepository {
   }
 
   getCustomerId(customerId: number): Observable<CustomerResponse> {
-    return this.httpClient.get<CustomerResponse>(
-      `${environment.baseURL}/paciente/${customerId}`,
-    );
+    return this.httpClient.get<CustomerResponse>(`${environment.baseURL}/paciente/${customerId}`);
   }
 
   getCustomerRecord(customerId: number): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.baseURL}/agenda/` + customerId,
-    );
+    return this.httpClient.get<any>(`${environment.baseURL}/agenda/` + customerId);
   }
 
   deleteCustomer(customer: any): Observable<any> {
-    return this.httpClient.delete<any>(
-      `${environment.baseURL}/paciente/${customer.id}`,
-    );
+    return this.httpClient.delete<any>(`${environment.baseURL}/paciente/${customer.id}`);
   }
 
   updateCustomer(body: any, id: number) {

@@ -8,12 +8,7 @@ import { ScheduleHeaderDesktopComponent } from './components/schedule-header-des
 @Component({
   selector: 'app-schedule-header',
   standalone: true,
-  imports: [
-    SharedModule,
-    MatToolbarModule,
-    HeaderComponent,
-    ScheduleHeaderDesktopComponent,
-  ],
+  imports: [SharedModule, MatToolbarModule, HeaderComponent, ScheduleHeaderDesktopComponent],
   templateUrl: './schedule-header.component.html',
   styleUrls: ['./schedule-header.component.scss'],
 })

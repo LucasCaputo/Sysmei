@@ -6,12 +6,7 @@ import { IconColorPipe } from './pipes/icon-color.pipe';
 import { IconCustomerPipe } from './pipes/icon-customer.pipe';
 
 @NgModule({
-  declarations: [
-    ArrayFiltroPipe,
-    FormatPhonePipe,
-    IconColorPipe,
-    IconCustomerPipe,
-  ],
+  declarations: [ArrayFiltroPipe, FormatPhonePipe, IconColorPipe, IconCustomerPipe],
   exports: [ArrayFiltroPipe, FormatPhonePipe, IconColorPipe, IconCustomerPipe],
 })
 export class SharedPipesModule {}

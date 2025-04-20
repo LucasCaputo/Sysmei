@@ -8,7 +8,7 @@ describe('MobileActionButtonsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ActionButtonsComponent]
+      imports: [ActionButtonsComponent],
     });
     fixture = TestBed.createComponent(ActionButtonsComponent);
     component = fixture.componentInstance;

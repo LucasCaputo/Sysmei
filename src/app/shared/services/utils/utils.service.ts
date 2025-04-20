@@ -7,10 +7,7 @@ export class UtilsService {
   constructor() {}
 
   formatPhone(phone: string) {
-    return `(${phone.slice(0, 2)}) ${phone.slice(2, 3)} ${phone.slice(
-      3,
-      7,
-    )}-${phone.slice(7, 11)}`;
+    return `(${phone.slice(0, 2)}) ${phone.slice(2, 3)} ${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
   }
 
   clearStringData(text: string) {

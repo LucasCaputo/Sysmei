@@ -8,7 +8,7 @@ describe('PhoneComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PhoneComponent]
+      imports: [PhoneComponent],
     });
     fixture = TestBed.createComponent(PhoneComponent);
     component = fixture.componentInstance;

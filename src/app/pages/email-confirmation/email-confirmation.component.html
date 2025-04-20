@@ -1,6 +1,6 @@
 <div class="bg-purple-700 h-96"></div>
 <div class="flex flex-col justify-center max-w-96 bg-white container">
-  <ng-container *ngIf="isError() else success">
+  <ng-container *ngIf="isError(); else success">
     <h2 class="!text-3xl w-full text-center">Oops, ocorreu um erro</h2>
     <p>Aconteceu uma falha ao validar seu e-mail</p>
     <p>Não se preocupe, você pode acessar o sistema normalmente</p>
@@ -15,5 +15,4 @@
     <p>É só clicar no botão abaixo</p>
     <button (click)="goToLogin()" mat-raised-button color="primary" class="mt-8">Fazer Login</button>
   </ng-template>
-
 </div>
