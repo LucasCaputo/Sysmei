@@ -1,11 +1,4 @@
 <div class="p-4">
-  <app-mobile-action-buttons
-    [title]="'Deixe sua mensagem'"
-    [disableConfirmButton]="userForm.invalid || !userForm.dirty"
-    (closeButton)="dialog.closeAll()"
-    (confirmButton)="saveFeedback(); dialog.closeAll()"
-  />
-
   <h3 class="text-center !mt-4">Basta enviar sua mensagem que responderemos em breve</h3>
 
   <form [formGroup]="userForm">

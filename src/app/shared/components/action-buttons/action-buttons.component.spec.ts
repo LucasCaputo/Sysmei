@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionButtonsComponent } from './action-buttons.component';
 
-describe('MobileActionButtonsComponent', () => {
+describe('ActionButtonsComponent', () => {
   let component: ActionButtonsComponent;
   let fixture: ComponentFixture<ActionButtonsComponent>;
 
