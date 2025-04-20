@@ -3,7 +3,11 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <div class="flex justify-end w-full">
+  <div class="flex justify-between w-full items-center">
+    <button *ngIf="tabSelected() !== 0" mat-button routerLink="/clientes">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
     <button *ngIf="tabSelected() == 1" mat-icon-button (click)="addSchedule()" class="icon-right" aria-label="Adicionar agendamento">
       <mat-icon>add_box</mat-icon>
     </button>

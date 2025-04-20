@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -45,6 +45,8 @@ export class CustomerRecordComponent implements OnInit {
     }
   }
 
+  @Output() changeTab = new EventEmitter<number>();
+
   data: CustomerResponse | undefined;
   cardData!: CardInfo;
   loading = false;
@@ -65,6 +67,7 @@ export class CustomerRecordComponent implements OnInit {
 
   selectedIndexChange(tabSelected: number) {
     this.tabSelected.set(tabSelected);
+    this.changeTab.emit(tabSelected);
   }
 
   ngOnInit(): void {

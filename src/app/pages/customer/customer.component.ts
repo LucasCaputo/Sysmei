@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
+import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input.module';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
@@ -51,6 +52,8 @@ export class CustomerComponent {
 
   selectedCustomerId = signal(0);
 
+  selectedTab = signal(0);
+
   constructor(
     public readonly dialog: MatDialog,
     public readonly viewPortService: ViewportService,
@@ -66,8 +69,19 @@ export class CustomerComponent {
     }
   }
 
-  openDialog(dataInfo: any) {
+  openCustomerDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
+      width: '500px',
+      maxWidth: '90vw',
+      position: {
+        top: '90px',
+      },
+      data: dataInfo,
+    });
+  }
+
+  openScheduleDialog(dataInfo: any) {
+    this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '90vw',
       position: {
@@ -87,5 +101,33 @@ export class CustomerComponent {
         }
       }
     });
+  }
+
+  public setSelectedTab(tabSelected: number): void {
+    this.selectedTab.set(tabSelected);
+  }
+
+  public openDialog(): void {
+    switch (this.selectedTab()) {
+      case 0:
+        this.openCustomerDialog({
+          nome: '',
+          telefones: [{ id: 0, numero: '' }],
+          email: '',
+        });
+        break;
+
+      case 1:
+        this.openScheduleDialog({ customer: { id: this.selectedCustomerId } });
+
+        break;
+
+      case 2:
+        console.log('TODO -> implement upload');
+        break;
+
+      default:
+        break;
+    }
   }
 }

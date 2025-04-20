@@ -6,17 +6,7 @@
 
     <app-search [search]="searchform.controls.search" />
 
-    <button
-      mat-icon-button
-      aria-label="Adicionar clientes"
-      (click)="
-        openDialog({
-          nome: '',
-          telefones: [{ id: 0, numero: '' }],
-          email: ''
-        })
-      "
-    >
+    <button mat-icon-button aria-label="Adicionar" (click)="openDialog()">
       <mat-icon style="color: white">add_circle_outline</mat-icon>
     </button>
   </div>
@@ -46,7 +36,7 @@
                   {{ customer.inicial }}
                 </div>
                 <mat-list [class]="{ 'w-[400px]': model.viewPort !== 'mobile' }">
-                  <app-card [cardData]="customer" (edit)="openDialog($event)" (click)="navigateToCustomerDetails($event)"></app-card>
+                  <app-card [cardData]="customer" (edit)="openCustomerDialog($event)" (click)="navigateToCustomerDetails($event)"></app-card>
                 </mat-list>
               </ng-container>
             </div>
@@ -73,7 +63,7 @@
               mat-raised-button
               color="primary"
               (click)="
-                openDialog({
+                openCustomerDialog({
                   nome: '',
                   telefones: [{ id: 0, numero: '' }],
                   email: ''
@@ -90,7 +80,7 @@
           class="m-0 pl-5 w-full"
           [class]="{ 'border-l': model.viewPort !== 'mobile' }"
         >
-          <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()"></app-customer-record>
+          <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()" (changeTab)="setSelectedTab($event)"></app-customer-record>
         </div>
 
         <div *ngIf="model.customerList === null" class="w-full">
