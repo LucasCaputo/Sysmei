@@ -49,14 +49,7 @@ export class SchedulingFormComponent implements OnInit {
     private snackbarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
     private cacheService: CacheService,
-  ) {
-    setTimeout(() => {
-      this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value)),
-      );
-    }, 0);
-  }
+  ) {}
 
   ngOnInit(): void {
     let end = '';
@@ -67,22 +60,59 @@ export class SchedulingFormComponent implements OnInit {
       end = `${('0' + this.data?.end?.getHours())?.slice(-2)}:${('0' + this.data?.end?.getMinutes())?.slice(-2)}`;
     }
 
-    this.form = this.formBuilder.group({
-      allDay: this.data?.start || new Date(),
-      detalhes: this.data?.detalhes || '',
-      end,
-      id: this.data?.schedule_id,
-      customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
-      pagamento: this.data?.pagamento || '',
-      employee: this.data?.employee || this.employeeData[0],
-      start,
-      title: this.data?.Title || '',
-      valor: this.data?.valor || '',
-      status: this.data?.status || 0,
-    });
+    const employee =  this.data?.employee || this.employeeData
 
-    if (this.employeeData?.length > 1) {
-      this.hiddenEmployee = true;
+    if(!employee) {
+      this.employeeService.searchEmployee().subscribe(() => {
+        this.employeeData = this.employeeService.employee
+        console.log( this.employeeService.employee)
+        console.log(this.customerData)
+        this.form = this.formBuilder.group({
+          allDay: this.data?.start || new Date(),
+          detalhes: this.data?.detalhes || '',
+          end,
+          id: this.data?.schedule_id,
+          customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
+          pagamento: this.data?.pagamento || '',
+          employee: this.data?.employee || this.employeeService.employee[0],
+          start,
+          title: this.data?.Title || '',
+          valor: this.data?.valor || '',
+          status: this.data?.status || 0,
+        });
+
+        if (this.employeeService.employee.length > 1) {
+          this.hiddenEmployee = true;
+        }
+
+        this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
+          startWith(''),
+          map((value) => this._filter(value)),
+        );
+      })
+    }else {
+      this.form = this.formBuilder.group({
+        allDay: this.data?.start || new Date(),
+        detalhes: this.data?.detalhes || '',
+        end,
+        id: this.data?.schedule_id,
+        customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
+        pagamento: this.data?.pagamento || '',
+        employee: this.data?.employee || this.employeeData[0],
+        start,
+        title: this.data?.Title || '',
+        valor: this.data?.valor || '',
+        status: this.data?.status || 0,
+      });
+
+      if (this.employeeData?.length > 1) {
+        this.hiddenEmployee = true;
+      }
+
+      this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
+        startWith(''),
+        map((value) => this._filter(value)),
+      );
     }
   }
 

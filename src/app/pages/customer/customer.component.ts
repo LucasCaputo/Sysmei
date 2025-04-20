@@ -118,7 +118,7 @@ export class CustomerComponent {
         break;
 
       case 1:
-        this.openScheduleDialog({ customer: { id: this.selectedCustomerId } });
+        this.openScheduleDialog({ customer: { id: this.selectedCustomerId() } });
 
         break;
 
