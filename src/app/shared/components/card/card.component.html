@@ -3,7 +3,7 @@
 
   <app-contact-info (click)="onClick()" [info]="cardData" class="w-2/5 cursor-pointer"></app-contact-info>
 
-  <app-contact-actions [customer]="cardData" (edit)="openDialog()"></app-contact-actions>
+  <app-contact-actions [customer]="cardData" (edit)="openDialog()" [showEdit]="showEdit"></app-contact-actions>
 
   <mat-divider></mat-divider>
 </div>

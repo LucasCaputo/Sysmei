@@ -1,208 +1,83 @@
 <form [formGroup]="profileForm" class="container-form">
   <mat-list>
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Nome completo</mat-label>
-          <input matInput type="text" formControlName="nome" required [readonly]="!edit" />
-          <mat-error *ngIf="profileForm.controls.nome.hasError('required')"> Nome é <strong>obrigatório</strong> </mat-error>
-          <mat-error *ngIf="!profileForm.controls.nome.hasError('required') && profileForm.controls.nome.hasError('hasNumber')">
-            Insira seu nome completo, <strong>somente letras</strong>
-          </mat-error>
-          <mat-error *ngIf="!profileForm.controls.nome.hasError('required') && profileForm.controls.nome.hasError('isNameComplete')">
-            Informe seu nome <strong>completo</strong>
-          </mat-error>
-        </mat-form-field>
-      </mat-list-item>
+    <div class="pb-[80px] sm:pb-0">
+      <div class="grid grid-cols-2">
+        <mat-list-item style="height: auto">
+          <app-name [name]="profileForm.controls.nome"></app-name>
+        </mat-list-item>
 
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Pseudônimo</mat-label>
-          <input matInput type="text" formControlName="socialName" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
+        <mat-list-item style="height: auto">
+          <mat-form-field class="w-full">
+            <mat-label>Pseudônimo</mat-label>
+            <input matInput type="text" formControlName="socialName" />
+          </mat-form-field>
+        </mat-list-item>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div mat-subheader class="flex"><mat-icon mat-list-icon>phone</mat-icon> Contato</div>
+
+      <div class="grid grid-cols-2">
+        <mat-list-item style="height: auto">
+          <app-phone [label]="'Telefone Celular'" [phone]="profileForm.controls.telefone1"></app-phone>
+        </mat-list-item>
+
+        <mat-list-item style="height: auto">
+          <app-phone [label]="'Telefone Alternativo'" [phone]="profileForm.controls.telefone2" [required]="false"></app-phone>
+        </mat-list-item>
+
+        <mat-list-item style="height: auto">
+          <app-email [email]="profileForm.controls.email"></app-email>
+        </mat-list-item>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div mat-subheader class="flex"><mat-icon mat-list-icon>person</mat-icon>Outros</div>
+
+      <div class="grid grid-cols-2">
+        <mat-list-item style="height: auto">
+          <mat-form-field class="w-full">
+            <mat-label>Profissão</mat-label>
+            <input matInput type="text" formControlName="ocupacao" />
+          </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item style="height: auto">
+          <mat-form-field class="w-full">
+            <mat-label>Endereço</mat-label>
+            <input matInput type="text" formControlName="endereco" />
+          </mat-form-field>
+        </mat-list-item>
+      </div>
+
+      <div class="grid grid-cols-2">
+        <mat-list-item style="height: auto">
+          <mat-form-field class="w-full">
+            <mat-label>Aniversário</mat-label>
+            <input matInput type="text" formControlName="nascimento" mask="00/00/0000" placeholder="dd/mm/aaaa" />
+            <mat-hint>Formato: dia/ mês/ ano</mat-hint>
+            <mat-error *ngIf="profileForm.get('nascimento')?.hasError('invalidFormat')"> Formato inválido </mat-error>
+          </mat-form-field>
+        </mat-list-item>
+
+        <mat-list-item style="height: auto">
+          <mat-form-field class="w-full">
+            <mat-label>Indicação</mat-label>
+            <input matInput type="text" formControlName="indicacao" />
+          </mat-form-field>
+        </mat-list-item>
+      </div>
     </div>
-
-    <mat-divider></mat-divider>
-
-    <div mat-subheader class="flex"><mat-icon mat-list-icon>phone</mat-icon> Contato</div>
-
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Telefone Celular</mat-label>
-          <input matInput type="tel" formControlName="telefone1" mask="(00) 0 0000-0000" minlength="11" [readonly]="!edit" required />
-          <mat-error *ngIf="profileForm.controls.telefone1.hasError('minlength') && !profileForm.controls.telefone1.hasError('required')">
-            Por favor insira um telefone <strong>celular</strong> válido
-          </mat-error>
-          <mat-error *ngIf="profileForm.controls.telefone1.hasError('required')"> Telefone é <strong>obrigatório</strong> </mat-error>
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Telefone Alternativo</mat-label>
-          <input matInput type="tel" formControlName="telefone2" mask="(00) 0 0000-0000" minlength="11" [readonly]="!edit" />
-          <mat-error *ngIf="profileForm.controls.telefone2.hasError('minlength')">
-            Por favor insira um telefone <strong>celular</strong> válido
-          </mat-error>
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>E-mail</mat-label>
-          <input type="email" matInput formControlName="email" [readonly]="!edit" required />
-          <mat-error *ngIf="profileForm.controls.email.hasError('email') && !profileForm.controls.email.hasError('required')">
-            Por favor insira um endereço de e-mail válido
-          </mat-error>
-          <mat-error *ngIf="profileForm.controls.email.hasError('required')"> E-mail é <strong>obrigatório</strong> </mat-error>
-        </mat-form-field>
-      </mat-list-item>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div mat-subheader class="flex"><mat-icon mat-list-icon>work</mat-icon>Comercial</div>
-
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Profissão</mat-label>
-          <input matInput type="text" formControlName="ocupacao" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Telefone Comercial</mat-label>
-          <input matInput type="tel" formControlName="telefone3" mask="(00) 0 0000-0000" minlength="11" [readonly]="!edit" />
-          <mat-error *ngIf="profileForm.controls.telefone3.hasError('minlength')">
-            Por favor insira um telefone <strong>celular</strong> válido
-          </mat-error>
-        </mat-form-field>
-      </mat-list-item>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div mat-subheader class="flex"><mat-icon mat-list-icon>cake</mat-icon>Outros</div>
-
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Aniversário</mat-label>
-          <input matInput type="text" formControlName="nascimento" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Indicação</mat-label>
-          <input matInput type="text" formControlName="indicacao" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Sexo</mat-label>
-          <input matInput type="text" formControlName="sexo" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Estado Civil</mat-label>
-          <input matInput type="text" formControlName="estadoCivil" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-    </div>
-
-    <mat-divider></mat-divider>
-    <div mat-subheader class="flex"><mat-icon mat-list-icon>place</mat-icon>Endereço</div>
-
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Endereço</mat-label>
-          <input matInput type="text" formControlName="endereco" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Número</mat-label>
-          <input matInput type="text" formControlName="enderecoNum" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Bairro</mat-label>
-          <input matInput type="text" formControlName="bairro" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Cidade</mat-label>
-          <input matInput type="text" formControlName="cidade" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Estado</mat-label>
-          <input matInput type="text" formControlName="estado" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>CEP</mat-label>
-          <input matInput type="text" formControlName="cep" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-    </div>
-
-    <mat-divider></mat-divider>
-    <div mat-subheader class="flex"><mat-icon mat-list-icon>person</mat-icon>Dados</div>
-
-    <div class="grid grid-cols-2">
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>RG</mat-label>
-          <input matInput type="text" formControlName="rg" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>CPF</mat-label>
-          <input matInput type="text" formControlName="cpf" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Responsável</mat-label>
-          <input matInput type="text" formControlName="responsavel" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Plano de Saúde</mat-label>
-          <input matInput type="text" formControlName="planoSaude" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
-
-      <mat-list-item style="height: auto">
-        <mat-form-field class="w-full">
-          <mat-label>Convênio</mat-label>
-          <input matInput type="text" formControlName="convenio" [readonly]="!edit" />
-        </mat-form-field>
-      </mat-list-item>
+    <div class="sm:static fixed bottom-0 left-0 right-0 bg-white p-4 pb-0 shadow-md z-50 sm:p-0 sm:shadow-none sm:bg-transparent sm:pr-5">
+      <app-action-buttons
+        [disableConfirmButton]="profileForm.invalid || !profileForm.dirty"
+        (confirmButton)="onSave()"
+        [secondaryButtonLabel]="'Limpar alterações'"
+        (closeButton)="clearForm()"
+      >
+      </app-action-buttons>
     </div>
   </mat-list>
 </form>

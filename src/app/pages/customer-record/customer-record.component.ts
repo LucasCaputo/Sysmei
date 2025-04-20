@@ -1,11 +1,9 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
@@ -33,36 +31,6 @@ import { RecordListComponent } from './record-list/record-list.component';
     RecordListComponent,
     CardComponent,
   ],
-  animations: [
-    trigger('enter', [
-      state(
-        'void',
-        style({
-          height: '0px',
-          overflow: 'hidden',
-        }),
-      ),
-      transition(':enter', [
-        animate(
-          '500ms ease-in-out',
-          style({
-            height: '*',
-            overflow: 'hidden',
-          }),
-        ),
-      ]),
-      //element being removed from DOM.
-      transition(':leave', [
-        animate(
-          '500ms ease-in-out',
-          style({
-            height: '0px',
-            overflow: 'hidden',
-          }),
-        ),
-      ]),
-    ]),
-  ],
 })
 export class CustomerRecordComponent implements OnInit {
   @Input() hasHeader: boolean = true;
@@ -81,13 +49,9 @@ export class CustomerRecordComponent implements OnInit {
   cardData!: CardInfo;
   loading = false;
 
-  tabSelected = 0;
+  tabSelected = signal(0);
 
   photos: any | undefined;
-
-  edit = false;
-
-  eventsSubject: Subject<void> = new Subject<void>();
 
   records: Array<Scheduling> | undefined;
 
@@ -99,22 +63,12 @@ export class CustomerRecordComponent implements OnInit {
     private customerService: CustomerService,
   ) {}
 
-  emitEventToChild() {
-    this.eventsSubject.next();
-
-    setTimeout(() => {
-      this.edit = false;
-    }, 1000);
-  }
-
   selectedIndexChange(tabSelected: number) {
-    this.tabSelected = tabSelected;
+    this.tabSelected.set(tabSelected);
   }
 
   ngOnInit(): void {
-    if (!this._customerId) {
-      this.populate();
-    }
+    this.populate();
   }
 
   getCustomerId() {

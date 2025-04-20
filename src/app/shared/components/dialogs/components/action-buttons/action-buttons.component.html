@@ -1,5 +1,7 @@
 <div class="flex w-full justify-end gap-4 h-14">
-  <button mat-button color="primary" (click)="closeButton.emit()">Fechar</button>
+  @if (showCloseButton) {
+    <button mat-button color="primary" (click)="closeButton.emit()">{{ secondaryButtonLabel }}</button>
+  }
 
   <button mat-raised-button color="primary" (click)="confirmButton.emit()" [disabled]="disableConfirmButton">Salvar</button>
 </div>

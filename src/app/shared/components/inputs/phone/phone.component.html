@@ -1,6 +1,6 @@
 <mat-form-field class="w-full">
   <mat-label>{{ label }}</mat-label>
-  <input matInput type="tel" mask="(00) 0 0000-0000" [formControl]="phone" minlength="11" required />
+  <input matInput type="tel" mask="(00) 0 0000-0000" [formControl]="phone" minlength="11" [required]="required" />
   <mat-error *ngIf="phone.hasError('minlength') && !phone.hasError('required')">
     Por favor insira um telefone <strong>celular</strong> válido
   </mat-error>

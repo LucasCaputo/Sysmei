@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { WhatsappIconComponent } from '../../../whatsapp-icon/whatsapp-icon.component';
 import { CardInfo } from '../../interfaces/card-info';
@@ -11,14 +11,11 @@ import { CardInfo } from '../../interfaces/card-info';
   standalone: true,
   imports: [CommonModule, MatIconModule, WhatsappIconComponent],
 })
-export class ContactActionsComponent implements OnInit {
+export class ContactActionsComponent {
   @Output() edit = new EventEmitter();
 
   @Input() customer!: CardInfo;
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  @Input() showEdit: boolean = true;
 
   openDialog() {
     this.edit.emit();

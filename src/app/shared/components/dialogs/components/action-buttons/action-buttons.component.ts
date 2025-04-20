@@ -14,4 +14,8 @@ export class ActionButtonsComponent {
   @Output() confirmButton = new EventEmitter();
 
   @Input({ required: true }) disableConfirmButton!: boolean;
+
+  @Input({ required: false }) showCloseButton = true;
+
+  @Input({ required: false }) secondaryButtonLabel = 'Fechar';
 }

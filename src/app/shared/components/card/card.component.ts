@@ -18,6 +18,7 @@ export class CardComponent {
   @Output() click = new EventEmitter();
 
   @Input() cardData!: CardInfo;
+  @Input() showEdit: boolean = true;
 
   openDialog() {
     this.edit.emit(this.cardData);

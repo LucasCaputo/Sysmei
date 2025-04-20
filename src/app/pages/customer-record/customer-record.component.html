@@ -1,29 +1,14 @@
 <app-header *ngIf="hasHeader" [isPrivate]="true">
-  <div class="flex justify-between w-full items-center">
-    <button *ngIf="!edit" mat-button routerLink="/clientes">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+  <button *ngIf="tabSelected() == 0" mat-button routerLink="/clientes">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-    <button *ngIf="edit" mat-button (click)="edit = !edit">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <button
-      *ngIf="tabSelected == 0"
-      mat-icon-button
-      (click)="!edit ? (edit = !edit) : emitEventToChild()"
-      class="icon-right"
-      aria-label="Ediar cliente"
-    >
-      <mat-icon *ngIf="!edit">edit</mat-icon>
-      <mat-icon *ngIf="edit">check</mat-icon>
-    </button>
-
-    <button *ngIf="tabSelected == 1" mat-icon-button (click)="addSchedule()" class="icon-right" aria-label="Adicionar agendamento">
+  <div class="flex justify-end w-full">
+    <button *ngIf="tabSelected() == 1" mat-icon-button (click)="addSchedule()" class="icon-right" aria-label="Adicionar agendamento">
       <mat-icon>add_box</mat-icon>
     </button>
 
-    <div *ngIf="tabSelected == 2">
+    <div *ngIf="tabSelected() == 2">
       <button mat-button>
         <mat-icon>photo_camera</mat-icon>
       </button>
@@ -35,36 +20,20 @@
 <mat-sidenav-container class="h-body-height">
   <mat-sidenav-content>
     <div *ngIf="!loading">
-      <mat-list *ngIf="!edit" @enter>
-        <app-card [cardData]="cardData" (edit)="!edit ? (edit = !edit) : emitEventToChild()"></app-card>
+      <mat-list>
+        <app-card [cardData]="cardData" [showEdit]="false"></app-card>
       </mat-list>
 
       <mat-tab-group mat-align-tabs="center" [selectedIndex]="tabSelected" (selectedIndexChange)="selectedIndexChange($event)">
         <mat-tab label="Dados">
-          @if (!hasHeader) {
-            <div class="flex justify-between">
-              <button *ngIf="edit" mat-button color="secondary" (click)="edit = !edit">Fechar</button>
-
-              <button
-                *ngIf="tabSelected == 0 && edit"
-                mat-button
-                color="primary"
-                (click)="!edit ? (edit = !edit) : emitEventToChild()"
-                class="icon-right"
-                aria-label="Ediar cliente"
-              >
-                Salvar
-              </button>
-            </div>
-          }
-          <app-customer-complete-registration [data]="data" [edit]="edit" [events]="eventsSubject.asObservable()" />
+          <app-customer-complete-registration [data]="data" />
         </mat-tab>
 
-        <mat-tab label="Histórico" *ngIf="!edit">
+        <mat-tab label="Histórico">
           <app-record-list *ngIf="records?.length" [data]="records"></app-record-list>
         </mat-tab>
 
-        <mat-tab label="Documentos" *ngIf="!edit">
+        <mat-tab label="Documentos">
           <div *ngIf="!photos?.length" style="text-align: center">Cadastre a primeira foto do cliente</div>
           <img *ngFor="let photo of photos" height="100px" src="{{ photo.url }}" />
         </mat-tab>

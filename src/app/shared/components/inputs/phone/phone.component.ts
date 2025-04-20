@@ -12,4 +12,5 @@ import { SharedModule } from 'src/app/shared/shared.module';
 export class PhoneComponent {
   @Input({ required: true }) phone!: FormControl<string | null>;
   @Input({ required: true }) label!: string;
+  @Input({ required: false }) required = true;
 }
