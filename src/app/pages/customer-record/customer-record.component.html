@@ -46,7 +46,7 @@
   <mat-sidenav-content>
     <div *ngIf="!loading">
       <mat-list *ngIf="!edit" @enter>
-        <app-card [cardData]="cardData"></app-card>
+        <app-card [cardData]="cardData" (edit)="!edit ? (edit = !edit) : emitEventToChild()"></app-card>
       </mat-list>
 
       <mat-tab-group
@@ -54,7 +54,25 @@
         [selectedIndex]="tabSelected"
         (selectedIndexChange)="selectedIndexChange($event)"
       >
-        <mat-tab label="Dados">
+      <mat-tab label="Dados">
+          @if (!hasHeader) {
+            <div class="flex justify-between">
+              <button *ngIf="edit" mat-button color="secondary" (click)="edit = !edit">
+                Fechar
+              </button>
+          
+              <button
+                *ngIf="tabSelected == 0 && edit"
+                mat-button
+                color="primary"
+                (click)="!edit ? (edit = !edit) : emitEventToChild()"
+                class="icon-right"
+                aria-label="Ediar cliente"
+              >
+                Salvar
+              </button>
+            </div>
+          }
           <app-customer-complete-registration
             [data]="data"
             [edit]="edit"

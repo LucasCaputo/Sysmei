@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { BadgeComponent } from './components/badge/badge.component';
 import { ContactActionsComponent } from './components/contact-actions/contact-actions.component';
@@ -19,13 +19,11 @@ import { CardInfo } from './interfaces/card-info';
     ContactInfoComponent,
   ],
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   @Output() edit = new EventEmitter();
   @Output() click = new EventEmitter();
 
   @Input() cardData!: CardInfo;
-
-  ngOnInit(): void {}
 
   openDialog() {
     this.edit.emit(this.cardData);

@@ -16,7 +16,8 @@
         id: data.customer?.id || 0,
         login_usuario: data.customer?.login_usuario || '',
         nome: data.customer?.nome || '',
-        telefone: data.customer?.telefone1 || ''
+        telefone: data.customer?.telefone1 || '',
+        email: data.customer?.email || ''
     }"></app-contact-info>
     <app-whatsapp-icon [phone]="data.customer?.telefone1 || ''"></app-whatsapp-icon>
 

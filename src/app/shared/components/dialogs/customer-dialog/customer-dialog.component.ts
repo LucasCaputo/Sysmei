@@ -78,6 +78,7 @@ export class CustomerDialogComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.confirmed) {
+        this.dialog.closeAll();
         this.customerService
           .deleteCustomer(customer)
           .pipe(map(() => this.getCustomer()))

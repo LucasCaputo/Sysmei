@@ -38,7 +38,6 @@ import { RecordListComponent } from './record-list/record-list.component';
     CustomerCompleteRegistrationComponent,
     RecordListComponent,
     CardComponent,
-    SchedulingFormComponent,
   ],
   animations: [
     trigger('enter', [
@@ -104,7 +103,7 @@ export class CustomerRecordComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private customerService: CustomerService,
-  ) {}
+  ) { }
 
   emitEventToChild() {
     this.eventsSubject.next();
@@ -131,35 +130,38 @@ export class CustomerRecordComponent implements OnInit {
   populate() {
     this.loading = true;
     const id = this.getCustomerId();
-    this.customerService.getCustomerId(id).subscribe(
-      (response) => {
-        this.data = response;
-        this.photos = response.documentsUrl;
+    if (id) {
+      this.customerService.getCustomerId(id).subscribe(
+        (response) => {
+          this.data = response;
+          this.photos = response.documentsUrl;
 
-        this.cardData = {
-          id: response?.id || 0,
-          login_usuario: response?.login_usuario || '',
-          nome: response?.nome || '',
-          telefone: response?.telefone1 || '',
-        };
-      },
-      (error) => {
-        this.router.navigate(['/clientes']);
-        this.snackbarService.openSnackBar('Tivemos um erro', 'X', true);
-      },
-      () => {
-        this.loading = false;
-      },
-    );
+          this.cardData = {
+            id: response?.id || 0,
+            login_usuario: response?.login_usuario || '',
+            nome: response?.nome || '',
+            telefone: response?.telefone1 || '',
+          };
+        },
+        (error) => {
+          this.router.navigate(['/clientes']);
+          this.snackbarService.openSnackBar('Tivemos um erro', 'X', true);
+        },
+        () => {
+          this.loading = false;
+        },
+      );
 
-    this.customerService.getCustomerRecord(id).subscribe(
-      (response) => {
-        this.records = response;
-      },
-      (erro) => {
-        console.error(erro);
-      },
-    );
+      this.customerService.getCustomerRecord(id).subscribe(
+        (response) => {
+          this.records = response;
+        },
+        (erro) => {
+          console.error(erro);
+        },
+      );
+    }
+
   }
 
   inputFileChange(event: any) {
@@ -177,7 +179,7 @@ export class CustomerRecordComponent implements OnInit {
               this.photos = result.documentsUrl;
             });
         },
-        (error) => {},
+        (error) => { },
       );
     }
   }

@@ -4,6 +4,8 @@
 <div class="line">
   {{ info?.telefone || '' | formatPhone }}
 </div>
-<div class="line">
-  {{ info?.login_usuario }}
-</div>
+@if (info?.email) {
+  <div class="line">
+    {{ info?.email }}
+  </div>
+}

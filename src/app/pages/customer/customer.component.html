@@ -28,82 +28,102 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-container *ngIf="{ customerList: (customerList$ | async) } as model">
-      <ng-container *ngIf="model.customerList">
-        <div
-          *ngIf="
-            (model.customerList | arrayFiltro: searchform.value.search!)
-              .length > 0
-          "
-          class="flex h-body-height justify-between"
+    <div class="flex">
+      <ng-container *ngIf="{ 
+        customerList: (customerList$ | async),
+        viewPort: (viewPortService.screenSize$ | async)
+
+        } as model"
         >
-          <div class="max-w-md h-body-height overflow-auto">
-            <ng-container
-              *ngFor="
-                let customer of model.customerList
-                  | arrayFiltro: searchform.value.search!
+        <ng-container *ngIf="model.customerList">
+          <div
+            *ngIf="
+              (model.customerList | arrayFiltro: searchform.value.search!)
+                .length > 0
+            "
+            class="flex h-body-height justify-between max-w-[100vw]"
+          >
+            <div class="max-w-md h-body-height overflow-auto">
+              <ng-container
+                *ngFor="
+                  let customer of model.customerList
+                    | arrayFiltro: searchform.value.search!
+                "
+              >
+                <div
+                  mat-subheader
+                  *ngIf="customer.isFirstLetter && !searchform.value.search!"
+                >
+                  {{ customer.inicial }}
+                </div>
+                <mat-list [class]="{'w-[400px]' :  model.viewPort !== 'mobile'}">
+                  <app-card
+                    [cardData]="customer"
+                    (edit)="openDialog($event)"
+                    (click)="navigateToCustomerDetails($event)"
+                  ></app-card>
+                </mat-list>
+              </ng-container>
+            </div>
+          </div>
+  
+          <div
+            *ngIf="
+              (model.customerList | arrayFiltro: searchform.value.search!)
+                .length === 0 && searchform.value.search!
+            "
+            class="h-body-height flex items-center justify-center text-base flex-col"
+            [class]="{
+              'min-w-[400px]' :  model.viewPort !== 'mobile',
+              'w-full' :  model.viewPort === 'mobile'
+            }"
+          >
+            <h1>Não encontramos o cliente</h1>
+            <h1>{{ searchform.value.search! }}</h1>
+          </div>
+  
+          <div
+            *ngIf="model.customerList?.length === 0 && !searchform.value.search"
+            class="h-body-height flex items-center justify-center text-base flex-col w-full"
+          >
+            <h1>Adicione seu primeiro cliente</h1>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="
+                openDialog({
+                  nome: '',
+                  telefones: [{ id: 0, numero: '' }],
+                  email: ''
+                })
               "
             >
-              <div
-                mat-subheader
-                *ngIf="customer.isFirstLetter && !searchform.value.search!"
-              >
-                {{ customer.inicial }}
-              </div>
-              <mat-list>
-                <app-card
-                  [cardData]="customer"
-                  (edit)="openDialog($event)"
-                  (click)="navigateToCustomerDetails($event)"
-                ></app-card>
-              </mat-list>
-            </ng-container>
+              Cadastrar
+            </button>
           </div>
-
-          <div
-            *ngIf="(viewPortService.screenSize$ | async) !== 'mobile'"
-            class="w-2/4 m-0 mx-auto max-xl"
-          >
-            <app-customer-record
-              [hasHeader]="false"
-              [customerId]="selectedCustomerId()"
-            ></app-customer-record>
-          </div>
-        </div>
-
+        </ng-container>
+  
         <div
-          *ngIf="
-            (model.customerList | arrayFiltro: searchform.value.search!)
-              .length === 0 && searchform.value.search!
-          "
-          class="h-body-height flex items-center justify-center text-base flex-col"
+          *ngIf="model.viewPort !== 'mobile' && !(model.customerList?.length === 0 && !searchform.value.search)"
+          class="m-0 pl-5 w-full"
+          [class]="{'border-l' :  model.viewPort !== 'mobile'}"
         >
-          <h1>Não encontramos o cliente</h1>
-          <h1>{{ searchform.value.search! }}</h1>
+          <app-customer-record
+            [hasHeader]="false"
+            [customerId]="selectedCustomerId()"
+          ></app-customer-record>
         </div>
-
-        <div
-          *ngIf="model.customerList?.length === 0 && !searchform.value.search"
-          class="h-body-height flex items-center justify-center text-base flex-col"
+  
+        <div   
+          *ngIf="model.customerList === null"
+          class="w-full"
         >
-          <h1>Adicione seu primeiro cliente</h1>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="
-              openDialog({
-                nome: '',
-                telefones: [{ id: 0, numero: '' }],
-                email: ''
-              })
-            "
-          >
-            Cadastrar
-          </button>
+          <app-spinner 
+           
+        />
+
         </div>
       </ng-container>
-
-      <app-spinner *ngIf="model.customerList === null" />
-    </ng-container>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

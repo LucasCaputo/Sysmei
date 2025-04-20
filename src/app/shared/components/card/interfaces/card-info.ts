@@ -3,4 +3,5 @@ export interface CardInfo {
   login_usuario: string;
   nome: string;
   telefone: string;
+  email?: string
 }

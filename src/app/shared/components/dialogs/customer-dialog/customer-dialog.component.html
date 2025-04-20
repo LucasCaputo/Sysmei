@@ -1,9 +1,6 @@
-<app-mobile-action-buttons [title]="!data.id ? 'Cadastrar cliente' : 'Editar cliente'"
-  [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
-  (confirmButton)="saveCustomer(); dialog.closeAll()" />
-
 <div mat-dialog-content>
   <form [formGroup]="form" class="flex flex-col">
+    <p class="text-xl flex w-full justify-center">{{ !data.id ? 'Cadastrar cliente' : 'Editar cliente' }}</p>
     <app-name [name]="form.controls.nome" />
 
     <app-phone [phone]="form.controls.telefone1" [label]="'Telefone'" />

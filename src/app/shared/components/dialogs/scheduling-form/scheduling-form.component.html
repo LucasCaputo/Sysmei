@@ -1,7 +1,7 @@
-<app-mobile-action-buttons [title]="data ? 'Editar Agendamento' : 'Novo Agendamento'"
-  [disableConfirmButton]="form.invalid || !form.dirty" (closeButton)="dialog.closeAll()"
-  (confirmButton)="saveScheduleData(); dialog.closeAll()" />
 <div mat-dialog-content>
+  <p class="text-xl flex w-full justify-center p-4">{{ !data.id ? 'Cadastrar agendamento' : 'Editar agendamento' }}</p>
+
+
   <form class="flex flex-col" [formGroup]="form">
     <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
       <mat-label>Atendente</mat-label>
