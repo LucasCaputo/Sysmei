@@ -9,6 +9,7 @@ import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
+import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -63,6 +64,7 @@ export class CustomerRecordComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private customerService: CustomerService,
+    private customerRecordService: CustomerRecordService,
   ) {}
 
   selectedIndexChange(tabSelected: number) {
@@ -82,6 +84,8 @@ export class CustomerRecordComponent implements OnInit {
     this.loading = true;
     const id = this.getCustomerId();
     if (id) {
+      this.customerRecordService.setCustomerRecordId(id)
+
       this.customerService.getCustomerId(id).subscribe(
         (response) => {
           this.data = response;
@@ -103,14 +107,6 @@ export class CustomerRecordComponent implements OnInit {
         },
       );
 
-      this.customerService.getCustomerRecord(id).subscribe(
-        (response) => {
-          this.records = response;
-        },
-        (erro) => {
-          console.error(erro);
-        },
-      );
     }
   }
 
@@ -146,29 +142,11 @@ export class CustomerRecordComponent implements OnInit {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '90vw',
-      data: { customer: { id: parseInt(this.route.snapshot.params['id']) } },
+      data: { customer: { id: this.customerRecordService.getCustomerRecordId() } },
       position: {
         top: '90px',
       },
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result == 'close') return;
-
-      if (result.title) {
-        this.records = [];
-
-        setTimeout(() => {
-          this.customerService.getCustomerRecord(this.getCustomerId()).subscribe(
-            (response) => {
-              this.records = response;
-            },
-            (erro) => {
-              console.error(erro);
-            },
-          );
-        }, 8000);
-      }
-    });
   }
 }

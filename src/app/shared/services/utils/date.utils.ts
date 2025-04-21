@@ -51,3 +51,12 @@ export const formatDate = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
+
+export const formatViewDate = (date: string): string => {
+
+  if(date.length < 10) {
+    console.error('Date length is invalid')
+    return '';
+  }
+  return `${date.slice(8, 10)}-${date.slice(5, 7)}-${date.slice(2, 4)}`
+}

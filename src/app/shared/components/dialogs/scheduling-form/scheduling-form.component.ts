@@ -12,6 +12,7 @@ import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
 import { CacheService } from 'src/app/shared/service-api/cache';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
+import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
@@ -41,6 +42,7 @@ export class SchedulingFormComponent implements OnInit {
   constructor(
     private scheduleService: ScheduleService,
     private customerService: CustomerService,
+    private customerRecordService: CustomerRecordService,
     private scheduleRepository: ScheduleRepository,
     private employeeService: EmployeeService,
     @Inject(MAT_DIALOG_DATA)
@@ -141,6 +143,7 @@ export class SchedulingFormComponent implements OnInit {
         (resultUpdate) => {
           this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
+          this.customerRecordService.reloadCustomerRecordSubject.next();
         },
         (error) => {
           this.scheduleService.reloadSchedule(new Date());
@@ -152,6 +155,7 @@ export class SchedulingFormComponent implements OnInit {
         (response) => {
           this.scheduleService.reloadSchedule(new Date());
           this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
+          this.customerRecordService.reloadCustomerRecordSubject.next();
         },
         (error) => {
           this.scheduleService.reloadSchedule(new Date());

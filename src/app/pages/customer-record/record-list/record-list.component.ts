@@ -1,9 +1,8 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
-import { CustomerRepository } from 'src/app/shared/service-api/customer.repository';
+import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SharedModule } from '../../../shared/shared.module';
 
@@ -12,48 +11,28 @@ import { SharedModule } from '../../../shared/shared.module';
   templateUrl: './record-list.component.html',
   styleUrls: ['./record-list.component.scss'],
   standalone: true,
-  imports: [SharedModule, SchedulingFormComponent],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  imports: [SharedModule],
 })
 export class RecordListComponent implements OnInit {
-  @Input() data: any;
-
-  customerId = this.route.snapshot.params['id'];
-  dataSource: any;
-  columnsToDisplay = ['data', 'titulo', 'valor'];
-
-  expandedElement = [];
+  customerRecordList = this.customerRecordService.customerRecord$;
 
   constructor(
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
-    private customerRepository: CustomerRepository,
+    private customerRecordService: CustomerRecordService,
   ) {}
 
   ngOnInit(): void {
-    this.formatData();
+    this.setCustomerId()
   }
 
-  formatData() {
-    this.dataSource = [];
-    this.data?.forEach((e: any) => {
-      let data = `${e.start.slice(8, 10)}-${e.start.slice(5, 7)}-${e.start.slice(2, 4)}`;
-
-      this.dataSource.push({
-        ...e,
-        data,
-        titulo: e.title.slice(0, 20),
-        valor: e.valor || 'R$',
-        description: e.detalhes || 'Sem observações',
-      });
-    });
+  private setCustomerId(): void {
+    const customerId = this.route.snapshot.params['id'];
+    
+    if(customerId) {
+      this.customerRecordService.setCustomerRecordId(customerId)
+    }
   }
 
   click(el: any) {
@@ -66,24 +45,6 @@ export class RecordListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result == 'close') return;
-
-      if (result.title) {
-        this.customerId = this.route.snapshot.params['id'];
-
-        setTimeout(() => {
-          this.customerRepository.getCustomerRecord(this.customerId).subscribe(
-            (response) => {
-              this.data = response;
-              this.formatData();
-            },
-            (erro) => {
-              console.error(erro);
-            },
-          );
-        }, 8000);
-      }
-    });
+   
   }
 }
