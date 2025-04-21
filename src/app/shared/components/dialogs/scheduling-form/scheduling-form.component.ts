@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder } from '@angular/forms';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
@@ -28,7 +28,8 @@ import { CustomerData } from './interfaces/customer-data';
   templateUrl: './scheduling-form.component.html',
   styleUrls: ['./scheduling-form.component.scss'],
   standalone: true,
-  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, ActionButtonsComponent],
+  imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, ActionButtonsComponent],
+  providers: [provideMomentDateAdapter()],
 })
 export class SchedulingFormComponent implements OnInit {
   form!: FormGroup;

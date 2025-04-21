@@ -40,8 +40,8 @@
       <div class="flex justify-between items-center">
         <mat-form-field class="w-1/3">
           <mat-label>Data</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="allDay" required readonly />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker" formControlName="allDay" required />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 

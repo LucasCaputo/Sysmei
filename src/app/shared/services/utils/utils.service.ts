@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import moment, { Moment } from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -21,18 +22,20 @@ export class UtilsService {
   }
 
   formatDateRequestPayload(result: any) {
-    let month = `0${1 + result?.allDay?.getMonth()}`.slice(-2);
-    let day = `0${result?.allDay?.getDate()}`.slice(-2);
+    const dateInput = result?.allDay;
+    const dateMoment: Moment = moment(dateInput);
 
-    const date = `${result?.allDay?.getFullYear()}-${month}-${day}`;
+    const year = dateMoment.year();
+    const month = String(dateMoment.month() + 1).padStart(2, '0');
+    const day = String(dateMoment.date()).padStart(2, '0');
 
-    let dateRequestPayload = {
-      allDay: `${date}`,
+    const date = `${year}-${month}-${day}`;
+
+    return {
+      allDay: date,
       start: `${date} ${result?.start}`,
       end: `${date} ${result?.end}`,
     };
-
-    return dateRequestPayload;
   }
 }
 

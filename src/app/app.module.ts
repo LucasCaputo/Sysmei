@@ -13,16 +13,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { LoaderComponent } from './shared/components/loader/loader/loader.component';
 
-import { registerLocaleData } from '@angular/common';
-import localePt from '@angular/common/locales/pt';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { HeaderComponent } from './pages/landing-page/components/header/header.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { HttpErrorInterceptor } from './shared/interceptor/error-interceptor.service';
-
-// Registre a localidade para 'pt'
-registerLocaleData(localePt, 'pt');
 
 @Injectable()
 @NgModule({
