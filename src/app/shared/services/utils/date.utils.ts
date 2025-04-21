@@ -53,10 +53,24 @@ export const formatDate = (date: Date): string => {
 };
 
 export const formatViewDate = (date: string): string => {
-
-  if(date.length < 10) {
-    console.error('Date length is invalid')
+  if (date.length < 10) {
+    console.error('Date length is invalid');
     return '';
   }
-  return `${date.slice(8, 10)}-${date.slice(5, 7)}-${date.slice(2, 4)}`
+  return `${date.slice(8, 10)}-${date.slice(5, 7)}-${date.slice(2, 4)}`;
+};
+
+export function getCurrentHour(): string {
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = '00';
+  return `${hours}:${minutes}`;
+}
+
+export function getNextHour(): string {
+  const now = new Date();
+  now.setHours(now.getHours() + 1);
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = '00';
+  return `${hours}:${minutes}`;
 }

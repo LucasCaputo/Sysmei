@@ -3,7 +3,7 @@
     <p class="text-xl flex w-full justify-center p-4">
       {{ !data.id ? 'Cadastrar agendamento' : 'Editar agendamento' }}
     </p>
-  
+
     <form class="flex flex-col" [formGroup]="form">
       <mat-form-field appearance="fill" *ngIf="hiddenEmployee">
         <mat-label>Atendente</mat-label>
@@ -13,12 +13,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field class="flex">
         <mat-label>Nome do Serviço</mat-label>
         <input matInput placeholder="Nome do Serviço" autocomplete="off" type="text" formControlName="title" name="title" required />
       </mat-form-field>
-  
+
       <mat-form-field style="width: 100%">
         <mat-label>Cliente</mat-label>
         <input
@@ -36,7 +36,7 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-  
+
       <div class="flex justify-between items-center">
         <mat-form-field class="w-1/3">
           <mat-label>Data</mat-label>
@@ -44,24 +44,24 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-  
+
         <mat-form-field class="w-1/3">
           <mat-label>Início</mat-label>
           <input matInput type="time" formControlName="start" name="timeStart" required />
         </mat-form-field>
-  
+
         <mat-form-field class="w-1/3">
           <mat-label>Fim</mat-label>
           <input matInput type="time" formControlName="end" name="timeEnd" required />
         </mat-form-field>
       </div>
-  
+
       <div class="flex justify-between">
         <mat-form-field class="w-2/5">
           <mat-label>Valor</mat-label>
           <input matInput placeholder="Valor" formControlName="valor" name="valor" type="text" mask="separator" prefix="R$ " thousandSeparator="." />
         </mat-form-field>
-  
+
         <mat-form-field class="w-2/5">
           <mat-select formControlName="pagamento" name="pagamento" placeholder="Forma de Pagamento">
             <mat-option value="Dinheiro">Dinheiro</mat-option>
@@ -73,7 +73,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-  
+
       <mat-form-field class="100%">
         <mat-label>Detalhes</mat-label>
         <textarea matInput placeholder="Detalhes" formControlName="detalhes" name="detalhes"></textarea>
@@ -85,12 +85,11 @@
       <mat-icon>delete</mat-icon>
     </button>
   </div>
-  
+
   <app-action-buttons
     class="p-2"
     [disableConfirmButton]="form.invalid || !form.dirty"
     (closeButton)="dialog.closeAll()"
     (confirmButton)="saveScheduleData(); dialog.closeAll()"
   ></app-action-buttons>
-  
 }

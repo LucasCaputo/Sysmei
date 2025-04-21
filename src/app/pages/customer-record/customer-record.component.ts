@@ -4,13 +4,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
-import { Scheduling } from 'src/app/shared/interfaces/scheduling.interface';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
+import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
@@ -36,12 +37,10 @@ import { RecordListComponent } from './record-list/record-list.component';
 export class CustomerRecordComponent implements OnInit {
   @Input() hasHeader: boolean = true;
 
-  _customerId: undefined | number;
-
   @Input()
   set customerId(value: number) {
     if (value) {
-      this._customerId = value;
+      this.customerRecordService.setCustomerRecordId(value);
       this.populate();
     }
   }
@@ -51,12 +50,8 @@ export class CustomerRecordComponent implements OnInit {
   data: CustomerResponse | undefined;
   cardData!: CardInfo;
   loading = false;
-
   tabSelected = signal(0);
-
   photos: any | undefined;
-
-  records: Array<Scheduling> | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +60,7 @@ export class CustomerRecordComponent implements OnInit {
     public dialog: MatDialog,
     private customerService: CustomerService,
     private customerRecordService: CustomerRecordService,
+    private employeeService: EmployeeService,
   ) {}
 
   selectedIndexChange(tabSelected: number) {
@@ -74,17 +70,24 @@ export class CustomerRecordComponent implements OnInit {
 
   ngOnInit(): void {
     this.populate();
+    if (!this.customerService.formattedCustomerList) {
+      this.customerService.searchCustomer$.pipe(take(1)).subscribe();
+    }
+
+    if (!this.employeeService.employee) {
+      this.employeeService.searchEmployee$.pipe(take(1)).subscribe();
+    }
   }
 
   getCustomerId() {
-    return this.route.snapshot?.params['id'] || this._customerId;
+    return this.route.snapshot?.params['id'] || this.customerRecordService.getCustomerRecordId();
   }
 
   populate() {
     this.loading = true;
     const id = this.getCustomerId();
     if (id) {
-      this.customerRecordService.setCustomerRecordId(id)
+      this.customerRecordService.setCustomerRecordId(id);
 
       this.customerService.getCustomerId(id).subscribe(
         (response) => {
@@ -106,7 +109,6 @@ export class CustomerRecordComponent implements OnInit {
           this.loading = false;
         },
       );
-
     }
   }
 
@@ -147,6 +149,5 @@ export class CustomerRecordComponent implements OnInit {
         top: '90px',
       },
     });
-
   }
 }

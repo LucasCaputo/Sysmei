@@ -4,14 +4,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { first, map, tap, withLatestFrom } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
 import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input.module';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
+import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
+import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
@@ -37,20 +38,20 @@ import { CustomerRecordComponent } from '../customer-record/customer-record.comp
 })
 export class CustomerComponent {
   customerList$ = this.customerService.searchCustomer$.pipe(
-    tap((result) => {
-      this.viewPortService.screenSize$.subscribe((size) => {
-        if (result.length && size !== 'mobile') {
-          this.selectedCustomerId.set(result[0].id);
-        }
-      });
+    withLatestFrom(this.viewPortService.screenSize$),
+    tap(([result, size]) => {
+      if (result.length && size !== 'mobile') {
+        this.customerRecordService.setCustomerRecordId(result[0].id);
+      }
     }),
+    map(([result]) => result),
   );
 
   searchform = this.formBuilder.group({
     search: '',
   });
 
-  selectedCustomerId = signal(0);
+  selectedCustomerId = this.customerRecordService.customerId;
 
   selectedTab = signal(0);
 
@@ -58,18 +59,12 @@ export class CustomerComponent {
     public readonly dialog: MatDialog,
     public readonly viewPortService: ViewportService,
     private readonly customerService: CustomerService,
+    private readonly customerRecordService: CustomerRecordService,
     private readonly router: Router,
     private readonly formBuilder: FormBuilder,
-  ) {
-    if (this.customerService.formattedCustomerList) {
-      this.customerList$ = of(this.customerService.formattedCustomerList);
-      if (this.customerService.customers[0]) {
-        this.selectedCustomerId.set(this.customerService.customers[0].id);
-      }
-    }
-  }
+  ) {}
 
-  openCustomerDialog(dataInfo: any) {
+  public openCustomerDialog(dataInfo: any) {
     const dialogRef = this.dialog.open(CustomerDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
@@ -80,7 +75,7 @@ export class CustomerComponent {
     });
   }
 
-  openScheduleDialog(dataInfo: any) {
+  private openScheduleDialog(dataInfo: any) {
     this.dialog.open(SchedulingFormComponent, {
       width: '500px',
       maxWidth: '90vw',
@@ -91,13 +86,15 @@ export class CustomerComponent {
     });
   }
 
-  navigateToCustomerDetails(customer: any) {
+  public navigateToCustomerDetails(customer: CustomerResponse) {
     this.viewPortService.screenSize$.pipe(first()).subscribe((size) => {
       if (customer.id) {
+        if (customer.id !== this.customerRecordService.getCustomerRecordId()) {
+          this.customerRecordService.setCustomerRecordId(customer.id);
+          this.customerRecordService.reloadCustomerRecordSubject.next();
+        }
         if (size === 'mobile') {
           this.router.navigate([`clientes/ficha/${customer.id}`]);
-        } else {
-          this.selectedCustomerId.set(customer.id);
         }
       }
     });
@@ -118,7 +115,7 @@ export class CustomerComponent {
         break;
 
       case 1:
-        this.openScheduleDialog({ customer: { id: this.selectedCustomerId() } });
+        this.openScheduleDialog({ customer: { id: this.customerRecordService.getCustomerRecordId() } });
 
         break;
 

@@ -17,6 +17,7 @@ import { CustomerService } from 'src/app/shared/services/customer/customer.servi
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { getCurrentHour, getNextHour } from 'src/app/shared/services/utils/date.utils';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ActionButtonsComponent } from '../../action-buttons/action-buttons.component';
 import { AutocompleteOptions } from './interfaces/autocomplete-options';
@@ -62,60 +63,28 @@ export class SchedulingFormComponent implements OnInit {
       end = `${('0' + this.data?.end?.getHours())?.slice(-2)}:${('0' + this.data?.end?.getMinutes())?.slice(-2)}`;
     }
 
-    const employee =  this.data?.employee || this.employeeData
+    this.form = this.formBuilder.group({
+      allDay: this.data?.start || new Date(),
+      detalhes: this.data?.detalhes || '',
+      end: end || getNextHour(),
+      id: this.data?.schedule_id,
+      customer: this.customerData.find((e) => e.id == this.data?.customer?.id) || '',
+      pagamento: this.data?.pagamento || '',
+      employee: this.data?.employee || this.employeeData[0],
+      start: start || getCurrentHour(),
+      title: this.data?.Title || '',
+      valor: this.data?.valor || '',
+      status: this.data?.status || 0,
+    });
 
-    if(!employee) {
-      this.employeeService.searchEmployee().subscribe(() => {
-        this.employeeData = this.employeeService.employee
-        console.log( this.employeeService.employee)
-        console.log(this.customerData)
-        this.form = this.formBuilder.group({
-          allDay: this.data?.start || new Date(),
-          detalhes: this.data?.detalhes || '',
-          end,
-          id: this.data?.schedule_id,
-          customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
-          pagamento: this.data?.pagamento || '',
-          employee: this.data?.employee || this.employeeService.employee[0],
-          start,
-          title: this.data?.Title || '',
-          valor: this.data?.valor || '',
-          status: this.data?.status || 0,
-        });
-
-        if (this.employeeService.employee.length > 1) {
-          this.hiddenEmployee = true;
-        }
-
-        this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
-          startWith(''),
-          map((value) => this._filter(value)),
-        );
-      })
-    }else {
-      this.form = this.formBuilder.group({
-        allDay: this.data?.start || new Date(),
-        detalhes: this.data?.detalhes || '',
-        end,
-        id: this.data?.schedule_id,
-        customer: this.customerData.find((e) => e.id === this.data?.customer?.id) || '',
-        pagamento: this.data?.pagamento || '',
-        employee: this.data?.employee || this.employeeData[0],
-        start,
-        title: this.data?.Title || '',
-        valor: this.data?.valor || '',
-        status: this.data?.status || 0,
-      });
-
-      if (this.employeeData?.length > 1) {
-        this.hiddenEmployee = true;
-      }
-
-      this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
-        startWith(''),
-        map((value) => this._filter(value)),
-      );
+    if (this.employeeData?.length > 1) {
+      this.hiddenEmployee = true;
     }
+
+    this.filteredOptions = this.form.controls.customer.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value)),
+    );
   }
 
   private _filter(value: any): Array<AutocompleteOptions> {

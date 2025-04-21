@@ -1,13 +1,13 @@
-<div *ngIf="(customerRecordList | async) as recordList">
-  <div class="h-[50px] w-full flex 
-  justify-between" *ngFor="let item of recordList" 
-  (click)="click(item)">
-    <span style="padding-left: 16px">{{ item.data }}</span>
-    <span>{{ item.title }}</span>
-    <span style="padding-right: 16px">{{ item.valor }}</span>
+<div *ngIf="customerRecordList | async as recordList">
+  <div
+    *ngFor="let item of recordList"
+    (click)="click(item)"
+    class="flex justify-between items-center px-4 py-3 mb-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer transition"
+  >
+    <span class="text-gray-500 text-sm">{{ item.data }}</span>
+    <span class="text-gray-800 font-medium text-sm text-center">{{ item.title }}</span>
+    <span class="text-green-600 font-semibold text-sm">{{ item.valor }}</span>
   </div>
-  <p 
-  *ngIf="!recordList.length" 
-  class="text-center"
-  >Esse cliente não possui histórico</p>
+
+  <p *ngIf="!recordList.length" class="text-center text-gray-400 mt-6">Esse cliente não possui histórico</p>
 </div>

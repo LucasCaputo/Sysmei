@@ -24,14 +24,14 @@ export class RecordListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setCustomerId()
+    this.setCustomerId();
   }
 
   private setCustomerId(): void {
     const customerId = this.route.snapshot.params['id'];
-    
-    if(customerId) {
-      this.customerRecordService.setCustomerRecordId(customerId)
+
+    if (customerId) {
+      this.customerRecordService.setCustomerRecordId(customerId);
     }
   }
 
@@ -44,7 +44,5 @@ export class RecordListComponent implements OnInit {
         top: '90px',
       },
     });
-
-   
   }
 }

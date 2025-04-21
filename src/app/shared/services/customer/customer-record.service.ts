@@ -9,7 +9,7 @@ import { CustomerRecordView } from './interfaces/customer-record-interface';
   providedIn: 'root',
 })
 export class CustomerRecordService {
-  private readonly customerId = signal(0)
+  public readonly customerId = signal(0);
 
   public reloadCustomerRecordSubject = new Subject<void>();
 
@@ -21,13 +21,11 @@ export class CustomerRecordService {
     retry(1),
   );
 
-  constructor(
-    private customerRepository: CustomerRepository,
-  ) {}
+  constructor(private customerRepository: CustomerRepository) {}
 
   private getCustomerRecord(customerId: number | undefined): Observable<any> {
-    if(!customerId) {
-      return of([{}])
+    if (!customerId) {
+      return of([{}]);
     }
     return this.customerRepository.getCustomerRecord(customerId);
   }
@@ -36,7 +34,7 @@ export class CustomerRecordService {
     const dataSource: any[] = [];
 
     data?.forEach((e: any) => {
-      let data = formatViewDate(e.start)
+      let data = formatViewDate(e.start);
 
       dataSource.push({
         ...e,
@@ -51,7 +49,7 @@ export class CustomerRecordService {
   }
 
   public setCustomerRecordId(id: number): void {
-    this.customerId.set(id)
+    this.customerId.set(id);
   }
 
   public getCustomerRecordId(): number {
