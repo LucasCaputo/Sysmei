@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { SchedulingDialogComponent } from 'src/app/shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { SharedModule } from '../../../shared/shared.module';
@@ -36,7 +36,7 @@ export class RecordListComponent implements OnInit {
   }
 
   click(el: any) {
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+    const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: this.scheduleService.formatScheduleResponse([el])[0],

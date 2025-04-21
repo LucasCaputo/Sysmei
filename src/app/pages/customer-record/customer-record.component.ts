@@ -14,7 +14,7 @@ import { CustomerService } from 'src/app/shared/services/customer/customer.servi
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { SchedulingDialogComponent } from '../../shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { CustomerCompleteRegistrationComponent } from './customer-complete-registration/customer-complete-registration.component';
 import { RecordListComponent } from './record-list/record-list.component';
 
@@ -141,7 +141,7 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   addSchedule() {
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+    const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: { customer: { id: this.customerRecordService.getCustomerRecordId() } },

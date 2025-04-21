@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { first, map, tap, withLatestFrom } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CustomerDialogComponent } from 'src/app/shared/components/dialogs/customer-dialog/customer-dialog.component';
-import { SchedulingFormComponent } from 'src/app/shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { SchedulingDialogComponent } from 'src/app/shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { SharedInputModule } from 'src/app/shared/components/inputs/shared-input.module';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
@@ -78,7 +78,7 @@ export class CustomerComponent {
   }
 
   private openScheduleDialog(dataInfo: any) {
-    this.dialog.open(SchedulingFormComponent, {
+    this.dialog.open(SchedulingDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       position: {

@@ -11,7 +11,7 @@ import { BadgeComponent } from '../../card/components/badge/badge.component';
 import { ContactInfoComponent } from '../../card/components/contact-info/contact-info.component';
 import { WhatsappIconComponent } from '../../whatsapp-icon/whatsapp-icon.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { SchedulingFormComponent } from '../scheduling-form/scheduling-form.component';
+import { SchedulingDialogComponent } from '../scheduling-dialog/scheduling-dialog.component';
 
 @Component({
   selector: 'app-agenda-status',
@@ -35,7 +35,7 @@ export class AgendaStatusComponent {
 
   /** Edita um agendamento */
   public onEdit() {
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+    const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: {

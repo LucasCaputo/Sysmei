@@ -25,7 +25,7 @@ import { CardColor } from 'src/app/shared/services/utils/schedule-card-color';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SchedulingFormComponent } from '../../shared/components/dialogs/scheduling-form/scheduling-form.component';
+import { SchedulingDialogComponent } from '../../shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { ScheduleHeaderComponent } from '../../shared/components/header/components/schedule-header/schedule-header.component';
 import { calendarSelectedOptions } from './calendar.options';
 
@@ -40,7 +40,7 @@ import { calendarSelectedOptions } from './calendar.options';
     MatSidenavModule,
     MenuComponent,
     CalendarNaviagtionComponent,
-    SchedulingFormComponent,
+    SchedulingDialogComponent,
     SharedModule,
     CalendarNavigationDesktopComponent,
     CalendarSidenavDesktopComponent,
@@ -150,7 +150,7 @@ export class CalendarComponent implements AfterViewInit {
       dateClick = { start, end };
     }
 
-    const dialogRef = this.dialog.open(SchedulingFormComponent, {
+    const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: { ...dateClick, hasDelete: false },

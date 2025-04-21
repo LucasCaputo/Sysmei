@@ -25,13 +25,13 @@ import { CustomerData } from './interfaces/customer-data';
 
 @Component({
   selector: 'app-scheduling',
-  templateUrl: './scheduling-form.component.html',
-  styleUrls: ['./scheduling-form.component.scss'],
+  templateUrl: './scheduling-dialog.component.html',
+  styleUrls: ['./scheduling-dialog.component.scss'],
   standalone: true,
   imports: [SharedModule, MatSelectModule, MatAutocompleteModule, MatDatepickerModule, ActionButtonsComponent],
   providers: [provideMomentDateAdapter()],
 })
-export class SchedulingFormComponent implements OnInit {
+export class SchedulingDialogComponent implements OnInit {
   form!: FormGroup;
 
   customerData: Array<CustomerData> = this.customerService.formattedCustomerList;
