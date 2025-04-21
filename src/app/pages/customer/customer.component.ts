@@ -55,6 +55,8 @@ export class CustomerComponent {
 
   selectedTab = signal(0);
 
+  inputFile = signal(0);
+
   constructor(
     public readonly dialog: MatDialog,
     public readonly viewPortService: ViewportService,
@@ -126,5 +128,9 @@ export class CustomerComponent {
       default:
         break;
     }
+  }
+
+  inputFileChange(event: any) {
+    this.inputFile.set(event);
   }
 }

@@ -6,9 +6,21 @@
 
     <app-search [search]="searchform.controls.search" />
 
-    <button mat-icon-button aria-label="Adicionar" (click)="openDialog()">
-      <mat-icon style="color: white">add_circle_outline</mat-icon>
-    </button>
+    @if (selectedTab() !== 2) {
+      <button mat-icon-button aria-label="Adicionar" (click)="openDialog()">
+        <mat-icon style="color: white">add_circle_outline</mat-icon>
+      </button>
+    }
+
+    @if (selectedTab() === 2) {
+      <div class="p-3">
+        <label for="photo-upload" class="flex h-[20px]">
+          <mat-icon class="cursor-pointer">photo_camera</mat-icon>
+        </label>
+
+        <input type="file" id="photo-upload" class="hidden" (change)="inputFileChange($event)" />
+      </div>
+    }
   </div>
 </app-header>
 
@@ -80,7 +92,12 @@
           class="m-0 pl-5 w-full"
           [class]="{ 'border-l': model.viewPort !== 'mobile' }"
         >
-          <app-customer-record [hasHeader]="false" [customerId]="selectedCustomerId()" (changeTab)="setSelectedTab($event)"></app-customer-record>
+          <app-customer-record
+            [hasHeader]="false"
+            [customerId]="selectedCustomerId()"
+            [inputFile]="inputFile()"
+            (changeTab)="setSelectedTab($event)"
+          ></app-customer-record>
         </div>
 
         <div *ngIf="model.customerList === null" class="w-full">

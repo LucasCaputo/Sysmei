@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { CardComponent } from 'src/app/shared/components/card/card.component';
 import { CardInfo } from 'src/app/shared/components/card/interfaces/card-info';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
@@ -42,6 +42,13 @@ export class CustomerRecordComponent implements OnInit {
     if (value) {
       this.customerRecordService.setCustomerRecordId(value);
       this.populate();
+    }
+  }
+
+  @Input()
+  set inputFile(value: any) {
+    if (value) {
+      this.inputFileChange(value);
     }
   }
 
@@ -112,33 +119,26 @@ export class CustomerRecordComponent implements OnInit {
     }
   }
 
-  inputFileChange(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const foto = event.target.files[0];
+  inputFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input?.files?.[0];
 
-      const formData = new FormData();
-      formData.append('file', foto);
+    if (!file) return;
 
-      this.customerService.postFile(this.getCustomerId(), formData).subscribe(
-        (result) => {
-          this.customerService.getCustomerId(this.getCustomerId()).subscribe((result) => {
-            this.photos = result.documentsUrl;
-          });
-        },
-        (error) => {},
-      );
-    }
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const customerId = this.getCustomerId();
+
+    this.customerService
+      .postFile(customerId, formData)
+      .pipe(switchMap(() => this.customerService.getCustomerId(customerId)))
+      .subscribe((result) => {
+        if (result) {
+          this.photos = result.documentsUrl;
+        }
+      });
   }
-
-  // onOpenPhoto(photo: string) {
-  //   const dialogRef = this.dialog.open(OpenPhotoComponent, {
-  //     data: photo,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result: any) => {
-  //     console.warn(result);
-  //   });
-  // }
 
   addSchedule() {
     const dialogRef = this.dialog.open(SchedulingFormComponent, {

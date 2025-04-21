@@ -1,22 +1,23 @@
 <app-header *ngIf="hasHeader" [isPrivate]="true">
-  <button *ngIf="tabSelected() == 0" mat-button routerLink="/clientes">
+  <button *ngIf="tabSelected() == 0" mat-icon-button routerLink="/clientes">
     <mat-icon>arrow_back</mat-icon>
   </button>
 
   <div class="flex justify-between w-full items-center">
-    <button *ngIf="tabSelected() !== 0" mat-button routerLink="/clientes">
+    <button *ngIf="tabSelected() !== 0" mat-icon-button routerLink="/clientes">
       <mat-icon>arrow_back</mat-icon>
     </button>
 
-    <button *ngIf="tabSelected() == 1" mat-icon-button (click)="addSchedule()" class="icon-right" aria-label="Adicionar agendamento">
+    <button *ngIf="tabSelected() == 1" mat-icon-button (click)="addSchedule()" aria-label="Adicionar agendamento">
       <mat-icon>add_box</mat-icon>
     </button>
 
-    <div *ngIf="tabSelected() == 2">
-      <button mat-button>
-        <mat-icon>photo_camera</mat-icon>
-      </button>
-      <input type="file" (change)="inputFileChange($event)" class="input-photo" />
+    <div *ngIf="tabSelected() == 2" class="p-3">
+      <label for="photo-upload" class="flex h-[20px]">
+        <mat-icon class="cursor-pointer">photo_camera</mat-icon>
+      </label>
+
+      <input type="file" id="photo-upload" class="hidden" (change)="inputFileChange($event)" />
     </div>
   </div>
 </app-header>
