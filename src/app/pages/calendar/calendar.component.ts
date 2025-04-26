@@ -40,7 +40,6 @@ import { calendarSelectedOptions } from './calendar.options';
     MatSidenavModule,
     MenuComponent,
     CalendarNaviagtionComponent,
-    SchedulingDialogComponent,
     SharedModule,
     CalendarNavigationDesktopComponent,
     CalendarSidenavDesktopComponent,
@@ -75,7 +74,6 @@ export class CalendarComponent implements AfterViewInit {
     ),
   );
 
-  user = this.auth.getUser();
   currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;

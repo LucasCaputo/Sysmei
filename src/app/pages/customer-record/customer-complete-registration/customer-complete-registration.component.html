@@ -55,7 +55,7 @@
       <div class="grid grid-cols-2">
         <mat-list-item style="height: auto">
           <mat-form-field class="w-full">
-            <mat-label>Aniversário</mat-label>
+            <mat-label>Nascimento</mat-label>
             <input matInput type="text" formControlName="nascimento" mask="00/00/0000" placeholder="dd/mm/aaaa" />
             <mat-hint>Formato: dia/ mês/ ano</mat-hint>
             <mat-error *ngIf="profileForm.get('nascimento')?.hasError('invalidFormat')"> Formato inválido </mat-error>
