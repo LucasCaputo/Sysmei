@@ -1,7 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { CustomerResponse } from '../interfaces/customer-response';
 
@@ -9,10 +8,7 @@ import { CustomerResponse } from '../interfaces/customer-response';
   providedIn: 'root',
 })
 export class CustomerRepository {
-  constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   postCustomer(customer: any): Observable<CustomerResponse> {
     return this.httpClient.post<any>(environment.baseURL + '/paciente', customer);
@@ -23,17 +19,7 @@ export class CustomerRepository {
   }
 
   getCustomer(): Observable<any> {
-    const user = this.authService.getUser();
-
-    let params = new HttpParams();
-
-    if (user?.login) {
-      params = params.set('login', user.login);
-    }
-
-    return this.httpClient.get<any>(`${environment.baseURL}/paciente`, {
-      params: params,
-    });
+    return this.httpClient.get<any>(`${environment.baseURL}/paciente`);
   }
 
   getCustomerId(customerId: number): Observable<CustomerResponse> {

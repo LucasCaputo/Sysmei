@@ -24,7 +24,7 @@ export class ScheduleRepository {
 
   public getScheduleByDate(startDate: string, endDate: string): Observable<ScheduleResponse[]> {
     const endpoint = `${environment.baseURL}/agenda/prestador`;
-    const params = `?login=${this.authService.getUser()?.login}&dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`;
+    const params = `?dataInicio=${startDate}&dataFim=${endDate}&prestadorId=all`;
 
     const cacheKey = this.cacheService.createCacheKey(endpoint, params);
 

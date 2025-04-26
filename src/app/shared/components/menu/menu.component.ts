@@ -19,7 +19,7 @@ import { UserDialogComponent } from '../dialogs/user-dialog/user-dialog.componen
   imports: [CommonModule, MatIconModule, MatDividerModule, MatSidenavModule, MatButtonModule],
 })
 export class MenuComponent {
-  user$ = this.auth.getUserObservable();
+  user$ = this.auth.user$;
 
   public menuData = [
     {

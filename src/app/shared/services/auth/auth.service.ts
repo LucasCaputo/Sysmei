@@ -13,27 +13,17 @@ export class AuthService {
 
   private token: string | undefined;
 
+  public user$ = this.userSubject;
+
   constructor(private cacheService: CacheService) {}
 
   setUser(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
     this.user = user;
     this.userSubject.next(user);
   }
 
-  getUserObservable() {
-    return this.userSubject.asObservable();
-  }
-
   getUser(): UserInterface | undefined {
-    const user = localStorage.getItem('user');
-
-    if (user) {
-      this.user = JSON.parse(user);
-      return this.user;
-    }
-
-    return undefined;
+    return this.user || undefined;
   }
 
   setToken(token: string) {

@@ -1,8 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { EmployeeResponse } from '../interfaces/employee-response';
 
@@ -10,23 +9,10 @@ import { EmployeeResponse } from '../interfaces/employee-response';
   providedIn: 'root',
 })
 export class EmployeeRepository {
-  constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   public getEmployee(): Observable<EmployeeResponse[]> {
-    const user = this.authService.getUser();
-
-    let params = new HttpParams();
-
-    if (user?.login) {
-      params = params.set('login', user.login);
-    }
-
-    return this.httpClient.get<EmployeeResponse[]>(`${environment.baseURL}/prestador`, {
-      params: params,
-    });
+    return this.httpClient.get<EmployeeResponse[]>(`${environment.baseURL}/prestador`);
   }
 
   public postEmployee(employee: EmployeeResponse): Observable<EmployeeResponse> {
