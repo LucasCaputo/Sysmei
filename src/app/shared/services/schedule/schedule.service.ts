@@ -3,7 +3,6 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, retry, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { ScheduleFormatResponse, ScheduleResponse } from 'src/app/shared/interfaces/schedule-response';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CacheService } from '../../service-api/cache';
 import { CustomerService } from '../customer/customer.service';
@@ -32,7 +31,6 @@ export class ScheduleService {
   );
 
   constructor(
-    private authService: AuthService,
     private scheduleRepository: ScheduleRepository,
     private customerService: CustomerService,
     private employeeService: EmployeeService,
@@ -114,7 +112,6 @@ export class ScheduleService {
   public postScheduling(body: any): Observable<any> {
     const payload = {
       ...body,
-      login_usuario: this.authService.getUser()?.login,
       allDay: body.start.split(' ')[0],
     };
 
@@ -137,7 +134,6 @@ export class ScheduleService {
   public updateScheduling(body: any, id: number): Observable<any> {
     const payload = {
       ...body,
-      login_usuario: this.authService.getUser()?.login,
       status: body.status,
       allDay: body.start.split(' ')[0],
     };

@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EmployeeResponse } from '../../../interfaces/employee-response';
@@ -19,11 +18,9 @@ export class EmployeeDialogComponent {
   form = this.formBuilder.group({
     nome: [this.data.nome || '', [Validators.required]],
     telefone: [this.data.telefone || '', [Validators.required]],
-    login_usuario: '',
   });
 
   constructor(
-    private authService: AuthService,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: EmployeeResponse,
@@ -33,7 +30,6 @@ export class EmployeeDialogComponent {
 
   saveEmployee() {
     if (this.form.valid && this.form.value.nome && this.form.value.telefone) {
-      this.form.controls.login_usuario.setValue(this.authService.getUser()!.login);
       const payload = this.form.value as EmployeeResponse;
       if (!this.data.id) {
         this.employeeService.postEmployee(payload).subscribe();
