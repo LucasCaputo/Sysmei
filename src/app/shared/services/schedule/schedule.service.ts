@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError, map, retry, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, retry, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { ScheduleFormatResponse, ScheduleResponse } from 'src/app/shared/interfaces/schedule-response';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { CacheService } from '../../service-api/cache';
+import { CalendarStateService } from '../calendar/calendar-state.service';
 import { CustomerService } from '../customer/customer.service';
 import { EmployeeService } from '../employee/employee.service';
 import { SnackbarService } from '../snackbar.service';
-import { getStartAndEndOfWeek } from '../utils/date.utils';
+import { formatDate } from '../utils/date.utils';
 import { FormatCalendarDate } from '../utils/format-calendar-payload';
 
 @Injectable({
@@ -21,11 +22,15 @@ export class ScheduleService {
 
   public formatedSchedule$ = new Subject<Array<ScheduleFormatResponse>>();
 
-  public reloadScheduleSubject = new Subject<Date>();
+  public reloadScheduleSubject = new Subject();
 
   public searchSchedule$ = this.reloadScheduleSubject.pipe(
-    startWith(new Date()),
-    switchMap((date) => this.searchScheduleList(getStartAndEndOfWeek(date))),
+    switchMap(() =>
+      this.searchScheduleList({
+        startDate: formatDate(this.calendarStateService.date.startStr),
+        endDate: formatDate(this.calendarStateService.date.endStr),
+      }),
+    ),
     shareReplay(1),
     retry(1),
   );
@@ -37,10 +42,11 @@ export class ScheduleService {
     private utilsService: UtilsService,
     private snackbarService: SnackbarService,
     private cacheService: CacheService,
+    private calendarStateService: CalendarStateService,
   ) {}
 
-  public reloadSchedule(date: Date): void {
-    this.reloadScheduleSubject.next(date);
+  public reloadSchedule(): void {
+    this.reloadScheduleSubject.next();
   }
 
   public searchScheduleList(date: { startDate: string; endDate: string }): Observable<any> {
@@ -121,7 +127,7 @@ export class ScheduleService {
   public deleteScheduling(customerId: any): Observable<any> {
     return this.scheduleRepository.deleteScheduling(customerId).pipe(
       tap(() => {
-        this.reloadSchedule(new Date());
+        this.reloadSchedule();
         this.snackbarService.openSnackBar(`Agendamento deletado com sucesso`, 'X', false);
       }),
       catchError(() => {
@@ -141,7 +147,7 @@ export class ScheduleService {
 
     return this.scheduleRepository.updateScheduling(payload, id).pipe(
       tap(() => {
-        this.reloadSchedule(new Date());
+        this.reloadSchedule();
         this.snackbarService.openSnackBar(`Agendamento atualizado com sucesso`, 'X', false);
       }),
       catchError(() => {
@@ -154,7 +160,7 @@ export class ScheduleService {
   public patchStatus(body: { status: number }, id: number) {
     return this.scheduleRepository.patchStatus(body, id).pipe(
       tap(() => {
-        this.reloadSchedule(new Date());
+        this.reloadSchedule();
         this.snackbarService.openSnackBar(
           `Status alterado com sucesso`,
 

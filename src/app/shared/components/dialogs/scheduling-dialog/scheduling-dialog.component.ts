@@ -103,39 +103,47 @@ export class SchedulingDialogComponent implements OnInit {
     return option?.text || '';
   }
 
-  saveScheduleData() {
+  public saveScheduleData() {
     const schedule = this.scheduleService.formatRequestPayload(this.form.value);
 
     this.cacheService.clearAllCache();
 
     if (schedule.id) {
-      this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
-        (resultUpdate) => {
-          this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
-          this.customerRecordService.reloadCustomerRecordSubject.next();
-        },
-        (error) => {
-          this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openErrorSnackBar('atualizar');
-        },
-      );
+      this.updateScheduling(schedule);
     } else {
-      this.scheduleService.postScheduling(schedule).subscribe(
-        (response) => {
-          this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
-          this.customerRecordService.reloadCustomerRecordSubject.next();
-        },
-        (error) => {
-          this.scheduleService.reloadSchedule(new Date());
-          this.snackbarService.openErrorSnackBar('inserir');
-        },
-      );
+      this.postScheduling(schedule);
     }
   }
 
-  onDelete(customer: any) {
+  private updateScheduling(schedule: any): void {
+    this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
+      (resultUpdate) => {
+        this.scheduleService.reloadSchedule();
+        this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
+        this.customerRecordService.reloadCustomerRecordSubject.next();
+      },
+      (error) => {
+        this.scheduleService.reloadSchedule();
+        this.snackbarService.openErrorSnackBar('atualizar');
+      },
+    );
+  }
+
+  private postScheduling(schedule: any): void {
+    this.scheduleService.postScheduling(schedule).subscribe(
+      (response) => {
+        this.scheduleService.reloadSchedule();
+        this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
+        this.customerRecordService.reloadCustomerRecordSubject.next();
+      },
+      (error) => {
+        this.scheduleService.reloadSchedule();
+        this.snackbarService.openErrorSnackBar('inserir');
+      },
+    );
+  }
+
+  public onDelete(customer: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       height: '280px',
@@ -153,7 +161,7 @@ export class SchedulingDialogComponent implements OnInit {
         this.dialog.closeAll();
         this.scheduleRepository.deleteScheduling(customer.schedule_id).subscribe(
           (response) => {
-            this.scheduleService.reloadSchedule(new Date());
+            this.scheduleService.reloadSchedule();
             this.snackbarService.openSuccessSnackBar('Agendamento deletado com sucesso');
           },
           (error) => {

@@ -26,7 +26,7 @@ export class EmployeeService {
     private snackbarService: SnackbarService,
   ) {}
 
-  public reloadSchedule(): void {
+  public reloadEmployee(): void {
     this.reloadEmployeeSubject.next();
   }
 
@@ -39,7 +39,7 @@ export class EmployeeService {
       tap(() => {
         this.snackbarService.openSnackBar(`Parabéns! Prestador cadastrado com sucesso!`, 'X', false);
 
-        this.reloadSchedule();
+        this.reloadEmployee();
       }),
       catchError(() => {
         this.snackbarService.openSnackBar(`Tivemos um erro ao deletar, tente novamente`, 'X', true);
@@ -52,7 +52,7 @@ export class EmployeeService {
     return this.employeeRepository.updateEmployee(employee).pipe(
       tap(() => {
         this.snackbarService.openSnackBar(`Parabéns! Prestador editado com sucesso!`, 'X', false);
-        this.reloadSchedule();
+        this.reloadEmployee();
       }),
       catchError(() => {
         this.snackbarService.openSnackBar(`Tivemos um erro ao editar, tente novamente`, 'X', true);
@@ -65,7 +65,7 @@ export class EmployeeService {
     return this.employeeRepository.deleteEmployee(employee).pipe(
       tap(() => {
         this.snackbarService.openSnackBar(`Parabéns! Prestador deletado com sucesso!`, 'X', false);
-        this.reloadSchedule();
+        this.reloadEmployee();
       }),
       catchError(() => {
         this.snackbarService.openSnackBar(`Tivemos um erro ao deletar, tente novamente`, 'X', true);

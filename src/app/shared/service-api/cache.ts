@@ -15,6 +15,5 @@ export class CacheService {
 
   public clearAllCache(): void {
     this.cache = {};
-    console.log('All cache cleared');
   }
 }

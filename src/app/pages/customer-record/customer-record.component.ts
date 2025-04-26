@@ -76,7 +76,10 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.populate();
+    if (this.route.snapshot.params.id) {
+      this.populate();
+    }
+
     if (!this.customerService.formattedCustomerList) {
       this.customerService.searchCustomer$.pipe(take(1)).subscribe();
     }

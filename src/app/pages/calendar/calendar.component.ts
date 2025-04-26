@@ -18,7 +18,7 @@ import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigatio
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
 import { CalendarSidenavDesktopComponent } from 'src/app/shared/components/navigation/calendar-sidenav-desktop/calendar-sidenav-desktop.component';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { CalendarStateService } from 'src/app/shared/services/calendar/calendar-state.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
 import { CardColor } from 'src/app/shared/services/utils/schedule-card-color';
@@ -80,14 +80,7 @@ export class CalendarComponent implements AfterViewInit {
   calendarDateTitle = signal('...');
   actionIcon = signal('timeGridWeek');
 
-  calendarState = {
-    calendarDateTitle: signal('...'),
-    activetedIcon: signal('timeGridWeek'),
-    date: signal({
-      startStr: new Date(),
-      endStr: new Date(),
-    }),
-  };
+  calendarState = this.calendarStateService.calendarState;
   todayIcon = 'primary';
   timeElapsed = Date.now();
   calendarApi: any;
@@ -98,11 +91,11 @@ export class CalendarComponent implements AfterViewInit {
     private dialog: MatDialog,
     private scheduleService: ScheduleService,
     private customerService: CustomerService,
-    private auth: AuthService,
     private router: Router,
     private utilsService: UtilsService,
     public loaderService: LoaderService,
     public viewportService: ViewportService,
+    private calendarStateService: CalendarStateService,
   ) {}
 
   ngAfterViewInit() {
@@ -240,24 +233,21 @@ export class CalendarComponent implements AfterViewInit {
           this.calendarApi.changeView(action);
           break;
       }
+      this.calendarStateService.setCalendarState({
+        date: {
+          startStr: this.calendarApi.view.activeStart,
+          endStr: this.calendarApi.view.activeEnd,
+        },
+      });
     }
 
-    this.calendarState.date.set({
-      startStr: this.calendarApi.view.activeStart,
-      endStr: this.calendarApi.view.activeEnd,
-    });
-
-    this.getSchedule(this.calendarApi.view.activeStart);
+    this.scheduleService.reloadSchedule();
 
     if (this.calendarApi?.view?.title) {
       this.calendarDateTitle.set(this.calendarApi?.view?.title);
     }
 
     this.setColorIconToday();
-  }
-
-  private getSchedule(date: Date): void {
-    this.scheduleService.reloadSchedule(date);
   }
 
   private setColorIconToday() {

@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseURL: 'https://api2.sysmei.com',
+  baseURL: 'https://api.sysmei.com',
 };

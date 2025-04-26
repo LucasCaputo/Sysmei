@@ -44,6 +44,34 @@ export function getStartAndEndOfWeek(date: Date): {
   };
 }
 
+export function getStartAndEndOfWeekDateFomat(date: Date): {
+  startDate: Date;
+  endDate: Date;
+} {
+  // Criar uma nova data baseada na data fornecida
+  const current = new Date(date);
+
+  // Encontrar o dia da semana atual (0 - Domingo, 1 - Segunda, etc.)
+  const dayOfWeek = current.getDay();
+
+  // Calcular a diferença em dias até o início da semana (Domingo)
+  const startDiff = current.getDate() - dayOfWeek;
+
+  // Calcular a diferença em dias até o final da semana (Sábado)
+  const endDiff = current.getDate() + (6 - dayOfWeek);
+
+  // Criar novas datas para o início e o fim da semana
+  const startOfWeek = new Date(current.setDate(startDiff));
+  const endOfWeek = new Date(current.setDate(endDiff));
+
+  // Retornar o início e o fim da semana formatados
+
+  return {
+    startDate: startOfWeek,
+    endDate: endOfWeek,
+  };
+}
+
 // Função auxiliar para formatar a data como YYYY-MM-DD
 export const formatDate = (date: Date): string => {
   const year = date.getFullYear();

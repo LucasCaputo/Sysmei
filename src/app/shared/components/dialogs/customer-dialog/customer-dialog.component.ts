@@ -21,10 +21,7 @@ export class CustomerDialogComponent {
     nome: [this.data.nome || '', [Validators.required]],
     telefone1: [this.data.telefone1 || '', [Validators.required]],
     email: [this.data.email || '', [Validators.email]],
-    login_usuario: [this.authService.getUser()?.login],
   });
-
-  user = this.authService.getUser();
 
   constructor(
     private authService: AuthService,
