@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
+import { CacheService } from 'src/app/shared/service-api/cache';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -52,6 +53,7 @@ export class SchedulingDialogComponent implements OnInit {
     private snackbarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
     private dialogRef: MatDialogRef<SchedulingDialogComponent>,
+    private cache: CacheService,
   ) {}
 
   ngOnInit(): void {
@@ -115,12 +117,14 @@ export class SchedulingDialogComponent implements OnInit {
   private updateScheduling(schedule: any): void {
     this.scheduleService.updateScheduling(schedule, schedule.id).subscribe(
       (resultUpdate) => {
+        this.cache.clearCache();
         this.scheduleService.reloadSchedule();
         this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
         this.customerRecordService.reloadCustomerRecordSubject.next();
         this.dialogRef.close(true);
       },
       (error) => {
+        this.cache.clearCache();
         this.scheduleService.reloadSchedule();
         this.snackbarService.openErrorSnackBar('atualizar');
       },
@@ -130,12 +134,14 @@ export class SchedulingDialogComponent implements OnInit {
   private postScheduling(schedule: any): void {
     this.scheduleService.postScheduling(schedule).subscribe(
       (response) => {
+        this.cache.clearCache();
         this.scheduleService.reloadSchedule();
         this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
         this.customerRecordService.reloadCustomerRecordSubject.next();
         this.dialogRef.close(true);
       },
       (error) => {
+        this.cache.clearCache();
         this.scheduleService.reloadSchedule();
         this.snackbarService.openErrorSnackBar('inserir');
       },
@@ -160,7 +166,9 @@ export class SchedulingDialogComponent implements OnInit {
         this.dialog.closeAll();
         this.scheduleRepository.deleteScheduling(customer.schedule_id).subscribe(
           (response) => {
+            this.cache.clearCache();
             this.scheduleService.reloadSchedule();
+            this.customerRecordService.reloadCustomerRecordSubject.next();
             this.snackbarService.openSuccessSnackBar('Agendamento deletado com sucesso');
           },
           (error) => {

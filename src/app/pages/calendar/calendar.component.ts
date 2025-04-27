@@ -148,7 +148,7 @@ export class CalendarComponent implements AfterViewInit {
 
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       ...dialogSize,
-      data: { ...dateClick, hasDelete: false },
+      data: dateClick,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

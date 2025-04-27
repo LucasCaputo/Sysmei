@@ -24,7 +24,7 @@
 
 <mat-sidenav-container class="h-body-height">
   <mat-sidenav-content>
-    <div *ngIf="!loading">
+    <div *ngIf="!loading && cardData">
       <mat-list>
         <app-card [cardData]="cardData" [showEdit]="false"></app-card>
       </mat-list>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ViewportService } from './shared/services/viewport.service';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private viewportService: ViewportService,
   ) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       const currentRoute = this.activatedRoute.root.firstChild;
@@ -50,5 +52,7 @@ export class AppComponent implements OnInit {
         this.showMenu = false;
       }
     });
+
+    this.viewportService.screenSize$.subscribe();
   }
 }

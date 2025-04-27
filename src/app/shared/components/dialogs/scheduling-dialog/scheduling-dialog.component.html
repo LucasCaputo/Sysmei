@@ -1,5 +1,5 @@
 @if (employeeData && filteredOptions) {
-  <div mat-dialog-content>
+  <div class="m-6">
     <p class="text-xl flex w-full justify-center p-4">
       {{ !data.id ? 'Cadastrar agendamento' : 'Editar agendamento' }}
     </p>
@@ -79,17 +79,15 @@
         <textarea matInput placeholder="Detalhes" formControlName="detalhes" name="detalhes"></textarea>
       </mat-form-field>
     </form>
-  </div>
-  <div class="flex justify-end items-center">
-    <button *ngIf="data.hasDelete && data != null" color="warn" mat-icon-button aria-label="Excluir" (click)="onDelete(data)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
+    <div class="flex justify-start items-center mt-4">
+      <button color="warn" mat-button aria-label="Excluir" (click)="onDelete(data)"><mat-icon>delete</mat-icon> Excluir</button>
+    </div>
 
-  <app-action-buttons
-    class="p-2"
-    [disableConfirmButton]="form.invalid || !form.dirty"
-    (closeButton)="dialog.closeAll()"
-    (confirmButton)="saveScheduleData()"
-  ></app-action-buttons>
+    <app-action-buttons
+      class="p-2"
+      [disableConfirmButton]="form.invalid || !form.dirty"
+      (closeButton)="dialog.closeAll()"
+      (confirmButton)="saveScheduleData()"
+    ></app-action-buttons>
+  </div>
 }

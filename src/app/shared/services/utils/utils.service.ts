@@ -36,13 +36,14 @@ export class UtilsService {
     };
   }
 
-  dialogSize(): { width: string; maxWidth: string; height: string } {
+  public dialogSize(): { width: string; maxWidth: string; height: string; maxHeight: string } {
     const mobileSize = this.viewportService.screenSize === 'mobile';
 
     return {
-      width: mobileSize ? '100vw' : '500px',
-      maxWidth: mobileSize ? '100vw' : '90vw',
-      height: mobileSize ? '100vh' : '500px',
+      width: mobileSize ? '100vw' : '60vw',
+      maxWidth: mobileSize ? '100vw' : '800px',
+      height: mobileSize ? '100vh' : '80vh',
+      maxHeight: mobileSize ? '100vh' : '800px',
     };
   }
 }

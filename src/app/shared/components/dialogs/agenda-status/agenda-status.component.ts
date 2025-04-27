@@ -40,10 +40,7 @@ export class AgendaStatusComponent {
     const dialogSize = this.utilsService.dialogSize();
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       ...dialogSize,
-      data: {
-        ...this.data,
-        hasDelete: false,
-      },
+      data: this.data,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
