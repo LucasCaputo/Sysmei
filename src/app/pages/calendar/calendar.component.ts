@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
+import { CalendarApi, CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap, tap } from 'rxjs/operators';
@@ -83,12 +83,11 @@ export class CalendarComponent implements AfterViewInit {
   );
 
   scheduling: EventInput[] = [];
-  viewApi!: ViewApi;
   calendarDateTitle = this.calendarStateService.calendarDateTitle;
   actionIcon = signal('timeGridWeek');
 
   calendarState = this.calendarStateService.calendarState;
-  calendarApi: any;
+  calendarApi!: CalendarApi;
   employeeList: EmployeeList[] | undefined;
 
   constructor(
@@ -131,35 +130,36 @@ export class CalendarComponent implements AfterViewInit {
   public insertSchedule(selectInfo?: DateSelectArg) {
     if (!this.customerService?.customers?.length) {
       alert('você precisa cadastrar seu primeiro cliente');
-
       this.router.navigate(['/clientes']);
       return;
     }
 
     let dateClick = null;
 
+    let tempSelection: EventApi | null;
+
     if (selectInfo) {
       const { start, end } = selectInfo;
       dateClick = { start, end };
+      tempSelection = this.calendarApi.addEvent(selectInfo);
     }
 
+    const dialogSize = this.utilsService.dialogSize();
+
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
+      ...dialogSize,
       data: { ...dateClick, hasDelete: false },
-      position: {
-        top: '90px',
-      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) {
+        if (tempSelection) {
+          tempSelection.remove();
+        }
         return;
       }
 
-      this.calendarApi.view.calendar.unselect();
-
-      this.calendarApi.view.calendar.addEvent(this.formatScheduleToCalendar(result));
+      this.dialog.closeAll();
     });
   }
 
@@ -202,8 +202,8 @@ export class CalendarComponent implements AfterViewInit {
    */
   public calendarNavigate(action?: string) {
     this.calendarApi.setOption('visibleRange', {
-      start: null,
-      end: null,
+      start: undefined,
+      end: undefined,
     });
 
     if (this.actionIcon() === 'timeGridWeek') {

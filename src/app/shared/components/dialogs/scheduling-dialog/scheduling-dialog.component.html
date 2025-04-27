@@ -90,6 +90,6 @@
     class="p-2"
     [disableConfirmButton]="form.invalid || !form.dirty"
     (closeButton)="dialog.closeAll()"
-    (confirmButton)="saveScheduleData(); dialog.closeAll()"
+    (confirmButton)="saveScheduleData()"
   ></app-action-buttons>
 }

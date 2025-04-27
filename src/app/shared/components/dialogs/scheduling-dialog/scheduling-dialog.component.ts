@@ -3,7 +3,7 @@ import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -51,6 +51,7 @@ export class SchedulingDialogComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
+    private dialogRef: MatDialogRef<SchedulingDialogComponent>,
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +118,7 @@ export class SchedulingDialogComponent implements OnInit {
         this.scheduleService.reloadSchedule();
         this.snackbarService.openSuccessSnackBar(`Agendamento atualizado com sucesso`);
         this.customerRecordService.reloadCustomerRecordSubject.next();
+        this.dialogRef.close(true);
       },
       (error) => {
         this.scheduleService.reloadSchedule();
@@ -131,6 +133,7 @@ export class SchedulingDialogComponent implements OnInit {
         this.scheduleService.reloadSchedule();
         this.snackbarService.openSuccessSnackBar(`Agendamento adicionado com sucesso`);
         this.customerRecordService.reloadCustomerRecordSubject.next();
+        this.dialogRef.close(true);
       },
       (error) => {
         this.scheduleService.reloadSchedule();
