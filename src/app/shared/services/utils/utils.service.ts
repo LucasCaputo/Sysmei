@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import moment, { Moment } from 'moment';
+import { format, parseISO } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -23,18 +23,15 @@ export class UtilsService {
 
   formatDateRequestPayload(result: any) {
     const dateInput = result?.allDay;
-    const dateMoment: Moment = moment(dateInput);
 
-    const year = dateMoment.year();
-    const month = String(dateMoment.month() + 1).padStart(2, '0');
-    const day = String(dateMoment.date()).padStart(2, '0');
+    const dateObj = typeof dateInput === 'string' ? parseISO(dateInput) : new Date(dateInput);
 
-    const date = `${year}-${month}-${day}`;
+    const formattedDate = format(dateObj, 'yyyy-MM-dd');
 
     return {
-      allDay: date,
-      start: `${date} ${result?.start}`,
-      end: `${date} ${result?.end}`,
+      allDay: formattedDate,
+      start: `${formattedDate} ${result?.start}`,
+      end: `${formattedDate} ${result?.end}`,
     };
   }
 }
