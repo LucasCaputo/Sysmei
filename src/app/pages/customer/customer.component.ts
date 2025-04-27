@@ -14,6 +14,7 @@ import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { CustomerResponse } from 'src/app/shared/interfaces/customer-response';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -64,6 +65,7 @@ export class CustomerComponent {
     private readonly customerRecordService: CustomerRecordService,
     private readonly router: Router,
     private readonly formBuilder: FormBuilder,
+    private utilsService: UtilsService,
   ) {}
 
   public openCustomerDialog(dataInfo: any) {
@@ -78,12 +80,10 @@ export class CustomerComponent {
   }
 
   private openScheduleDialog(dataInfo: any) {
+    const dialogSize = this.utilsService.dialogSize();
+
     this.dialog.open(SchedulingDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-      position: {
-        top: '90px',
-      },
+      ...dialogSize,
       data: dataInfo,
     });
   }

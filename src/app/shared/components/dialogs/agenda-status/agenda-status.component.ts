@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SharedPipesModule } from 'src/app/shared/shared-pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BadgeComponent } from '../../card/components/badge/badge.component';
@@ -31,19 +32,17 @@ export class AgendaStatusComponent {
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
     private formBuilder: FormBuilder,
+    private utilsService: UtilsService,
   ) {}
 
   /** Edita um agendamento */
   public onEdit() {
+    const dialogSize = this.utilsService.dialogSize();
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
+      ...dialogSize,
       data: {
         ...this.data,
         hasDelete: false,
-      },
-      position: {
-        top: '90px',
       },
     });
 

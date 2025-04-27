@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SchedulingDialogComponent } from 'src/app/shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { ScheduleService } from 'src/app/shared/services/schedule/schedule.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
@@ -21,6 +22,7 @@ export class RecordListComponent implements OnInit {
     public dialog: MatDialog,
     private scheduleService: ScheduleService,
     private customerRecordService: CustomerRecordService,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -36,13 +38,10 @@ export class RecordListComponent implements OnInit {
   }
 
   click(el: any) {
-    const dialogRef = this.dialog.open(SchedulingDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
+    const dialogSize = this.utilsService.dialogSize();
+    this.dialog.open(SchedulingDialogComponent, {
+      ...dialogSize,
       data: this.scheduleService.formatScheduleResponse([el])[0],
-      position: {
-        top: '90px',
-      },
     });
   }
 }

@@ -13,6 +13,7 @@ import { CustomerRecordService } from 'src/app/shared/services/customer/customer
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SnackbarService } from 'src/app/shared/services/snackbar.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingDialogComponent } from '../../shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { CustomerCompleteRegistrationComponent } from './customer-complete-registration/customer-complete-registration.component';
@@ -68,6 +69,7 @@ export class CustomerRecordComponent implements OnInit {
     private customerService: CustomerService,
     private customerRecordService: CustomerRecordService,
     private employeeService: EmployeeService,
+    private utilsService: UtilsService,
   ) {}
 
   selectedIndexChange(tabSelected: number) {
@@ -144,13 +146,10 @@ export class CustomerRecordComponent implements OnInit {
   }
 
   addSchedule() {
+    const dialogSize = this.utilsService.dialogSize();
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
+      ...dialogSize,
       data: { customer: { id: this.customerRecordService.getCustomerRecordId() } },
-      position: {
-        top: '90px',
-      },
     });
   }
 }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { format, parseISO } from 'date-fns';
+import { ViewportService } from '../viewport.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor() {}
+  constructor(private readonly viewportService: ViewportService) {}
 
   formatPhone(phone: string) {
     return `(${phone.slice(0, 2)}) ${phone.slice(2, 3)} ${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
@@ -32,6 +33,16 @@ export class UtilsService {
       allDay: formattedDate,
       start: `${formattedDate} ${result?.start}`,
       end: `${formattedDate} ${result?.end}`,
+    };
+  }
+
+  dialogSize(): { width: string; maxWidth: string; height: string } {
+    const mobileSize = this.viewportService.screenSize === 'mobile';
+
+    return {
+      width: mobileSize ? '100vw' : '500px',
+      maxWidth: mobileSize ? '100vw' : '90vw',
+      height: mobileSize ? '100vh' : '500px',
     };
   }
 }
