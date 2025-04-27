@@ -6,17 +6,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarOptions, DateSelectArg, EventApi, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
+import { CalendarOptions, DateSelectArg, EventClickArg, EventDropArg, EventInput, ViewApi } from '@fullcalendar/core';
 import { DateClickArg, EventResizeDoneArg } from '@fullcalendar/interaction';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { AgendaStatusComponent } from 'src/app/shared/components/dialogs/agenda-status/agenda-status.component';
-import { UserDialogComponent } from 'src/app/shared/components/dialogs/user-dialog/user-dialog.component';
 import { LoaderService } from 'src/app/shared/components/loader/loader.service';
 import { MenuComponent } from 'src/app/shared/components/menu/menu.component';
 import { CalendarNaviagtionComponent } from 'src/app/shared/components/navigation/calendar-naviagtion/calendar-naviagtion.component';
 import { CalendarNavigationDesktopComponent } from 'src/app/shared/components/navigation/calendar-navigation-desktop/calendar-navigation-desktop.component';
 import { CalendarSidenavDesktopComponent } from 'src/app/shared/components/navigation/calendar-sidenav-desktop/calendar-sidenav-desktop.component';
+import { EmployeeList } from 'src/app/shared/interfaces/employee-list';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
 import { CalendarStateService } from 'src/app/shared/services/calendar/calendar-state.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -27,7 +27,7 @@ import { ViewportService } from 'src/app/shared/services/viewport.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SchedulingDialogComponent } from '../../shared/components/dialogs/scheduling-dialog/scheduling-dialog.component';
 import { ScheduleHeaderComponent } from '../../shared/components/header/components/schedule-header/schedule-header.component';
-import { calendarSelectedOptions } from './calendar.options';
+import { calendarSelectedOptions } from './constants/calendar.options';
 
 @Component({
   selector: 'app-calendar',
@@ -56,11 +56,11 @@ export class CalendarComponent implements AfterViewInit {
     eventClick: this.editSchedule.bind(this),
     eventDrop: this.onDragAndDrop.bind(this),
     eventResize: this.onDragAndDrop.bind(this),
-    eventsSet: this.handleEvents.bind(this),
     dateClick: this.redirectMonthToDay.bind(this),
   };
 
   calendarEvents: Observable<EventInput> = this.customerService.searchCustomer$.pipe(
+    startWith(void 0),
     switchMap(() =>
       this.scheduleService.searchSchedule$.pipe(
         map((elements: ScheduleFormatResponse[]) =>
@@ -70,22 +70,26 @@ export class CalendarComponent implements AfterViewInit {
           })),
         ),
         tap((scheduleFormat) => (this.scheduling = scheduleFormat)),
+        map((scheduleFormat) => {
+          if (!this.employeeList) {
+            return scheduleFormat;
+          }
+          const selectedEmployeeIds = this.employeeList.filter((element: any) => element.checked).map((element: any) => element.id);
+
+          return scheduleFormat.filter((e) => selectedEmployeeIds.includes(e.employee?.id));
+        }),
       ),
     ),
   );
 
-  currentEvents: EventApi[] = [];
   scheduling: EventInput[] = [];
   viewApi!: ViewApi;
-  calendarDateTitle = signal('...');
+  calendarDateTitle = this.calendarStateService.calendarDateTitle;
   actionIcon = signal('timeGridWeek');
 
   calendarState = this.calendarStateService.calendarState;
-  todayIcon = 'primary';
-  timeElapsed = Date.now();
   calendarApi: any;
-
-  screenSize$ = this.viewportService.screenSize$;
+  employeeList: EmployeeList[] | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -98,12 +102,10 @@ export class CalendarComponent implements AfterViewInit {
     private calendarStateService: CalendarStateService,
   ) {}
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
 
-    setTimeout(() => {
-      this.calendarNavigate();
-    }, 0);
+    this.calendarNavigate();
   }
 
   /** Atualiza agendamento por drag and drop
@@ -163,7 +165,7 @@ export class CalendarComponent implements AfterViewInit {
 
   /** Edita um agendamento */
   private editSchedule(clickInfo: EventClickArg) {
-    const dialogRef = this.dialog.open(AgendaStatusComponent, {
+    this.dialog.open(AgendaStatusComponent, {
       width: '500px',
       maxWidth: '90vw',
       data: {
@@ -174,12 +176,6 @@ export class CalendarComponent implements AfterViewInit {
       position: {
         top: '90px',
       },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
     });
   }
 
@@ -197,7 +193,7 @@ export class CalendarComponent implements AfterViewInit {
     if (this.calendarApi?.view?.type === 'dayGridMonth') {
       this.calendarApi.changeView('timeGridDay');
       this.calendarApi.view.calendar.gotoDate(clickInfo.date);
-      this.calendarDateTitle.set(this.calendarApi?.view?.title);
+      this.setCalendarDateTitle();
     }
   }
 
@@ -233,52 +229,43 @@ export class CalendarComponent implements AfterViewInit {
           this.calendarApi.changeView(action);
           break;
       }
-      this.calendarStateService.setCalendarState({
-        date: {
-          startStr: this.calendarApi.view.activeStart,
-          endStr: this.calendarApi.view.activeEnd,
-        },
-      });
     }
+    this.calendarStateService.setCalendarState({
+      date: {
+        startStr: this.calendarApi.view.activeStart,
+        endStr: this.calendarApi.view.activeEnd,
+      },
+    });
 
     this.scheduleService.reloadSchedule();
 
-    if (this.calendarApi?.view?.title) {
-      this.calendarDateTitle.set(this.calendarApi?.view?.title);
-    }
-
-    this.setColorIconToday();
+    this.setCalendarDateTitle();
   }
 
-  private setColorIconToday() {
-    const today = new Date(this.timeElapsed);
+  public changeEmployee(employeeList: EmployeeList[] | undefined = this.employeeList): void {
+    if (employeeList) {
+      this.employeeList = employeeList;
+      const selectedEmployee = employeeList.filter((element: any) => element.checked).map((element: any) => element.id) as number[];
+      const filteredSchedule = this.scheduling.filter((element) => selectedEmployee.includes(element.employee.id));
+      this.calendarApi.removeAllEvents();
 
-    if (this.calendarApi?.view && this.calendarApi.view.activeStart < today && this.calendarApi.view.activeEnd > today) {
-      this.todayIcon = 'primary';
-    } else {
-      this.todayIcon = 'secondary';
-    }
-  }
-
-  private handleEvents(events: EventApi[]) {
-    this.currentEvents = events;
-  }
-
-  public changeEmployee(event: any): void {
-    const selectedEmployee = event.filter((element: any) => element.checked).map((element: any) => element.id) as number[];
-    const filteredSchedule = this.scheduling.filter((element) => selectedEmployee.includes(element.employee.id));
-    this.calendarApi.removeAllEvents();
-
-    filteredSchedule.forEach((element: any) => {
-      this.calendarApi.view.calendar.addEvent({
-        ...element,
-        color: this.cardColor(element.status),
+      filteredSchedule.forEach((element: any) => {
+        this.calendarApi.view.calendar.addEvent({
+          ...element,
+          color: this.cardColor(element.status),
+        });
       });
-    });
+    }
   }
 
   public cardColor(status: number | undefined): string {
     return CardColor(status);
+  }
+
+  private setCalendarDateTitle(): void {
+    if (this.calendarApi?.view?.title) {
+      this.calendarStateService.calendarDateTitle.set(this.calendarApi?.view?.title);
+    }
   }
 
   public changeDate(event: any): void {
@@ -291,9 +278,7 @@ export class CalendarComponent implements AfterViewInit {
       end: event.endStr,
     });
 
-    if (this.calendarApi?.view?.title) {
-      this.calendarDateTitle.set(this.calendarApi?.view?.title);
-    }
+    this.setCalendarDateTitle();
 
     if (this.actionIcon() === 'listWeek') {
       // listDay , listWeek , listMonth
@@ -308,21 +293,5 @@ export class CalendarComponent implements AfterViewInit {
     if (this.calendarApi?.view?.title.split('').includes('–')) {
       this.actionIcon.set('timeGridWeek');
     }
-  }
-
-  public openUserSettingsModal(): void {
-    const dialogRef = this.dialog.open(UserDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-      position: {
-        top: '90px',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) {
-        return;
-      }
-    });
   }
 }

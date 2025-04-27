@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CalendarViewOptions } from '../../../contants/calendar.navigation.options';
+import { CalendarViewOptions } from '../../../constants/calendar.navigation.options';
 
 @Component({
   selector: 'app-calendar-navigation-desktop',

@@ -21,6 +21,8 @@ export class CalendarStateService {
     endStr: this.initialDate.endDate,
   };
 
+  public calendarDateTitle = signal('...');
+
   public setCalendarState({ calendarDateTitle, activetedIcon, date }: Partial<CalendarState>): void {
     if (calendarDateTitle) {
       this.calendarState.calendarDateTitle.set(calendarDateTitle);

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { CalendarViewOptions } from '../../../contants/calendar.navigation.options';
+import { CalendarStateService } from 'src/app/shared/services/calendar/calendar-state.service';
+import { CalendarViewOptions } from '../../../constants/calendar.navigation.options';
 
 @Component({
   selector: 'app-calendar-naviagtion',
@@ -12,12 +13,14 @@ import { CalendarViewOptions } from '../../../contants/calendar.navigation.optio
 })
 export class CalendarNaviagtionComponent {
   @Input() title = '';
-  @Input() todayIcon = '';
   @Output() action = new EventEmitter<string>();
 
+  todayIcon = signal('primary');
   calendarViewOptions = CalendarViewOptions;
   direction = '';
   actionIcon = 'timeGridWeek';
+
+  public constructor(private readonly calendarStateService: CalendarStateService) {}
 
   /**
    * Emite evento de clique com ação selecionada
@@ -28,5 +31,16 @@ export class CalendarNaviagtionComponent {
       this.actionIcon = action;
     }
     this.action.emit(action);
+    this.setColorIconToday();
+  }
+
+  public setColorIconToday() {
+    const today = new Date(Date.now());
+
+    if (this.calendarStateService.date.startStr < today && this.calendarStateService.date.endStr > today) {
+      this.todayIcon.set('primary');
+    } else {
+      this.todayIcon.set('secondary');
+    }
   }
 }

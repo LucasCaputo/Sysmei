@@ -10,7 +10,6 @@ import { map, startWith } from 'rxjs/operators';
 import { ConfirmDialogComponent } from 'src/app/shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { EmployeeResponse } from 'src/app/shared/interfaces/employee-response';
 import { ScheduleFormatResponse } from 'src/app/shared/interfaces/schedule-response';
-import { CacheService } from 'src/app/shared/service-api/cache';
 import { ScheduleRepository } from 'src/app/shared/service-api/schedule.repository';
 import { CustomerRecordService } from 'src/app/shared/services/customer/customer-record.service';
 import { CustomerService } from 'src/app/shared/services/customer/customer.service';
@@ -52,7 +51,6 @@ export class SchedulingDialogComponent implements OnInit {
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private formBuilder: UntypedFormBuilder,
-    private cacheService: CacheService,
   ) {}
 
   ngOnInit(): void {
@@ -105,8 +103,6 @@ export class SchedulingDialogComponent implements OnInit {
 
   public saveScheduleData() {
     const schedule = this.scheduleService.formatRequestPayload(this.form.value);
-
-    this.cacheService.clearAllCache();
 
     if (schedule.id) {
       this.updateScheduling(schedule);

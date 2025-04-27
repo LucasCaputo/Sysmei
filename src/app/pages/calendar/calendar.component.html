@@ -10,7 +10,7 @@
     <app-menu (click)="snav.toggle()"></app-menu>
   </mat-sidenav>
 
-  <mat-sidenav-content [class]="(screenSize$ | async) == 'mobile' ? '!h-body-height-mobile' : '!h-body-height'">
+  <mat-sidenav-content [class]="(viewportService.screenSize$ | async) == 'mobile' ? '!h-body-height-mobile' : '!h-body-height'">
     <app-calendar-navigation-desktop
       class="navigation-desktop"
       (action)="calendarNavigate($event)"
@@ -21,15 +21,20 @@
     <div class="calendar-container">
       <app-calendar-sidenav-desktop
         class="sidenav-desktop"
-        (changeUser)="changeEmployee($event)"
+        (changeEmployee)="changeEmployee($event)"
         (changeDate)="changeDate($event)"
         [actionIcon]="actionIcon()"
         [date]="calendarState.date()"
       />
 
-      <full-calendar class="full-calendar" #calendar [options]="calendarOptions" [events]="calendarEvents | async"></full-calendar>
+      <full-calendar class="full-calendar" #calendar [options]="calendarOptions" [events]="calendarEvents | async">
+        <ng-template #eventContent let-arg>
+          <span>{{ arg.timeText }}</span>
+          <p>{{ arg.event.title }}</p>
+        </ng-template>
+      </full-calendar>
     </div>
 
-    <app-calendar-naviagtion class="navigation" [todayIcon]="todayIcon" [title]="calendarDateTitle()" (action)="calendarNavigate($event)" />
+    <app-calendar-naviagtion class="navigation" [title]="calendarDateTitle()" (action)="calendarNavigate($event)" />
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -18,7 +18,7 @@ export class ScheduleRepository {
   ) {}
 
   public postScheduling(scheduling: any): Observable<any> {
-    this.cacheService.clearAllCache();
+    this.cacheService.clearCache();
     return this.httpClient.post<any>(environment.baseURL + '/agenda', scheduling);
   }
 
@@ -36,12 +36,12 @@ export class ScheduleRepository {
   }
 
   public deleteScheduling(customerId: any): Observable<any> {
-    this.cacheService.clearAllCache();
+    this.cacheService.clearCache();
     return this.httpClient.delete<any>(`${environment.baseURL}/agenda/${customerId}`);
   }
 
   public updateScheduling(body: any, id: number) {
-    this.cacheService.clearAllCache();
+    this.cacheService.clearCache();
     return this.httpClient.put(environment.baseURL + '/agenda/' + id, body, {
       headers: {
         Authorization: this.authService.getToken()!,
@@ -52,7 +52,7 @@ export class ScheduleRepository {
   }
 
   public patchStatus(body: { status: number }, id: number) {
-    this.cacheService.clearAllCache();
+    this.cacheService.clearCache();
     return this.httpClient.patch(environment.baseURL + '/agenda/' + id + '/status', body);
   }
 }

@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild, WritableSignal, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarApi, CalendarOptions, DateSelectArg } from '@fullcalendar/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { calendarSelectedOptions } from 'src/app/pages/calendar/calendar.options';
+import { calendarSelectedOptions } from 'src/app/pages/calendar/constants/calendar.options';
+import { EmployeeList } from 'src/app/shared/interfaces/employee-list';
 import { EmployeeService } from 'src/app/shared/services/employee/employee.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -18,7 +19,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 export class CalendarSidenavDesktopComponent implements AfterViewInit {
   @ViewChild('calendar') calendar!: FullCalendarComponent;
 
-  @Output() public changeUser = new EventEmitter();
+  @Output() public changeEmployee = new EventEmitter<EmployeeList[]>();
   @Output() public changeDate = new EventEmitter();
 
   @Input() public actionIcon = '';
@@ -73,7 +74,7 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     map((employees) => employees.map((employee) => ({ ...employee, checked: true }))),
   );
 
-  employeeListFormated = signal([{ id: 0 }]);
+  employeeListFormated: WritableSignal<EmployeeList[]> = signal([{ id: 0, nome: '', telefone: '', checked: false }]);
 
   constructor(private employeeService: EmployeeService) {
     this.employeeList.forEach((e) => {
@@ -84,8 +85,8 @@ export class CalendarSidenavDesktopComponent implements AfterViewInit {
     this.calendarApi = this.calendar.getApi();
   }
 
-  emitSelectedEmployeeList(event: any): void {
-    this.changeUser.emit(event);
+  emitSelectedEmployeeList(event: EmployeeList[]): void {
+    this.changeEmployee.emit(event);
   }
 
   change(event: string) {
