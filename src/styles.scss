@@ -94,3 +94,22 @@ full-calendar {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
+
+.full-calendar .fc-event-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.full-calendar .fc-event-time {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.full-calendar .fc-event div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-width: 100%;
+}

@@ -29,8 +29,10 @@
 
       <full-calendar class="full-calendar" #calendar [options]="calendarOptions" [events]="calendarEvents | async">
         <ng-template #eventContent let-arg>
-          <span>{{ arg.timeText }}</span>
-          <p>{{ arg.event.title }}</p>
+          <div class="overflow-hidden text-ellipsis whitespace-normal max-w-full leading-tight">
+            <span class="mr-1">{{ arg.timeText }}</span
+            >{{ arg.event.title }}
+          </div>
         </ng-template>
       </full-calendar>
     </div>
