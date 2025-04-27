@@ -31,11 +31,11 @@
 <form [formGroup]="statusForm">
   <mat-form-field class="px-4 py-2 w-full">
     <mat-select formControlName="status" (valueChange)="updateStatus($event)" name="Status" placeholder="Status do atendimento">
-      <mat-option [value]="0">Confirmar</mat-option>
-      <mat-option [value]="1">Confirmado</mat-option>
-      <mat-option [value]="2">Desmarcou</mat-option>
-      <mat-option [value]="3">Atendido</mat-option>
-      <mat-option [value]="4">Faltou</mat-option>
+      <mat-option value="CONFIRMAR">Confirmar</mat-option>
+      <mat-option value="CONFIRMADO">Confirmado</mat-option>
+      <mat-option value="ATENDIDO">Atendido</mat-option>
+      <mat-option value="DESMARCOU">Desmarcou</mat-option>
+      <mat-option value="FALTOU">Faltou</mat-option>
     </mat-select>
   </mat-form-field>
 </form>

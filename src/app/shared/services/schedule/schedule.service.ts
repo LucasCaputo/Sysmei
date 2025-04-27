@@ -154,16 +154,11 @@ export class ScheduleService {
     );
   }
 
-  public patchStatus(body: { status: number }, id: number) {
+  public patchStatus(body: { status: string }, id: number) {
     return this.scheduleRepository.patchStatus(body, id).pipe(
       tap(() => {
         this.reloadSchedule();
-        this.snackbarService.openSnackBar(
-          `Status alterado com sucesso`,
-
-          'X',
-          false,
-        );
+        this.snackbarService.openSnackBar(`Status alterado com sucesso`, 'X', false);
       }),
       catchError(() => {
         this.snackbarService.openSnackBar(`Tivemos um erro para alterar o status, tente novamente`, 'X', true);

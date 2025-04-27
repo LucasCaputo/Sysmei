@@ -11,7 +11,7 @@ export interface ScheduleResponse {
   paciente_nome: string;
   pagamento: string;
   start: string;
-  status: number;
+  status: string;
   title: string;
   valor: number;
   prestador_id: number;
@@ -31,5 +31,5 @@ export interface ScheduleFormatResponse {
   Title: string;
   valor: number;
   hasDelete?: boolean;
-  status?: number;
+  status?: string;
 }

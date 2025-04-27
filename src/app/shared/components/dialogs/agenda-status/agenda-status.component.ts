@@ -73,7 +73,12 @@ export class AgendaStatusComponent {
     });
   }
 
-  updateStatus(status: number) {
-    this.scheduleService.patchStatus({ status }, this.data.schedule_id!).pipe(first()).subscribe();
+  updateStatus(status: string) {
+    this.scheduleService
+      .patchStatus({ status }, this.data.schedule_id!)
+      .pipe(first())
+      .subscribe(() => {
+        this.dialog.closeAll();
+      });
   }
 }

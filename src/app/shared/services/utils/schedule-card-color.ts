@@ -1,12 +1,11 @@
-export function CardColor(status: number | undefined): string {
-  const statusColorMap = new Map<number, string>([
-    [0, 'purple'],
-    [1, 'green'],
-    [2, 'burlywood'],
-    [3, 'blue'],
-    [4, 'gray'],
-    [5, 'burlywood'],
+export function CardColor(status: string | undefined): string {
+  const statusColorMap = new Map<string, string>([
+    ['CONFIRMAR', '#9b59b6'],
+    ['CONFIRMADO', '#27ae60'],
+    ['ATENDIDO', '#3498db'],
+    ['DESMARCOU', '#95a5a6'],
+    ['FALTOU', '#e67e22'],
   ]);
 
-  return statusColorMap.get(status ?? -1) || '';
+  return statusColorMap.get(status || '') || '';
 }

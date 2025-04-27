@@ -84,7 +84,7 @@ export class CustomerComponent {
 
     this.dialog.open(SchedulingDialogComponent, {
       ...dialogSize,
-      data: dataInfo,
+      data: { ...dataInfo },
     });
   }
 

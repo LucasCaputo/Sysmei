@@ -51,7 +51,7 @@ export class ScheduleRepository {
     });
   }
 
-  public patchStatus(body: { status: number }, id: number) {
+  public patchStatus(body: { status: string }, id: number) {
     this.cacheService.clearCache();
     return this.httpClient.patch(environment.baseURL + '/agenda/' + id + '/status', body);
   }

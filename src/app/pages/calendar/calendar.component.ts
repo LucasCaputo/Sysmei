@@ -148,7 +148,7 @@ export class CalendarComponent implements AfterViewInit {
 
     const dialogRef = this.dialog.open(SchedulingDialogComponent, {
       ...dialogSize,
-      data: dateClick,
+      data: { ...dateClick },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -258,7 +258,7 @@ export class CalendarComponent implements AfterViewInit {
     }
   }
 
-  public cardColor(status: number | undefined): string {
+  public cardColor(status: string | undefined): string {
     return CardColor(status);
   }
 
